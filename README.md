@@ -10,18 +10,36 @@ Built using https://github.com/react-boilerplate/react-boilerplate
 
 ### **DEVELOPMENT**
 
-  `$ npm i`
-  `$ npm run generate:svg`
-  `$ npm run grunt`
-  `$ npm run build:dev`
-  `$ npm tun start`
+  ```
+  $ nvm use 12
+
+  $ npm i
+  
+  $ npm run generate:svg
+  
+  $ npm run grunt
+  
+  $ npm run build:dev
+  
+  $ npm tun start
+  ```
+  
   Run local server at `https://localhost:3000`
   
 ### **PRODUCTION**
 
-  `$ npm i`
-  `$ npm run generate:svg`
-  `$ npm run grunt`
-  `$ npm run build`
-  `$ npm tun start:prod`
+  ```
+  $ nvm use 12
+
+  $ npm i
+  
+  $ npm run generate:svg
+  
+  $ npm run grunt
+  
+  $ npm run build
+  
+  $ npm tun start:prod
+  ```
+  
   Run local server at `https://localhost:3000`
