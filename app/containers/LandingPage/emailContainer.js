@@ -6,7 +6,7 @@ class EmailContainer extends React.Component {
     super(props);
     this.state = {
       email: '',
-      submitButton: 'C($primaryDarkGrey) Bgc(white)',
+      dynamicSubmitStyle: `C($primaryDarkGrey) ${props.inactiveButton}`,
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,7 +15,7 @@ class EmailContainer extends React.Component {
   validEmail({ email }) {
     const lastAtPos = email.lastIndexOf('@');
     const lastDotPos = email.lastIndexOf('.');
-
+    if (email.length === 0) return false;
     if (
       !(
         lastAtPos < lastDotPos &&
@@ -37,9 +37,9 @@ class EmailContainer extends React.Component {
     });
     const valid = this.validEmail({ email });
     this.setState({
-      submitButton: valid
+      dynamicSubmitStyle: valid
         ? 'Bgc($themeColor) C(white) Fw($fwbold)'
-        : 'C($primaryDarkGrey) Bgc(white)',
+        : `C($primaryDarkGrey) ${this.props.inactiveButton}`,
     });
   }
 
@@ -80,7 +80,7 @@ class EmailContainer extends React.Component {
         <input
           type="submit"
           className={`Trsdu(0.4s) Trsp(a) Trstf(e) ${this.props.submitClass} ${
-            this.state.submitButton
+            this.state.dynamicSubmitStyle
           }`}
           value="Submit"
         />
@@ -96,6 +96,7 @@ EmailContainer.propTypes = {
   submitClass: PropTypes.string,
   formClass: PropTypes.string,
   onSubmitForm: PropTypes.func,
+  inactiveButton: PropTypes.string,
 };
 
 EmailContainer.defaultProps = {
@@ -104,6 +105,7 @@ EmailContainer.defaultProps = {
   inputClass: 'Bd(n) Bdb($bdnewGrey) W(100%)',
   submitClass: 'Bdrs(1vw) W(5vw) H(2vw) C($primaryDarkGrey) Bd($bdnewGrey)',
   formClass: 'D(f) Ai(b)',
+  inactiveButton: 'Bgc(white)',
   onSubmitForm: () => {},
 };
 export default EmailContainer;

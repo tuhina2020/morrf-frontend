@@ -33,6 +33,7 @@ export function LandingPage({ onSubmitForm }) {
       'Bd(n) Bdb($bdnewGrey) Bd(n):a Bdb($bdnewGrey):a Bgc(white):a W(100%) Pt(8%) Pb(2%) Bgc(white) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
     submitClass:
       'Bdrs(1.5vw) W(8vw) H(3vw) Bd($bdnewGrey) Ff($ffmont) Fz(1.2vw) ',
+    inactiveButton: 'Bgc(white)',
     onSubmitForm,
   };
 
@@ -40,10 +41,11 @@ export function LandingPage({ onSubmitForm }) {
     placeholder: 'Email address',
     containerClass: 'Mend(2vw) W(25%)',
     inputClass:
-      'Bd(n) Bdb($bdnewGrey) Bd(n):a O(n):a O(n):f Bdb($bdnewGrey):a Bgc(#ededed):a C($primary):a W(100%) Pt(8%) Pb(2%) Bgc(#ededed) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
+      'Bd(n) Bdb($bdnewGrey) Bd(n):a Bdb($bdnewGrey):a Bgc(#ededed):a C($primary):a W(100%) Pt(8%) Pb(2%) Bgc(#ededed) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
     submitClass:
-      'Bdrs(1.5vw) W(8vw) H(3vw) Bd($bdnewGrey) Ff($ffmont) Fz(1.2vw)',
+      'Bdrs(1.5vw) W(8vw) H(3vw) Bd($bdnewGrey) Ff($ffmont) Fz(1.2vw) Bgc(#ededed)',
     formClass: 'D(f) Ai(b) Py(2vw)',
+    inactiveButton: 'Bgc(#ededed)',
     onSubmitForm,
   };
   const secondPage = useRef(null);
