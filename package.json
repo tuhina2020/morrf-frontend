@@ -1,10 +1,10 @@
 {
   "name": "morrf-frontend",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "Morrf PWA",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "git://github.com/tuhina2020/morrf-frontend.git"
   },
   "engines": {
     "npm": ">=5",
