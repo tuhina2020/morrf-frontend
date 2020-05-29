@@ -6,7 +6,7 @@ class EmailContainer extends React.Component {
     super(props);
     this.state = {
       email: '',
-      submitButton: 'C(#919191) Bgc(white)',
+      submitButton: 'C($primaryDarkGrey) Bgc(white)',
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,8 +38,8 @@ class EmailContainer extends React.Component {
     const valid = this.validEmail({ email });
     this.setState({
       submitButton: valid
-        ? 'Bgc(#f00647) C(white) Fw($fwbold)'
-        : 'C(#919191) Bgc(white)',
+        ? 'Bgc($themeColor) C(white) Fw($fwbold)'
+        : 'C($primaryDarkGrey) Bgc(white)',
     });
   }
 
@@ -51,6 +51,16 @@ class EmailContainer extends React.Component {
     this.state.email = '';
   }
 
+  onFocus(e) {
+    e.target.classList.add('C($primary)::ph');
+    e.target.classList.remove('C($primaryDarkGrey)::ph');
+  }
+
+  onBlur(e) {
+    e.target.classList.add('C($primaryDarkGrey)::ph');
+    e.target.classList.remove('C($primary)::ph');
+  }
+
   render() {
     return (
       <form className={this.props.formClass} onSubmit={this.handleSubmit}>
@@ -60,9 +70,11 @@ class EmailContainer extends React.Component {
             name="email"
             autoComplete="off"
             placeholder={this.props.placeholder}
-            className={this.props.inputClass}
+            className={`Trsdu(1s) Trsp(a) Trstf(e) ${this.props.inputClass}`}
             value={this.state.email}
             onChange={this.handleEmailChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
           />
         </div>
         <input
@@ -90,7 +102,7 @@ EmailContainer.defaultProps = {
   placeholder: 'Email address',
   containerClass: 'W(20%) Mend(2vw)',
   inputClass: 'Bd(n) Bdb($bdnewGrey) W(100%)',
-  submitClass: 'Bdrs(1vw) W(5vw) H(2vw) C(#919191) Bd($bdnewGrey)',
+  submitClass: 'Bdrs(1vw) W(5vw) H(2vw) C($primaryDarkGrey) Bd($bdnewGrey)',
   formClass: 'D(f) Ai(b)',
   onSubmitForm: () => {},
 };

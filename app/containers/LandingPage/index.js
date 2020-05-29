@@ -30,7 +30,7 @@ export function LandingPage({ onSubmitForm }) {
     placeholder: 'Email address',
     containerClass: 'Mend(2vw) W(50%)',
     inputClass:
-      'Bd(n) Bdb($bdnewGrey) Bd(n):a Bdb($bdnewGrey):a Bgc(white):a W(100%) Pt(8%) Pb(2%) Bgc(white) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C(#f00647)::ph Op(1)::ph',
+      'Bd(n) Bdb($bdnewGrey) Bd(n):a Bdb($bdnewGrey):a Bgc(white):a W(100%) Pt(8%) Pb(2%) Bgc(white) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
     submitClass:
       'Bdrs(1.5vw) W(8vw) H(3vw) Bd($bdnewGrey) Ff($ffmont) Fz(1.2vw) ',
     onSubmitForm,
@@ -40,7 +40,7 @@ export function LandingPage({ onSubmitForm }) {
     placeholder: 'Email address',
     containerClass: 'Mend(2vw) W(25%)',
     inputClass:
-      'Bd(n) Bdb($bdnewGrey) Bd(n):a O(n):a O(n):f Bdb($bdnewGrey):a Bgc(#ededed):a C(#f00647):a W(100%) Pt(8%) Pb(2%) Bgc(#ededed) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C(#f00647)::ph Op(1)::p',
+      'Bd(n) Bdb($bdnewGrey) Bd(n):a O(n):a O(n):f Bdb($bdnewGrey):a Bgc(#ededed):a C($primary):a W(100%) Pt(8%) Pb(2%) Bgc(#ededed) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
     submitClass:
       'Bdrs(1.5vw) W(8vw) H(3vw) Bd($bdnewGrey) Ff($ffmont) Fz(1.2vw)',
     formClass: 'D(f) Ai(b) Py(2vw)',
@@ -54,7 +54,7 @@ export function LandingPage({ onSubmitForm }) {
         <div>
           <div className="Bdb($bdGrey) D(f) Ai(c) Jc(sb)">
             <div className="W(38%)">
-              <div className="C(#f00647) Fw($fwbold) Fz($fzlarge)">
+              <div className="C($primary) Fw($fwbold) Fz($fzlarge)">
                 Ok, you got us
               </div>
               <div className="Fz($fzbody) C(#504d4d) My(3vw)">

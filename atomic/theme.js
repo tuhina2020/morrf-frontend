@@ -2,7 +2,8 @@ module.exports = () => ({
   palette: {
     prefix: '',
     primaryDark: '#3d2156',
-    primary: '#8445AE',
+    primary: '#f00647',
+    primaryDarkGrey: '#919191',
     backgroundTransparent: 'rgba(240, 6, 71, 0.5)',
     primaryLight: '#9876b3',
     secondaryDark: '#4A4A59',
@@ -153,6 +154,7 @@ module.exports = () => ({
   },
   background: {
     prefix: '',
+    themeColor: '#f00647',
     overlay: 'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))',
     modal: 'rgba(0, 0, 0, 0.3)',
     snackbar: '#323232',
