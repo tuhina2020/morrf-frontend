@@ -22,4 +22,4 @@ const makeSelectLandingPage = () =>
   );
 
 export default makeSelectLandingPage;
-export { selectLandingPageDomain };
+export { selectLandingPageDomain, makeSelectLandingPage };

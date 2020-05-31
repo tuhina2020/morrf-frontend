@@ -2,7 +2,7 @@ module.exports = () => ({
   palette: {
     prefix: '',
     primaryDark: '#3d2156',
-    primary: '#f00647',
+    primary: '#1f28cf',
     primaryDarkGrey: '#919191',
     backgroundTransparent: 'rgba(240, 6, 71, 0.5)',
     primaryLight: '#9876b3',
@@ -40,6 +40,7 @@ module.exports = () => ({
   },
   fontFamily: {
     prefix: 'ff',
+    opensans: 'Open Sans',
     primary:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
     pre: 'monospace',
@@ -140,6 +141,8 @@ module.exports = () => ({
       '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.06), 0px 0px 2px rgba(0, 0, 0, 0.07)',
     covidZone: '0px 1px 2px rgba(0, 0, 0, 0.45)',
     covidZone2: '0px 3px 4px rgba(0, 0, 0, 0.25)',
+    fabIcon:
+      '0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149)',
   },
   transition: {
     prefix: 'trs',
@@ -154,7 +157,7 @@ module.exports = () => ({
   },
   background: {
     prefix: '',
-    themeColor: '#f00647',
+    themeColor: '#1f28cf',
     overlay: 'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))',
     modal: 'rgba(0, 0, 0, 0.3)',
     snackbar: '#323232',
@@ -170,7 +173,7 @@ module.exports = () => ({
     bottom: '0 0 1px',
     left: '0 0 0 1px',
     Grey: '1px solid lightgray',
-    newGrey: '1px solid #393737',
+    newGrey: '1px solid #504d4d',
   },
   figure: {
     prefix: 'fg',
