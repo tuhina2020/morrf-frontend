@@ -9,6 +9,7 @@ import {
   SET_EMAIL,
   SEND_EMAIL,
   SEND_EMAIL_STATUS,
+  SET_NAME,
 } from './constants';
 
 export function defaultAction() {
@@ -20,6 +21,13 @@ export function defaultAction() {
 export function setEmail(payload) {
   return {
     type: SET_EMAIL,
+    payload,
+  };
+}
+
+export function setName(payload) {
+  return {
+    type: SET_NAME,
     payload,
   };
 }

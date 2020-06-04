@@ -11,46 +11,103 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
+import { RESTART_ON_REMOUNT } from 'utils/constants';
 import { useInjectReducer } from 'utils/injectReducer';
 import { scrollIt, scrollTo } from 'utils/helper';
-import { showmore as ShowMore } from 'Assets/svg-comp';
+import { showmore as ShowMore, curve as Curve } from 'Assets/svg-comp';
 import { ComingSoonGraphic } from 'Assets/images';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import EmailContainer from 'components/EmailContainer';
 import makeSelectLandingPage from './selectors';
-import { setEmail, sendEmail } from './actions';
+import { setEmail, sendEmail, setName } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import EmailContainer from 'components/EmailContainer';
 import ValueInformation from './valueInformation';
 
 export function LandingPage({ onSubmitForm }) {
   useInjectReducer({ key: 'landingPage', reducer });
-  useInjectSaga({ key: 'landingPage', saga });
+  useInjectSaga({ key: 'landingPage', saga, mode: RESTART_ON_REMOUNT });
   const secondPage = useRef(null);
 
   const emailPropsTop = {
-    placeholder: 'Email address',
-    containerClass: 'Mend(2vw) W(50%)',
+    inputDetails: [
+      {
+        key: 'name',
+        type: 'name',
+        widthStyle: 'W(30%) Mend(1vw)',
+        placeholder: 'Name',
+        labelStyle: 'C($themeColor) Fz(0.6vw)',
+      },
+      {
+        key: 'email',
+        type: 'email',
+        widthStyle: 'W(70%) Mend(1vw)',
+        placeholder: 'Email address',
+        labelStyle: 'C($themeColor) Fz(0.6vw)',
+      },
+    ],
+    containerClass: 'D(f) Jc(sb) W(100%)',
+    placeholderStyle: {
+      active: 'C($themeColor):ph',
+      inactive: 'C($lightGrey)::ph',
+      common: 'Ff($ffmont)::ph Fz(0.8vw)::ph',
+    },
     inputClass:
-      'Bd(n) Bdb($bdnewGrey) Bd(n):a Bgc(white):a W(100%) Pt(8%) Pb(2%) Bgc(white) Ff($ffmont) Fz(0.8vw) Ff($ffmont)::ph Fz(0.8vw)::ph C($primaryDarkGrey)::ph',
-    submitClass:
-      'Bdrs(0.2vw) W(5vw) H(2vw) Bd($bdnewGrey) Ff($ffmont) Fz(0.8vw) Bgc(#ededed)',
-    inactiveButton: 'Bgc(white)',
+      'Bd(n) Bdb($bdnewGrey) W(100%) Pb(0.2vw) Ff($ffmont) Fz(0.8vw) C($themeColor):h::ph Op(1)::ph',
+    submitStyle: {
+      inactive: 'Bd($bdprimaryDarkGrey) C($primaryDarkGrey) Bgc(white)',
+      active:
+        'Bd($bdthemeColor) C($primaryDarkGrey) Bd($bdthemeColor):h C($themeColor):h Bgc(white)',
+      clicked: 'C(white) Bgc($themeColor) Bd(n)',
+      common: 'Bdrs(0.2vw) W(5vw) H(2vw) Ff($ffmont) Fz(0.8vw)',
+      success: 'Bdrs(0.2vw) Px(1vw) Py(0.5vw) Ff($ffmont) Fz(0.8vw)',
+    },
     onSubmitForm,
   };
 
+  const [showCurve, setCurveStatus] = useState(false);
+  const [scrolled, setScrollStatus] = useState(false);
+
+  const onScroll = () => {
+    if (
+      document.documentElement.scrollTop > 100 ||
+      (document.body.scrollTop > 100 && !scrolled)
+    ) {
+      setScrollStatus(true);
+    } else {
+      setScrollStatus(false);
+    }
+  };
+  window.addEventListener('scroll', onScroll);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCurveStatus(true);
+    }, 200);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
-    <div className="Ff($ffmont)">
+    <div className="Ff($ffmont) Ovx(h)">
       <Header />
-      <div className="Mx(8vw) My(4vw)">
-        <div>
-          <div className="Bdb($bdGrey) D(f) Ai(c) Jc(sb)">
-            <div className="W(40%) Mb(3vw)">
+      <div
+        className={`Pos(a) Z(-1) Trsdu(2s) Trsp(a) Trstf(e) ${
+          showCurve ? 'T(4vw)' : 'T(-24vw)'
+        }`}
+      >
+        <Curve width="100vw" />
+      </div>
+      <div className="Mx(8vw) Mt(8vw) Mb(4vw)">
+        <div className="Bdb($bdGrey)">
+          <div className="D(f) Ai(c) Jc(sb) Mstart(8.7vw) Mb(3vw)">
+            <div className="W(40%)">
               <div className="C(black) Fw($fwbold) Fz($fzlarge)">
                 Hey there!
               </div>
-              <div className="Fz($fzbody) C(#504d4d) My(1.8vw) Ff($ffopensans) Lh(2vw)">
+              <div className="Fz($fzsubheading) C(#504d4d) My(1.5vw) Ff($ffopensans) Lh($lhsubheading)">
                 We are working on this very hard but we are really glad, you
                 dropped-in. Please leave your email and we will make sure, we
                 will update you as soon as we launch.
@@ -59,7 +116,11 @@ export function LandingPage({ onSubmitForm }) {
                 <EmailContainer {...emailPropsTop} />
               </div>
             </div>
-            <div className="W(33%)">
+            <div
+              className={`W(30%) Trsdu(1s) Trsp(a) Trstf(e) Pos(r) ${
+                showCurve ? 'End(10vw)' : 'End(-32vw)'
+              }`}
+            >
               <img
                 src={ComingSoonGraphic}
                 className="W(100%)"
@@ -67,41 +128,48 @@ export function LandingPage({ onSubmitForm }) {
               />
             </div>
           </div>
-          <div className="Ta(c)">
-            <div className="Fz($fzsubheading) Fw($fwsemibold) Mt(3vw) Mb(1vw)">
-              Here’s what we are building
-            </div>
-            <div className="Fz($fzbody) C(#504d4d) W(40%) M(a) Ff($ffopensans)">
-              An efficient and effortless Design Services Freelance platform for
-              both Designers and Businesses
-            </div>
+        </div>
+        <div className="Ta(c)">
+          <div className="Fz($fzsubheading) Fw($fwsemibold) Mt(3vw) Mb(1vw)">
+            Here’s what we are building
           </div>
-          <div className="Ta(c) D(f) Jc(c) Ai(c)">
-            <div className="Bdrs(2.5vw) W(5vw) H(5vw) Bxsh($bxshlightInset):h Bgc(#ededed):h Trsdu(0.5s) Trsp(a) Trstf(e)">
-              <ShowMore
-                width="5vw"
-                height="5vw"
-                className="Trsdu(0.8s) Trsp(a) Trstf(e)"
-                onClick={e => {
-                  e.target.parentNode.classList.toggle('Rotate(180deg)');
-                  secondPage.current.classList.toggle('TranslateY(6vw)');
+          <div className="Fz($fzbody) C(#504d4d) W(40%) M(a) Ff($ffopensans)">
+            An efficient and effortless Design Services Freelance platform for
+            both Designers and Businesses
+          </div>
+        </div>
+        <div className="Ta(c) D(f) Jc(c) Ai(c) Mt(2vw)">
+          <div
+            className={`Bdrs(2.5vw) W(5vw) H(5vw) Bxsh($bxshlightInset):h Bgc(#ededed):h Trsdu(0.8s) Trsp(a) Trstf(e) ${
+              scrolled ? 'Rotate(180deg)' : ''
+            }`}
+          >
+            <ShowMore
+              width="5vw"
+              height="5vw"
+              onClick={() => {
+                setScrollStatus(!scrolled);
+                setTimeout(() => {
                   const top =
                     document.documentElement.scrollTop ||
                     document.body.scrollTop;
-                  top === 0 ? scrollIt(secondPage.current) : scrollTo({});
-                }}
-              />
-            </div>
+                  if (top === 0) scrollIt(secondPage.current);
+                  else scrollTo({});
+                }, 600);
+              }}
+            />
           </div>
         </div>
       </div>
       <div
         ref={secondPage}
-        className="TranslateY(6vw) Trsdu(2s) Trsp(a) Trstf(e)"
+        className={`Trsdu(2s) Trsp(a) Trstf(e) ${
+          scrolled ? 'Op(1) TranslateY(-4vw)' : 'Op(0)'
+        }`}
       >
         <ValueInformation />
-        <Footer onSubmitForm={onSubmitForm} />
       </div>
+      <Footer onSubmitForm={onSubmitForm} />
     </div>
   );
 }
@@ -117,8 +185,9 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    onSubmitForm: ({ email }) => {
+    onSubmitForm: ({ email, name }) => {
       dispatch(setEmail(email));
+      dispatch(setName(name));
       dispatch(sendEmail());
     },
   };

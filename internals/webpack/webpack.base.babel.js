@@ -5,6 +5,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = options => ({
   mode: options.mode,
@@ -121,6 +122,7 @@ module.exports = options => ({
     ],
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),

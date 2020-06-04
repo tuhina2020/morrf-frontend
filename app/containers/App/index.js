@@ -14,8 +14,8 @@ import ROUTES from './routes';
 export default function App() {
   return (
     <div>
-      <Helmet titleTemplate="%s - Morrf" defaultTitle="Morrf">
-        <meta name="description" content="Morrf" />
+      <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
+        <meta name="description" content="Morff" />
       </Helmet>
       <Switch>
         {ROUTES.map(route => (

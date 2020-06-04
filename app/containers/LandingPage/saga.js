@@ -7,18 +7,23 @@ import { makeSelectLandingPage } from 'containers/LandingPage/selectors';
 
 export function* sendEmail() {
   // Select username from store
-  const { email } = yield select(makeSelectLandingPage());
+  const { email, name, source } = yield select(makeSelectLandingPage());
   const requestURL =
-    'https://0ddtvni7bl.execute-api.ap-southeast-1.amazonaws.com/prod/subscriberEmail';
+    'https://b6qzcm7x4m.execute-api.ap-southeast-1.amazonaws.com/prod/subscribe';
 
   try {
-    const data = { email };
+    const data = {
+      email,
+      name,
+      source,
+      timestamp: new Date().toISOString(),
+    };
     yield call(request, requestURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        body: JSON.stringify(data),
       },
+      body: JSON.stringify(data),
     });
     yield put(sendEmailStatus(true));
   } catch (err) {

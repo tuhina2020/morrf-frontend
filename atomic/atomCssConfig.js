@@ -37,6 +37,7 @@ const config = {
       'C($primary)',
       'C($primaryDarkGrey)',
       'C(white)',
+      'W(70%)',
     ],
   },
 };
