@@ -26,19 +26,7 @@ const config = {
       ldsp: '@media screen and (orientation:landscape)',
     },
     custom: cssVariables,
-    classNames: [
-      'M(0)',
-      'P(0)',
-      'Fz($fzbody)',
-      'Ff($ffprimary)',
-      'Fw($fwbold)',
-      'Lh($lhbody)',
-      'Bgc($themeColor)',
-      'C($primary)',
-      'C($primaryDarkGrey)',
-      'C(white)',
-      'W(70%)',
-    ],
+    classNames: ['M(0)', 'P(0)'],
   },
 };
 

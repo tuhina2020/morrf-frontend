@@ -7,7 +7,12 @@ module.exports = grunt => {
         },
         files: [
           {
-            src: [`app/components/**/*.js`, 'app/containers/**/*.js'],
+            src: [
+              `app/components/**/*.js`,
+              'app/containers/**/*.js',
+              'app/utils/*.js',
+              'app/utils/**/*.js',
+            ],
             dest: 'css/generatedAtoms.css',
           },
         ],
