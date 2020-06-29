@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uniq from 'lodash/uniq';
 import { check as Check } from 'Assets/svg-comp';
+import {
+  getInputBoxStyles,
+  getInputFieldDetails,
+  FLEX_CENTER_END,
+  FLEX_CENTER_CENTER,
+  HIDDEN_STYLE,
+} from 'utils/css';
+import { bulkValidation, getTransitionClass } from 'utils/helper';
+
 import InputContainer from './inputContainer';
-import { validateData } from 'utils/helper';
-import { COMING_SOON_INPUT_BOX_STYLES, INPUT_FIELD_DETAILS } from 'utils/css';
-import { bulkValidation } from '../../utils/helper';
 
 class EmailContainer extends React.Component {
   constructor(props) {
@@ -13,6 +18,7 @@ class EmailContainer extends React.Component {
     this.state = {
       email: '',
       name: '',
+      filled: false,
       resetForm: false,
       validObject: {
         name: {
@@ -22,39 +28,22 @@ class EmailContainer extends React.Component {
           valid: true,
         },
       },
-      inputDetails: [...INPUT_FIELD_DETAILS],
-      dynamicSubmitStyle: COMING_SOON_INPUT_BOX_STYLES.submitStyle.inactive,
+      INPUT_BOX_STYLES: getInputBoxStyles(props.isDesktopOrLaptop),
+      inputDetails: getInputFieldDetails(props.isDesktopOrLaptop),
+      dynamicSubmitStyle: getInputBoxStyles(props.isDesktopOrLaptop).submitStyle
+        .inactive,
     };
-    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fieldStyleChanges = this.fieldStyleChanges.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.renderNew = this.renderNew.bind(this);
     this.updateState = this.updateState.bind(this);
     this.getNewForm = this.getNewForm.bind(this);
-    this.successElement = React.createRef();
-    this.resetForm = this.resetForm.bind(this);
     this.validateFields = this.validateFields.bind(this);
-    this.fadeEmailForm = this.fadeEmailForm.bind(this);
-  }
-
-  handleFieldChange(e, { field }) {
-    const { value } = e.target;
-    const {
-      submitStyle: { active, inactive },
-    } = COMING_SOON_INPUT_BOX_STYLES;
-    const { name, email } = this.state;
-    this.setState({
-      [field]: value,
-      dynamicSubmitStyle:
-        email.length > 0 || name.length > 0 || value.length > 0
-          ? active
-          : inactive,
-    });
   }
 
   validateFields(update = true) {
-    const { name, email, inputDetails } = this.state;
+    const { inputDetails } = this.state;
     const validObject = {};
     inputDetails.forEach(inputDetail => {
       const { key, validationObj } = inputDetail;
@@ -69,60 +58,64 @@ class EmailContainer extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const validObject = this.validateFields();
-    if (!validObject.name.valid || !validObject.email.valid) return;
-    const { name, email } = this.state;
-    const {
-      submitStyle: { clicked },
-    } = COMING_SOON_INPUT_BOX_STYLES;
-    this.props.onSubmitForm({ email, name });
-    this.setState({ resetForm: true, dynamicSubmitStyle: clicked });
-    setTimeout(this.fadeEmailForm, 100);
-  }
-
-  fadeEmailForm() {
-    const successElement = this.successElement.current;
-    const formElement = successElement.previousSibling;
-    formElement.classList.add('Op(0)');
-    formElement.classList.add('Z(-1)');
-    setTimeout(() => {
+    if (!this.state.filled) {
+    } else {
+      const validObject = this.validateFields();
+      if (!validObject.name.valid || !validObject.email.valid) return;
+      const { name, email, INPUT_BOX_STYLES } = this.state;
+      this.props.onSubmitForm({ email, name });
       const {
-        submitStyle: { inactive },
-      } = COMING_SOON_INPUT_BOX_STYLES;
-      successElement.classList.remove('Op(0)');
-      successElement.classList.remove('Z(-1)');
-      // this.setState({ dynamicSubmitStyle: inactive });
-    }, 400);
+        submitStyle: { clicked },
+      } = INPUT_BOX_STYLES;
+      this.setState({ dynamicSubmitStyle: clicked });
+      setTimeout(() => {
+        this.setState({ resetForm: true });
+      }, 500);
+    }
   }
 
   fieldStyleChanges() {
+    const { email, name, INPUT_BOX_STYLES, filled } = this.state;
     const {
       submitStyle: { active, inactive },
-    } = COMING_SOON_INPUT_BOX_STYLES;
-    const { email, name } = this.state;
+    } = INPUT_BOX_STYLES;
 
     this.setState({
       dynamicSubmitStyle:
-        email.length > 0 || name.length > 0 ? active : inactive,
+        (email.length > 0 || name.length > 0) && filled ? active : inactive,
     });
+    // const validObject = this.validateFields();
   }
 
   renderNew() {
     const {
-      submitStyle: { success, active },
-    } = COMING_SOON_INPUT_BOX_STYLES;
+      INPUT_BOX_STYLES: {
+        submitStyle: { success, active },
+      },
+      resetForm,
+    } = this.state;
+
+    const { isDesktopOrLaptop, submitSuccessStyle = '' } = this.props;
+
     return (
       <div
-        className="D(f) Fz($fzsmall) Jc(e) Ai(c) Pos(r) T(-2vw) Trsdu(0.4s) Trsp(a) Trstf(e) Op(0) Z(-1)"
-        ref={this.successElement}
+        className={`${resetForm ? submitSuccessStyle : HIDDEN_STYLE.NO_HEIGHT}
+          ${FLEX_CENTER_END} Pos(r)  ${getTransitionClass(0.5)}`}
       >
-        <div className="D(f) Mend(2vw)">
-          <div className="Mend(0.5vw) Ff($ffmont) Fz($fzcaption)">
+        <div
+          className={`${getTransitionClass(1)} ${
+            isDesktopOrLaptop ? 'Mend(0.5vw)' : ''
+          } Ff($ffmont) ${FLEX_CENTER_CENTER}`}
+        >
+          <div className={isDesktopOrLaptop ? 'Mend(0.5vw)' : 'Mend(3vw)'}>
             Successfully Submitted
           </div>
-          <Check width="1vw" fill="#ff0356" />
+          <Check width={isDesktopOrLaptop ? '1.5vw' : '6vw'} fill="#ff0356" />
         </div>
-        <form onSubmit={this.getNewForm}>
+        <form
+          onSubmit={this.getNewForm}
+          className={isDesktopOrLaptop ? 'Mstart(1vw)' : 'Mt(5vw)'}
+        >
           <input
             type="submit"
             className={`${success} ${active}`}
@@ -135,26 +128,15 @@ class EmailContainer extends React.Component {
 
   getNewForm(e) {
     e.preventDefault();
-    this.setState({ resetForm: false });
-    const successElement = this.successElement.current;
-    const formElement = successElement.previousSibling;
-    successElement.classList.add('Op(0)');
-    successElement.classList.add('Z(-1)');
-    setTimeout(() => {
-      formElement.classList.remove('Op(0)');
-      formElement.classList.remove('Z(-1)');
-    }, 400);
-  }
-
-  resetForm() {
     const {
-      submitStyle: { inactive },
-    } = COMING_SOON_INPUT_BOX_STYLES;
-    this.setState({
-      dynamicSubmitStyle: inactive,
-      email: '',
-      name: '',
-    });
+      INPUT_BOX_STYLES: {
+        submitStyle: { inactive },
+      },
+    } = this.state;
+    this.setState({ dynamicSubmitStyle: inactive, name: '', email: '' });
+    setTimeout(() => {
+      this.setState({ resetForm: false });
+    }, 500);
   }
 
   updateState({ key, value }) {
@@ -164,6 +146,7 @@ class EmailContainer extends React.Component {
     }
     this.setState({
       [key]: value,
+      filled: true,
     });
   }
 
@@ -173,38 +156,46 @@ class EmailContainer extends React.Component {
       resetForm,
       inputDetails,
       validObject,
+      INPUT_BOX_STYLES: {
+        submitStyle: { common },
+      },
     } = this.state;
-    const { formClass, containerClass } = this.props;
-    const {
-      submitStyle: { common },
-    } = COMING_SOON_INPUT_BOX_STYLES;
+    const { formClass, containerClass, isDesktopOrLaptop } = this.props;
     return (
-      <form
-        className={`${formClass} Trsdu(0.4s) Trsp(a) Trstf(e)`}
-        onSubmit={this.handleSubmit}
-        noValidate
+      <div
+        className={`${isDesktopOrLaptop ? 'Mt(3vw)' : ''} ${
+          resetForm ? HIDDEN_STYLE.NO_HEIGHT : ''
+        } ${getTransitionClass(0.5)}`}
       >
-        <div className={containerClass}>
-          {inputDetails.map(inputDetail => (
-            <div key={inputDetail.key} className={inputDetail.style}>
-              <InputContainer
-                containerClass={containerClass}
-                {...inputDetail}
-                validObject={validObject[inputDetail.stateKey]}
-                changeHandler={this.updateState}
-                styleChangesHandler={this.fieldStyleChanges}
-                resetFormHandler={this.resetForm}
-                resetForm={resetForm}
-              />
-            </div>
-          ))}
-        </div>
-        <input
-          type="submit"
-          className={`Trsdu(0.4s) Trsp(a) Trstf(e) ${dynamicSubmitStyle} ${common}`}
-          value="Submit"
-        />
-      </form>
+        <form className={formClass} onSubmit={this.handleSubmit} noValidate>
+          <div
+            className={
+              containerClass + (resetForm ? ` ${HIDDEN_STYLE.NO_HEIGHT}` : '')
+            }
+          >
+            {inputDetails.map(inputDetail => (
+              <div key={inputDetail.key} className={inputDetail.style}>
+                <InputContainer
+                  containerClass={containerClass}
+                  {...inputDetail}
+                  resetForm={resetForm}
+                  validObject={validObject[inputDetail.stateKey]}
+                  changeHandler={this.updateState}
+                  styleChangesHandler={this.fieldStyleChanges}
+                  isDesktopOrLaptop={isDesktopOrLaptop}
+                  INPUT_BOX_STYLES={this.state.INPUT_BOX_STYLES}
+                />
+              </div>
+            ))}
+          </div>
+          {this.props.isDesktopOrLaptop}
+          <input
+            type="submit"
+            className={`${getTransitionClass()} ${dynamicSubmitStyle} ${common}`}
+            value="Submit"
+          />
+        </form>
+      </div>
     );
   }
 
@@ -222,11 +213,12 @@ EmailContainer.propTypes = {
   containerClass: PropTypes.string,
   formClass: PropTypes.string,
   onSubmitForm: PropTypes.func,
+  isDesktopOrLaptop: PropTypes.bool,
+  submitSuccessStyle: PropTypes.string,
+  inputClass: PropTypes.string,
 };
 
 EmailContainer.defaultProps = {
-  containerClass: 'W(20%) Mend(2vw)',
-  inputClass: 'Bd(n) Bdb($bdnewGrey) W(100%)',
   onSubmitForm: () => {},
 };
 export default EmailContainer;

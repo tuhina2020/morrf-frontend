@@ -1,23 +1,37 @@
-export const COMING_SOON_INPUT_BOX_STYLES = {
-  labelStyle: 'C($themeColor) Fz(0.6vw)',
-  placeholderStyle: {
-    active: 'C($themeColor):ph',
-    inactive: 'C($lightGrey)::ph',
-    common: 'Ff($ffmont)::ph Fz($fzcaption)::ph',
-  },
-  inputClass:
-    'Bd(n) W(100%) Pb(0.2vw) Ff($ffmont) Fz($fzcaption) C($themeColor):h::ph Op(1)::ph',
-  submitStyle: {
-    inactive: 'Bd($bdprimaryDarkGrey) C($primaryDarkGrey) Bgc(white)',
-    active:
-      'Bd($bdthemeColor) C($primaryDarkGrey) Bd($bdthemeColor):h C($themeColor):h Bgc(white)',
-    clicked: 'C(white) Bgc($themeColor) Bd(n)',
-    common: 'Bdrs(0.2vw) W(5vw) H(2vw) Ff($ffmont) Fz($fzcaption)',
-    success: 'Bdrs(0.2vw) Px(1vw) Py(0.5vw) Ff($ffmont) Fz($fzcaption)',
-  },
-};
+export const COMING_SOON_INPUT_BOX_STYLES = 1;
 
-export const INPUT_FIELD_DETAILS = [
+export const getInputBoxStyles = isDesktopOrLaptop => ({
+  labelStyle: {
+    inactive: `C($placeholderGrey) C($primary):h ${
+      isDesktopOrLaptop ? 'H(1.5vw) Fz($fzbody)' : 'Fz($fzlarge) H(6vw)'
+    }`,
+    active: `C($primary) ${
+      isDesktopOrLaptop
+        ? 'H(1.5vw) Fz($fzcaption)'
+        : 'Fz($fzmobilesubheading) H(6vw)'
+    }`,
+  },
+  inputClass: `Bd(n) W(100%) Pb(0.2vw) Ff($ffmont) ${
+    isDesktopOrLaptop ? 'Fz($fzcaption)' : 'Fz($fzlarge)'
+  } C($primary):h::ph Op(1)::ph`,
+  submitStyle: {
+    inactive: `Bd($bddisabledGrey) C($disabledGrey) Bgc(white)`,
+    active: isDesktopOrLaptop
+      ? 'Bd($bdthemeColor) C($primary) Bgc(white) C($disabledGrey) Bd($bdthemeColor):h C($primary):h'
+      : 'Bd($bdthemeColor) C($primary) Bgc(white) C($disabledGrey)',
+    clicked: 'C(white) Bgc($primary) Bd($bdthemeColor) Mb(1vw)',
+    common: isDesktopOrLaptop
+      ? 'Fz($fzbody) Px(1vw) Py(0.5vw) Bdrs(0.2vw) Ff($ffmont) Mb(1vw)'
+      : 'Fz($fzlarge) Mx(22vw) Mt(5vw) Py(4vw) Bdrs(1vw) Ff($ffmont)',
+    success: `Ff($ffmont) ${
+      isDesktopOrLaptop
+        ? 'Fz($fzbody) Bdrs(0.2vw) Px(1vw) Py(0.5vw)'
+        : 'Fz($fzlarge) Bdrs(1vw) Py(4vw) Px(8vw)'
+    }`,
+  },
+});
+
+export const getInputFieldDetails = isDesktopOrLaptop => [
   {
     key: 'name',
     stateKey: 'name',
@@ -29,12 +43,17 @@ export const INPUT_FIELD_DETAILS = [
         priority: 2,
       },
       minLength: {
-        size: 6,
+        size: 3,
         priority: 1,
-        errorMsg: 'Enter atleast six letters.',
+        errorMsg: 'Enter atleast three letters.',
+      },
+      maxLength: {
+        size: 20,
+        priority: 1,
+        errorMsg: 'Atmost 20 letters are allowed',
       },
     },
-    style: 'W(30%)',
+    style: isDesktopOrLaptop ? 'W(30%)' : '',
     placeholder: 'Name',
   },
   {
@@ -54,7 +73,20 @@ export const INPUT_FIELD_DETAILS = [
     },
     fieldType: 'email',
     dataType: 'email',
-    style: 'W(70%)',
+    style: isDesktopOrLaptop ? 'W(70%)' : '',
     placeholder: 'Email address',
   },
 ];
+
+export const FLEX_CENTER_CENTER = 'D(f) Ai(c) Jc(c)';
+export const FLEX_CENTER_END = 'D(f) Ai(c) Jc(e)';
+export const HIDDEN_STYLE = {
+  NO_HEIGHT: 'Op(0) Z(-1) H(0)',
+  WITH_HEIGHT: 'Op(0) Z(-1)',
+};
+export const DOTS_STYLE = desktop =>
+  desktop
+    ? 'W(0.5vw) H(0.5vw) Bdrs(50%) Bgc(black) Mx(0.5vw)'
+    : 'W(2vw) H(2vw) Bdrs(50%) Bgc(black) Mx(6vw)';
+
+export const buttonReset = `Bd(n) Va(bl) Cur(p)`;

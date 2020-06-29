@@ -1,5 +1,6 @@
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LandingPage from 'containers/LandingPage/Loadable';
+import LoginPage from 'containers/LoginPage/Loadable';
 
 const ROUTES = [
   {
@@ -8,6 +9,13 @@ const ROUTES = [
     header: false,
     footer: false,
     key: 'landing',
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+    header: false,
+    footer: false,
+    key: 'login',
   },
   {
     path: '/',

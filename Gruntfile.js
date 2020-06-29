@@ -9,7 +9,9 @@ module.exports = grunt => {
           {
             src: [
               `app/components/**/*.js`,
+              `app/components/**/**/*.js`,
               'app/containers/**/*.js',
+              'app/templates/**/*.js',
               'app/utils/*.js',
               'app/utils/**/*.js',
             ],
@@ -21,7 +23,6 @@ module.exports = grunt => {
   });
 
   grunt.loadNpmTasks('grunt-atomizer');
-  // grunt.loadNpmTasks("grunt-contrib-htmlmin");
 
   grunt.registerTask('default', ['atomizer']);
 };

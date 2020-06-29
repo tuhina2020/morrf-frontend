@@ -1,0 +1,21 @@
+LoginPage:
+  atoms:
+    - inputcontainer:
+        - label
+        - input
+    - button
+    - SVG
+    - Icons
+  molecules:
+    LoginForm:
+      - FormField:
+        inputcontainer
+      - FormSubmitButton:
+        button
+      - GoogleLoginButton:
+        button
+  organisms:
+    LoginScreen:
+      - Background
+      - Plaintext
+      - LoginForm

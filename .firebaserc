@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "morrf-frontend"
+  },
+  "targets": {
+    "morrf-frontend": {
+      "hosting": {
+        "production": [
+          "morrf-frontend"
+        ],
+        "staging": [
+          "morff-dev"
+        ]
+      }
+    }
   }
 }

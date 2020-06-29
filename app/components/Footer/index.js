@@ -3,29 +3,58 @@ import EmailContainer from 'components/EmailContainer';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function Footer({ onSubmitForm }) {
+export default function Footer({ onSubmitForm, isDesktopOrLaptop }) {
   const emailPropsBottom = {
-    containerClass: 'W(100%) D(f)',
-    formClass: 'D(f) Ai(e) Jc(sb) W(50%)',
+    formClass: isDesktopOrLaptop
+      ? 'D(f) Ai(c) Jc(sb) W(50%)'
+      : 'D(f) Fld(c) Mt(5vw)',
+    containerClass: isDesktopOrLaptop ? 'D(f) W(100%)' : '',
+    submitSuccessStyle: isDesktopOrLaptop
+      ? 'Fz($fzcaption) Mb(3vw)'
+      : 'Fz($fzlarge) Fld(c)',
     onSubmitForm,
   };
   return (
-    <div className="Pt(2vw) Pb(1vw) Px(16.7vw) Bdt($bdsolidLightestGray)">
-      <div className="Fz($fzbody) Fw($fwmedium)">
+    <div
+      className={`${
+        isDesktopOrLaptop ? 'Pt(2vw) Pb(1vw) Px(16.7vw)' : 'Py(3vw) Px(5.5vw)'
+      } Bdt($bdsolidLightestGray)`}
+    >
+      <div
+        className={`${
+          isDesktopOrLaptop ? 'Fz($fzbody)' : 'Fz($fzlarge)'
+        } Fw($fwmedium) C($subheadingDarkGrey)`}
+      >
         Get the update from us when we launch
       </div>
-      <div className="Mt(2vw)">
-        <EmailContainer {...emailPropsBottom} />
-      </div>
+      <EmailContainer
+        {...emailPropsBottom}
+        isDesktopOrLaptop={isDesktopOrLaptop}
+      />
 
-      <div className="Fz($fzcaption) C($mediumGrey) Mb(1.3vw)">
+      <div
+        className={`${
+          isDesktopOrLaptop
+            ? 'Fz($fzcaption)'
+            : 'Fz($fzmobilesubheading) Mt(7vw)'
+        } C($bodyGrey) Mb(1.3vw)`}
+      >
         Reach us at:{' '}
-        <Link to="mailto : contact@morff.io" className="Td(n) C($mediumGrey)">
+        <Link
+          to="mailto : contact@morff.io"
+          className="Td(n) C($placeholderGrey)"
+        >
           contact@morff.io
         </Link>
       </div>
 
-      <div className="Fz($fzcaption) C($lightestGray)">&copy; 2020 Morff</div>
+      <div
+        className={`${
+          isDesktopOrLaptop ? 'Fz($fzcaption)' : 'Fz($fzmobilesubheading)'
+        } C($lightestGray)`}
+      >
+        &copy; 2020 Morff
+      </div>
     </div>
   );
 }

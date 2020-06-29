@@ -21,7 +21,7 @@ $ npm run grunt
 
 $ npm run build:dev
 
-$ npm tun start
+$ npm run start
 ```
 
 Run local server at `https://localhost:3000`
@@ -47,5 +47,6 @@ Run Production server at `https://localhost:3000`
 ### **DEPLOY TO FIREBASE**
 
 ```
-$ npm run deploy
+$ npm run deploy:staging  // deploys to https://morff-dev.web.app/
+$ npm run deploy:prod    // deploys to https://morff.io
 ```

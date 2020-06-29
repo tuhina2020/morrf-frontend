@@ -15,11 +15,6 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
-
-// load static css
-// import Sanitize from './css/sanitize.css';
-// import GeneratedAtoms from './css/generatedAtoms.css';
-
 // Import root app
 import App from 'containers/App';
 
@@ -39,11 +34,11 @@ openSansObserver.load().then(() => {
 });
 
 // Create redux store with history
-const initialState = {};
-const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = () => {
+  const initialState = {};
+  const store = configureStore(initialState, history);
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>

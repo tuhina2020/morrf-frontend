@@ -115,11 +115,11 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'Morrf Frontend',
-      short_name: 'React Morrf',
-      description: 'Morrf Frontend',
+      name: 'Morff',
+      short_name: 'Morff',
+      description: 'Morff',
       background_color: '#fafafa',
-      theme_color: '#f15a24',
+      theme_color: '#ff0356',
       inject: true,
       ios: true,
       icons: [
