@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 // import { Businesses, Designers } from 'Assets/images';
 import { FLEX_CENTER_END, FLEX_CENTER_CENTER } from 'utils/css';
 import {

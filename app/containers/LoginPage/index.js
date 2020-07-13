@@ -2,35 +2,67 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { RESTART_ON_REMOUNT } from 'utils/constants';
+import { setToast, isLoggedIn } from 'utils/helper';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoginDesktopTemplate from 'templates/Login/desktop';
-import history from 'utils/history';
+// import history from 'utils/history';
 import { makeSelectLoginPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { getExistingUser, signInExisting } from './actions';
+import {
+  getExistingUser,
+  signInAllUsers,
+  forgotPassword,
+  verifyNewPassword,
+  resendCode,
+  setGlobalChoice,
+  setToastData,
+  googleLogin,
+} from './actions';
 
 const LoginPage = ({
   signIn,
   responsiveData,
-  fetchExistingUser,
+  checkUser,
+  verifyPassword,
   loginPage,
+  setUserChoice,
+  history,
+  forgotUserPassword,
+  resendVerificationCode,
+  dispatchToastData,
+  signInWithGoogle,
 }) => {
   useInjectReducer({ key: 'loginPage', reducer });
   useInjectSaga({ key: 'loginPage', saga, mode: RESTART_ON_REMOUNT });
-  const { login, user } = loginPage;
-  if (login && login.token && user && user.exists) history.pushState('/next');
-  else
-    return (
-      <LoginDesktopTemplate
-        signInExisting={signIn}
-        user={user}
-        fetchExistingUser={fetchExistingUser}
-      />
-    );
+  const { error, role, login } = loginPage;
+  if (error.message) {
+    setToast(error);
+    dispatchToastData({});
+  }
+  const loggedIn = isLoggedIn();
+  console.log('ALREADY LOGGED IN ', loggedIn);
+  if (loggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
+  return (
+    <LoginDesktopTemplate
+      setUserChoice={setUserChoice}
+      signInAllUsers={signIn}
+      loginData={login}
+      checkUser={checkUser}
+      role={role}
+      error={error}
+      forgotPassword={forgotUserPassword}
+      verifyPassword={verifyPassword}
+      resendVerificationCode={resendVerificationCode}
+      signInWithGoogle={signInWithGoogle}
+    />
+  );
 };
 
 LoginPage.propTypes = {
@@ -43,13 +75,14 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
-    fetchExistingUser: ({ email }) => {
-      dispatch(getExistingUser({ email }));
-    },
-    signIn: ({ email, password }) => {
-      dispatch(signInExisting({ email, password }));
-    },
+    checkUser: params => dispatch(getExistingUser(params)),
+    signIn: params => dispatch(signInAllUsers(params)),
+    verifyPassword: params => dispatch(verifyNewPassword(params)),
+    forgotUserPassword: params => dispatch(forgotPassword(params)),
+    setUserChoice: params => dispatch(setGlobalChoice(params)),
+    resendVerificationCode: params => dispatch(resendCode(params)),
+    dispatchToastData: params => dispatch(setToastData(params)),
+    signInWithGoogle: params => dispatch(googleLogin(params)),
   };
 }
 

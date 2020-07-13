@@ -82,6 +82,8 @@ module.exports = {
     'redux-saga/no-yield-in-race': 2,
     'redux-saga/yield-effects': 2,
     'require-yield': 0,
+    'react/no-multi-comp': 0,
+    'no-nested-ternary': 0,
   },
   settings: {
     'import/resolver': {

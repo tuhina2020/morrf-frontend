@@ -12,6 +12,15 @@ export const EMAIL_VALIDATION_OBJ = [
   },
 ];
 
+export const VERIFICATION_VALIDATION_OBJ = [
+  {
+    size: 0,
+    priority: 1,
+    type: 'minLength',
+    errorMsg: 'Enter Verifcation Code',
+  },
+];
+
 export const PASSWORD_VALIDATION_OBJ = [
   {
     size: 7,
@@ -37,9 +46,17 @@ export const PASSWORD_VALIDATION_OBJ = [
     type: 'genericRegex',
     errorMsg: 'Password must have atleast one digit',
   },
+  // {
+  //   regex: new RegExp(
+  //     /(?=.*[ ^$*.[]{}()?"!@#%&/,><':;|_~`])/
+  //   ),
+  //   priority: 5,
+  //   type: 'genericRegex',
+  //   errorMsg: 'Password must have atleast one special character',
+  // },
   {
     size: 17,
-    priority: 5,
+    priority: 6,
     type: 'maxLength',
     errorMsg: 'Password must be less than 16 characters',
   },
@@ -50,8 +67,8 @@ export const EMAIL_LOGIN_STATES = {
   EXISTING_ENTER_PASSWORD: 'EXISTING_ENTER_PASSWORD',
   RESET_PASSWORD: 'RESET_PASSWORD',
   FORGOT_PASSWORD_MESSAGE: 'FORGOT_PASSWORD_MESSAGE',
-  NEW_ENTER_PASSWORD: 'NEW_ENTER_PASSWORD',
   CREATE_ACCOUNT_MESSAGE: 'CREATE_ACCOUNT_MESSAGE',
+  CREATE_NEW_ACCOUNT: 'CREATE_NEW_ACCOUNT',
   CONGRATULATIONS: 'CONGRATULATIONS',
 };
 
@@ -60,7 +77,8 @@ export const EMAIL_LOGIN_FLOW = {
   NEW_USER: [
     'ENTER_EMAIL',
     'CREATE_ACCOUNT_MESSAGE',
-    'NEW_ENTER_PASSWORD',
+    'CREATE_NEW_ACCOUNT',
+    'EXISTING_ENTER_PASSWORD',
     'CONGRATULATIONS',
   ],
   FORGOT_PASSWORD: [

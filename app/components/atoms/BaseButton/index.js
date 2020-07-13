@@ -1,59 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import omit from 'lodash/omit';
 
-const BaseButton = React.forwardRef(({ children, to, ...props }, ref) => {
+const BaseButton = React.forwardRef(({ to, ...props }, ref) => {
   if (to) {
     return (
       <NavLink ref={ref} {...props} to={to}>
-        {children}
+        {props.children}
       </NavLink>
     );
-  } else {
-    return (
-      <button ref={ref} {...props}>
-        {children}
-      </button>
-    );
   }
+  return (
+    <button ref={ref} {...props}>
+      {props.children}
+    </button>
+  );
 });
 
 const Button = React.forwardRef((props, ref) => {
   const {
-    children,
     iconDescription,
     onClick,
     tabIndex,
     disabled,
     to,
     classes,
+    type,
+    ...others
   } = props;
 
   const newProps = {
     to,
-    children,
     'aria-label': iconDescription,
     tabIndex,
     disabled,
     onClick,
+    type,
     className: classes,
+    ...others,
   };
 
   return (
     <BaseButton {...newProps} ref={ref}>
-      {children}
+      {props.children}
     </BaseButton>
   );
 });
 
 Button.propTypes = {
   iconDescription: PropTypes.string,
+  to: PropTypes.string,
   onClick: PropTypes.func,
   tabIndex: PropTypes.number,
   disabled: PropTypes.bool,
-  to: PropTypes.string,
   classes: PropTypes.string,
+  type: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -62,6 +63,7 @@ Button.defaultProps = {
   disabled: false,
   iconDescription: 'submit button',
   classes: '',
+  type: 'submit',
 };
 
 export default Button;

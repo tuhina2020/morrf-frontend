@@ -12,3 +12,7 @@ export const FIREBASE_CONFIG = {
     appId: '1:995390422851:web:bd359095958d829b5579f6',
   },
 };
+
+export const BASE_URL = {
+  default: 'https://cav2ob34n5.execute-api.ap-southeast-1.amazonaws.com/prod',
+};

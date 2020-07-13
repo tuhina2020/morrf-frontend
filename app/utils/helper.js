@@ -3,6 +3,31 @@ import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import { toast } from 'react-toastify';
+
+export const setToast = ({ message }) => {
+  if (isEmpty(message)) return;
+  toast(message);
+};
+
+export const getDefaultState = (key, DEFAULT = '') => {
+  if (!key) return DEFAULT;
+  let value = localStorage.getItem(key);
+  if (!value || value === 'undefined') return DEFAULT;
+  try {
+    value = JSON.parse(value);
+  } catch (error) {
+    return value;
+  }
+  return value;
+};
+
+export const isLoggedIn = () => {
+  const role = localStorage.getItem('role');
+  const token = localStorage.getItem('token');
+  const valid = l => !isEmpty(l) && l !== 'undefined';
+  return valid(role) && valid(token);
+};
 
 export const deviceScreenInfo = () => {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
@@ -16,7 +41,7 @@ export const deviceScreenInfo = () => {
 
 export function checkPosition({ elements = [] }) {
   const windowHeight = window.innerHeight;
-  for (let i = 0; i < elements.length; i++) {
+  for (let i = 0; i < elements.length; i += 1) {
     const element = elements[i];
     const positionFromTop = elements[i].getBoundingClientRect().top;
 
@@ -89,25 +114,25 @@ export function validateAlphabets({ data }) {
 
 const primitive = ({ data, type }) => typeof data === type;
 
-export function validateData({ data, type = 'string', ...params }) {
-  const LOOKUP = {
-    string: primitive,
-    number: primitive,
-    boolean: primitive,
-    emailRegex: validateEmail,
-    alphabetRegex: validateAlphabets,
-    minLength: ({ data, size }) =>
-      primitive({ data, type: 'string' }) && data.trim().length > size,
-    maxLength: ({ data, size }) =>
-      primitive({ data, type: 'string' }) && data.trim().length < size,
-    genericRegex: ({ data, regex }) =>
-      primitive({ data, type: 'string' }) && regex.test(data),
-    default: () => {
-      console.log('PLEASE ADD VALIDATION');
-      return false;
-    },
-  };
+const LOOKUP = {
+  string: primitive,
+  number: primitive,
+  boolean: primitive,
+  emailRegex: validateEmail,
+  alphabetRegex: validateAlphabets,
+  minLength: ({ data, size }) =>
+    primitive({ data, type: 'string' }) && data.trim().length > size,
+  maxLength: ({ data, size }) =>
+    primitive({ data, type: 'string' }) && data.trim().length < size,
+  genericRegex: ({ data, regex }) =>
+    primitive({ data, type: 'string' }) && regex.test(data),
+  default: () => {
+    console.log('PLEASE ADD VALIDATION');
+    return false;
+  },
+};
 
+export function validateData({ data, type = 'string', ...params }) {
   return LOOKUP[type]
     ? LOOKUP[type]({ data, type, ...params })
     : LOOKUP.default();
@@ -162,9 +187,9 @@ export function bulkValidationList({ validationList, data }) {
     }
     allValid = allValid && valid;
   });
-  console.log(errorMsg, 'OPEN END');
   validObj.errorMsg = errorMsg;
   validObj.valid = allValid;
+  console.log(validObj, data, 'OPEN END');
   return validObj;
 }
 

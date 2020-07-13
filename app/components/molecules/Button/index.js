@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buttonReset } from 'utils/css';
 import { classnames } from 'utils/helper';
-import isObject from 'lodash/isObject';
 import BaseButton from 'components/atoms/BaseButton';
 import BaseIcon from 'components/atoms/BaseIcon';
 
@@ -13,8 +11,9 @@ const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
     'Fz($fzbutton)': true,
     'Py($md)': true,
     'H($2xl)': true,
-    [`Miw($${size})`]: true,
+    [`Miw($${size})`]: size !== 'auto',
     'Bdrs($bdrsbutton)': true,
+    'O(n)': true,
     [`W($${size})`]: size && size.length > 0,
     'Jc(c) D(f) Ai(c)': !alignContent || alignContent === 'center',
     'Jc(s) D(f) Ai(c)': alignContent === 'start',
@@ -30,6 +29,7 @@ const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
     'Bd(n)': true,
     'Va(bl)': true,
     'Cur(p)': true,
+    'Bgc(black):a': true,
   };
 
   const secondaryButtonStyles = {
@@ -42,6 +42,8 @@ const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
     'Px($md)': true,
     'Va(bl)': true,
     'Cur(p)': true,
+    'Bd($bdheadingDarkGrey):a': true,
+    'C($headingDarkGrey):a': true,
   };
 
   const ghostStyles = {
@@ -53,18 +55,16 @@ const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
     'Cur(p)': true,
     'Bd(n)': true,
     'Px($xs)': true,
+    'C($headingDarkGrey):a': true,
+    'Bgc($navBarBg):a': true,
   };
 
-  return (
-    classnames({
-      ...commonStyles,
-      ...(kind === 'primary' ? primaryButtonStyles : {}),
-      ...(kind === 'secondary' ? secondaryButtonStyles : {}),
-      ...(kind === 'ghost' || kind === 'tertiary' ? ghostStyles : {}),
-    }) +
-    ' ' +
-    classnames(classes)
-  );
+  return `${classnames({
+    ...commonStyles,
+    ...(kind === 'primary' ? primaryButtonStyles : {}),
+    ...(kind === 'secondary' ? secondaryButtonStyles : {}),
+    ...(kind === 'ghost' || kind === 'tertiary' ? ghostStyles : {}),
+  })} ${classnames(classes)}`;
 };
 
 const Button = React.forwardRef((props, ref) => {
@@ -74,7 +74,7 @@ const Button = React.forwardRef((props, ref) => {
     alignContent,
     kind,
     onClick,
-    renderIcon,
+    prependIcon,
     iconWidth,
     iconHeight,
     iconClasses,
@@ -85,6 +85,7 @@ const Button = React.forwardRef((props, ref) => {
     disabled,
     to,
     classes,
+    ...others
   } = props;
 
   const buttonClasses = getButtonStyle({
@@ -103,11 +104,12 @@ const Button = React.forwardRef((props, ref) => {
     disabled,
     onClick,
     classes: buttonClasses,
+    ...others,
   };
 
-  const Icon = renderIcon ? (
+  const Icon = prependIcon ? (
     <BaseIcon
-      icon={renderIcon}
+      icon={prependIcon}
       width={iconWidth}
       height={iconHeight}
       iconClasses={iconClasses}
@@ -135,7 +137,7 @@ Button.propTypes = {
   ]),
   iconDescription: PropTypes.string,
   onClick: PropTypes.func,
-  renderIcon: PropTypes.string,
+  prependIcon: PropTypes.string,
   tabIndex: PropTypes.number,
   disabled: PropTypes.bool,
   to: PropTypes.string,
@@ -144,6 +146,8 @@ Button.propTypes = {
   iconHeight: PropTypes.string,
   iconSpacing: PropTypes.string,
   iconClasses: PropTypes.string,
+  size: PropTypes.string,
+  iconFill: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -155,6 +159,7 @@ Button.defaultProps = {
   iconWidth: '16px',
   iconHeight: '16px',
   iconSpacing: '8px',
+  size: 'auto',
   iconClasses: 'Fill($primaryButton) W($md) H($md)',
 };
 

@@ -1,27 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from 'components/organisms/LoginForm';
+import isEmpty from 'lodash/isEmpty';
 
 const LoginTemplate = ({
   text,
   loginStyle,
   textStyle,
-  signInExisting,
-  user,
-  fetchExistingUser,
+  signInAllUsers,
+  verifyPassword,
+  loginData,
+  checkUser,
+  role,
+  error,
+  setUserChoice,
+  resendVerificationCode,
+  forgotPassword,
+  signInWithGoogle,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  console.log('BASE EMAIL ANDD PASS', email, password);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [verificationCode, setCode] = useState('');
+
+  useEffect(() => {
+    if (!isEmpty(error)) {
+      console.log('ERROR ', error);
+      // setPassword('');
+      // setConfirmPassword('');
+      setCode('');
+    }
+  }, [error]);
 
   const loginProps = {
-    signInExisting,
+    signInAllUsers,
+    verifyPassword,
     email,
     password,
-    user,
-    fetchExistingUser,
+    loginData,
+    checkUser,
     setEmail,
     setPassword,
+    confirmPassword,
+    verificationCode,
+    setConfirmPassword,
+    setCode,
+    setUserChoice,
+    role,
+    resendVerificationCode,
+    forgotPassword,
+    signInWithGoogle,
   };
 
   return (
@@ -36,8 +64,12 @@ LoginTemplate.propTypes = {
   text: PropTypes.string,
   loginStyle: PropTypes.string,
   textStyle: PropTypes.string,
-  fetchExistingUser: PropTypes.func,
-  signInExisting: PropTypes.func,
+  checkUser: PropTypes.func,
+  signInAllUsers: PropTypes.func,
+  verifyPassword: PropTypes.func,
+  setUserChoice: PropTypes.func,
+  resendVerificationCode: PropTypes.func,
+  signInWithGoogle: PropTypes.func,
   user: PropTypes.object,
 };
 

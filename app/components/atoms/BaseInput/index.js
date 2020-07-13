@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 
@@ -32,7 +32,7 @@ const InputContainer = React.forwardRef(
   ) => {
     const error = <div className={errorMessageClasses}>{invalidText}</div>;
 
-    console.log('BASE INPUT ', value, invalid, invalidText);
+    const newRef = ref || useRef();
 
     const inputProps = {
       onChange: evt => {
@@ -57,7 +57,7 @@ const InputContainer = React.forwardRef(
       },
       placeholder,
       type,
-      ref,
+      ref: newRef,
       name,
       autoComplete,
       className: inputClasses,
@@ -68,10 +68,16 @@ const InputContainer = React.forwardRef(
       ...other,
     };
 
+    const focusInput = () => newRef.current.focus();
+
     return (
       <div className={inputContainerClass}>
         <label htmlFor={name}>
-          {labelText ? <div className={labelClasses}>{labelText}</div> : null}
+          {labelText ? (
+            <div className={labelClasses} onClick={focusInput} role="div">
+              {labelText}
+            </div>
+          ) : null}
           <div className={inputWrapperClasses} data-invalid={invalid || null}>
             <input {...inputProps} />
             <div className={warningContainerClass}>
@@ -108,14 +114,13 @@ InputContainer.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  warningContainerClass: PropTypes.string,
 };
 
 InputContainer.defaultProps = {
   labelText: 'label',
-  placeholder: 'placeholder',
-  onClick: () => {
-    console.log('CLICKED');
-  },
+  placeholder: '',
+  onClick: () => {},
   value: '',
   warningContainerClass: 'D(f) Ai(c) Jc(c) P($md)',
   autoFocus: false,

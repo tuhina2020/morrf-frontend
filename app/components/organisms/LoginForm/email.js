@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import Input from 'components/molecules/Input';
 import Button from 'components/molecules/Button';
 import GoogleLogin from 'components/molecules/GoogleLogin';
-import BaseIcon from 'components/atoms/BaseIcon';
-import { morff as Morff } from 'Assets/svg-comp';
 import { EMAIL_VALIDATION_OBJ } from './constants';
-import { bulkValidationList } from 'utils/helper';
 
 const EnterEmail = ({
   submitText,
@@ -14,48 +11,29 @@ const EnterEmail = ({
   next,
   email,
   setEmail,
-  ...props
+  signInGoogleApi,
 }) => {
-  const [invalid, setInvalid] = useState(false);
-  const [invalidText, setInvalidText] = useState('');
-  const isValid = data => {
-    const validationObj = bulkValidationList({
-      validationList: EMAIL_VALIDATION_OBJ,
-      data,
-    });
-    console.log(validationObj, 'THIS IS WHERE');
-    setInvalidText(validationObj.errorMsg);
-    let v = !validationObj.valid;
-    setInvalid(v);
-    return v;
-  };
+  const [validate, setValidate] = useState(false);
+  const [submittable, setSubmittable] = useState(false);
   const inputProps = {
     dataType: 'string',
     labelText: 'Email address',
+    validationList: EMAIL_VALIDATION_OBJ,
     tabIndex: 1,
     name: 'email',
-    // autoFocus: true,
-    // placeholder: 'Email address',
     type: 'email',
     onChange: e => {
       setEmail(e.target.value);
-      if (invalid) setInvalid(false);
+      if (validate) setValidate(false);
     },
-    onFocus: () => {
-      console.log('FOCUS');
-    },
-    onBlur: () => {
-      console.log('BLUR');
-    },
+    setSubmittable,
     animate: true,
-    invalid,
-    invalidText,
     value: email,
-    disabled: false,
+    validate,
   };
 
   const buttonProps = {
-    iconDescription: 'submit email',
+    iconDescription: 'Submit Email',
     alignContent: 'center',
     kind: 'primary',
     size: '10x',
@@ -64,35 +42,28 @@ const EnterEmail = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    const flag = isValid(email);
-    console.log('THIS IS EMAIL ', flag);
-    if (!flag) next();
+    setValidate(true);
+    if (submittable) next();
   };
 
   return (
-    <div className={wrapperClass}>
-      <div className="Px($2xl) Pt($2xl) Pb($9xl) Mb($2xl)">
-        <BaseIcon icon="morff" iconClasses="W($3xxl)" {...props} />
-        <div>
-          <div className="C($headingDarkGrey) Fz($fzdesktopTitle) Mt($lg) Mb($xs)">
-            Let's get Started
-          </div>
-          <div className="C($headingDarkGrey) Fz($fzbutton) Mb($lg)">
-            Enter your email to continue to Morff
-          </div>
+    <>
+      <form onSubmit={handleSubmit} noValidate>
+        <Input {...inputProps} />
+        <div className="Mt($5x) Mx(a) W($10x)">
+          <Button {...buttonProps}>{submitText}</Button>
         </div>
-        <form onSubmit={handleSubmit} noValidate>
-          <Input {...inputProps} />
-          <div className="Mt($xxl) Mx(a) W($10x)">
-            <Button {...buttonProps}>{submitText}</Button>
-          </div>
-        </form>
-        <div className="My($2xl)">or</div>
-        <div className="Mx(a) W(fc)">
-          <GoogleLogin />
-        </div>
+      </form>
+
+      <div className="My($2xl) D(f) Ai(c) Jc(c)">
+        <div className="H(1px) W($half) Bgc($hoverInput)" />
+        <div className="W(40px)">or</div>
+        <div className="H(1px) W($half) Bgc($hoverInput)" />
       </div>
-    </div>
+      <div className="Mx(a) W(fc)">
+        <GoogleLogin signInApi={signInGoogleApi} />
+      </div>
+    </>
   );
 };
 
@@ -101,13 +72,15 @@ EnterEmail.propTypes = {
   wrapperClass: PropTypes.string,
   width: PropTypes.string,
   next: PropTypes.func.isRequired,
+  signInGoogleApi: PropTypes.func,
+  setEmail: PropTypes.func,
 };
 
 EnterEmail.defaultProps = {
   submitText: 'Next',
-  next: () => {},
+  signInGoogleApi: () => {},
   wrapperClass:
-    'Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W(fc) Bdrs($bdrscontainer)',
+    'Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W(fc) Bdrs($bdrscontainer) Px($5xl) Pt($2xl) Pb($9xl) Mb($2xl)',
 };
 
 export default EnterEmail;

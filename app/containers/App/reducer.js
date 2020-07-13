@@ -18,6 +18,7 @@ export const initialState = {
   userData: {
     repositories: false,
   },
+  errorMessage: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */

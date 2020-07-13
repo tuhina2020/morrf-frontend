@@ -1,6 +1,7 @@
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LandingPage from 'containers/LandingPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
+import DummyPage from 'containers/DummyPage/Loadable';
 
 const ROUTES = [
   {
@@ -8,6 +9,7 @@ const ROUTES = [
     component: LandingPage,
     header: false,
     footer: false,
+    auth: false,
     key: 'landing',
   },
   {
@@ -15,7 +17,16 @@ const ROUTES = [
     component: LoginPage,
     header: false,
     footer: false,
+    auth: false,
     key: 'login',
+  },
+  {
+    path: '/dashboard',
+    component: DummyPage,
+    header: false,
+    footer: false,
+    auth: true,
+    key: 'dashboard',
   },
   {
     path: '/',
@@ -23,13 +34,15 @@ const ROUTES = [
     exact: true,
     header: true,
     footer: true,
+    auth: false,
     key: 'home',
   },
   {
-    path: '',
+    path: '/notfound',
     component: NotFoundPage,
     header: true,
     footer: true,
+    auth: false,
     key: 'notfound',
   },
 ];

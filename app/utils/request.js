@@ -1,33 +1,6 @@
-/**
- * Parses the JSON returned by a network request
- *
- * @param  {object} response A response from a network request
- *
- * @return {object}          The parsed JSON from the request
- */
-function parseJSON(response) {
-  if (response.status === 204 || response.status === 205) {
-    return null;
-  }
-  return response.json();
-}
-
-/**
- * Checks if a network request came back fine, and throws an error if not
- *
- * @param  {object} response   A response from a network request
- *
- * @return {object|undefined} Returns either the response, or throws an error
- */
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
-}
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
+import { BASE_URL } from './constants';
 
 /**
  * Requests a URL, returning a promise
@@ -37,8 +10,34 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON);
+export default function request(url, options, internal = true) {
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(options.headers || {}),
+  };
+  if (!isEmpty(token) || token !== 'undefined') {
+    headers.Authorization = token;
+  }
+  const modifiedOptions = {
+    method: 'POST',
+    headers,
+    body: options.data ? JSON.stringify(options.data) : undefined,
+    ...omit(options, ['headers', 'data']),
+  };
+
+  return fetch(internal ? BASE_URL.default + url : url, modifiedOptions).then(
+    response =>
+      new Promise((resolve, reject) => {
+        response.json().then(json => {
+          if (response.ok && !json.errorMessage && !json.errorType) {
+            return resolve(json);
+          }
+          return reject(
+            (json && (json.message || json.errorMessage)) ||
+              'Something is wrong...',
+          );
+        });
+      }),
+  );
 }
