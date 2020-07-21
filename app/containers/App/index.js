@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { deviceScreenInfo, isLoggedIn } from 'utils/helper';
 import { ToastContainer, Bounce } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.min.css';
+import { NavigationWrapper, EmptyWrapper } from 'templates/NavigationWrapper';
 import ROUTES from './routes';
 
 export default function App({ history }) {
@@ -24,6 +24,7 @@ export default function App({ history }) {
     pauseOnHover: false,
     draggable: false,
   };
+
   return (
     <div>
       <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
@@ -36,27 +37,32 @@ export default function App({ history }) {
           return (
             <Route
               path={route.path}
-              render={props =>
-                route.auth ? (
-                  isLoggedIn() ? (
-                    <Component
-                      {...props}
-                      responsiveData={responsiveData}
-                      loggedIn={isLoggedIn()}
-                      location={location}
-                    />
-                  ) : (
-                    <Redirect
-                      to={{
-                        pathname: '/login',
-                        state: { from: props.location },
-                      }}
-                    />
-                  )
-                ) : (
-                  <Component {...props} responsiveData={responsiveData} />
-                )
-              }
+              render={props => {
+                const Wrapper = route.nav ? NavigationWrapper : EmptyWrapper;
+                return (
+                  <Wrapper>
+                    {route.auth ? (
+                      isLoggedIn() ? (
+                        <Component
+                          {...props}
+                          responsiveData={responsiveData}
+                          loggedIn={isLoggedIn()}
+                          location={location}
+                        />
+                      ) : (
+                        <Redirect
+                          to={{
+                            pathname: '/login',
+                            state: { from: props.location },
+                          }}
+                        />
+                      )
+                    ) : (
+                      <Component {...props} responsiveData={responsiveData} />
+                    )}
+                  </Wrapper>
+                );
+              }}
               exact={route.exact}
               key={route.key}
             />

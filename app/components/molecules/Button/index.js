@@ -4,7 +4,14 @@ import { classnames } from 'utils/helper';
 import BaseButton from 'components/atoms/BaseButton';
 import BaseIcon from 'components/atoms/BaseIcon';
 
-const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
+const getButtonStyle = ({
+  size,
+  kind,
+  disabled,
+  alignContent,
+  roundCorners,
+  classes,
+}) => {
   const commonStyles = {
     'Ff($ffmanrope)': true,
     'Fw($fwregular)': true,
@@ -12,7 +19,7 @@ const getButtonStyle = ({ size, kind, disabled, alignContent, classes }) => {
     'Py($md)': true,
     'H($2xl)': true,
     [`Miw($${size})`]: size !== 'auto',
-    'Bdrs($bdrsbutton)': true,
+    'Bdrs($bdrsbutton)': roundCorners,
     'O(n)': true,
     [`W($${size})`]: size && size.length > 0,
     'Jc(c) D(f) Ai(c)': !alignContent || alignContent === 'center',
@@ -85,6 +92,7 @@ const Button = React.forwardRef((props, ref) => {
     disabled,
     to,
     classes,
+    roundCorners,
     ...others
   } = props;
 
@@ -94,6 +102,7 @@ const Button = React.forwardRef((props, ref) => {
     disabled,
     alignContent,
     classes,
+    roundCorners,
   });
 
   const newProps = {
@@ -148,6 +157,7 @@ Button.propTypes = {
   iconClasses: PropTypes.string,
   size: PropTypes.string,
   iconFill: PropTypes.string,
+  roundCorners: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -160,6 +170,7 @@ Button.defaultProps = {
   iconHeight: '16px',
   iconSpacing: '8px',
   size: 'auto',
+  roundCorners: true,
   iconClasses: 'Fill($primaryButton) W($md) H($md)',
 };
 

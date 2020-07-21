@@ -47,7 +47,7 @@ export const getInputFieldDetails = isDesktopOrLaptop => [
         priority: 1,
         errorMsg: 'Enter atleast three letters.',
       },
-      maxLength: {
+      maxAllowedLength: {
         size: 20,
         priority: 1,
         errorMsg: 'Atmost 20 letters are allowed',

@@ -5,6 +5,13 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { toast } from 'react-toastify';
 
+export const wordCount = word => {
+  return word
+    .trim()
+    .replace(/\s+/gi, ' ')
+    .split(' ').length;
+};
+
 export const setToast = ({ message }) => {
   if (isEmpty(message)) return;
   toast(message);
@@ -122,7 +129,7 @@ const LOOKUP = {
   alphabetRegex: validateAlphabets,
   minLength: ({ data, size }) =>
     primitive({ data, type: 'string' }) && data.trim().length > size,
-  maxLength: ({ data, size }) =>
+  maxAllowedLength: ({ data, size }) =>
     primitive({ data, type: 'string' }) && data.trim().length < size,
   genericRegex: ({ data, regex }) =>
     primitive({ data, type: 'string' }) && regex.test(data),
@@ -189,7 +196,6 @@ export function bulkValidationList({ validationList, data }) {
   });
   validObj.errorMsg = errorMsg;
   validObj.valid = allValid;
-  console.log(validObj, data, 'OPEN END');
   return validObj;
 }
 
