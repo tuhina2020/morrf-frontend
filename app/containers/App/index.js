@@ -27,7 +27,7 @@ export default function App({ history }) {
   };
   return (
     <div>
-     {/*  <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
+      <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
         <meta name="description" content="Morff" />
       </Helmet>
       <ToastContainer {...toastProps} transition={Bounce} />
@@ -64,8 +64,8 @@ export default function App({ history }) {
           );
         })}
         <Redirect path="*" to="/notfound" />
-      </Switch> */}
-      <SideNavBar />
+      </Switch>
+
     </div>
   );
 }
