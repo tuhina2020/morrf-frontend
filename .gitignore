@@ -4,7 +4,8 @@ build
 node_modules
 stats.json
 css/generatedAtoms.css
-app/assets/svg/svg-svgo
+app/assets/svg-svgo
+app/assets/svg-comp
 
 # Cruft
 .DS_Store
