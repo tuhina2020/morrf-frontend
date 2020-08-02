@@ -9,7 +9,6 @@ import { RESTART_ON_REMOUNT } from 'utils/constants';
 import { setToast, isLoggedIn } from 'utils/helper';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoginDesktopTemplate from 'templates/Login/desktop';
-// import history from 'utils/history';
 import { makeSelectLoginPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -47,7 +46,7 @@ const LoginPage = ({
   const loggedIn = isLoggedIn();
   console.log('ALREADY LOGGED IN ', loggedIn);
   if (loggedIn) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/profile/details" />;
   }
   return (
     <LoginDesktopTemplate

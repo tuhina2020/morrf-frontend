@@ -19,3 +19,35 @@ LoginPage:
       - Background
       - Plaintext
       - LoginForm
+ProfilePage:
+  atoms:
+  - inputcontainer:
+    - dropdowns(searchable)
+    - tool tips
+  molecules:
+    - display cards ( type = basic, editable, heading, content [{ heading, subheading, description, images }], flex )
+    - modals
+    - two-action-forms
+    - chips
+    - breadcrumbs
+    - scrollable images
+    - icon with tool tip
+  organisms:
+    DetailsPage:
+      - personal
+      - skills
+      - about
+      - contact
+      - experience
+      - portfolio
+    Account
+    Subscription
+  template:
+    Details
+    Account
+    Subscription
+
+
+
+
+

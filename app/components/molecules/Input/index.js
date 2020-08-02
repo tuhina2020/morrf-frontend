@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bulkValidationList } from 'utils/helper';
 import BaseInput from 'components/atoms/BaseInput';
 
-const getClasses = ({ active, disabled, value, invalid, animate, size }) => ({
-  labelClasses: `Pos(r) Pstart($md) W(fc) Pstart($md) H($smd) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
+const getClasses = ({ active, disabled, value, invalid, animate }) => ({
+  labelClasses: `Ff($ffmanrope) Pos(r) Pstart($md) W(fc) Pstart($md) H($smd) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
     active && !disabled
@@ -19,7 +19,6 @@ const getClasses = ({ active, disabled, value, invalid, animate, size }) => ({
       ? 'C($primaryButton)'
       : 'C($inputGrey)'
   }`,
-  inputContainerClass: `W($${size}) M(a) Ta(start) H($2xl)`,
   inputWrapperClasses: `Ff($ffmanrope) ${
     invalid
       ? 'Bdb($bderrorColor)'
@@ -59,6 +58,7 @@ const Input = React.forwardRef(
       size,
       setSubmittable,
       extraValidation,
+      dimensionClasses,
       ...other
     },
     ref,
@@ -96,6 +96,9 @@ const Input = React.forwardRef(
     }, [validate]);
 
     const onFocusHandler = e => {
+      if (e.target.autocomplete) {
+        e.target.autocomplete = 'whatever';
+      }
       setActive(true);
       onFocus(e);
     };
@@ -136,6 +139,7 @@ const Input = React.forwardRef(
       onFocus: onFocusHandler,
       onBlur: onBlurHandler,
       ...allClasses,
+      inputContainerClass: `${dimensionClasses} H($2xl) Ta(start)`,
       ...other,
     };
 
@@ -162,12 +166,14 @@ Input.propTypes = {
   validate: PropTypes.bool,
   extraValidation: PropTypes.func,
   validationList: PropTypes.array,
+  dimensionClasses: PropTypes.string,
 };
 
 Input.defaultProps = {
   dataType: 'string',
   tabIndex: 1,
   value: '',
+  dimensionClasses: 'W($30xl) M(a)',
   disabled: false,
   autoFocus: false,
   size: '30xl',

@@ -2,6 +2,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LandingPage from 'containers/LandingPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import DummyPage from 'containers/DummyPage/Loadable';
+import ProfilePage from 'containers/ProfilePage/Loadable';
 
 const ROUTES = [
   {
@@ -27,6 +28,15 @@ const ROUTES = [
     footer: false,
     auth: true,
     key: 'dashboard',
+  },
+  {
+    path: '/profile/:tabId',
+    component: ProfilePage,
+    header: false,
+    footer: false,
+    auth: true,
+    nav: true,
+    key: 'profile',
   },
   {
     path: '/',

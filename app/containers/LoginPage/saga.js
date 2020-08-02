@@ -211,7 +211,7 @@ export function* setGlobalChoice({ payload }) {
 }
 
 // Individual exports for testing
-export default function* landingPageSaga() {
+export default function* loginPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(GET_EXISTING_USER, getExistingUser);
   yield takeLatest(SIGNIN_ALL_USERS, signInAllUsersSaga);

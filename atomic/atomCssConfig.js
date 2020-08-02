@@ -43,6 +43,7 @@ const config = {
       'Trsdu(2s)',
       'Trsdu(3s)',
       'Trsdu(5s)',
+      'Mstart(8px)',
     ],
   },
 };

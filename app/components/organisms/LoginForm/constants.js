@@ -17,7 +17,7 @@ export const VERIFICATION_VALIDATION_OBJ = [
     size: 0,
     priority: 1,
     type: 'minLength',
-    errorMsg: 'Enter Verifcation Code',
+    errorMsg: 'Enter Verification Code',
   },
 ];
 
@@ -57,7 +57,7 @@ export const PASSWORD_VALIDATION_OBJ = [
   {
     size: 17,
     priority: 6,
-    type: 'maxLength',
+    type: 'maxAllowedLength',
     errorMsg: 'Password must be less than 16 characters',
   },
 ];
