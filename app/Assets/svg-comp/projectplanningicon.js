@@ -6,18 +6,34 @@ function SvgProjectplanningicon(props) {
       <defs>
         <style>
           {
-            '.projectb{fill:none;stroke:#000122;stroke-linecap:round;stroke-width:2px}'
+            '.projecta,.projectb{fill:none;stroke:#000122;stroke-linecap:round;}.projecta{stroke-width:3px;}.projectb{stroke-width:2px;}'
           }
         </style>
       </defs>
-      <path
-        d="M1.5 1.5v25"
-        strokeWidth={3}
-        fill="none"
-        stroke="#000122"
-        strokeLinecap="round"
-      />
-      <path className="projectb" d="M8 4h16.969M9.575 14h11.216M15 24h11.581" />
+      <g transform="translate(-8.149 -31.966)">
+        <path
+          className="projecta"
+          d="M-13523.351,2530.337v25"
+          transform="translate(13533 -2496.871)"
+        />
+        <g transform="translate(0 -1.837)">
+          <path
+            className="projectb"
+            d="M-13523.351,2530.337v16.969"
+            transform="translate(-2514.188 -13485.548) rotate(-90)"
+          />
+          <path
+            className="projectb"
+            d="M-13523.351,2530.337v11.216"
+            transform="translate(-2512.613 -13475.548) rotate(-90)"
+          />
+          <path
+            className="projectb"
+            d="M-13523.351,2530.337v11.581"
+            transform="translate(-2507.188 -13465.548) rotate(-90)"
+          />
+        </g>
+      </g>
     </svg>
   );
 }

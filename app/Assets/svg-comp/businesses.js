@@ -4,15 +4,18 @@ function SvgBusinesses(props) {
   return (
     <svg
       id="Layer_1"
-      x={0}
-      y={0}
+      x="0px"
+      y="0px"
       viewBox="0 0 470.9 433.1"
+      style={{
+        enableBackground: 'new 0 0 470.9 433.1',
+      }}
       xmlSpace="preserve"
       {...props}
     >
-      <style>
+      <style type="text/css">
         {
-          '.business-st2{fill:#f2f2f2}.business-st6{fill:#6c63ff}.business-st7{fill:#d1a39d}.business-st8{fill:#fff}.business-st9{fill:#3f3d56}.business-st10{fill:#2f2e41}.business-st11{opacity:.1;enable-background:new}.business-st12{opacity:.5}.business-st14{fill:#f5f5f5}.business-st15{fill:#e0e0e0}.business-st17{fill:#fda57d}.business-st18{fill:#333}.business-st22{fill:#4d8af0}.business-st25{fill:#be7c5e}.business-st29{fill:#f1f1f1}'
+          '.business-st0{fill:#DDDDDD;}.business-st1{fill:#F9DC5C;}.business-st2{fill:#F2F2F2;}.business-st3{fill:#000122;}.business-st4{fill:#FE5F55;}.business-st5{fill:#9ED8DB;}.business-st6{fill:#6C63FF;}.business-st7{fill:#D1A39D;}.business-st8{fill:#FFFFFF;}.business-st9{fill:#3F3D56;}.business-st10{fill:#2F2E41;}.business-st11{opacity:0.1;enable-background:new    ;}.business-st12{opacity:0.5;}.business-st13{fill:url(#Rectangle_177_1_);}.business-st14{fill:#F5F5F5;}.business-st15{fill:#E0E0E0;}.business-st16{fill:url(#Path_185_1_);}.business-st17{fill:#FDA57D;}.business-st18{fill:#333333;}.business-st19{fill:#FDD835;}.business-st20{fill:url(#Rectangle_188_1_);}.business-st21{fill:url(#Path_197_1_);}.business-st22{fill:#4D8AF0;}.business-st23{fill:url(#Rectangle_199_1_);}.business-st24{fill:url(#Path_208_1_);}.business-st25{fill:#BE7C5E;}.business-st26{fill:#3AD29F;}.business-st27{fill:url(#Ellipse_40_1_);}.business-st28{fill:#69F0AE;}.business-st29{fill:#F1F1F1;}  '
         }
       </style>
       <g
@@ -21,14 +24,14 @@ function SvgBusinesses(props) {
       >
         <path
           id="Right_Gray_Pebble"
-          d="M1397.1 1444.2s37.8 73.2 94.3 34 120.7-69.5 79.3-151.5-186-135.2-203.8-53.2c-17.8 82 30.2 170.7 30.2 170.7z"
-          fill="#ddd"
+          className="business-st0"
+          d="M1397.1,1444.2c0,0,37.8,73.2,94.3,34s120.7-69.5,79.3-151.5s-186-135.2-203.8-53.2C1349.1,1355.5,1397.1,1444.2,1397.1,1444.2z"
         />
-        <g transform="translate(1362.93 1186.3)">
+        <g transform="matrix(1, 0, 0, 1, 1362.93, 1186.3)">
           <path
             id="Right_Yellow_Pebble-2"
-            d="M279.5 404C-29.9 574.8 47.1-66.8 262.8 5.7S589 233.2 279.5 404z"
-            fill="#f9dc5c"
+            className="business-st1"
+            d="M279.5,404C-29.9,574.8,47.1-66.8,262.8,5.7S589,233.2,279.5,404z"
           />
         </g>
         <g id="Businessman" transform="translate(1479.5 1396.808)">
@@ -43,52 +46,52 @@ function SvgBusinesses(props) {
           <path
             id="Rectangle_173"
             className="business-st2"
-            d="M-23.3-74.7H78c12.6 0 22.8 10.2 22.8 22.8v42.3C100.8 3 90.6 13.2 78 13.2H-23.3C-35.9 13.2-46.1 3-46.1-9.6v-42.3c0-12.5 10.2-22.8 22.8-22.8z"
+            d="M-23.3-74.7H78c12.6,0,22.8,10.2,22.8,22.8v42.3c0,12.6-10.2,22.8-22.8,22.8H-23.3c-12.6,0-22.8-10.2-22.8-22.8v-42.3C-46.1-64.4-35.9-74.7-23.3-74.7z"
           />
           <path
             id="Rectangle_174"
-            d="M136.7-74.7H238c12.6 0 22.8 10.2 22.8 22.8v42.3c0 12.6-10.2 22.8-22.8 22.8H136.7c-12.6 0-22.8-10.2-22.8-22.8v-42.3c0-12.5 10.2-22.8 22.8-22.8z"
-            fill="#000122"
+            className="business-st3"
+            d="M136.7-74.7H238c12.6,0,22.8,10.2,22.8,22.8v42.3c0,12.6-10.2,22.8-22.8,22.8H136.7c-12.6,0-22.8-10.2-22.8-22.8v-42.3C113.9-64.4,124.1-74.7,136.7-74.7z"
           />
           <path
             id="Path_222"
-            d="M-3.1-21.1h-16c-1.1-6.3-1.1-12.8 0-19.1h16c-1.8 6.2-1.8 12.9 0 19.1z"
-            fill="#fe5f55"
+            className="business-st4"
+            d="M-3.1-21.1h-16c-1.1-6.3-1.1-12.8,0-19.1h16C-4.9-34-4.9-27.3-3.1-21.1z"
           />
           <path
             id="Path_223"
-            d="M12.8-21.5h16c1.1-6.3 1.1-12.8 0-19.1h-16c1.8 6.3 1.8 12.9 0 19.1z"
-            fill="#9ed8db"
+            className="business-st5"
+            d="M12.8-21.5h16c1.1-6.3,1.1-12.8,0-19.1h-16C14.6-34.3,14.6-27.7,12.8-21.5z"
           />
           <path
             id="Path_224"
             className="business-st6"
-            d="M45.7-20.7h16c1.1-6.3 1.1-12.8 0-19.1h-16c1.8 6.3 1.8 12.9 0 19.1z"
+            d="M45.7-20.7h16c1.1-6.3,1.1-12.8,0-19.1h-16C47.5-33.5,47.5-26.9,45.7-20.7z"
           />
           <path
             id="Path_174"
             className="business-st7"
-            d="M84.1 28.7s.7 5.5-1.1 7.7-4.7 16.8-4.7 16.8V62s11.3-16.4 13.5-23c1.3-3.8 1.3-7.9 0-11.7l-7.7 1.4z"
+            d="M84.1,28.7c0,0,0.7,5.5-1.1,7.7s-4.7,16.8-4.7,16.8v8.8c0,0,11.3-16.4,13.5-23c1.3-3.8,1.3-7.9,0-11.7L84.1,28.7z"
           />
           <path
             id="Path_175"
             className="business-st8"
-            d="M83 1.6l.2.2c1.9 2.1 3.4 4.6 4.4 7.2 2.4 6.4 7.6 22.1 5.7 23.7-2.6 2.2-9.9 3.7-10.2 3.3s-7.7-23-7.7-23L83 1.6z"
+            d="M83,1.6l0.2,0.2c1.9,2.1,3.4,4.6,4.4,7.2c2.4,6.4,7.6,22.1,5.7,23.7c-2.6,2.2-9.9,3.7-10.2,3.3s-7.7-23-7.7-23L83,1.6z"
           />
           <path
             id="Path_176"
             className="business-st9"
-            d="M71.2 156.9s8.8 1.8 9.1 0c.2-1.1.6-2.2 1.1-3.3 0 0 7.9.3 5.9 7.3-.2.7-.7 1.3-1.3 1.6-1.9 1.2-6.4 3.9-8.6 5.3-1.7 1.1-4.1.3-5.9-.6-1.3-.6-2-2.1-1.7-3.5l1.4-6.8z"
+            d="M71.2,156.9c0,0,8.8,1.8,9.1,0c0.2-1.1,0.6-2.2,1.1-3.3c0,0,7.9,0.3,5.9,7.3c-0.2,0.7-0.7,1.3-1.3,1.6c-1.9,1.2-6.4,3.9-8.6,5.3c-1.7,1.1-4.1,0.3-5.9-0.6c-1.3-0.6-2-2.1-1.7-3.5L71.2,156.9z"
           />
           <path
             id="Path_177"
             className="business-st9"
-            d="M46 158s-8.8 1.8-9.1 0c-.2-1.1-.6-2.2-1.1-3.3 0 0-7.9.3-5.9 7.3.2.7.7 1.3 1.3 1.7 1.9 1.2 6.3 3.9 8.6 5.3 1.9 1.2 4.6.1 6.4-.8 1-.5 1.5-1.6 1.3-2.7L46 158z"
+            d="M46,158c0,0-8.8,1.8-9.1,0c-0.2-1.1-0.6-2.2-1.1-3.3c0,0-7.9,0.3-5.9,7.3c0.2,0.7,0.7,1.3,1.3,1.7c1.9,1.2,6.3,3.9,8.6,5.3c1.9,1.2,4.6,0.1,6.4-0.8c1-0.5,1.5-1.6,1.3-2.7L46,158z"
           />
           <path
             id="Path_178"
             className="business-st7"
-            d="M35 33.4s-.7 5.5 1.1 7.7 4.7 10.6 4.7 10.6v8.8S29.5 50.3 27.3 43.7c-1.3-3.8-1.3-7.9 0-11.7l7.7 1.4z"
+            d="M35,33.4c0,0-0.7,5.5,1.1,7.7s4.7,10.6,4.7,10.6v8.8c0,0-11.3-10.2-13.5-16.8c-1.3-3.8-1.3-7.9,0-11.7L35,33.4z"
           />
           <circle
             id="Ellipse_24"
@@ -100,32 +103,32 @@ function SvgBusinesses(props) {
           <path
             id="Path_179"
             className="business-st7"
-            d="M67.9-17s-2.6 11.7 0 13.2-15.3 0-15.3 0 4-9.9 2.2-13.2 13.1 0 13.1 0z"
+            d="M67.9-17c0,0-2.6,11.7,0,13.2s-15.3,0-15.3,0s4-9.9,2.2-13.2S67.9-17,67.9-17z"
           />
           <path
             id="Path_180"
             className="business-st10"
-            d="M76.7 60.8s3.3 4.7 2.2 19.4-2.2 30-2.2 30 8 46 5.5 47.1-11 2.2-12.1 1.1-6.2-43.8-6.2-43.8l-4.7-35.1-7.3 40.2s-4 39.1-6.9 40.9c-2.1 1.3-6.2.4-8.4-.3-.8-.2-1.4-1-1.4-1.9.3-6.1 1.5-30.4 4.3-45.3 3.3-17.2-3.3-51.5 2.6-52.2s34.6-.1 34.6-.1z"
+            d="M76.7,60.8c0,0,3.3,4.7,2.2,19.4s-2.2,30-2.2,30s8,46,5.5,47.1s-11,2.2-12.1,1.1s-6.2-43.8-6.2-43.8l-4.7-35.1l-7.3,40.2c0,0-4,39.1-6.9,40.9c-2.1,1.3-6.2,0.4-8.4-0.3c-0.8-0.2-1.4-1-1.4-1.9c0.3-6.1,1.5-30.4,4.3-45.3c3.3-17.2-3.3-51.5,2.6-52.2S76.7,60.8,76.7,60.8z"
           />
           <path
             id="Path_181"
             className="business-st8"
-            d="M51.1-5.3s1.5-6.6 6.9-5.8 9.1.4 10.2 4S81-.6 81-.6s2.9.4 2.6 5.1-7.7 22.3-7.7 22.3.4 14.6 2.2 21.2 1.8 14.6-2.2 16.4-29.2 8.4-35.1.4c0 0-3.3-11.7-1.1-16.4S39.4 25 39.4 25l-7-15.3s2.2-7.3 8.4-9.5C44.5-1.1 48-3 51.1-5.3z"
+            d="M51.1-5.3c0,0,1.5-6.6,6.9-5.8s9.1,0.4,10.2,4S81-0.6,81-0.6s2.9,0.4,2.6,5.1s-7.7,22.3-7.7,22.3s0.4,14.6,2.2,21.2s1.8,14.6-2.2,16.4s-29.2,8.4-35.1,0.4c0,0-3.3-11.7-1.1-16.4S39.4,25,39.4,25L32.4,9.7c0,0,2.2-7.3,8.4-9.5C44.5-1.1,48-3,51.1-5.3z"
           />
           <path
             id="Path_182"
             className="business-st8"
-            d="M35.4 6.4l-2.9 3.3s-8.8 21.6-6.2 23.7 9.9 3.7 10.2 3.3 6.6-19 6.6-19L35.4 6.4z"
+            d="M35.4,6.4l-2.9,3.3c0,0-8.8,21.6-6.2,23.7s9.9,3.7,10.2,3.3s6.6-19,6.6-19L35.4,6.4z"
           />
           <path
             id="Path_183"
             className="business-st10"
-            d="M71.2-26.1c-1 .9-1.7 2.3-1.8 3.7-.4 2.6-2.6-1.5-3.1 3.8S57-9.7 53.7-12.2s-8.8-18.6-1.1-21.2 15.3-2.2 16.8.4 1.8 6.9 1.8 6.9z"
+            d="M71.2-26.1c-1,0.9-1.7,2.3-1.8,3.7c-0.4,2.6-2.6-1.5-3.1,3.8s-9.3,8.9-12.6,6.4s-8.8-18.6-1.1-21.2s15.3-2.2,16.8,0.4S71.2-26.1,71.2-26.1z"
           />
           <path
             id="Path_184"
             className="business-st11"
-            d="M64-18.7c.5-5.3 2.8-1.3 3.1-3.8.1-1.4.8-2.7 1.8-3.7 0 0-.4-4.4-1.8-6.9-.7-1.2-2.8-1.9-5.7-2.1 3.9-.2 7 .6 7.9 2.1 1.5 2.6 1.8 6.9 1.8 6.9-1 .9-1.7 2.3-1.8 3.7-.4 2.6-2.6-1.5-3.1 3.8-.4 4.5-6.8 7.8-10.7 7.1 3.7-.4 8.2-3.3 8.5-7.1z"
+            d="M64-18.7c0.5-5.3,2.8-1.3,3.1-3.8c0.1-1.4,0.8-2.7,1.8-3.7c0,0-0.4-4.4-1.8-6.9c-0.7-1.2-2.8-1.9-5.7-2.1c3.9-0.2,7,0.6,7.9,2.1c1.5,2.6,1.8,6.9,1.8,6.9c-1,0.9-1.7,2.3-1.8,3.7c-0.4,2.6-2.6-1.5-3.1,3.8c-0.4,4.5-6.8,7.8-10.7,7.1C59.2-12,63.7-14.9,64-18.7z"
           />
           <g id="Resumes" transform="translate(-15 13)">
             <g
@@ -136,99 +139,129 @@ function SvgBusinesses(props) {
               <linearGradient
                 id="Rectangle_177_1_"
                 gradientUnits="userSpaceOnUse"
-                x1={-388.778}
-                y1={589.848}
-                x2={-388.778}
-                y2={588.467}
-                gradientTransform="matrix(7.1987 -47.712 -34.5312 -5.21 23027.549 -15540.188)"
+                x1={-388.7782}
+                y1={589.8481}
+                x2={-388.7782}
+                y2={588.4672}
+                gradientTransform="matrix(7.1987 -47.712 -34.5312 -5.21 23027.5488 -15540.1875)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
-              <path
+              <polygon
                 id="Rectangle_177"
-                fill="url(#Rectangle_177_1_)"
-                d="M-30.6-23.1l7.2-47.7 34.5 5.2-7.2 47.7z"
+                className="business-st13"
+                points="-30.6,-23.1 -23.4,-70.8 11.1,-65.6 3.9,-17.9 "
               />
             </g>
-            <path
+            <rect
               id="Rectangle_178"
-              transform="rotate(-81.419 224.76 -49.349)"
+              x={201.2}
+              y={-66.4}
+              transform="matrix(0.1492 -0.9888 0.9888 0.1492 240.0213 180.2563)"
               className="business-st14"
-              d="M201.2-66.4h47.2v34h-47.2z"
+              width={47.2}
+              height={34}
             />
-            <path
+            <rect
               id="Rectangle_179"
-              transform="rotate(-81.431 224.926 -51.746)"
+              x={224.2}
+              y={-64}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 242.57 178.3734)"
               className="business-st15"
-              d="M224.2-64h1.5v24.6h-1.5z"
+              width={1.5}
+              height={24.6}
             />
-            <path
+            <rect
               id="Rectangle_180"
-              transform="rotate(-81.431 224.37 -48.065)"
+              x={223.6}
+              y={-60.3}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 238.4579 180.9554)"
               className="business-st15"
-              d="M223.6-60.3h1.5v24.6h-1.5z"
+              width={1.5}
+              height={24.6}
             />
-            <path
+            <rect
               id="Rectangle_181"
-              transform="rotate(-81.431 232.588 -62.634)"
+              x={231.8}
+              y={-69}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 259.856 176.6841)"
               className="business-st15"
-              d="M231.8-69h1.5v12.7h-1.5z"
+              width={1.5}
+              height={12.7}
             />
-            <path
+            <rect
               id="Rectangle_182"
-              transform="rotate(-81.431 232.034 -58.953)"
+              x={231.3}
+              y={-64.2}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 255.7447 179.2684)"
               className="business-st6"
-              d="M231.3-64.2h1.5v10.4h-1.5z"
+              width={1.5}
+              height={10.4}
             />
-            <path
+            <rect
               id="Rectangle_183"
-              transform="rotate(-81.431 222.342 -44.607)"
+              x={221.6}
+              y={-55.4}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 233.3123 181.8929)"
               className="business-st15"
-              d="M221.6-55.4h1.5v21.6h-1.5z"
+              width={1.5}
+              height={21.6}
             />
-            <path
+            <rect
               id="Rectangle_184"
-              transform="rotate(-81.431 220.314 -41.149)"
+              x={219.6}
+              y={-50.4}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 228.1672 182.8309)"
               className="business-st15"
-              d="M219.6-50.4h1.5v18.6h-1.5z"
+              width={1.5}
+              height={18.6}
             />
-            <path
+            <rect
               id="Rectangle_185"
-              transform="rotate(-81.431 218.654 -37.635)"
+              x={217.9}
+              y={-45.8}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 223.2799 184.1794)"
               className="business-st15"
-              d="M217.9-45.8h1.5v16.4h-1.5z"
+              width={1.5}
+              height={16.4}
             />
-            <path
+            <rect
               id="Rectangle_186"
-              transform="rotate(-81.431 220.308 -33.62)"
+              x={219.6}
+              y={-44}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 220.7181 189.2301)"
               className="business-st15"
-              d="M219.6-44h1.5v20.8h-1.5z"
+              width={1.5}
+              height={20.8}
             />
-            <path
+            <rect
               id="Rectangle_187"
-              transform="rotate(-81.431 213.496 -30.884)"
+              x={212.7}
+              y={-35}
+              transform="matrix(0.149 -0.9888 0.9888 0.149 212.2157 184.8234)"
               className="business-st6"
-              d="M212.7-35h1.5v8.2h-1.5z"
+              width={1.5}
+              height={8.2}
             />
             <g
               id="Group_355"
@@ -238,38 +271,38 @@ function SvgBusinesses(props) {
               <linearGradient
                 id="Path_185_1_"
                 gradientUnits="userSpaceOnUse"
-                x1={-390.932}
-                y1={556.607}
-                x2={-390.932}
-                y2={555.61}
-                gradientTransform="matrix(9.9368 0 0 -10.0007 3858.922 5415.387)"
+                x1={-390.9319}
+                y1={556.6071}
+                x2={-390.9319}
+                y2={555.6101}
+                gradientTransform="matrix(9.9368 0 0 -10.0007 3858.9216 5415.3872)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
               <path
                 id="Path_185"
-                d="M-20.8-65.1c.4-2.7-1.5-5.2-4.2-5.7-2.7-.4-5.2 1.5-5.7 4.2-.2 1.6.3 3.3 1.6 4.4.1.2.3.3.5.4.7.5 1.4.8 2.2.9.7.1 1.5.1 2.2-.2.2-.1.4-.1.5-.2v-.1c1.7-.7 2.7-2.1 2.9-3.7z"
-                fill="url(#Path_185_1_)"
+                className="business-st16"
+                d="M-20.8-65.1c0.4-2.7-1.5-5.2-4.2-5.7c-2.7-0.4-5.2,1.5-5.7,4.2c-0.2,1.6,0.3,3.3,1.6,4.4v0c0.1,0.2,0.3,0.3,0.5,0.4l0,0c0.7,0.5,1.4,0.8,2.2,0.9h0c0.7,0.1,1.5,0.1,2.2-0.2l0,0c0.2-0.1,0.4-0.1,0.5-0.2l0-0.1C-22-62.1-21-63.5-20.8-65.1z"
               />
             </g>
             <circle
@@ -282,17 +315,17 @@ function SvgBusinesses(props) {
             <path
               id="Path_186"
               className="business-st17"
-              d="M216.9-61.6s-1.1-.1-1.2 2c.1.2.3.3.5.4l1-2.1-.3-.3z"
+              d="M216.9-61.6c0,0-1.1-0.1-1.2,2c0.1,0.2,0.3,0.3,0.5,0.4l1-2.1L216.9-61.6z"
             />
             <path
               id="Path_187"
               className="business-st17"
-              d="M220.6-61.1s1.1.3.5 2.3l-.6.3-.3-2.3.4-.3z"
+              d="M220.6-61.1c0,0,1.1,0.3,0.5,2.3c-0.2,0.1-0.4,0.2-0.6,0.3l-0.3-2.3L220.6-61.1z"
             />
             <path
               id="Path_188"
               className="business-st18"
-              d="M217.5-65s-.8 1.5-1 1.3c0 0 2.5 2.9 5.4.8-.2-.6-.5-1.1-.9-1.6l-3.5-.5z"
+              d="M217.5-65c0,0-0.8,1.5-1,1.3c0,0,2.5,2.9,5.4,0.8c-0.2-0.6-0.5-1.1-0.9-1.6L217.5-65z"
             />
             <circle
               id="Ellipse_26"
@@ -304,32 +337,32 @@ function SvgBusinesses(props) {
             <path
               id="Path_189"
               className="business-st11"
-              d="M220.6-61.1l-3.7-.6-.6 1.4s-.3.7-.1 1c1.3.9 2.8 1.1 4.3.7.2-.4.3-.8.2-1.2-.1-.7 0-.1 0-.1l-.1-1.2z"
+              d="M220.6-61.1l-3.7-0.6l-0.6,1.4c0,0-0.3,0.7-0.1,1c1.3,0.9,2.8,1.1,4.3,0.7c0.2-0.4,0.3-0.8,0.2-1.2c-0.1-0.7,0-0.1,0-0.1L220.6-61.1z"
             />
             <path
               id="Path_190"
               className="business-st11"
-              d="M220.6-61.1l-3.7-.6-.6 1.4s-.3.7-.1 1c1.3.9 2.8 1.1 4.3.7.2-.4.3-.8.2-1.2-.1-.7 0-.1 0-.1l-.1-1.2z"
+              d="M220.6-61.1l-3.7-0.6l-0.6,1.4c0,0-0.3,0.7-0.1,1c1.3,0.9,2.8,1.1,4.3,0.7c0.2-0.4,0.3-0.8,0.2-1.2c-0.1-0.7,0-0.1,0-0.1L220.6-61.1z"
             />
             <path
               id="Path_191"
-              d="M220.6-61.1l-3.7-.6-.6 1.4s-.3.7-.1 1c1.3.9 2.8 1.1 4.3.7.2-.4.3-.8.2-1.2-.1-.7 0-.1 0-.1l-.1-1.2z"
-              fill="#fdd835"
+              className="business-st19"
+              d="M220.6-61.1l-3.7-0.6l-0.6,1.4c0,0-0.3,0.7-0.1,1c1.3,0.9,2.8,1.1,4.3,0.7c0.2-0.4,0.3-0.8,0.2-1.2c-0.1-0.7,0-0.1,0-0.1L220.6-61.1z"
             />
             <path
               id="Path_192"
               className="business-st11"
-              d="M218.2-62.7l1.5.2-.2 1.3c0 .3-.3.5-.7.5h-.3c-.3 0-.5-.3-.5-.7l.2-1.3z"
+              d="M218.2-62.7l1.5,0.2l0,0l-0.2,1.3c0,0.3-0.3,0.5-0.7,0.5c0,0,0,0,0,0l-0.3,0c-0.3,0-0.5-0.3-0.5-0.7c0,0,0,0,0,0L218.2-62.7L218.2-62.7z"
             />
             <path
               id="Path_193"
               className="business-st17"
-              d="M218.2-62.7l1.5.2-.2 1.3c0 .3-.4.5-.7.5h-.3c-.3 0-.5-.3-.5-.7l.2-1.3z"
+              d="M218.2-62.7l1.5,0.2l0,0l-0.2,1.3c0,0.3-0.4,0.5-0.7,0.5l-0.3,0c-0.3,0-0.5-0.3-0.5-0.7c0,0,0,0,0,0L218.2-62.7L218.2-62.7z"
             />
             <path
               id="Path_194"
               className="business-st11"
-              d="M218.2-62.5c.4.2 1 .3 1.5.2v-.2l-1.5-.2v.2z"
+              d="M218.2-62.5c0.4,0.2,1,0.3,1.5,0.2l0-0.2l-1.5-0.2L218.2-62.5z"
             />
             <circle
               id="Ellipse_27"
@@ -341,11 +374,11 @@ function SvgBusinesses(props) {
             <path
               id="Path_195"
               className="business-st18"
-              d="M217.4-65.5l4 .6c0-.9-.7-1.7-1.6-1.8-1-.1-1.9.4-2.4 1.2z"
+              d="M217.4-65.5l4,0.6c0-0.9-0.7-1.7-1.6-1.8C218.8-66.8,217.9-66.3,217.4-65.5z"
             />
             <ellipse
               id="Ellipse_28"
-              transform="rotate(-81.419 217.214 -64.813)"
+              transform="matrix(0.1492 -0.9888 0.9888 0.1492 248.8936 159.6384)"
               className="business-st17"
               cx={217.2}
               cy={-64.8}
@@ -354,7 +387,7 @@ function SvgBusinesses(props) {
             />
             <ellipse
               id="Ellipse_29"
-              transform="rotate(-81.419 221.342 -64.19)"
+              transform="matrix(0.1492 -0.9888 0.9888 0.1492 251.7879 164.2501)"
               className="business-st17"
               cx={221.3}
               cy={-64.2}
@@ -364,7 +397,7 @@ function SvgBusinesses(props) {
             <path
               id="Path_196"
               className="business-st11"
-              d="M217.4-65.5l4 .6c0-.9-.7-1.7-1.6-1.8-1 0-1.9.5-2.4 1.2z"
+              d="M217.4-65.5l4,0.6c0-0.9-0.7-1.7-1.6-1.8C218.8-66.7,217.9-66.2,217.4-65.5z"
             />
             <g
               id="Group_356"
@@ -375,98 +408,128 @@ function SvgBusinesses(props) {
                 id="Rectangle_188_1_"
                 gradientUnits="userSpaceOnUse"
                 x1={-347.912}
-                y1={574.059}
+                y1={574.0589}
                 x2={-347.912}
-                y2={573.062}
-                gradientTransform="matrix(34.5733 -5.5879 -7.7207 -47.7691 16454.1 25452.643)"
+                y2={573.0619}
+                gradientTransform="matrix(34.5733 -5.5879 -7.7207 -47.7691 16454.0996 25452.6426)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
-              <path
+              <polygon
                 id="Rectangle_188"
-                fill="url(#Rectangle_188_1_)"
-                d="M-30.6-65.3l34.5-5.5 7.7 47.7-34.5 5.6z"
+                className="business-st20"
+                points="-30.6,-65.3 3.9,-70.8 11.6,-23.1 -22.9,-17.5 "
               />
             </g>
-            <path
+            <rect
               id="Rectangle_189"
-              transform="rotate(-9.32 189.586 -42.428)"
+              x={172.6}
+              y={-66.1}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 9.3674 30.1149)"
               className="business-st14"
-              d="M172.6-66.1h34v47.2h-34z"
+              width={34}
+              height={47.2}
             />
-            <path
+            <rect
               id="Rectangle_190"
-              transform="rotate(-9.32 189.006 -44.753)"
+              x={176.7}
+              y={-45.5}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 9.7359 29.9905)"
               className="business-st15"
-              d="M176.7-45.5h24.6v1.5h-24.6z"
+              width={24.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_191"
-              transform="rotate(-9.32 189.607 -41.08)"
+              x={177.3}
+              y={-41.9}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 9.1496 30.1361)"
               className="business-st15"
-              d="M177.3-41.9h24.6v1.5h-24.6z"
+              width={24.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_192"
-              transform="rotate(-9.32 192.957 -57.466)"
+              x={186.7}
+              y={-58.3}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 11.8451 30.4619)"
               className="business-st15"
-              d="M186.7-58.3h12.7v1.5h-12.7z"
+              width={12.7}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_193"
-              transform="rotate(-9.32 193.559 -53.793)"
+              x={188.4}
+              y={-54.6}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 11.2587 30.6077)"
               className="business-st6"
-              d="M188.4-54.6h10.4v1.5h-10.4z"
+              width={10.4}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_194"
-              transform="rotate(-9.32 188.74 -37.167)"
+              x={178}
+              y={-37.9}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 8.505 30.0476)"
               className="business-st15"
-              d="M178-37.9h21.6v1.5H178z"
+              width={21.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_195"
-              transform="rotate(-9.32 187.871 -33.256)"
+              x={178.6}
+              y={-34}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 7.8607 29.9586)"
               className="business-st15"
-              d="M178.6-34h18.6v1.5h-18.6z"
+              width={18.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_196"
-              transform="rotate(-9.32 187.372 -29.402)"
+              x={179.2}
+              y={-30.2}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 7.2306 29.9287)"
               className="business-st15"
-              d="M179.2-30.2h16.4v1.5h-16.4z"
+              width={16.4}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_197"
-              transform="rotate(-9.32 190.177 -26.091)"
+              x={179.8}
+              y={-26.9}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 6.7319 30.4262)"
               className="business-st15"
-              d="M179.8-26.9h20.8v1.5h-20.8z"
+              width={20.8}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_198"
-              transform="rotate(-9.32 184.536 -21.396)"
+              x={180.5}
+              y={-22.2}
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 5.8978 29.5755)"
               className="business-st6"
-              d="M180.5-22.2h8.2v1.5h-8.2z"
+              width={8.2}
+              height={1.5}
             />
             <g
               id="Group_357"
@@ -476,38 +539,38 @@ function SvgBusinesses(props) {
               <linearGradient
                 id="Path_197_1_"
                 gradientUnits="userSpaceOnUse"
-                x1={-352.082}
-                y1={534.055}
-                x2={-352.082}
-                y2={533.055}
-                gradientTransform="matrix(10.2184 0 0 -10.2568 3572.174 5473.56)"
+                x1={-352.0822}
+                y1={534.0551}
+                x2={-352.0822}
+                y2={533.0551}
+                gradientTransform="matrix(10.2184 0 0 -10.2568 3572.1738 5473.5605)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
               <path
                 id="Path_197"
-                d="M-20.5-66.6c-.5-2.8-3.1-4.7-5.9-4.2-2.8.5-4.7 3.1-4.2 5.9.3 1.7 1.4 3.1 2.9 3.8l.6.3c.8.3 1.6.3 2.5.1.8-.1 1.5-.4 2.1-.9.2-.1.3-.2.4-.4v-.1c1.3-1.1 1.9-2.8 1.6-4.5z"
-                fill="url(#Path_197_1_)"
+                className="business-st21"
+                d="M-20.5-66.6c-0.5-2.8-3.1-4.7-5.9-4.2c-2.8,0.5-4.7,3.1-4.2,5.9c0.3,1.7,1.4,3.1,2.9,3.8l0,0c0.2,0.1,0.4,0.2,0.6,0.3v0c0.8,0.3,1.6,0.3,2.5,0.1h0c0.8-0.1,1.5-0.4,2.1-0.9c0,0,0,0,0,0c0.2-0.1,0.3-0.2,0.4-0.4v-0.1C-20.8-63.2-20.2-64.9-20.5-66.6z"
               />
             </g>
             <circle
@@ -520,12 +583,12 @@ function SvgBusinesses(props) {
             <path
               id="Path_198"
               className="business-st22"
-              d="M178.6-51.8s-1.1.3-.5 2.4l.6.3.3-2.3-.4-.4z"
+              d="M178.6-51.8c0,0-1.1,0.3-0.5,2.4c0.2,0.1,0.4,0.2,0.6,0.3l0.3-2.3L178.6-51.8z"
             />
             <path
               id="Path_199"
               className="business-st22"
-              d="M182.4-52.4s1.2-.1 1.2 2.1c-.1.2-.3.3-.5.4l-1-2.1.3-.4z"
+              d="M182.4-52.4c0,0,1.2-0.1,1.2,2.1c-0.1,0.2-0.3,0.3-0.5,0.4l-1-2.1L182.4-52.4z"
             />
             <circle
               id="Ellipse_31"
@@ -537,32 +600,32 @@ function SvgBusinesses(props) {
             <path
               id="Path_200"
               className="business-st22"
-              d="M182.3-52.4l-3.8.6-.1 1.6s-.1.7.2 1c1.5.5 3.1.2 4.4-.7.1-.4 0-.9-.2-1.3-.3-.7-.1 0-.1 0l-.4-1.2z"
+              d="M182.3-52.4l-3.8,0.6l-0.1,1.6c0,0-0.1,0.7,0.2,1c1.5,0.5,3.1,0.2,4.4-0.7c0.1-0.4,0-0.9-0.2-1.3c-0.3-0.7-0.1,0-0.1,0L182.3-52.4z"
             />
             <path
               id="Path_201"
               className="business-st22"
-              d="M182.4-52.4l-3.8.6-.1 1.6s-.1.7.2 1c1.5.5 3.1.2 4.4-.7.1-.4 0-.9-.2-1.3-.3-.7-.1 0-.1 0l-.4-1.2z"
+              d="M182.4-52.4l-3.8,0.6l-0.1,1.6c0,0-0.1,0.7,0.2,1c1.5,0.5,3.1,0.2,4.4-0.7c0.1-0.4,0-0.9-0.2-1.3c-0.3-0.7-0.1,0-0.1,0L182.4-52.4z"
             />
             <path
               id="Path_202"
               className="business-st22"
-              d="M182.4-52.4l-3.8.6-.1 1.6s-.1.7.2 1c1.5.5 3.1.2 4.4-.7.1-.4 0-.9-.2-1.3-.3-.7-.1 0-.1 0l-.4-1.2z"
+              d="M182.4-52.4l-3.8,0.6l-0.1,1.6c0,0-0.1,0.7,0.2,1c1.5,0.5,3.1,0.2,4.4-0.7c0.1-0.4,0-0.9-0.2-1.3c-0.3-0.7-0.1,0-0.1,0L182.4-52.4z"
             />
             <path
               id="Path_203"
               className="business-st11"
-              d="M179.5-53.2l1.5-.2.2 1.4c.1.3-.2.6-.5.7l-.3.1c-.3.1-.6-.2-.7-.5l-.2-1.5z"
+              d="M179.5-53.2l1.5-0.2l0,0l0.2,1.4c0.1,0.3-0.2,0.6-0.5,0.7l0,0l-0.3,0.1c-0.3,0.1-0.6-0.2-0.7-0.5l0,0L179.5-53.2L179.5-53.2z"
             />
             <path
               id="Path_204"
               className="business-st17"
-              d="M179.5-53.3l1.5-.2.2 1.4c.1.3-.2.6-.5.7l-.3.1c-.3.1-.6-.2-.7-.5l-.2-1.5z"
+              d="M179.5-53.3l1.5-0.2l0,0l0.2,1.4c0.1,0.3-0.2,0.6-0.5,0.7c0,0,0,0,0,0l0,0l-0.3,0.1c-0.3,0.1-0.6-0.2-0.7-0.5l0,0L179.5-53.3L179.5-53.3z"
             />
             <path
               id="Path_205"
               className="business-st11"
-              d="M179.6-53.1c.5.1 1.1 0 1.5-.2v-.2l-1.5.2v.2z"
+              d="M179.6-53.1c0.5,0.1,1.1,0,1.5-0.2l0-0.2l-1.5,0.2L179.6-53.1z"
             />
             <circle
               id="Ellipse_32"
@@ -574,16 +637,16 @@ function SvgBusinesses(props) {
             <path
               id="Path_206"
               className="business-st11"
-              d="M177.8-55.7l4.1-.7c-.3-.9-1.2-1.4-2.2-1.2-.9.2-1.6 1-1.9 1.9z"
+              d="M177.8-55.7l4.1-0.7c-0.3-0.9-1.2-1.4-2.2-1.2C178.8-57.4,178.1-56.6,177.8-55.7z"
             />
             <path
               id="Path_207"
               className="business-st18"
-              d="M177.8-55.8l4.1-.7c-.3-.9-1.2-1.4-2.2-1.2-.9.3-1.6 1-1.9 1.9z"
+              d="M177.8-55.8l4.1-0.7c-0.3-0.9-1.2-1.4-2.2-1.2C178.8-57.4,178.1-56.7,177.8-55.8z"
             />
             <ellipse
               id="Ellipse_33"
-              transform="rotate(-9.177 177.829 -54.885)"
+              transform="matrix(0.9872 -0.1596 0.1596 0.9872 11.0359 27.6789)"
               className="business-st17"
               cx={177.9}
               cy={-54.9}
@@ -592,7 +655,7 @@ function SvgBusinesses(props) {
             />
             <ellipse
               id="Ellipse_34"
-              transform="rotate(-9.32 182.07 -55.671)"
+              transform="matrix(0.9868 -0.1618 0.1618 0.9868 11.4109 28.724)"
               className="business-st17"
               cx={182.1}
               cy={-55.7}
@@ -607,44 +670,50 @@ function SvgBusinesses(props) {
               <linearGradient
                 id="Rectangle_199_1_"
                 gradientUnits="userSpaceOnUse"
-                x1={-371.323}
-                y1={567.374}
-                x2={-371.323}
-                y2={566.374}
-                gradientTransform="matrix(34.922 0 0 -48.252 12954.152 27296.166)"
+                x1={-371.3229}
+                y1={567.3735}
+                x2={-371.3229}
+                y2={566.3735}
+                gradientTransform="matrix(34.922 0 0 -48.252 12954.1523 27296.166)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
-              <path
+              <rect
                 id="Rectangle_199"
-                fill="url(#Rectangle_199_1_)"
-                d="M-30.6-70.8H4.3v48.3h-34.9z"
+                x={-30.6}
+                y={-70.8}
+                className="business-st23"
+                width={34.9}
+                height={48.3}
               />
             </g>
-            <path
+            <rect
               id="Rectangle_200"
+              x={193.9}
+              y={-60.7}
               className="business-st8"
-              d="M193.9-60.7h34v47.2h-34z"
+              width={34}
+              height={47.2}
             />
             <g
               id="Group_359"
@@ -655,37 +724,37 @@ function SvgBusinesses(props) {
                 id="Path_208_1_"
                 gradientUnits="userSpaceOnUse"
                 x1={-375.239}
-                y1={538.307}
+                y1={538.3066}
                 x2={-375.239}
-                y2={537.307}
+                y2={537.3066}
                 gradientTransform="matrix(10.444 0 0 -10.4796 3893.561 5558.666)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
               <path
                 id="Path_208"
-                d="M-30.6-65.6c0-2.9 2.3-5.2 5.2-5.2s5.2 2.3 5.2 5.2c0 1.7-.9 3.4-2.3 4.3-.2.2-.4.3-.6.4-.8.4-1.6.6-2.5.5-.8 0-1.6-.2-2.3-.5-.2-.1-.3-.2-.5-.3v-.1c-1.4-1-2.2-2.6-2.2-4.3z"
-                fill="url(#Path_208_1_)"
+                className="business-st24"
+                d="M-30.6-65.6c0-2.9,2.3-5.2,5.2-5.2s5.2,2.3,5.2,5.2c0,1.7-0.9,3.4-2.3,4.3v0c-0.2,0.2-0.4,0.3-0.6,0.4l0,0c-0.8,0.4-1.6,0.6-2.5,0.5h0c-0.8,0-1.6-0.2-2.3-0.5l0,0c-0.2-0.1-0.3-0.2-0.5-0.3l0-0.1C-29.8-62.3-30.6-63.9-30.6-65.6z"
               />
             </g>
             <circle
@@ -698,17 +767,17 @@ function SvgBusinesses(props) {
             <path
               id="Path_209"
               className="business-st25"
-              d="M201.6-48s-1.2.1-.9 2.3c.2.2.4.3.6.4l.7-2.3-.4-.4z"
+              d="M201.6-48c0,0-1.2,0.1-0.9,2.3c0.2,0.2,0.4,0.3,0.6,0.4l0.7-2.3L201.6-48z"
             />
             <path
               id="Path_210"
               className="business-st25"
-              d="M205.6-48s1.2.1.9 2.3c-.2.2-.4.3-.6.4l-.7-2.3.4-.4z"
+              d="M205.6-48c0,0,1.2,0.1,0.9,2.3c-0.2,0.2-0.4,0.3-0.6,0.4l-0.7-2.3L205.6-48z"
             />
             <path
               id="Path_211"
               className="business-st18"
-              d="M201.7-51.6l-.2.6c-.3.7 0 3.3.7 3.6.9.4 1.9.4 2.8.1.9-.3 1.2-3.3.6-4.1-.1-.1-.2-.2-.2-.3l-3.7.1z"
+              d="M201.7-51.6c0,0-0.1,0.3-0.2,0.6c-0.3,0.7,0,3.3,0.7,3.6c0.9,0.4,1.9,0.4,2.8,0.1c0.9-0.3,1.2-3.3,0.6-4.1c-0.1-0.1-0.2-0.2-0.2-0.3L201.7-51.6z"
             />
             <circle
               id="Ellipse_36"
@@ -720,32 +789,32 @@ function SvgBusinesses(props) {
             <path
               id="Path_212"
               className="business-st11"
-              d="M205.5-48h-3.9l-.4 1.6s-.2.7.1 1c1.4.7 3.1.7 4.6.1.2-.4.2-.9.1-1.3-.2-.7-.1-.1-.1-.1l-.4-1.3z"
+              d="M205.5-48h-3.9l-0.4,1.6c0,0-0.2,0.7,0.1,1c1.4,0.7,3.1,0.7,4.6,0.1c0.2-0.4,0.2-0.9,0.1-1.3c-0.2-0.7-0.1-0.1-0.1-0.1L205.5-48z"
             />
             <path
               id="Path_213"
               className="business-st11"
-              d="M205.6-48h-3.9l-.4 1.6s-.2.7.1 1c1.4.7 3.1.7 4.6.1.2-.4.2-.9.1-1.3-.2-.7-.1-.1-.1-.1l-.4-1.3z"
+              d="M205.6-48h-3.9l-0.4,1.6c0,0-0.2,0.7,0.1,1c1.4,0.7,3.1,0.7,4.6,0.1c0.2-0.4,0.2-0.9,0.1-1.3c-0.2-0.7-0.1-0.1-0.1-0.1L205.6-48z"
             />
             <path
               id="Path_214"
-              d="M205.6-48h-3.9l-.4 1.6s-.2.7.1 1c1.4.7 3.1.7 4.6.1.2-.4.2-.9.1-1.3-.2-.7-.1-.1-.1-.1l-.4-1.3z"
-              fill="#3ad29f"
+              className="business-st26"
+              d="M205.6-48h-3.9l-0.4,1.6c0,0-0.2,0.7,0.1,1c1.4,0.7,3.1,0.7,4.6,0.1c0.2-0.4,0.2-0.9,0.1-1.3c-0.2-0.7-0.1-0.1-0.1-0.1L205.6-48z"
             />
             <path
               id="Path_215"
               className="business-st11"
-              d="M202.8-49.3h1.6v1.4c0 .3-.3.6-.6.6h-.4c-.3 0-.6-.3-.6-.6v-1.4z"
+              d="M202.8-49.3h1.6v1.4c0,0.3-0.3,0.6-0.6,0.6l0,0h-0.4c-0.3,0-0.6-0.3-0.6-0.6l0,0l0,0L202.8-49.3L202.8-49.3L202.8-49.3z"
             />
             <path
               id="Path_216"
               className="business-st25"
-              d="M202.8-49.3h1.6v1.4c0 .3-.3.6-.6.6h-.4c-.3 0-.6-.3-.6-.6v-1.4z"
+              d="M202.8-49.3h1.6v1.4c0,0.3-0.3,0.6-0.6,0.6l0,0h-0.4c-0.3,0-0.6-0.3-0.6-0.6l0,0l0,0L202.8-49.3L202.8-49.3L202.8-49.3z"
             />
             <path
               id="Path_217"
               className="business-st11"
-              d="M202.8-49.1c.5.2 1.1.2 1.6 0v-.2h-1.6v.2z"
+              d="M202.8-49.1c0.5,0.2,1.1,0.2,1.6,0v-0.2h-1.6V-49.1z"
             />
             <circle
               id="Ellipse_37"
@@ -757,7 +826,7 @@ function SvgBusinesses(props) {
             <path
               id="Path_218"
               className="business-st18"
-              d="M201.5-52.1h4.3c-.2-.9-1-1.6-2-1.6-1 .1-1.9.7-2.3 1.6z"
+              d="M201.5-52.1h4.3c-0.2-0.9-1-1.6-2-1.6C202.8-53.6,201.9-53,201.5-52.1z"
             />
             <ellipse
               id="Ellipse_38"
@@ -778,52 +847,79 @@ function SvgBusinesses(props) {
             <path
               id="Path_219"
               className="business-st11"
-              d="M201.5-52h4.3c-.2-.9-1-1.6-2-1.6-1 .1-1.9.7-2.3 1.6z"
+              d="M201.5-52h4.3c-0.2-0.9-1-1.6-2-1.6C202.8-53.5,201.9-52.9,201.5-52z"
             />
-            <path
+            <rect
               id="Rectangle_201"
+              x={198.4}
+              y={-40.2}
               className="business-st15"
-              d="M198.4-40.2H223v1.5h-24.6z"
+              width={24.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_202"
+              x={198.4}
+              y={-36.5}
               className="business-st15"
-              d="M198.4-36.5H223v1.5h-24.6z"
+              width={24.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_203"
+              x={210.3}
+              y={-52.1}
               className="business-st15"
-              d="M210.3-52.1H223v1.5h-12.7z"
+              width={12.7}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_204"
+              x={211.4}
+              y={-48.4}
               className="business-st6"
-              d="M211.4-48.4h10.4v1.5h-10.4z"
+              width={10.4}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_205"
+              x={198.4}
+              y={-32.8}
               className="business-st15"
-              d="M198.4-32.8H220v1.5h-21.6z"
+              width={21.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_206"
+              x={198.4}
+              y={-29.1}
               className="business-st15"
-              d="M198.4-29.1H217v1.5h-18.6z"
+              width={18.6}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_207"
+              x={198.4}
+              y={-25.3}
               className="business-st15"
-              d="M198.4-25.3h16.4v1.5h-16.4z"
+              width={16.4}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_208"
+              x={198.4}
+              y={-21.6}
               className="business-st15"
-              d="M198.4-21.6h20.8v1.5h-20.8z"
+              width={20.8}
+              height={1.5}
             />
-            <path
+            <rect
               id="Rectangle_209"
+              x={198.4}
+              y={-17.9}
               className="business-st6"
-              d="M198.4-17.9h8.2v1.5h-8.2z"
+              width={8.2}
+              height={1.5}
             />
             <g
               id="Group_360"
@@ -833,47 +929,53 @@ function SvgBusinesses(props) {
               <linearGradient
                 id="Ellipse_40_1_"
                 gradientUnits="userSpaceOnUse"
-                x1={-395.834}
-                y1={519.054}
-                x2={-395.834}
-                y2={518.054}
-                gradientTransform="matrix(14.878 0 0 -14.878 5866.005 7602.185)"
+                x1={-395.8336}
+                y1={519.0541}
+                x2={-395.8336}
+                y2={518.0541}
+                gradientTransform="matrix(14.878 0 0 -14.878 5866.0054 7602.1846)"
               >
                 <stop
                   offset={0}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.251,
                   }}
-                  stopOpacity={0.251}
                 />
                 <stop
                   offset={0.54}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.122,
                   }}
-                  stopOpacity={0.122}
                 />
                 <stop
                   offset={1}
                   style={{
-                    businessStopColor: 'gray',
+                    businessStopColor: '#808080',
+                    stopOpacity: 0.102,
                   }}
-                  stopOpacity={0.102}
                 />
               </linearGradient>
               <circle
                 id="Ellipse_40"
+                className="business-st27"
                 cx={-23.2}
                 cy={-63.4}
                 r={7.4}
-                fill="url(#Ellipse_40_1_)"
               />
             </g>
-            <circle id="Ellipse_41" cx={226} cy={-17.1} r={7} fill="#69f0ae" />
+            <circle
+              id="Ellipse_41"
+              className="business-st28"
+              cx={226}
+              cy={-17.1}
+              r={7}
+            />
             <path
               id="Path_220"
               className="business-st8"
-              d="M222.9-18.1l2.6 2.4 3.7-5.5 1.3 1.1-5 6.6-3.7-4.2 1.1-.4z"
+              d="M222.9-18.1l2.6,2.4l3.7-5.5l1.3,1.1l-5,6.6l-3.7-4.2L222.9-18.1z"
             />
           </g>
           <circle
