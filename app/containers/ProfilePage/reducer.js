@@ -281,7 +281,7 @@ const dummyFilled = {
   ],
 };
 
-export const initialState = emptyState;
+export const initialState = dummyFilled;
 
 /* eslint-disable default-case, no-param-reassign */
 const profilePageReducer = (state = initialState, action) =>

@@ -60,17 +60,15 @@ const SkillEditForm = ({
 
   const initialValues = {
     skills,
-    search: '',
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
-        onSave(values);
+        alert(JSON.stringify(localSkills));
+        onSave({ skills: localSkills });
         setSubmitting(false);
-        onCancel();
       }}
       // validationSchema={validationSchema}
     >
