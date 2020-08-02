@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import DisplayCard from 'components/molecules/DisplayCard';
-import Modal from 'react-modal';
 import BaseIcon from 'components/atoms/BaseIcon';
 import BaseImage from 'components/atoms/BaseImage';
-import ProfileEditForm from 'components/organisms/ProfileEditForm/personal';
+import isEmpty from 'lodash/isEmpty';
 
-const PersonalDetails = ({ personal }) => {
+const PersonalDetails = ({ personal, onSave, onEdit }) => {
+  if (isEmpty(personal)) return null;
+  console.log(personal);
   const { firstName, lastName, profession, city, state } = personal;
-  const [open, setOpen] = useState(false);
-  Modal.setAppElement('#app');
+  // const [open, setOpen] = useState(false);
+  // Modal.setAppElement('#app');
 
   return (
-    <div className="Bdrs($xs) M($lg) Bgc(white) H($fc)">
+    <div className="Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)">
       <div className="D(f) Ai(s) Jc(sb) Px($lg) Pb($sm) Pt($mmd) Lh(1)">
         <div>
           <div className="Ff($ffmanrope) Fz($xml)">
@@ -33,11 +34,11 @@ const PersonalDetails = ({ personal }) => {
           fill="#0847f4"
           onClick={() => {
             console.log('OPEN PERSONAL');
-            setOpen(true);
+            onEdit();
           }}
         />
       </div>
-      <Modal
+      {/* <Modal
         isOpen={open}
         contentLabel="onRequestClose Example"
         onRequestClose={() => setOpen(false)}
@@ -48,11 +49,12 @@ const PersonalDetails = ({ personal }) => {
           onCancel={() => setOpen(false)}
           city={city}
           state={state}
+          onSave={onSave}
           profession={profession}
           firstName={firstName}
           lastName={lastName}
         />
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

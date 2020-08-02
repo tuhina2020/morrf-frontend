@@ -3,8 +3,8 @@ export const EmptyWrapper = ({ children }) => children;
 
 export const NavigationWrapper = ({ children }) => {
   return (
-    <div className="Bgc($navBarBg)">
-      <div>THIS IS WRAPPER</div>
+    <div className="Bgc($navBarBg) Mih(100vh)">
+      <div>THIS IS NAVIGATION WRAPPER</div>
       <div>{children}</div>
     </div>
   );

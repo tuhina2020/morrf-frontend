@@ -9,13 +9,14 @@ import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import { wordCount } from 'utils/helper';
 
-const AboutEditForm = ({ onCancel, about }) => {
+const AboutEditForm = ({ onCancel, data, onSave }) => {
   const Formik = useFormik({
     initialValues: {
-      about,
+      about: data,
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      onSave(values);
+      onCancel();
     },
     validationSchema: Yup.object({
       about: Yup.string()

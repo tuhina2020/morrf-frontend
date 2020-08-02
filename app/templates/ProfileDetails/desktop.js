@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PersonalDetails from 'components/organisms/ProfileDetails/personal';
 import AboutMe from 'components/organisms/ProfileDetails/about';
 import Contact from 'components/organisms/ProfileDetails/contact';
 import Experience from 'components/organisms/ProfileDetails/experience';
 import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
+import GetStarted from 'components/organisms/EditCarousels';
+import isEmpty from 'lodash/isEmpty';
+import Modal from 'react-modal';
+import EditFormModal from './editModal';
 
-const ProfileDetails = ({ profile }) => {
+const ProfileDetails = ({
+  profile,
+  sendCode,
+  getFilteredSkills,
+  saveFunctionMap,
+}) => {
   const {
     personal,
     about,
@@ -15,19 +24,58 @@ const ProfileDetails = ({ profile }) => {
     experience,
     portfolio,
     skills,
+    getAllSkills,
   } = profile;
+
+  const countEmptyLarge = [
+    // personal,
+    // about,
+    // phone,
+    portfolio,
+    skills,
+    experience,
+  ].filter(isEmpty).length;
+  const [open, setOpen] = useState('');
+  Modal.setAppElement('#app');
+  const onCancel = () => setOpen('');
+  const extraProps = {
+    getFilteredSkills: open === 'skills' ? getFilteredSkills : undefined,
+    allSkills: open === 'skills' ? getAllSkills : undefined,
+    onSendCode: open === 'contact' ? sendCode : undefined,
+  };
   return (
-    <div className="D(f) Ai(s) Jc(s)">
-      <div className="Mend($lg) Maw($60xl)">
-        <PersonalDetails personal={personal} />
-        <Contact phone={phone} email={email} />
-        <AboutMe about={about} />
-        <Skills skills={skills} />
-        <Experience experience={experience} />
+    <div>
+      <div className="D(f) Ai(s) Jc(s) Mih($100vh)">
+        <div className="Mend($lg) Miw($60xl)">
+          <PersonalDetails
+            personal={personal}
+            onEdit={() => setOpen('personal')}
+          />
+          <Contact data={{ phone, email }} onEdit={() => setOpen('contact')} />
+          <AboutMe about={about} onEdit={() => setOpen('about')} />
+          <Skills skills={skills} onEdit={() => setOpen('skills')} />
+          {/* <Experience experience={experience} onSave={saveExperience} /> */}
+        </div>
+        {/* <Portfolio portfolio={portfolio} onSave={savePortfolio} /> */}
       </div>
-      <div className="Maw($60xl)">
-        <Portfolio portfolio={portfolio} />
-      </div>
+      <Modal
+        isOpen={!isEmpty(open)}
+        contentLabel="onRequestClose Example"
+        onRequestClose={onCancel}
+        className={`W($61xl) M(a) H($fc) Pos(r) ${
+          ['skills', 'experience'].includes(open) ? 'T($deci)' : 'T($quarter)'
+        } Bd(n) O(n)`}
+        overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
+      >
+        <EditFormModal
+          onCancel={onCancel}
+          data={profile[open]}
+          onSave={saveFunctionMap[open]}
+          open={open}
+          {...extraProps}
+        />
+      </Modal>
+      {countEmptyLarge > 1 ? <GetStarted profile={profile} /> : null}
     </div>
   );
 };

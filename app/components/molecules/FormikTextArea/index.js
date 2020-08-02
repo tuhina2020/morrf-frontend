@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import BaseInput from 'components/atoms/BaseInput';
-import { wordCount } from 'utils/helper';
 
 const getClasses = ({ active, disabled, value, invalid, heightClass }) => {
   return {
@@ -47,7 +46,6 @@ const FormikTextArea = React.forwardRef((props, ref) => {
     maxAllowedLength,
   } = props;
   const [active, setActive] = useState(false);
-  const count = wordCount(value);
   const classes = getClasses({
     active,
     disabled,
@@ -71,7 +69,6 @@ const FormikTextArea = React.forwardRef((props, ref) => {
   const newRef = ref || useRef();
 
   const focusInput = () => newRef.current.focus();
-  console.log('ALLOWED ', disabled || wordCount === maxAllowedLength);
   return (
     <div className={`${dimensionClasses} Ta(start)`}>
       <div className={classes.inputWrapperClasses}>
@@ -86,7 +83,7 @@ const FormikTextArea = React.forwardRef((props, ref) => {
           onBlur={onBlurWrapper}
           onFocus={onFocusWrapper}
           value={value}
-          disabled={disabled || wordCount === maxAllowedLength}
+          disabled={disabled}
           ref={newRef}
           tabIndex={tabIndex}
         />

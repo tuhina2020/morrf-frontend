@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
-import BaseInput from 'components/atoms/BaseInput';
+import { Field } from 'formik';
 
 const getClasses = ({ active, disabled, value, invalid }) => {
   return {
@@ -31,7 +31,9 @@ const getClasses = ({ active, disabled, value, invalid }) => {
         ? 'Bdb($bdprimaryButton)'
         : 'Bdb($bdinputGrey)'
     } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
-    inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i)`,
+    inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
+      active ? 'Op(1)::ph' : 'Op(0)::ph'
+    } Trsdu(0.6s)::ph Trsp(a)::ph Trstf(e)::ph`,
     warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
       invalid ? 'Op(1)' : 'Op(0)'
     } Trsdu(0.8s) Trsp(a) Trstf(e)`,
@@ -57,9 +59,14 @@ const FormikTextField = React.forwardRef((props, ref) => {
     error,
     tabIndex,
     dimensionClasses,
+    prependIcon,
+    iconWidth,
+    iconHeight,
+    iconFill,
+    placeholder,
+    ...others
   } = props;
   const [active, setActive] = useState(false);
-  const classes = getClasses({ active, disabled, value, invalid: error });
   const onBlurWrapper = e => {
     setActive(false);
     onBlur(e);
@@ -67,35 +74,33 @@ const FormikTextField = React.forwardRef((props, ref) => {
 
   const onFocusWrapper = e => {
     if (e.target.autocomplete) {
-      e.target.autocomplete = 'whatever';
+      e.target.autocomplete = 'off';
     }
     setActive(true);
     onFocus(e);
   };
 
-  const newRef = ref || useRef();
-
-  const focusInput = () => newRef.current.focus();
+  const classes = getClasses({ active, disabled, value, invalid: error });
 
   return (
     <div className={`${dimensionClasses} Ta(start)`}>
-      <label htmlFor={id} className={classes.labelClasses} onClick={focusInput}>
+      <label htmlFor={id} className={classes.labelClasses} id={`${id}_label`}>
         {label}
       </label>
       <div className={classes.inputWrapperClasses}>
-        <input
+        <Field
           name={name}
           id={id}
           className={classes.inputClasses}
           type={type}
+          placeholder={placeholder}
           autoComplete={autoComplete}
           onChange={onChange}
           onBlur={onBlurWrapper}
           onFocus={onFocusWrapper}
-          value={value}
           disabled={disabled}
-          ref={newRef}
           tabIndex={tabIndex}
+          {...others}
         />
         <div className={classes.warningContainerClass}>
           {error && <Warning className={classes.warningClasses} />}
@@ -120,6 +125,7 @@ FormikTextField.propTypes = {
   label: PropTypes.string,
   tabIndex: PropTypes.number,
   dimensionClasses: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 FormikTextField.defaultProps = {
@@ -130,6 +136,9 @@ FormikTextField.defaultProps = {
   disabled: false,
   label: '',
   dimensionClasses: 'W($25x)',
+  iconFill: '#333',
+  iconWidth: '24px',
+  iconHeight: '24px',
 };
 
 export default FormikTextField;

@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
 import DisplayCard from 'components/molecules/DisplayCard';
 import BaseIcon from 'components/atoms/BaseIcon';
-import Modal from 'react-modal';
-import ContactEditForm from 'components/organisms/ProfileEditForm/contact';
+import isEmpty from 'lodash/isEmpty';
 
-const Contact = ({ phone, email }) => {
-  const [open, setOpen] = useState(false);
-  Modal.setAppElement('#app');
-
+const Contact = ({ data, onEdit }) => {
+  const { phone, email } = data;
   return (
-    <>
-      <DisplayCard
-        heading="Contact Information"
-        topRightIcon="edit"
-        onClickIcon={() => {
-          console.log('OPEN Contact');
-          setOpen(true);
-        }}
-      >
-        <div className="D(f) Ai(c) Jc(s) Ff($ffopensans) Fz($md)">
+    <DisplayCard
+      heading="Contact Information"
+      topRightIcon="edit"
+      onClickIcon={onEdit}
+    >
+      <div className="D(f) Ai(c) Jc(s) Ff($ffopensans) Fz($md)">
+        {!isEmpty(phone) && (
           <div className="W($half)">
             <div className="Fw($fwbold) Fz($smx) Lh(1) Mb($xs)">Phone</div>
             <div className="D(f) Ai(c) Jc(s)">
@@ -40,30 +34,31 @@ const Contact = ({ phone, email }) => {
               )}
             </div>
           </div>
-          <div className="W($half)">
-            <div className="Fw($fwbold) Fz($smx) Lh(1) Mb($xs)">Email id</div>
-            <div className="D(f) Ai(c) Jc(s)">
-              <div className="Fz($smd) Mend($xs)">{email.id}</div>
-              {email.verified ? (
-                <BaseIcon
-                  icon="checkcircle"
-                  width="16px"
-                  height="16px"
-                  fill="#00a04a"
-                />
-              ) : (
-                <BaseIcon
-                  icon="warning"
-                  width="16px"
-                  height="16px"
-                  fill="#ff0356"
-                />
-              )}
-            </div>
+        )}
+        <div className="W($half)">
+          <div className="Fw($fwbold) Fz($smx) Lh(1) Mb($xs)">Email id</div>
+          <div className="D(f) Ai(c) Jc(s)">
+            <div className="Fz($smd) Mend($xs)">{email.id}</div>
+            {email.verified ? (
+              <BaseIcon
+                icon="checkcircle"
+                width="16px"
+                height="16px"
+                fill="#00a04a"
+              />
+            ) : (
+              <BaseIcon
+                icon="warning"
+                width="16px"
+                height="16px"
+                fill="#ff0356"
+              />
+            )}
           </div>
         </div>
-      </DisplayCard>
-      <Modal
+      </div>
+    </DisplayCard>
+    /*{ <Modal
         isOpen={open}
         contentLabel="onRequestClose Example"
         onRequestClose={() => setOpen(false)}
@@ -72,11 +67,12 @@ const Contact = ({ phone, email }) => {
       >
         <ContactEditForm
           onCancel={() => setOpen(false)}
+          onSave={verifyPhone}
+          onSendCode={sendCode}
           phone={phone}
           email={email}
         />
-      </Modal>
-    </>
+      </Modal> }*/
   );
 };
 

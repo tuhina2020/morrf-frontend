@@ -6,17 +6,30 @@
 import produce from 'immer';
 import { getDefaultState } from 'utils/helper';
 import {
-  SET_PERSONAL_DATA,
+  SET_LOCAL_PERSONAL_DATA,
   SET_EMAIL,
   SET_PHONE,
-  SET_PORTFOLIO,
-  SET_EXPERIENCE,
-  SET_SKILLS,
+  SET_LOCAL_PORTFOLIO,
+  SET_LOCAL_EXPERIENCE,
+  SET_LOCAL_SKILLS,
   SET_AVAILABLE_SKILLS,
-  SET_ABOUT_ME,
+  SET_LOCAL_ABOUT_ME,
 } from './constants';
 
-export const initialState = {
+const emptyState = {
+  email: {
+    id: 'xyz@xyz.com',
+    verified: true,
+  },
+  phone: {},
+  personal: {},
+  about: '',
+  skills: [],
+  portfolio: [],
+  experience: [],
+};
+
+const dummyFilled = {
   personal: {
     id: '112233',
     firstName: 'Prasanth',
@@ -26,11 +39,15 @@ export const initialState = {
     state: 'Karnataka',
     address: '',
   },
+  email: {
+    id: 'xyz@xyz.com',
+    verified: true,
+  },
   about:
     'I am an architect with xyz years of experience. I love working on ideas and implementing from end to end.',
   skills: [
     {
-      id: '123',
+      id: '123-a',
       name: 'furniture design',
     },
     {
@@ -38,8 +55,20 @@ export const initialState = {
       name: 'UI/UX',
     },
     {
-      id: '546',
+      id: '546-es',
       name: 'Architecture',
+    },
+    {
+      id: '123-b',
+      name: 'interior design',
+    },
+    {
+      id: '245-bx',
+      name: 'Illustrator',
+    },
+    {
+      id: '546',
+      name: 'Photoshop',
     },
   ],
   experience: [
@@ -47,9 +76,10 @@ export const initialState = {
       designation: 'Senior Architect',
       company: 'Arup',
       from: '08/2017',
-      to: 'present', //have to figure out a way if it is the present workplace
+      to: '', //have to figure out a way if it is the present workplace
       description: 'Designed and coordinated on site.\nManaged teams',
       order: 1,
+      present: true,
     },
     {
       designation: 'Architect',
@@ -60,10 +90,6 @@ export const initialState = {
       order: 2,
     },
   ],
-  email: {
-    id: 'xyz@xyz.com',
-    verified: true,
-  },
   phone: {
     number: '8019280192',
     verified: false,
@@ -71,19 +97,22 @@ export const initialState = {
   portfolio: [
     {
       project: 'Aviation Academy at Mumbai',
-      year: '2015',
-      description: 'New house at Panvel',
+      client: 'Novo Matrix',
+      completion: '07/2018',
+      description: 'New house at Panvel 1',
       order: 1,
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
-          link: 'https://cdn.img.com',
+          link: 'http:lorempixel.com/g/400/200/',
           description: 'The ceiling',
+          name: 'ScreenShot-11',
           order: 1,
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
-          link: 'https://cdn.img1.com',
+          link: 'http:lorempixel.com/g/400/200/',
+          name: 'ScreenShot-12',
           description: 'The window',
           order: 2,
         },
@@ -91,28 +120,146 @@ export const initialState = {
     },
     {
       project: 'Heavy Security Bank, Singapore',
-      year: '2017',
-      description: 'New house at Koramangala',
+      client: 'Novo Matrix',
+      completion: '03/2017',
+      description: 'New house at Koramangala 2',
       order: 2,
       images: [
         {
-          id: '23423', // optional (Will depend on the edit portfolio design)
-          link: 'https://cdn.img2.com',
+          id: '23423', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The view from outside',
+          name: 'ScreenShot-9',
+          order: 1,
+        },
+        {
+          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          name: 'ScreenShot-10',
+          description: 'The window',
+          order: 2,
+        },
+      ],
+    },
+    {
+      project: 'Aviation Academy at Mumbai 2',
+      client: 'Novo Matrix',
+      completion: '07/2018',
+      description: 'New house at Panvel 3',
+      order: 3,
+      images: [
+        {
+          id: '1', // optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The ceiling',
+          name: 'ScreenShot-7',
+          order: 1,
+        },
+        {
+          id: 'abc', // optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The window',
+          name: 'ScreenShot-8',
+          order: 2,
+        },
+      ],
+    },
+    {
+      project: 'Heavy Security Bank, Singapore 2',
+      client: 'Novo Matrix',
+      completion: '03/2017',
+      description: 'New house at Koramangala 4',
+      order: 4,
+      images: [
+        {
+          id: '23423', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The view from outside',
+          name: 'ScreenShot-1',
+          order: 1,
+        },
+        {
+          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The window',
+          name: 'ScreenShot-2',
+          order: 2,
+        },
+      ],
+    },
+    {
+      project: 'Aviation Academy at Mumbai 3',
+      client: 'Novo Matrix',
+      completion: '07/2018',
+      description: 'New house at Panvel 5',
+      order: 5,
+      images: [
+        {
+          id: '1', // optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          name: 'ScreenShot-3',
+          description: 'The ceiling',
+          order: 1,
+        },
+        {
+          id: 'abc', // optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          description: 'The window',
+          order: 2,
+        },
+      ],
+    },
+    {
+      project: 'Heavy Security Bank, Singapore 3',
+      client: 'Novo Matrix',
+      completion: '03/2017',
+      description: 'New house at Koramangala 6',
+      order: 6,
+      images: [
+        {
+          id: '23423', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          name: 'ScreenShot-5',
           description: 'The view from outside',
           order: 1,
         },
         {
-          id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
-          link: 'https://cdn.img3.com',
+          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          link: 'http:lorempixel.com/g/400/200/',
+          name: 'ScreenShot-6',
           description: 'The window',
           order: 2,
         },
       ],
     },
   ],
-  getSkills: [
+  getAllSkills: [
     {
-      id: '123',
+      id: '1234',
+      name: 'furnace design',
+    },
+    {
+      id: '2452',
+      name: 'UI/UX Research',
+    },
+    {
+      id: '5469-b',
+      name: 'Town planning',
+    },
+    {
+      id: '123-b',
+      name: 'interior design',
+    },
+    {
+      id: '2451',
+      name: 'Illustration Tools',
+    },
+    {
+      id: '5469-a',
+      name: '3ds Max',
+    },
+    {
+      id: '123-a',
       name: 'furniture design',
     },
     {
@@ -120,32 +267,30 @@ export const initialState = {
       name: 'UI/UX',
     },
     {
-      id: '546',
+      id: '546-es',
       name: 'Architecture',
     },
     {
-      id: '123',
-      name: 'furniture design',
-    },
-    {
-      id: '245',
-      name: 'UI/UX',
+      id: '245-bx',
+      name: 'Illustrator',
     },
     {
       id: '546',
-      name: 'Architecture',
+      name: 'Photoshop',
     },
   ],
 };
+
+export const initialState = dummyFilled;
 
 /* eslint-disable default-case, no-param-reassign */
 const profilePageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case SET_PERSONAL_DATA:
+      case SET_LOCAL_PERSONAL_DATA:
         draft.personal = action.payload;
         break;
-      case SET_ABOUT_ME:
+      case SET_LOCAL_ABOUT_ME:
         draft.about = action.payload;
         break;
       case SET_EMAIL:
@@ -154,14 +299,16 @@ const profilePageReducer = (state = initialState, action) =>
       case SET_PHONE:
         draft.phone = action.payload;
         break;
-      case SET_PORTFOLIO:
+      case SET_LOCAL_PORTFOLIO:
         draft.portfolio = action.payload;
         break;
-      case SET_EXPERIENCE:
+      case SET_LOCAL_EXPERIENCE:
         draft.experience = action.payload;
         break;
       case SET_AVAILABLE_SKILLS:
-        draft.getDefaultState = action.payload;
+        draft.getAllSkills = action.payload;
+      case SET_LOCAL_SKILLS:
+        draft.skills = action.payload;
     }
   });
 

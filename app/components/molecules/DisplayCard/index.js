@@ -39,9 +39,9 @@ const DisplayCard = React.forwardRef((props, ref) => {
     lastChildPadding,
     onClickIcon,
   } = props;
-  console.log(onClickIcon, heading);
+
   return (
-    <div className="Bdrs($xs) M($lg) Bgc(white) H($fc)">
+    <div className={`Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)`}>
       {heading ? (
         topRightIcon ? (
           <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">

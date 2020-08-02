@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DisplayCard from 'components/molecules/DisplayCard';
-import Modal from 'react-modal';
-const Skills = ({ skills }) => {
+import Tag from 'components/molecules/Tag';
+import isEmpty from 'lodash/isEmpty';
+const Skills = ({ skills, onEdit }) => {
   return (
-    <DisplayCard heading="Skills" topRightIcon="edit">
-      <div className="Ff($ffopensans) Fz($md) Lh(1.75)">
-        {JSON.stringify(skills)}
+    <DisplayCard heading="Skills" topRightIcon="edit" onClickIcon={onEdit}>
+      <div className="D(f) Ai(c) Jc(s) Flw(w)">
+        {skills.map(skill => {
+          return (
+            <div className="Mend($sm) Mb($sm)" key={`${skill.id}`}>
+              <Tag disabled={true}>{skill.name}</Tag>
+            </div>
+          );
+        })}
       </div>
     </DisplayCard>
   );
