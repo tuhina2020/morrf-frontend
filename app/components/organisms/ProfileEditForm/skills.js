@@ -70,7 +70,6 @@ const SkillEditForm = ({
         onSave({ skills: localSkills });
         setSubmitting(false);
       }}
-      // validationSchema={validationSchema}
     >
       {({
         values,
