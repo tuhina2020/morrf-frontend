@@ -15,6 +15,9 @@ const GetStarted = ({ width, profile }) => {
     size: 'half',
     type: 'submit',
     roundCorners: true,
+    onClick: () => {
+      console.log('lol');
+    },
   };
   return (
     <div className="W($60xl) H($30xl) Bgc(white) Bdrs($bdrsbutton) M(a) Ff($ffmanrope) D(f) Ai(c) Jc(c) Fld(c) Pos(r) T($20x)">

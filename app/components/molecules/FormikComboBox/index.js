@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikCheckBox from 'components/molecules/FormikCheckBox';
 import { Field } from 'formik';
-import { useCombobox } from 'downshift';
 import { warning as Warning } from 'Assets/svg-comp';
 
 const getClasses = ({ active, disabled, value, invalid = false }) => ({
@@ -31,7 +30,7 @@ const getClasses = ({ active, disabled, value, invalid = false }) => ({
       ? ''
       : active
       ? 'Bdb($bdprimaryButton)'
-          : 'Bdb($bdinputGrey)'
+      : 'Bdb($bdinputGrey)'
   } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
   inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
     active ? 'Op(1)::ph' : 'Op(0)::ph'
