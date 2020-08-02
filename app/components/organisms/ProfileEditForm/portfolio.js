@@ -7,7 +7,6 @@ import FormikTextArea from 'components/molecules/FormikTextArea';
 import { Form, FieldArray, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
-import FormikForm from 'components/molecules/FormikForm';
 import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 import get from 'lodash/get';

@@ -7,7 +7,6 @@ import FormikInput from 'components/molecules/FormikInput';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
-import FormikForm from 'components/molecules/FormikForm';
 import isEmpty from 'lodash/isEmpty';
 const ContactFormComponent = ({
   onCancel,
