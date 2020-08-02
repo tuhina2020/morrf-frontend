@@ -48,11 +48,7 @@ const CallBackForm = props => {
           <Input labelText="" placeholder="Your Name" size="auto" />
         </div>
         <div style={{ height: '72px' }}>
-          <Input
-            size="auto"
-            labelText=""
-            placeholder="Your phone no."
-          />
+          <Input size="auto" labelText="" placeholder="Your phone no." />
         </div>
         <div
           style={{
@@ -62,18 +58,10 @@ const CallBackForm = props => {
           }}
         >
           <div style={{ width: '45%' }}>
-            <Input
-              size="auto"
-              labelText=""
-              placeholder="Preferred date"
-            />
+            <Input size="auto" labelText="" placeholder="Preferred date" />
           </div>
           <div style={{ width: '45%' }}>
-            <Input
-              size="auto"
-              labelText=""
-              placeholder="Preferred time"
-            />
+            <Input size="auto" labelText="" placeholder="Preferred time" />
           </div>
         </div>
 

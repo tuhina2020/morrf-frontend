@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { morrflogo as MorrfLogo } from 'Assets/svg-comp';
+import {
+  morrflogo as MorrfLogo,
+  showmore as ShowMore,
+  curve as Curve,
+} from 'Assets/svg-comp';
 
+import { scrollTo, getTransitionClass, scrollToElement } from 'utils/helper';
+import MovingDots from 'components/MovingDots';
 import CallBackForm from '../../components/organisms/LiteForms/CallBackForm/index';
 import RequestForm from '../../components/organisms/LiteForms/RequestForm/index';
 import Button from '../../components/molecules/Button';
-import { scrollTo, getTransitionClass, scrollToElement } from 'utils/helper';
-import { showmore as ShowMore, curve as Curve } from 'Assets/svg-comp';
-import MovingDots from 'components/MovingDots';
-
 
 import LiteCard from '../../components/molecules/LiteCard';
 
@@ -60,8 +62,8 @@ const LitePage = props => {
           alignItems: 'center',
         }}
       >
-        <div className={`D(f) Ai(c)`}>
-          <MorrfLogo width={'11vw'} height={null} className="Mstart(3.6vw)" />
+        <div className="D(f) Ai(c)">
+          <MorrfLogo width="11vw" height={null} className="Mstart(3.6vw)" />
           <div
             className={`Bdend($bdlightGrey) ${'Pt(2.5vw) Pstart(1.8vw) Mend(1.8vw)'}`}
           />
@@ -120,9 +122,8 @@ const LitePage = props => {
 
       <div
         style={{
-                  backgroundColor: '#f5f5f5',
-                          paddingBottom:"72px",
-
+          backgroundColor: '#f5f5f5',
+          paddingBottom: '72px',
         }}
       >
         <div
@@ -232,20 +233,40 @@ const LitePage = props => {
             </div>
           </div>
         ) : null}
+      </div>
+      <div
+        style={{
+          height: '128px',
+          backgroundColor: '#555555',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginLeft: '15vw' }}>
+          <div style={{ fontSize: '20px', color: '#FFFFFF' }}>
+            Like to know more?
           </div>
-          <div style={{
-              height: "128px",
-              backgroundColor: "#555555",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-          }}>
-              <div style={{marginLeft: "15vw"}}><div style={{ fontSize: "20px", color: "#FFFFFF"}}>Like to know more?</div>
-                  <div className = "Ff($ffmanrope)" style={{color: "#FFFFFF", fontSize: "15px",}}>Reach us at: contact@morff.io</div>
-                  <div className = "Ff($ffmanrope)" style={{fontSize: "15px", color: "#888888"}}>© 2020 Morff</div>
-              </div>
-              <div className = "Ff($ffmanrope)" style={{color: "#FFFFFF", fontSize: "20px",}}>Officially recognised by DIIPT, India</div>
+          <div
+            className="Ff($ffmanrope)"
+            style={{ color: '#FFFFFF', fontSize: '15px' }}
+          >
+            Reach us at: contact@morff.io
           </div>
+          <div
+            className="Ff($ffmanrope)"
+            style={{ fontSize: '15px', color: '#888888' }}
+          >
+            © 2020 Morff
+          </div>
+        </div>
+        <div
+          className="Ff($ffmanrope)"
+          style={{ color: '#FFFFFF', fontSize: '20px' }}
+        >
+          Officially recognised by DIIPT, India
+        </div>
+      </div>
     </div>
   );
 };

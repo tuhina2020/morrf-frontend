@@ -66,7 +66,7 @@ export default function App({ history }) {
         })}
         <Redirect path="*" to="/notfound" />
       </Switch> */}
-      <LitePage/>
+      <LitePage />
     </div>
   );
 }
