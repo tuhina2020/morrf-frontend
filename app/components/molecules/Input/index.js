@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bulkValidationList } from 'utils/helper';
 import BaseInput from 'components/atoms/BaseInput';
 
-const getClasses = ({ active, disabled, value, invalid, animate }) => ({
+const getClasses = ({ active, disabled, value, invalid, animate, size }) => ({
   labelClasses: `Pos(r) Pstart($md) W(fc) Pstart($md) H($smd) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
@@ -19,7 +19,7 @@ const getClasses = ({ active, disabled, value, invalid, animate }) => ({
       ? 'C($primaryButton)'
       : 'C($inputGrey)'
   }`,
-  inputContainerClass: `W($30xl) M(a) Ta(start) H($2xl)`,
+  inputContainerClass: `W($${size}) M(a) Ta(start) H($2xl)`,
   inputWrapperClasses: `Ff($ffmanrope) ${
     invalid
       ? 'Bdb($bderrorColor)'
@@ -56,6 +56,7 @@ const Input = React.forwardRef(
       value,
       validationList,
       validate,
+      size,
       setSubmittable,
       extraValidation,
       ...other
@@ -115,6 +116,7 @@ const Input = React.forwardRef(
       value,
       animate,
       invalid,
+      size,
     });
 
     const inputProps = {
@@ -152,6 +154,7 @@ Input.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   animate: PropTypes.bool,
+  size: PropTypes.string,
   tabIndex: PropTypes.number,
   disabled: PropTypes.bool,
   autoFocus: PropTypes.bool,
@@ -167,6 +170,7 @@ Input.defaultProps = {
   value: '',
   disabled: false,
   autoFocus: false,
+  size: '30xl',
   validate: false,
   onFocus: () => {},
   onBlur: () => {},

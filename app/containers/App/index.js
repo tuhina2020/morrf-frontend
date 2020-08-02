@@ -14,6 +14,7 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import SideNavBar from '../../components/organisms/SideNavBar/index';
 // import 'react-toastify/dist/ReactToastify.min.css';
 import ROUTES from './routes';
+import LitePage from '../Lite';
 
 export default function App({ history }) {
   const responsiveData = deviceScreenInfo();
@@ -27,7 +28,7 @@ export default function App({ history }) {
   };
   return (
     <div>
-      <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
+      {/* <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
         <meta name="description" content="Morff" />
       </Helmet>
       <ToastContainer {...toastProps} transition={Bounce} />
@@ -64,8 +65,8 @@ export default function App({ history }) {
           );
         })}
         <Redirect path="*" to="/notfound" />
-      </Switch>
-
+      </Switch> */}
+      <LitePage/>
     </div>
   );
 }
