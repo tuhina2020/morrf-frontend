@@ -3,29 +3,27 @@ import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import BaseInput from 'components/atoms/BaseInput';
 
-const getClasses = ({ active, disabled, value, invalid, heightClass }) => {
-  return {
-    inputWrapperClasses: `Ff($ffmanrope) Bgc($navBarBg) ${
-      disabled ? 'Bdb($bddisabledGrey2)' : 'Bgc($hoverInput):h'
-    } ${
-      invalid
-        ? 'Bdb($bderrorColor)'
-        : disabled
-        ? ''
-        : active
-        ? 'Bdb($bdprimaryButton)'
-        : 'Bdb($bdinputGrey)'
-    } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
-    inputClasses: `${heightClass} O(n) Rsz(n) Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) Ff($ffmanrope) Ff($ffmanrope)::ph`,
-    warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
-      invalid ? 'Op(1)' : 'Op(0)'
-    } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-    errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) ${
-      invalid ? 'Op(1)' : 'Op(0)'
-    } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-    warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
-  };
-};
+const getClasses = ({ active, disabled, value, invalid, heightClass }) => ({
+  inputWrapperClasses: `Ff($ffmanrope) Bgc($navBarBg) ${
+    disabled ? 'Bdb($bddisabledGrey2)' : 'Bgc($hoverInput):h'
+  } ${
+    invalid
+      ? 'Bdb($bderrorColor)'
+      : disabled
+      ? ''
+      : active
+      ? 'Bdb($bdprimaryButton)'
+      : 'Bdb($bdinputGrey)'
+  } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  inputClasses: `${heightClass} O(n) Rsz(n) Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) Ff($ffmanrope) Ff($ffmanrope)::ph`,
+  warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
+    invalid ? 'Op(1)' : 'Op(0)'
+  } Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) ${
+    invalid ? 'Op(1)' : 'Op(0)'
+  } Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
+});
 
 const FormikTextArea = React.forwardRef((props, ref) => {
   const {

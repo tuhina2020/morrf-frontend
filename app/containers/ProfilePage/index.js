@@ -61,7 +61,7 @@ const ProfilePage = ({
         sendCode={sendCode}
       />
     );
-  else return <div>LOL TTHIS IS EMPTY</div>;
+  return <div>LOL TTHIS IS EMPTY</div>;
 };
 
 ProfilePage.propTypes = {

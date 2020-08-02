@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import isEmpty from 'lodash/isEmpty';
 import {
   GET_AVAILABLE_SKILLS,
   SEND_VERIFICATION,
@@ -9,7 +10,6 @@ import {
   SET_REMOTE_PORTFOLIO,
   SET_REMOTE_SKILLS,
 } from './constants';
-import isEmpty from 'lodash/isEmpty';
 import { makeSelectProfilePage } from './selectors';
 
 import {

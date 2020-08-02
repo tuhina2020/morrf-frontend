@@ -86,26 +86,24 @@ const SkillEditForm = ({
         return (
           <Form onSubmit={handleSubmit}>
             <DisplayCard
-              heading={'Edit Skills'}
+              heading="Edit Skills"
               lastChildPadding={false}
               // childPadding="Px($lg) Py($md)"
               childPadding="Px($lg) Pb($lmg) Pt($md)"
             >
               <div>
                 <div className="D(f) Ai(c) Jc(s) Mb($3xxl) Flw(w)">
-                  {localSkills.map((skill, i) => {
-                    return (
-                      <div className="Mend($sm) Mb($sm)" key={'i ' + i}>
-                        <Tag
-                          filter={true}
-                          disabled={false}
-                          onDelete={() => deleteSkill(skill)}
-                        >
-                          {skill.name}
-                        </Tag>
-                      </div>
-                    );
-                  })}
+                  {localSkills.map((skill, i) => (
+                    <div className="Mend($sm) Mb($sm)" key={`i ${i}`}>
+                      <Tag
+                        filter
+                        disabled={false}
+                        onDelete={() => deleteSkill(skill)}
+                      >
+                        {skill.name}
+                      </Tag>
+                    </div>
+                  ))}
                 </div>
                 {values.search}
                 <div style={{ height: '400px', overflow: 'scroll' }}>
@@ -140,7 +138,7 @@ const SkillEditForm = ({
                   />
                 </div>
               </div>
-              <div className={`D(f) Ai(c) Jc(c)`}>
+              <div className="D(f) Ai(c) Jc(c)">
                 <Button {...cancelProps}>Cancel</Button>
                 <Button {...saveProps}>Save</Button>
               </div>

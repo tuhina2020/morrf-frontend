@@ -100,7 +100,7 @@ const ExperienceFormCard = ({
             tabIndex={6 * index + 5}
             onChange={e => {
               handleChange(e);
-              let v = e.target.value;
+              const v = e.target.value;
               if (v) {
                 setFieldValue(`allExperiences[${index}].to`, '');
               }
@@ -172,7 +172,7 @@ const ExperienceEditForm = ({ onCancel, experience, onSave }) => {
             //   const today = [mo, ye];
             //   return toDate[0] <= today[0] && toDate[1] <= today[1];
             // }
-          }), //have to figure out a way if it is the present workplace
+          }), // have to figure out a way if it is the present workplace
         present: Yup.boolean(),
         description: Yup.string()
           .required('Required')
@@ -250,7 +250,7 @@ const ExperienceEditForm = ({ onCancel, experience, onSave }) => {
         touched,
         errors,
       }) => (
-        <div className={`Bdrs($xs) Bgc(white) H($fc) W($60xl)`}>
+        <div className="Bdrs($xs) Bgc(white) H($fc) W($60xl)">
           <Form onSubmit={handleSubmit}>
             <FieldArray
               name="allExperiences"

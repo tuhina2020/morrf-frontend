@@ -66,75 +66,73 @@ const EditPersonalForm = ({
       }}
       validationSchema={validationSchema}
     >
-      {({ values, handleSubmit, handleChange, errors, touched }) => {
-        return (
-          <div>
-            <Form onSubmit={handleSubmit}>
-              <DisplayCard
-                heading={'Edit My Details'}
-                lastChildPadding={false}
-                childPadding="Px($lg) Pb($xl) Pt($md)"
-              >
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="First Name"
-                    name="firstName"
-                    id="firstName"
-                    tabIndex={1}
-                    onChange={handleChange}
-                    value={values.firstName}
-                    error={getError({ key: 'firstName', errors, touched })}
-                  />
-                  <FormikInput
-                    name="lastName"
-                    id="lastName"
-                    label="Last Name"
-                    tabIndex={2}
-                    onChange={handleChange}
-                    value={values.lastName}
-                    error={getError({ key: 'lastName', errors, touched })}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="Profession"
-                    name="profession"
-                    id="profession"
-                    tabIndex={3}
-                    onChange={handleChange}
-                    value={values.profession}
-                    error={getError({ key: 'profession', errors, touched })}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="City / Town"
-                    name="city"
-                    id="city"
-                    tabIndex={4}
-                    onChange={handleChange}
-                    value={values.city}
-                    error={getError({ key: 'city', errors, touched })}
-                  />
-                  <FormikInput
-                    name="state"
-                    id="state"
-                    label="State"
-                    tabIndex={5}
-                    onChange={handleChange}
-                    value={values.state}
-                    error={getError({ key: 'state', errors, touched })}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(c)">
-                  <Button {...cancelProps}>Cancel</Button>
-                  <Button {...saveProps}>Save</Button>
-                </div>
-              </DisplayCard>
-            </Form>
-          </div>
-        );
-      }}
+      {({ values, handleSubmit, handleChange, errors, touched }) => (
+        <div>
+          <Form onSubmit={handleSubmit}>
+            <DisplayCard
+              heading="Edit My Details"
+              lastChildPadding={false}
+              childPadding="Px($lg) Pb($xl) Pt($md)"
+            >
+              <div className="D(f) Ai(c) Jc(sb) H($2xl)">
+                <FormikInput
+                  label="First Name"
+                  name="firstName"
+                  id="firstName"
+                  tabIndex={1}
+                  onChange={handleChange}
+                  value={values.firstName}
+                  error={getError({ key: 'firstName', errors, touched })}
+                />
+                <FormikInput
+                  name="lastName"
+                  id="lastName"
+                  label="Last Name"
+                  tabIndex={2}
+                  onChange={handleChange}
+                  value={values.lastName}
+                  error={getError({ key: 'lastName', errors, touched })}
+                />
+              </div>
+              <div className="D(f) Ai(c) Jc(sb) H($2xl)">
+                <FormikInput
+                  label="Profession"
+                  name="profession"
+                  id="profession"
+                  tabIndex={3}
+                  onChange={handleChange}
+                  value={values.profession}
+                  error={getError({ key: 'profession', errors, touched })}
+                />
+              </div>
+              <div className="D(f) Ai(c) Jc(sb) H($2xl)">
+                <FormikInput
+                  label="City / Town"
+                  name="city"
+                  id="city"
+                  tabIndex={4}
+                  onChange={handleChange}
+                  value={values.city}
+                  error={getError({ key: 'city', errors, touched })}
+                />
+                <FormikInput
+                  name="state"
+                  id="state"
+                  label="State"
+                  tabIndex={5}
+                  onChange={handleChange}
+                  value={values.state}
+                  error={getError({ key: 'state', errors, touched })}
+                />
+              </div>
+              <div className="D(f) Ai(c) Jc(c)">
+                <Button {...cancelProps}>Cancel</Button>
+                <Button {...saveProps}>Save</Button>
+              </div>
+            </DisplayCard>
+          </Form>
+        </div>
+      )}
     </Formik>
   );
 };

@@ -54,7 +54,7 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
   return (
     <form noValidate onSubmit={Formik.handleSubmit}>
       <DisplayCard
-        heading={'Edit About Me'}
+        heading="Edit About Me"
         lastChildPadding={false}
         // childPadding="Px($lg) Py($md)"
         childPadding="Px($lg) Pb($lmg) Pt($md)"

@@ -58,7 +58,7 @@ const Contact = ({ data, onEdit }) => {
         </div>
       </div>
     </DisplayCard>
-    /*{ <Modal
+    /* { <Modal
         isOpen={open}
         contentLabel="onRequestClose Example"
         onRequestClose={() => setOpen(false)}
@@ -72,7 +72,7 @@ const Contact = ({ data, onEdit }) => {
           phone={phone}
           email={email}
         />
-      </Modal> }*/
+      </Modal> } */
   );
 };
 

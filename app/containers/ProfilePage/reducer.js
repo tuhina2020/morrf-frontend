@@ -76,7 +76,7 @@ const dummyFilled = {
       designation: 'Senior Architect',
       company: 'Arup',
       from: '08/2017',
-      to: '', //have to figure out a way if it is the present workplace
+      to: '', // have to figure out a way if it is the present workplace
       description: 'Designed and coordinated on site.\nManaged teams',
       order: 1,
       present: true,
@@ -126,14 +126,14 @@ const dummyFilled = {
       order: 2,
       images: [
         {
-          id: '23423', //optional (Will depend on the edit portfolio design)
+          id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           description: 'The view from outside',
           name: 'ScreenShot-9',
           order: 1,
         },
         {
-          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           name: 'ScreenShot-10',
           description: 'The window',
@@ -172,14 +172,14 @@ const dummyFilled = {
       order: 4,
       images: [
         {
-          id: '23423', //optional (Will depend on the edit portfolio design)
+          id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           description: 'The view from outside',
           name: 'ScreenShot-1',
           order: 1,
         },
         {
-          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           description: 'The window',
           name: 'ScreenShot-2',
@@ -217,14 +217,14 @@ const dummyFilled = {
       order: 6,
       images: [
         {
-          id: '23423', //optional (Will depend on the edit portfolio design)
+          id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           name: 'ScreenShot-5',
           description: 'The view from outside',
           order: 1,
         },
         {
-          id: 'sdfsdff', //optional (Will depend on the edit portfolio design)
+          id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'http:lorempixel.com/g/400/200/',
           name: 'ScreenShot-6',
           description: 'The window',

@@ -96,9 +96,7 @@ const geCurrentState = profile => {
       'portfolio',
       'skills',
     ].filter(info => isEmpty(profile[info])),
-  ).map(info => {
-    return MESSAGES[info];
-  });
+  ).map(info => MESSAGES[info]);
 
   console.log(messageList);
 

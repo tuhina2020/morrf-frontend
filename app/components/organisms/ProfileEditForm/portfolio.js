@@ -46,7 +46,7 @@ const PortfolioFormCard = ({
   return (
     <div
       key={`portfolio_${index}`}
-      className={`Px($xlg) Py($md) Bgc(white) W($60xl)`}
+      className="Px($xlg) Py($md) Bgc(white) W($60xl)"
     >
       <div className="D(f) Ai(c) Jc(sb) H($2xl)">
         <div>
@@ -224,7 +224,7 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
         touched,
         errors,
       }) => (
-        <div className={`Bdrs($xs) Bgc(white) H($fc) W($60xl)`}>
+        <div className="Bdrs($xs) Bgc(white) H($fc) W($60xl)">
           <Form onSubmit={handleSubmit}>
             <FieldArray
               name="allPortfolios"
@@ -287,7 +287,7 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
                       ))}
                     </div>
                   </div>
-                  <div className={`D(f) Ai(c) Jc(c) W($60xl) Bdt($bdcardGrey)`}>
+                  <div className="D(f) Ai(c) Jc(c) W($60xl) Bdt($bdcardGrey)">
                     <Button {...cancelProps}>Cancel</Button>
                     <Button
                       {...activeSaveProps}

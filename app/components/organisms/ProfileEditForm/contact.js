@@ -61,7 +61,7 @@ const ContactFormComponent = ({
   return (
     <form onSubmit={handleSubmit}>
       <DisplayCard
-        heading={'Edit Contact Information'}
+        heading="Edit Contact Information"
         lastChildPadding={false}
         // childPadding="Px($lg) Py($md)"
         childPadding="Px($lg) Pb($lmg) Pt($md)"
@@ -80,7 +80,7 @@ const ContactFormComponent = ({
             <FormikInput
               name="email"
               id="email"
-              disabled={true}
+              disabled
               label="Email ID"
               tabIndex={2}
               onChange={handleChange}

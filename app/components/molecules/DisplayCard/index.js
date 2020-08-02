@@ -11,22 +11,16 @@ const ChildDisplayCardWrapper = ({
 }) => {
   const number = React.Children.count(children);
   if (number === 0) return <EmptyDisplayCard />;
-  return React.Children.map(children, (child, i) => {
-    return (
-      <div
-        className={`${
-          i == number - 1
-            ? lastChildPadding
-              ? childPadding
-              : ''
-            : childPadding
-        } ${number == 1 || i == number - 1 ? '' : 'Bdb($bdcardGrey)'}`}
-        key={i}
-      >
-        {child}
-      </div>
-    );
-  });
+  return React.Children.map(children, (child, i) => (
+    <div
+      className={`${
+        i == number - 1 ? (lastChildPadding ? childPadding : '') : childPadding
+      } ${number == 1 || i == number - 1 ? '' : 'Bdb($bdcardGrey)'}`}
+      key={i}
+    >
+      {child}
+    </div>
+  ));
 };
 
 const DisplayCard = React.forwardRef((props, ref) => {
@@ -41,7 +35,7 @@ const DisplayCard = React.forwardRef((props, ref) => {
   } = props;
 
   return (
-    <div className={`Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)`}>
+    <div className="Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)">
       {heading ? (
         topRightIcon ? (
           <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
