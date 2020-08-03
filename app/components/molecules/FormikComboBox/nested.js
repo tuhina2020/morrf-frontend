@@ -6,39 +6,70 @@ import BaseIcon from 'components/atoms/BaseIcon';
 import { Field } from 'formik';
 import { warning as Warning } from 'Assets/svg-comp';
 import { classnames } from 'utils/helper';
+import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
 
-const CheckList = ({ items, id, selectedIds, onSelect, isOpen, maheight }) => {
-  if (!isOpen) return null;
+const parseNestedObj = items => {
+  const initObj = groupBy(items, 'category');
+  console.log(initObj === items);
+  const finalList = [];
+  Object.keys(initObj).forEach(category => {
+    const obj = {
+      category: initObj[category][0].category,
+      groupLabel: initObj[category][0].groupLabel,
+      options: initObj[category],
+    };
+    finalList.push(obj);
+  });
+  return finalList;
+};
+
+const CheckList = ({ items, id, values, onSelect, isOpen }) => {
+  if (!isOpen || isEmpty(items)) return null;
+  const iterableList = parseNestedObj(items);
   return (
     <div
       id={`${id}_menu`}
       aria-labelledby={`${id}_input_label`}
-      className="Bgc($navBarBg)"
+      className="Bgc($navBarBg) Ov(s) H($20x)"
     >
-      {items.map((item, index) => (
+      {iterableList.map((item, index) => (
         <div
-          className={`Bgc($activeTagBlue):h Px($sm) Bxz(bb) Pos(r) Pb($xs) ${
-            index === 0 ? 'Pt($md)' : 'Pt($xs)'
-          } `}
+          className={`Bxz(bb) Pos(r) Bdb($bdinputGrey) Py($md)`}
           role="option"
           aria-selected="false"
           id={`${id}_item_${index}`}
           key={`${item.name}_${item.id}_${index}`}
         >
+          <div className="Ff($ffmanrope) Fz($sm) Lh(1) Px($sm) C($headingDarkGrey) Pb($xs)">
+            {item.groupLabel}
+          </div>
           <div className="W($full) Ta(start)">
-            <FormikCheckBox
-              name={`${name}.selected`}
-              value={selectedIds.includes(item.id)}
-              labelText={item.name}
-              labelSize="sm"
-              bluePosition="Start(58px)"
-              bgColorStyle="Bgc($navBarBg)"
-              onChange={e => {
-                const v = e.target.checked;
-                console.log(v);
-                onSelect({ item, add: v });
-              }}
-            />
+            {item.options.map((option, i) => {
+              return (
+                <div
+                  key={option.id}
+                  className={`Py($xs) Px($lg) Bgc($activeTagBlue):h`}
+                >
+                  <FormikCheckBox
+                    name={`${option.name}.selected`}
+                    value={values.includes(option.id)}
+                    labelText={option.name}
+                    labelSize="sm"
+                    bluePosition="Start(58px)"
+                    bgColorStyle="Bgc($navBarBg)"
+                    onChange={e => {
+                      const v = e.target.checked;
+                      onSelect({ item: option, add: v });
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log(v);
+                      debugger;
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}
@@ -53,44 +84,21 @@ const FormikComboBox = ({
   placeholder,
   onFocus,
   onBlur,
-  onChange,
   labelText,
   autoComplete,
   tabIndex,
   disabled,
   items,
   dimensionClasses,
-  selectedIds,
+  values,
   onSelect,
-  value,
-  onFilter,
   width,
-  maheight,
 }) => {
-  // const [inputItems, setInputItems] = useState(items);
-  const [active, setActive] = useState(false);
-  const onBlurWrapper = e => {
-    setActive(false);
-    onBlur(e);
-  };
-
-  const onFocusWrapper = e => {
-    if (e.target.autocomplete) {
-      e.target.autocomplete = 'off';
-    }
-    setActive(true);
-    onFocus(e);
-  };
-
-  const onChangeHandler = e => {
-    onFilter(e.target.value);
-    onChange(e);
-    e.preventDefault();
-    e.stopPropagation();
-  };
   const [isOpen, setOpen] = useState(false);
 
   const toggleOpen = e => {
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(!isOpen);
   };
 
@@ -118,6 +126,7 @@ const FormikComboBox = ({
   return (
     <div
       role="combobox"
+      className="W($full)"
       aria-haspopup="listbox"
       aria-owns={`${id}_menu`}
       aria-expanded={isOpen}
@@ -137,11 +146,11 @@ const FormikComboBox = ({
       </div>
       <CheckList
         isOpen={isOpen}
+        // items={parseNestedObj(items)}
         items={items}
         id={id}
-        selectedIds={selectedIds}
+        values={values}
         onSelect={onSelect}
-        maheight={maheight}
       />
     </div>
   );
@@ -150,17 +159,15 @@ const FormikComboBox = ({
 FormikComboBox.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  onChange: PropTypes.func,
+  onSelect: PropTypes.func,
   labelText: PropTypes.string,
   id: PropTypes.string.isRequired,
   dimensionClasses: PropTypes.string,
-  maheight: PropTypes.string,
 };
 
 FormikComboBox.defaultProps = {
   onFocus: () => {},
   onBlur: () => {},
-  onChange: () => {},
   labelText: 'Label',
   autoComplete: 'off',
   tabIndex: 1,
@@ -170,7 +177,6 @@ FormikComboBox.defaultProps = {
   dimensionClasses: 'W($full)',
   onSelect: () => {},
   items: [],
-  maheight: '10x',
 };
 
 export default FormikComboBox;

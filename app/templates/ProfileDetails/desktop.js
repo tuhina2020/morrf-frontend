@@ -7,6 +7,8 @@ import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
 import GetStarted from 'components/organisms/EditCarousels';
 import isEmpty from 'lodash/isEmpty';
+import flatten from 'lodash/flatten';
+import compact from 'lodash/compact';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
 
@@ -54,7 +56,10 @@ const ProfileDetails = ({
           <Contact data={{ phone, email }} onEdit={() => setOpen('contact')} />
           <AboutMe about={about} onEdit={() => setOpen('about')} />
           <Skills skills={skills} onEdit={() => setOpen('skills')} />
-          {/* <Experience experience={experience} onSave={saveExperience} /> */}
+          <Experience
+            experience={experience}
+            onEdit={() => setOpen('experience')}
+          />
         </div>
         {/* <Portfolio portfolio={portfolio} onSave={savePortfolio} /> */}
       </div>

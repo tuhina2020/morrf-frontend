@@ -24,7 +24,80 @@ import {
 
 function* getSkills({ payload }) {
   const { search } = payload;
+  debugger;
   // const { getAllSkills } = yield select(makeSelectProfilePage());
+  const allSkillsObj = [
+    {
+      label: 'Architecture',
+      id: 'newcategory-1',
+      options: [
+        {
+          id: '1234',
+          name: 'furnace design',
+        },
+        {
+          id: '2451',
+          name: 'Illustration Tools',
+        },
+        {
+          id: '123-a',
+          name: 'furniture design',
+        },
+        {
+          id: '245',
+          name: 'UI/UX',
+        },
+        {
+          id: '546-es',
+          name: 'Architecture',
+        },
+      ],
+    },
+    {
+      label: 'Design Skills',
+      id: 'newcategory-2',
+      options: [
+        {
+          id: '2452',
+          name: 'UI/UX Research',
+        },
+        {
+          id: '2452-xd',
+          name: 'Geo mapping',
+        },
+        {
+          id: '2452-ab',
+          name: 'Metallurgy',
+        },
+        {
+          id: '5469-b',
+          name: 'Town planning',
+        },
+        {
+          id: '123-b',
+          name: 'interior design',
+        },
+      ],
+    },
+    {
+      id: 'newcategory-3',
+      name: 'Software Skills',
+      options: [
+        {
+          id: '245-bx',
+          name: 'Illustrator',
+        },
+        {
+          id: '546',
+          name: 'Photoshop',
+        },
+        {
+          id: '5469-a',
+          name: '3ds Max',
+        },
+      ],
+    },
+  ];
   const allSkills = [
     {
       id: '1234',

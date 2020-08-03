@@ -44,6 +44,7 @@ const config = {
       'Trsdu(3s)',
       'Trsdu(5s)',
       'Mstart(8px)',
+      'Mah($10x)',
     ],
   },
 };
