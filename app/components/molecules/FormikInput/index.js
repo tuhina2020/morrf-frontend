@@ -133,6 +133,7 @@ FormikTextField.defaultProps = {
   onBlur: () => {},
   disabled: false,
   label: '',
+  value:"",
   dimensionClasses: 'W($25x)',
   iconFill: '#333',
   iconWidth: '24px',
