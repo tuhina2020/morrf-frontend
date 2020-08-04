@@ -4,11 +4,11 @@ import * as Yup from 'yup';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { Form, Formik } from 'formik';
-import Input from '../../../molecules/Input/index';
+import Input from 'components/molecules/Input/index';
 import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 
-import Button from '../../../molecules/Button/index';
+import Button from 'components/molecules/Button/index';
 const getDesktopForm = ({
   setCallBackForm,
   viewableSpecialist,
@@ -47,24 +47,12 @@ const getDesktopForm = ({
           error={getError('phone')}
         />
         <div className="W($full) Mb($sm)">
-          <div className="D(f) Ai(c) Jc(s) Flw(w)">
-            {viewableSpecialist.map(skill => (
-              <div className="Mend($sm) Mb($sm)" key={skill.id}>
-                <Tag
-                  filter
-                  disabled={false}
-                  onDelete={() => deleteSkill(skill)}
-                >
-                  {skill.name}
-                </Tag>
-              </div>
-            ))}
-          </div>
           <NestedFormikComboBox
             className="H($2xl)"
             id="search"
             name="search"
             type="text"
+            inline={true}
             prependIcon="showmore"
             labelText="Design specialist you are looking for"
             // onKeyPress={onEnter}

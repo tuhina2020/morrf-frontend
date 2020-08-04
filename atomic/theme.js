@@ -151,6 +151,7 @@ module.exports = () => ({
   },
   background: {
     prefix: '',
+    bgfull: '100% 100%',
     themeColor: '#ff0356',
     disabledGrey2: '#c6c6c6',
     hoverButton: '#172be2',

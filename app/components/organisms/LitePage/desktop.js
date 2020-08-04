@@ -1,31 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { morrflogo as MorrfLogo, showmore as ShowMore } from 'Assets/svg-comp';
 
-import { getTransitionClass } from 'utils/helper';
+import { getTransitionClass, scrollTo, scrollToElement } from 'utils/helper';
 import MovingDots from 'components/MovingDots';
 import CallBackForm from 'components/organisms/LiteForms/CallBackForm/index';
 import RequestForm from 'components/organisms/LiteForms/RequestForm/index';
-import Button from 'components/molecules/Button';
 import { Link } from 'react-router-dom';
 import LiteCard from 'components/molecules/LiteCard';
 import Gradient from 'Assets/images/Gradient_BG.png';
 import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
 
-const DesktopPage = ({
-  specialistList,
-  scrolled,
-  onClickShowMore,
-  secondPage,
-}) => {
+const DesktopPage = ({ specialistList }) => {
   const [callBackForm, setCallBackForm] = useState(false);
+  const secondPage = useRef(null);
+  const [scrolled, setScrollStatus] = useState(false);
+  const onScroll = () => {
+    if (
+      document.documentElement.scrollTop > 100 ||
+      (document.body.scrollTop > 100 && !scrolled)
+    ) {
+      setScrollStatus(true);
+    }
+  };
+  window.addEventListener('scroll', onScroll);
+
+  useEffect(() => {
+    setTimeout(() => {}, 500);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  const onClickShowMore = () => {
+    setScrollStatus(!scrolled);
+    const showMore = () => {
+      const top = document.documentElement.scrollTop || document.body.scrollTop;
+      if (top === 0)
+        scrollToElement({
+          element: secondPage.current,
+          offset: 100,
+          duration: 500,
+        });
+      else scrollTo({});
+    };
+    setTimeout(showMore, 200);
+  };
   return (
     <div>
       <div
-        className="W($full) H($5xl) D(f) Fld(r) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Ai(c)"
+        className="W($full) H($5xl) D(f) Fld(r) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Ai(c) Bgr(nr) Bxz(pb)"
         style={{
-          background: `transparent url(${menuHeader}) 0% 0% no-repeat padding-box`,
-          backgroundSize: '100% 100%',
+          backgroundImage: `url(${menuHeader})`,
         }}
       >
         <div className="D(f) Ai(c)">
@@ -46,15 +72,13 @@ const DesktopPage = ({
       </div>
 
       <div
+        className="Bgr(nr)"
         style={{
           backgroundImage: `url(${Splash}),url(${Gradient})`,
-          backgroundSize: '100% 549px, 100% 100%',
-          backgroundPosition: 'top, top',
-          backgroundRepeat: 'no-repeat',
         }}
       >
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
-          <div className="Fz(64px) Mb($sm)">
+          <div className="Fz($4xl) Mb($sm)">
             Looking for a freelance designer?
           </div>
           <div className="Fz($fzdesktopTitle)">
@@ -147,18 +171,18 @@ const DesktopPage = ({
           </div>
         ) : null}
       </div>
-      <div className="H($12xl) Bgc(#555555) D(f) Jc(sb) Ai(c) Pstart(15vw) Pend(7.5vw)">
+      <div className="H($12xl) Bgc($inputGrey) D(f) Jc(sb) Ai(c) Pstart(15vw) Pend(7.5vw)">
         <div>
           <div className="Fz($fztitle) Ff($ffmanrope) C(white)">
             Like to know more?
           </div>
-          <div className="Ff($ffmanrope) C(white) Fz(15px)">
-            Reach us at:{' '}
+          <div className="Ff($ffmanrope) C(white) Fz($smd)">
+            Reach us at
             <Link to="mailto : contact@morff.io" className="Td(n) C(white)">
               contact@morff.io
             </Link>
           </div>
-          <div className="Ff($ffmanrope) C($placeholderGrey) Fz(15px)">
+          <div className="Ff($ffmanrope) C($placeholderGrey) Fz($smd)">
             © 2020 Morff
           </div>
         </div>

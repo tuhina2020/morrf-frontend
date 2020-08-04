@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import Button from '../../../molecules/Button/index';
-import Input from '../../../molecules/Input/index';
+import Button from 'components/molecules/Button/index';
 import BaseIcon from 'components/atoms/BaseIcon';
 
 const getDesktopForm = setCallBackForm => ({
@@ -20,25 +19,17 @@ const getDesktopForm = setCallBackForm => ({
 }) => {
   const getError = key => (key && errors[key] ? errors[key] : null);
   return (
-    <div
-      className="W(540px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)"
-    >
-      <div>
-        <Button
-          kind="tertiary"
-          classes="Pos(a)"
-          onClick={() => {
-            setCallBackForm(false);
-          }}
-        >
-          <BaseIcon icon="arrowback" width="24px" height="18px" />
-        </Button>
+    <div className="W(540px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)">
+      <BaseIcon
+        width="24px"
+        icon="arrowback"
+        iconClasses="Bdrs($mmd) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
+        onClick={() => setCallBackForm(false)}
+      />
+      <div className="D(f) Jc(c) H($5xl) Mt($lg)">
+        <div className="W($5xl) H($5xl) Bgc($inputGrey)" />
       </div>
-      <div className="D(f) Jc(c) H($5xl) Mt($lg)" >
-        <div className="W($5xl) H($5xl) Bgc($inputGrey)"></div>
-      </div>
-      <div
-        className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
+      <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
         Request a Call Back
       </div>
       <form
@@ -67,9 +58,7 @@ const getDesktopForm = setCallBackForm => ({
           value={values.phone}
           error={getError('phone')}
         />
-        <div
-          className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)"
-        >
+        <div className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)">
           <FormikInput
             dimensionClasses="W(218px) H($2xl)"
             label="Preffered date"
@@ -94,10 +83,7 @@ const getDesktopForm = setCallBackForm => ({
           />
         </div>
 
-        <Button
-          classes="Mx(a) Mt($lg) Mb($2xl)"
-          type="submit"
-        >
+        <Button classes="Mx(a) Mt($lg) Mb($2xl)" type="submit">
           Submit Request
         </Button>
       </form>
@@ -118,9 +104,7 @@ const getMobileForm = setCallBackForm => ({
 }) => {
   const getError = key => (key && errors[key] ? errors[key] : null);
   return (
-    <div
-      className="W(540px) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)"
-    >
+    <div className="W(540px) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)">
       <div>
         <Button
           kind="tertiary"
@@ -132,11 +116,10 @@ const getMobileForm = setCallBackForm => ({
           <BaseIcon icon="arrowback" width="24px" height="18px" />
         </Button>
       </div>
-      <div className="D(f) Jc(c) H($5xl) Mt($lg)" >
-        <div className="W($5xl) H($5xl) Bgc($inputGrey)"></div>
+      <div className="D(f) Jc(c) H($5xl) Mt($lg)">
+        <div className="W($5xl) H($5xl) Bgc($inputGrey)" />
       </div>
-      <div
-        className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
+      <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
         Request a Call Back
       </div>
       <form
@@ -165,9 +148,7 @@ const getMobileForm = setCallBackForm => ({
           value={values.phone}
           error={getError('phone')}
         />
-        <div
-          className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)"
-        >
+        <div className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)">
           <FormikInput
             dimensionClasses="W(218px) H($2xl)"
             label="Preffered date"
@@ -192,18 +173,13 @@ const getMobileForm = setCallBackForm => ({
           />
         </div>
 
-        <Button
-          classes="Mx(a) Mt($lg) Mb($2xl)"
-          type="submit"
-        >
+        <Button classes="Mx(a) Mt($lg) Mb($2xl)" type="submit">
           Submit Request
         </Button>
       </form>
     </div>
   );
 };
-
-
 
 const CallBackForm = props => {
   const { setCallBackForm, isDesktopOrLaptop } = props;
