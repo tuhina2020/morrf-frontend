@@ -1,27 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import EditCard from 'components/organisms/EditCard';
 import DisplayCard from 'components/molecules/DisplayCard';
-import Input from 'components/molecules/Input';
 import FormikInput from 'components/molecules/FormikInput';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
-const ContactFormComponent = ({
-  onCancel,
-  phone,
-  email,
-  onSave,
-  onSendCode,
-}) => ({
+const ContactFormComponent = ({ onCancel, onSendCode }) => ({
   handleSubmit,
   handleChange,
-  handleBlur,
   values,
-  touched,
   errors,
-  validateField,
   validateForm,
   setFieldError,
 }) => {
@@ -63,7 +52,7 @@ const ContactFormComponent = ({
         heading="Edit Contact Information"
         lastChildPadding={false}
         // childPadding="Px($lg) Py($md)"
-        childPadding="Px($lg) Pb($lmg) Pt($md)"
+        childPadding="P($lg)"
       >
         <div>
           <div className="D(f) Ai(c) Jc(sb) H($2xl)">
@@ -71,7 +60,6 @@ const ContactFormComponent = ({
               label="Phone"
               name="phone"
               id="phone"
-              tabIndex={1}
               onChange={handleChange}
               value={values.phone}
               error={getError('phone')}
@@ -81,19 +69,17 @@ const ContactFormComponent = ({
               id="email"
               disabled
               label="Email ID"
-              tabIndex={2}
               onChange={handleChange}
               value={values.email}
               error={getError('email')}
             />
           </div>
           {!phone.verified && (
-            <div className="Mt($sm) D(f) Jc(s) Ai(c)">
+            <div className="D(f) Jc(s) Ai(c) H($2xl) Mt($lg)">
               <FormikInput
                 label="Verification Code"
                 name="code"
                 id="code"
-                tabIndex={3}
                 dimensionClasses="W($20xl)"
                 onChange={handleChange}
                 value={values.code}
@@ -165,14 +151,14 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
 
 ContactEditForm.propTypes = {
   onCancel: PropTypes.func,
-  phone: PropTypes.object,
-  email: PropTypes.object,
+  onSave: PropTypes.func.isRequired,
+  data: PropTypes.array,
+  onSendCode: PropTypes.func,
 };
 
 ContactEditForm.defaultProps = {
   onCancel: () => {},
-  phone: { number: '', verified: false },
-  email: { id: '', verified: false },
+  data: {},
 };
 
 export default ContactEditForm;

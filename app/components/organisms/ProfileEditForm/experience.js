@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FormikCheckBox from 'components/molecules/FormikCheckBox';
-import Input from 'components/molecules/Input';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
-import { Form, FieldArray, getIn, Formik } from 'formik';
+import { Form, FieldArray, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
-import BaseIcon from 'components/atoms/BaseIcon';
 import get from 'lodash/get';
-import sortBy from 'lodash/sortBy';
 import { wordCount } from 'utils/helper';
 
 const removeProps = {
@@ -41,16 +38,12 @@ const ExperienceFormCard = ({
       ? get(errors, `allExperiences[${i}][${key}]`, null)
       : null;
   return (
-    <div
-      key={index}
-      className={`Px($lg) Py($md) ${last ? '' : 'Bdb($bdcardGrey)'}`}
-    >
+    <div key={index} className={`P($lg) ${last ? '' : 'Bdb($bdcardGrey)'}`}>
       <div className="D(f) Ai(c) Jc(sb) H($2xl)">
         <FormikInput
           label="Designation"
           name={`allExperiences[${index}].designation`}
           id={`designation_${index}`}
-          tabIndex={6 * index + 1}
           error={getError('designation', index)}
           value={experience.designation}
           onChange={handleChange}
@@ -59,7 +52,6 @@ const ExperienceFormCard = ({
           name={`allExperiences[${index}].company`}
           id={`company_${index}`}
           label="Company"
-          tabIndex={6 * index + 2}
           error={getError('company', index)}
           value={experience.company}
           onChange={handleChange}
@@ -71,7 +63,6 @@ const ExperienceFormCard = ({
           name={`allExperiences[${index}].from`}
           placeholder="mm/yyyy"
           id={`from_${index}`}
-          tabIndex={6 * index + 3}
           autoComplete="off"
           dimensionClasses="W($10x) Mend($2xl)"
           error={getError('from', index)}
@@ -82,7 +73,6 @@ const ExperienceFormCard = ({
           name={`allExperiences[${index}].to`}
           id={`to_${index}`}
           label="To"
-          tabIndex={6 * index + 4}
           autoComplete="off"
           placeholder="mm/yyyy"
           disabled={experience.present}
@@ -96,7 +86,6 @@ const ExperienceFormCard = ({
             name={`allExperiences[${index}].present`}
             value={experience.present}
             labelText="I work here currently"
-            tabIndex={6 * index + 5}
             onChange={e => {
               handleChange(e);
               const v = e.target.value;
@@ -107,7 +96,7 @@ const ExperienceFormCard = ({
           />
         </div>
       </div>
-      <div className="Mt($2xl)">
+      <div className="My($lg)">
         <FormikTextArea
           label="Description"
           name={`allExperiences[${index}].description`}
@@ -115,7 +104,6 @@ const ExperienceFormCard = ({
           heightClass="H($5xl)"
           placeholder="Brief description of your work"
           dimensionClasses="W($full)"
-          tabIndex={6 * index + 6}
           onChange={handleChange}
           value={experience.description}
           error={getError('description', index)}
@@ -151,10 +139,10 @@ const ExperienceEditForm = ({ onCancel, data: experience, onSave }) => {
             /^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
             'Enter valid date mm/yyyy',
           )
-          .test('no-present', 'Required', function(toD) {
-            return this.parent.present ? true : !isEmpty(toD);
-          })
-          .test('date-range-start', 'Less than start date', function(toD) {
+          .test('no-present', 'Required', toD =>
+            this.parent.present ? true : !isEmpty(toD),
+          )
+          .test('date-range-start', 'Less than start date', toD => {
             const fromString = this.parent.from;
             if (!fromString || this.parent.present) return true;
             const toDate = (toD || '/').split('/');
@@ -253,7 +241,7 @@ const ExperienceEditForm = ({ onCancel, data: experience, onSave }) => {
           <Form onSubmit={handleSubmit}>
             <FieldArray
               name="allExperiences"
-              render={({ remove, push, insert }) => (
+              render={({ remove, push }) => (
                 <>
                   <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
                     <div>Edit Experience</div>
@@ -308,11 +296,13 @@ const ExperienceEditForm = ({ onCancel, data: experience, onSave }) => {
 
 ExperienceEditForm.propTypes = {
   onCancel: PropTypes.func,
-  experience: PropTypes.array,
+  onSave: PropTypes.func.isRequired,
+  data: PropTypes.array,
 };
 
 ExperienceEditForm.defaultProps = {
   onCancel: () => {},
+  data: [],
 };
 
 export default ExperienceEditForm;
