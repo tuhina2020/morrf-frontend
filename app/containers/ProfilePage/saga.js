@@ -24,7 +24,6 @@ import {
 
 function* getSkills({ payload }) {
   const { search } = payload;
-  debugger;
   // const { getAllSkills } = yield select(makeSelectProfilePage());
   const allSkillsObj = [
     {
@@ -157,7 +156,6 @@ function* getSkills({ payload }) {
 
 function* setRemoteSkills({ payload }) {
   console.log('we are ssetting skills here', payload.skills);
-  debugger;
   yield put(setLocalSkills(payload.skills));
 }
 
