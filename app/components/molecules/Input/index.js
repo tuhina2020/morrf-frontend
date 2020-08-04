@@ -32,7 +32,7 @@ const getClasses = ({ active, disabled, value, invalid, animate }) => ({
   warningClasses: `C($error) W($md) H($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-  errorMessageClasses: `C($error) Pstart($md) Fz($fzlabel) H($smd) ${
+  errorMessageClasses: `C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
 });

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import PersonalDetails from 'components/organisms/ProfileDetails/personal';
 import AboutMe from 'components/organisms/ProfileDetails/about';
 import Contact from 'components/organisms/ProfileDetails/contact';
@@ -54,9 +55,12 @@ const ProfileDetails = ({
           <Contact data={{ phone, email }} onEdit={() => setOpen('contact')} />
           <AboutMe about={about} onEdit={() => setOpen('about')} />
           <Skills skills={skills} onEdit={() => setOpen('skills')} />
-          {/* <Experience experience={experience} onSave={saveExperience} /> */}
+          <Experience
+            experience={experience}
+            onEdit={() => setOpen('experience')}
+          />
         </div>
-        {/* <Portfolio portfolio={portfolio} onSave={savePortfolio} /> */}
+        <Portfolio portfolio={portfolio} onSave={() => {}} />
       </div>
       <Modal
         isOpen={!isEmpty(open)}
@@ -78,6 +82,13 @@ const ProfileDetails = ({
       {countEmptyLarge > 1 ? <GetStarted profile={profile} /> : null}
     </div>
   );
+};
+
+ProfileDetails.propTypes = {
+  profile: PropTypes.object,
+  sendCode: PropTypes.func,
+  getFilteredSkills: PropTypes.func,
+  saveFunctionMap: PropTypes.object,
 };
 
 export default ProfileDetails;

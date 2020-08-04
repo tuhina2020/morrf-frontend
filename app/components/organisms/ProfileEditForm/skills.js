@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
-import FormikComboBox from 'components/molecules/FormikComboBox/multi-select';
+import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
-import { useFormik, Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
-import isEmpty from 'lodash/isEmpty';
+import { Formik, Form } from 'formik';
 
 const SkillEditForm = ({
   onCancel,
   onSave,
   data: skills,
   allSkills,
-  getFilteredSkills,
+  // getFilteredSkills,
 }) => {
-  const [localSkills, setSkills] = useState(skills);
-  const [search, setSearch] = useState('');
+  const [viewableSkills, setViewableSkills] = useState(skills);
 
   const saveProps = {
     iconDescription: 'Save',
@@ -36,123 +33,87 @@ const SkillEditForm = ({
     onClick: onCancel,
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    alert(search);
-  };
-
-  const onEnter = e => {
-    if (event.key === 'Enter') {
-      console.log('enter press here! ', search);
-    }
+  const selectObj = ({ item, add }) => {
+    const newSkills = add
+      ? [...viewableSkills, item]
+      : viewableSkills.filter(sk => sk.id !== item.id);
+    setViewableSkills(newSkills);
   };
 
   const deleteSkill = skill => {
-    const skills = localSkills.filter(skillObj => skillObj.id !== skill.id);
-    setSkills(skills);
+    selectObj({
+      item: skill,
+      add: false,
+    });
   };
 
-  const addSkill = skill => {
-    const skills = [...localSkills];
-    skills.push(skill);
-    setSkills(skills);
-  };
-
-  const initialValues = {
-    skills,
-  };
+  // const handleSubmit = () => {
+  //   alert(JSON.stringify(viewableSkills));
+  //   onSave({ skills: viewableSkills });
+  //   onCancel();
+  // };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ skills: [] }}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(localSkills));
-        onSave({ skills: localSkills });
+        alert(JSON.stringify(viewableSkills));
+        onSave({ skills: viewableSkills });
         setSubmitting(false);
+        onCancel();
       }}
     >
-      {({
-        values,
-        handleChange,
-        setFieldValue,
-        handleSubmit,
-        touched,
-        errors,
-      }) => {
-        const getError = key => (key && errors[key] ? errors[key] : null);
-        return (
-          <Form onSubmit={handleSubmit}>
-            <DisplayCard
-              heading="Edit Skills"
-              lastChildPadding={false}
-              // childPadding="Px($lg) Py($md)"
-              childPadding="Px($lg) Pb($lmg) Pt($md)"
-            >
-              <div>
-                <div className="D(f) Ai(c) Jc(s) Mb($3xxl) Flw(w)">
-                  {localSkills.map((skill, i) => (
-                    <div className="Mend($sm) Mb($sm)" key={`i ${i}`}>
-                      <Tag
-                        filter
-                        disabled={false}
-                        onDelete={() => deleteSkill(skill)}
-                      >
-                        {skill.name}
-                      </Tag>
-                    </div>
-                  ))}
-                </div>
-                {values.search}
-                <div style={{ height: '400px', overflow: 'scroll' }}>
-                  <FormikComboBox
-                    id="search"
-                    name="search"
-                    type="text"
-                    prependIcon="showmore"
-                    onChange={handleChange}
-                    value={values.search}
-                    labelText="Select one or more skills"
-                    // onKeyPress={onEnter}
-                    onSelect={({ item, add }) => {
-                      const newSkills = add
-                        ? [...localSkills, item]
-                        : localSkills.filter(sk => sk.id !== item.id);
-                      setFieldValue('skills', newSkills);
-                      setSkills(newSkills);
-                      setSearch('');
-                      setFieldValue('search', '');
-                      getFilteredSkills({});
-                    }}
-                    onFilter={searchString => {
-                      console.log(values.search);
-                      setFieldValue('search', searchString);
-                      getFilteredSkills({ search: searchString });
-                    }}
-                    items={allSkills}
-                    selectedIds={localSkills.map(sk => sk.id)}
-                    // error={getError('search')}
-                    label="Select one or more skills"
-                  />
-                </div>
+      {({ handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <DisplayCard
+            heading="Edit Skills"
+            lastChildPadding={false}
+            childPadding="Px($lg) Pb($lmg) Pt($md)"
+          >
+            <div>
+              <div className="D(f) Ai(c) Jc(s) Mb($3xxl) Flw(w)">
+                {viewableSkills.map(skill => (
+                  <div className="Mend($sm) Mb($sm)" key={skill.id}>
+                    <Tag
+                      filter
+                      disabled={false}
+                      onDelete={() => deleteSkill(skill)}
+                    >
+                      {skill.name}
+                    </Tag>
+                  </div>
+                ))}
               </div>
-              <div className="D(f) Ai(c) Jc(c)">
-                <Button {...cancelProps}>Cancel</Button>
-                <Button {...saveProps}>Save</Button>
-              </div>
-            </DisplayCard>
-          </Form>
-        );
-      }}
+              <NestedFormikComboBox
+                id="search"
+                name="search"
+                type="text"
+                prependIcon="showmore"
+                labelText="Select one or more skills"
+                // onKeyPress={onEnter}
+                onSelect={selectObj}
+                items={allSkills}
+                values={viewableSkills.map(sk => sk.id)}
+                label="Select one or more skills"
+              />
+            </div>
+            <div className="D(f) Ai(c) Jc(c)">
+              <Button {...cancelProps}>Cancel</Button>
+              <Button {...saveProps}>Save</Button>
+            </div>
+          </DisplayCard>
+        </Form>
+      )}
     </Formik>
   );
 };
 
 SkillEditForm.propTypes = {
   onCancel: PropTypes.func,
-  allSkills: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }),
+  allSkills: PropTypes.array,
+  onSave: PropTypes.func,
+  data: PropTypes.array,
+  getFilteredSkills: PropTypes.func,
 };
 
 SkillEditForm.defaultProps = {

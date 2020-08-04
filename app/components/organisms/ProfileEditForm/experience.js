@@ -132,7 +132,7 @@ const ExperienceFormCard = ({
   );
 };
 
-const ExperienceEditForm = ({ onCancel, experience, onSave }) => {
+const ExperienceEditForm = ({ onCancel, data: experience, onSave }) => {
   const validationSchema = Yup.object().shape({
     allExperiences: Yup.array().of(
       Yup.object().shape({

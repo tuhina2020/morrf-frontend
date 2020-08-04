@@ -19,7 +19,7 @@ const getClasses = ({ active, disabled, value, invalid, heightClass }) => ({
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-  errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) ${
+  errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
   warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
@@ -68,7 +68,7 @@ const FormikTextArea = React.forwardRef((props, ref) => {
 
   const focusInput = () => newRef.current.focus();
   return (
-    <div className={`${dimensionClasses} Ta(start)`}>
+    <div className={`${dimensionClasses} Ta(start) Pos(r)`}>
       <div className={classes.inputWrapperClasses}>
         <textarea
           name={name}

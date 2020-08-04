@@ -4,14 +4,14 @@ import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
 
 const getClasses = ({ active, disabled, value, invalid }) => ({
-  labelClasses: `Lh(0) Ff($ffmanrope) Pos(r) Pstart($md) W(fc) Pstart($md) H(0) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
+  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Pstart($md) W(fc) Pstart($md) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
     active && !disabled
-      ? `${invalid ? 'C($error)' : 'C($primaryButton)'} T($mmd) Fz($fzlabel)`
+      ? `${invalid ? 'C($error)' : 'C($primaryButton)'} T($sm) Fz($fzlabel)`
       : value.length === 0
-      ? 'T($xxl) Fz($fzbutton)'
-      : 'T($mmd) Fz($fzlabel)'
+      ? 'T($lmg) Fz($fzbutton)'
+      : 'T($sm) Fz($fzlabel)'
   } ${
     value.length === 0
       ? 'C($inputGrey)'
@@ -28,7 +28,7 @@ const getClasses = ({ active, disabled, value, invalid }) => ({
       ? ''
       : active
       ? 'Bdb($bdprimaryButton)'
-          : 'Bdb($bdinputGrey)'
+      : 'Bdb($bdinputGrey)'
   } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
   inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
     active ? 'Op(1)::ph' : 'Op(0)::ph'
@@ -36,7 +36,7 @@ const getClasses = ({ active, disabled, value, invalid }) => ({
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-  errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) ${
+  errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
   warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
@@ -81,7 +81,7 @@ const FormikTextField = React.forwardRef((props, ref) => {
   const classes = getClasses({ active, disabled, value, invalid: error });
 
   return (
-    <div className={`${dimensionClasses} Ta(start)`}>
+    <div className={`${dimensionClasses} Pos(r) Ta(start)`}>
       <label htmlFor={id} className={classes.labelClasses} id={`${id}_label`}>
         {label}
       </label>

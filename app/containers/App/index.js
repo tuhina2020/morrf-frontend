@@ -8,12 +8,11 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { deviceScreenInfo, isLoggedIn } from 'utils/helper';
 import { ToastContainer, Bounce } from 'react-toastify';
 import { NavigationWrapper, EmptyWrapper } from 'templates/NavigationWrapper';
 import ROUTES from './routes';
-import LitePage from '../Lite';
 
 export default function App({ history }) {
   const responsiveData = deviceScreenInfo();
@@ -28,7 +27,7 @@ export default function App({ history }) {
 
   return (
     <div>
-       <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
+      <Helmet titleTemplate="%s - Morff" defaultTitle="Morff">
         <meta name="description" content="Morff" />
       </Helmet>
       <ToastContainer {...toastProps} transition={Bounce} />
@@ -59,7 +58,11 @@ export default function App({ history }) {
                         />
                       )
                     ) : (
-                      <Component {...props} responsiveData={responsiveData} />
+                      <Component
+                        {...props}
+                        responsiveData={responsiveData}
+                        history={history}
+                      />
                     )}
                   </Wrapper>
                 );

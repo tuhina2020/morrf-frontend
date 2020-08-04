@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import {
   GET_AVAILABLE_SKILLS,
@@ -10,7 +10,7 @@ import {
   SET_REMOTE_PORTFOLIO,
   SET_REMOTE_SKILLS,
 } from './constants';
-import { makeSelectProfilePage } from './selectors';
+// import { makeSelectProfilePage } from './selectors';
 
 import {
   setPhone,
@@ -27,50 +27,122 @@ function* getSkills({ payload }) {
   // const { getAllSkills } = yield select(makeSelectProfilePage());
   const allSkills = [
     {
-      id: '1234',
-      name: 'furnace design',
+      label: 'Architecture',
+      id: 'newcategory-1',
+      options: [
+        {
+          id: '1234',
+          name: 'furnace design',
+        },
+        {
+          id: '2451',
+          name: 'Illustration Tools',
+        },
+        {
+          id: '123-a',
+          name: 'furniture design',
+        },
+        {
+          id: '245',
+          name: 'UI/UX',
+        },
+        {
+          id: '546-es',
+          name: 'Architecture',
+        },
+      ],
     },
     {
-      id: '2452',
-      name: 'UI/UX Research',
+      label: 'Design Skills',
+      id: 'newcategory-2',
+      options: [
+        {
+          id: '2452',
+          name: 'UI/UX Research',
+        },
+        {
+          id: '2452-xd',
+          name: 'Geo mapping',
+        },
+        {
+          id: '2452-ab',
+          name: 'Metallurgy',
+        },
+        {
+          id: '5469-b',
+          name: 'Town planning',
+        },
+        {
+          id: '123-b',
+          name: 'interior design',
+        },
+      ],
     },
     {
-      id: '5469-b',
-      name: 'Town planning',
-    },
-    {
-      id: '123-b',
-      name: 'interior design',
-    },
-    {
-      id: '2451',
-      name: 'Illustration Tools',
-    },
-    {
-      id: '5469-a',
-      name: '3ds Max',
-    },
-    {
-      id: '123-a',
-      name: 'furniture design',
-    },
-    {
-      id: '245',
-      name: 'UI/UX',
-    },
-    {
-      id: '546-es',
-      name: 'Architecture',
-    },
-    {
-      id: '245-bx',
-      name: 'Illustrator',
-    },
-    {
-      id: '546',
-      name: 'Photoshop',
+      id: 'newcategory-3',
+      name: 'Software Skills',
+      options: [
+        {
+          id: '245-bx',
+          name: 'Illustrator',
+        },
+        {
+          id: '546',
+          name: 'Photoshop',
+        },
+        {
+          id: '5469-a',
+          name: '3ds Max',
+        },
+      ],
     },
   ];
+  // const allSkills = [
+  //   {
+  //     id: '1234',
+  //     name: 'furnace design',
+  //   },
+  //   {
+  //     id: '2452',
+  //     name: 'UI/UX Research',
+  //   },
+  //   {
+  //     id: '5469-b',
+  //     name: 'Town planning',
+  //   },
+  //   {
+  //     id: '123-b',
+  //     name: 'interior design',
+  //   },
+  //   {
+  //     id: '2451',
+  //     name: 'Illustration Tools',
+  //   },
+  //   {
+  //     id: '5469-a',
+  //     name: '3ds Max',
+  //   },
+  //   {
+  //     id: '123-a',
+  //     name: 'furniture design',
+  //   },
+  //   {
+  //     id: '245',
+  //     name: 'UI/UX',
+  //   },
+  //   {
+  //     id: '546-es',
+  //     name: 'Architecture',
+  //   },
+  //   {
+  //     id: '245-bx',
+  //     name: 'Illustrator',
+  //   },
+  //   {
+  //     id: '546',
+  //     name: 'Photoshop',
+  //   },
+  // ];
   if (isEmpty(search)) {
     yield put(setLocalSkillsList(allSkills));
   } else {
@@ -84,7 +156,6 @@ function* getSkills({ payload }) {
 
 function* setRemoteSkills({ payload }) {
   console.log('we are ssetting skills here', payload.skills);
-  debugger;
   yield put(setLocalSkills(payload.skills));
 }
 

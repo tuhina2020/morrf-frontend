@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { getDefaultState } from 'utils/helper';
 import {
   SET_LOCAL_PERSONAL_DATA,
   SET_EMAIL,
@@ -29,6 +28,126 @@ const emptyState = {
   experience: [],
 };
 
+const currentSkillsObj1 = [
+  {
+    id: '123-a',
+    name: 'furniture design',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '546-es',
+    name: 'Architecture',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '123-b',
+    name: 'interior design',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '245',
+    name: 'UI/UX',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '245-bx',
+    name: 'Illustrator',
+    category: 'newcategory-3',
+    groupLabel: 'Software Skills',
+  },
+  {
+    id: '546',
+    name: 'Photoshop',
+    category: 'newcategory-3',
+    groupLabel: 'Software Skills',
+  },
+];
+
+const allSkillsObj1 = [
+  {
+    id: '1234',
+    name: 'furnace design',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '2451',
+    name: 'Illustration Tools',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '123-a',
+    name: 'furniture design',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '245',
+    name: 'UI/UX',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '546-es',
+    name: 'Architecture',
+    category: 'newcategory-1',
+    groupLabel: 'Architecture',
+  },
+  {
+    id: '2452',
+    name: 'UI/UX Research',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '2452-xd',
+    name: 'Geo mapping',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '2452-ab',
+    name: 'Metallurgy',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '5469-b',
+    name: 'Town planning',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '123-b',
+    name: 'interior design',
+    category: 'newcategory-2',
+    groupLabel: 'Design Skills',
+  },
+  {
+    id: '245-bx',
+    name: 'Illustrator',
+    category: 'newcategory-3',
+    groupLabel: 'Software Skills',
+  },
+  {
+    id: '546',
+    name: 'Photoshop',
+    category: 'newcategory-3',
+    groupLabel: 'Software Skills',
+  },
+  {
+    id: '5469-a',
+    name: '3ds Max',
+    category: 'newcategory-3',
+    groupLabel: 'Software Skills',
+  },
+];
+
 const dummyFilled = {
   personal: {
     id: '112233',
@@ -45,32 +164,7 @@ const dummyFilled = {
   },
   about:
     'I am an architect with xyz years of experience. I love working on ideas and implementing from end to end.',
-  skills: [
-    {
-      id: '123-a',
-      name: 'furniture design',
-    },
-    {
-      id: '245',
-      name: 'UI/UX',
-    },
-    {
-      id: '546-es',
-      name: 'Architecture',
-    },
-    {
-      id: '123-b',
-      name: 'interior design',
-    },
-    {
-      id: '245-bx',
-      name: 'Illustrator',
-    },
-    {
-      id: '546',
-      name: 'Photoshop',
-    },
-  ],
+  skills: currentSkillsObj1,
   experience: [
     {
       designation: 'Senior Architect',
@@ -233,52 +327,7 @@ const dummyFilled = {
       ],
     },
   ],
-  getAllSkills: [
-    {
-      id: '1234',
-      name: 'furnace design',
-    },
-    {
-      id: '2452',
-      name: 'UI/UX Research',
-    },
-    {
-      id: '5469-b',
-      name: 'Town planning',
-    },
-    {
-      id: '123-b',
-      name: 'interior design',
-    },
-    {
-      id: '2451',
-      name: 'Illustration Tools',
-    },
-    {
-      id: '5469-a',
-      name: '3ds Max',
-    },
-    {
-      id: '123-a',
-      name: 'furniture design',
-    },
-    {
-      id: '245',
-      name: 'UI/UX',
-    },
-    {
-      id: '546-es',
-      name: 'Architecture',
-    },
-    {
-      id: '245-bx',
-      name: 'Illustrator',
-    },
-    {
-      id: '546',
-      name: 'Photoshop',
-    },
-  ],
+  getAllSkills: allSkillsObj1,
 };
 
 export const initialState = dummyFilled;
@@ -307,8 +356,10 @@ const profilePageReducer = (state = initialState, action) =>
         break;
       case SET_AVAILABLE_SKILLS:
         draft.getAllSkills = action.payload;
+        break;
       case SET_LOCAL_SKILLS:
         draft.skills = action.payload;
+        break;
     }
   });
 
