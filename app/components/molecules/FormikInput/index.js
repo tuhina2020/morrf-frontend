@@ -129,6 +129,7 @@ FormikTextField.defaultProps = {
   onBlur: () => {},
   disabled: false,
   label: '',
+  value:"",
   dimensionClasses: 'W($25x)',
   tabIndex: 0,
 };

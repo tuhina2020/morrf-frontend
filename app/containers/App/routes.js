@@ -3,6 +3,7 @@ import LandingPage from 'containers/LandingPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import DummyPage from 'containers/DummyPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
+import LitePage from '../Lite';
 
 const ROUTES = [
   {
@@ -54,6 +55,14 @@ const ROUTES = [
     footer: true,
     auth: false,
     key: 'notfound',
+  },
+  {
+    path: '/lite',
+    component: LitePage,
+    header: true,
+    footer: true,
+    auth: false,
+    key: 'lite',
   },
 ];
 

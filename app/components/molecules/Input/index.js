@@ -32,7 +32,7 @@ const getClasses = ({ active, disabled, value, invalid, animate }) => ({
   warningClasses: `C($error) W($md) H($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
-  errorMessageClasses: `C($error) Pstart($md) Fz($fzlabel) H($smd) ${
+  errorMessageClasses: `C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,
 });
@@ -55,6 +55,7 @@ const Input = React.forwardRef(
       value,
       validationList,
       validate,
+      size,
       setSubmittable,
       extraValidation,
       dimensionClasses,
@@ -118,6 +119,7 @@ const Input = React.forwardRef(
       value,
       animate,
       invalid,
+      size,
     });
 
     const inputProps = {
@@ -156,6 +158,7 @@ Input.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   animate: PropTypes.bool,
+  size: PropTypes.string,
   tabIndex: PropTypes.number,
   disabled: PropTypes.bool,
   autoFocus: PropTypes.bool,
@@ -173,6 +176,7 @@ Input.defaultProps = {
   dimensionClasses: 'W($30xl) M(a)',
   disabled: false,
   autoFocus: false,
+  size: '30xl',
   validate: false,
   onFocus: () => {},
   onBlur: () => {},
