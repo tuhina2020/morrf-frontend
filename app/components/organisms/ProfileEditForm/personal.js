@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import EditCard from 'components/organisms/EditCard';
 import DisplayCard from 'components/molecules/DisplayCard';
-import Input from 'components/molecules/Input';
 import FormikInput from 'components/molecules/FormikInput';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -72,14 +70,13 @@ const EditPersonalForm = ({
             <DisplayCard
               heading="Edit My Details"
               lastChildPadding={false}
-              childPadding="Px($lg) Pb($xl) Pt($md)"
+              childPadding="P($lg)"
             >
               <div className="D(f) Ai(c) Jc(sb) H($2xl)">
                 <FormikInput
                   label="First Name"
                   name="firstName"
                   id="firstName"
-                  tabIndex={1}
                   onChange={handleChange}
                   value={values.firstName}
                   error={getError({ key: 'firstName', errors, touched })}
@@ -88,7 +85,6 @@ const EditPersonalForm = ({
                   name="lastName"
                   id="lastName"
                   label="Last Name"
-                  tabIndex={2}
                   onChange={handleChange}
                   value={values.lastName}
                   error={getError({ key: 'lastName', errors, touched })}
@@ -99,7 +95,6 @@ const EditPersonalForm = ({
                   label="Profession"
                   name="profession"
                   id="profession"
-                  tabIndex={3}
                   onChange={handleChange}
                   value={values.profession}
                   error={getError({ key: 'profession', errors, touched })}
@@ -110,7 +105,6 @@ const EditPersonalForm = ({
                   label="City / Town"
                   name="city"
                   id="city"
-                  tabIndex={4}
                   onChange={handleChange}
                   value={values.city}
                   error={getError({ key: 'city', errors, touched })}
@@ -119,7 +113,6 @@ const EditPersonalForm = ({
                   name="state"
                   id="state"
                   label="State"
-                  tabIndex={5}
                   onChange={handleChange}
                   value={values.state}
                   error={getError({ key: 'state', errors, touched })}
@@ -139,20 +132,12 @@ const EditPersonalForm = ({
 
 EditPersonalForm.propTypes = {
   onCancel: PropTypes.func,
-  city: PropTypes.string,
-  state: PropTypes.string,
-  profession: PropTypes.string,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
+  data: PropTypes.object,
 };
 
 EditPersonalForm.defaultProps = {
   onCancel: () => {},
-  city: '',
-  state: '',
-  profession: '',
-  firstName: '',
-  lastName: '',
 };
 
 export default EditPersonalForm;

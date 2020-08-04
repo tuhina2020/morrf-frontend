@@ -6,43 +6,22 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 // import classNames from 'classnames';
+import BaseButton from 'components/atoms/BaseButton';
 import { classnames } from 'utils/helper';
 import BaseIcon from 'components/atoms/BaseIcon';
-
-const TYPES = {
-  red: 'Red',
-  magenta: 'Magenta',
-  purple: 'Purple',
-  blue: 'Blue',
-  cyan: 'Cyan',
-  teal: 'Teal',
-  green: 'Green',
-  gray: 'Gray',
-  'cool-gray': 'Cool-Gray',
-  'warm-gray': 'Warm-Gray',
-  clickable: 'clickable',
-  nonClickable: 'nonClickable',
-};
-
-const prefix = 'lol';
 
 const Tag = ({
   children,
   className,
-  type,
   filter,
   title,
   disabled,
   onDelete,
   ...other
 }) => {
-  // const tagClass = `${prefix}--tag--${type}`;
-  // const tagClasses = classnames(`${prefix}--tag`, tagClass, className, {
-  //   [`${prefix}--tag--disabled`]: disabled,
-  //   [`${prefix}--tag--filter`]: filter,
-  // });
+  const [hover, setHover] = useState(false);
 
   const svgStyleJSON = {
     'Mstart($xxs)': true,
@@ -52,9 +31,10 @@ const Tag = ({
     'Bd(n)': true,
     'Va(bl)': true,
     'Cur(p)': true,
-    'Bgc(white):h': true,
-    'Bgc(t)': true,
-    'C(black)': true,
+    'Bgc(t)': !hover,
+    'Bgc(white)': hover,
+    'C(black)': !disabled,
+    'C($hoverInput)': disabled,
     'Bdrs($half)': true,
   };
 
@@ -67,36 +47,52 @@ const Tag = ({
     'Bdrs($mmd)': true,
     'Ff($ffmanrope)': true,
     'Fz($smd)': true,
-    'Bgc($navBarBg)': disabled,
-    'Bgc($activeTagBlue)': !disabled,
+    'Bgc($navBarBg)': disabled || !filter,
+    'Bgc($activeTagBlue)': !disabled && filter,
     'Whs(nw)': true,
+    'O(n)': true,
+    'Bd(n)': true,
+    'Bd($bdprimaryButton):f': true,
+    'C(black)': !disabled,
+    'C($hoverInput)': disabled,
   };
 
-  return filter && !disabled ? (
-    <div
+  const onClickHandler = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDelete(e);
+  };
+
+  const FilterableTag = () => (
+    <BaseButton
       className={classnames(wrapperStyleJSON)}
       disabled={disabled}
       {...other}
+      onMouseEnter={() => !disabled && setHover(true)}
+      onMouseLeave={() => !disabled && setHover(false)}
     >
       <div className="D(f) Ai(c) Jc(c)">
         <div className="Whs(nw)">
           {children !== null && children !== undefined ? children : 'Dummy Tag'}
         </div>
         <BaseIcon
-          onClick={onDelete}
+          onClick={onClickHandler}
           icon="close"
           width="16px"
           height="16px"
           iconClasses={classnames(svgStyleJSON)}
-          fill="#000"
         />
       </div>
-    </div>
-  ) : (
+    </BaseButton>
+  );
+
+  const NonFilterableTag = () => (
     <div className={classnames(wrapperStyleJSON)} {...other}>
       {children !== null && children !== undefined ? children : 'Dummy Tag'}
     </div>
   );
+
+  return filter ? <FilterableTag /> : <NonFilterableTag />;
 };
 
 Tag.propTypes = {
@@ -130,5 +126,4 @@ Tag.propTypes = {
   onDelete: PropTypes.func,
 };
 
-export const types = Object.keys(TYPES);
 export default Tag;

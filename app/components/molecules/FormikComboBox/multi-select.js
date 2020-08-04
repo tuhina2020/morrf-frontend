@@ -1,13 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormikInput from 'components/molecules/FormikInput';
 import FormikCheckBox from 'components/molecules/FormikCheckBox/dropdown';
 import BaseIcon from 'components/atoms/BaseIcon';
-import { Field } from 'formik';
-import { warning as Warning } from 'Assets/svg-comp';
 import { classnames } from 'utils/helper';
 
-const CheckList = ({ items, id, selectedIds, onSelect, isOpen, maheight }) => {
+const CheckList = ({ items, id, selectedIds, onSelect, isOpen }) => {
   if (!isOpen) return null;
   return (
     <div
@@ -23,11 +20,11 @@ const CheckList = ({ items, id, selectedIds, onSelect, isOpen, maheight }) => {
           role="option"
           aria-selected="false"
           id={`${id}_item_${index}`}
-          key={`${item.name}_${item.id}_${index}`}
+          key={item.id}
         >
           <div className="W($full) Ta(start)">
             <FormikCheckBox
-              name={`${name}.selected`}
+              name={`${item.name}.selected`}
               value={selectedIds.includes(item.id)}
               labelText={item.name}
               labelSize="sm"
@@ -35,7 +32,6 @@ const CheckList = ({ items, id, selectedIds, onSelect, isOpen, maheight }) => {
               bgColorStyle="Bgc($navBarBg)"
               onChange={e => {
                 const v = e.target.checked;
-                console.log(v);
                 onSelect({ item, add: v });
               }}
             />
@@ -48,24 +44,16 @@ const CheckList = ({ items, id, selectedIds, onSelect, isOpen, maheight }) => {
 
 const FormikComboBox = ({
   id,
-  name,
-  type,
-  placeholder,
   onFocus,
   onBlur,
   onChange,
   labelText,
-  autoComplete,
-  tabIndex,
   disabled,
   items,
-  dimensionClasses,
   selectedIds,
   onSelect,
-  value,
   onFilter,
   width,
-  maheight,
 }) => {
   // const [inputItems, setInputItems] = useState(items);
   const [active, setActive] = useState(false);
@@ -91,6 +79,8 @@ const FormikComboBox = ({
   const [isOpen, setOpen] = useState(false);
 
   const toggleOpen = e => {
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(!isOpen);
   };
 
@@ -98,10 +88,11 @@ const FormikComboBox = ({
     // 'Bxsh($bxshcheckbox)': true,
     // 'Pb($md)': true,
     // 'Px($sm)': true,
-    'Bgc($hoverInput):h': true,
-    'Bgc($hoverInput)': isOpen,
-    'Bgc($navBarBg)': !isOpen,
-    'C($headingDarkGrey)': true,
+    'Bgc($hoverInput):h': !disabled,
+    'Bgc($hoverInput)': isOpen && !disabled,
+    'Bgc($navBarBg)': !isOpen || disabled,
+    'C($headingDarkGrey)': !disabled,
+    'C($disabledGrey2)': disabled,
     'H($2xl)': true,
     [`W($${width})`]: true,
     'Pos(r)': true,
@@ -122,7 +113,13 @@ const FormikComboBox = ({
       aria-owns={`${id}_menu`}
       aria-expanded={isOpen}
     >
-      <div className={labelStyle} onClick={toggleOpen}>
+      <div
+        role="button"
+        className={labelStyle}
+        onClick={toggleOpen}
+        onKeyDown={toggleOpen}
+        tabIndex={0}
+      >
         <div className="D(f) Ai(c) Jc(sb) Pt($sm) Px($sm)">
           <div className="Lh($md) Ff($ffmanrope) Fz($smd)">{labelText}</div>
           <div>
@@ -141,7 +138,6 @@ const FormikComboBox = ({
         id={id}
         selectedIds={selectedIds}
         onSelect={onSelect}
-        maheight={maheight}
       />
     </div>
   );
@@ -153,8 +149,12 @@ FormikComboBox.propTypes = {
   onChange: PropTypes.func,
   labelText: PropTypes.string,
   id: PropTypes.string.isRequired,
-  dimensionClasses: PropTypes.string,
-  maheight: PropTypes.string,
+  items: PropTypes.array,
+  selectedIds: PropTypes.array,
+  onSelect: PropTypes.func,
+  disabled: PropTypes.bool,
+  onFilter: PropTypes.func,
+  width: PropTypes.string,
 };
 
 FormikComboBox.defaultProps = {
@@ -162,15 +162,10 @@ FormikComboBox.defaultProps = {
   onBlur: () => {},
   onChange: () => {},
   labelText: 'Label',
-  autoComplete: 'off',
-  tabIndex: 1,
   disabled: false,
   width: 'full',
-  prependIcon: 'showmore',
-  dimensionClasses: 'W($full)',
   onSelect: () => {},
   items: [],
-  maheight: '10x',
 };
 
 export default FormikComboBox;

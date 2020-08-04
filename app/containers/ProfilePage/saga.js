@@ -189,6 +189,7 @@ function* setRemotePersonalData({ payload }) {
 
 function* setRemotePortfolio({ payload }) {
   console.log('Portfolio Data has been set', payload);
+  debugger;
   yield put(setLocalPortfolio(payload.portfolio));
 }
 

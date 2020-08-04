@@ -12,12 +12,15 @@ const FormikComboBox = ({
   onSelect,
   width,
   tabIndex,
+  disabled,
 }) => {
   const [isOpen, setOpen] = useState(false);
 
   const toggleOpen = e => {
     e.preventDefault();
     e.stopPropagation();
+    if (disabled) return;
+    debugger;
     setOpen(!isOpen);
   };
 
@@ -25,21 +28,24 @@ const FormikComboBox = ({
     // 'Bxsh($bxshcheckbox)': true,
     // 'Pb($md)': true,
     // 'Px($sm)': true,
-    'Bgc($hoverInput):h': true,
-    'Bgc($hoverInput)': isOpen,
-    'Bgc($navBarBg)': !isOpen,
-    'C($headingDarkGrey)': true,
+    'Bgc($hoverInput):h': !disabled,
+    'Bgc($hoverInput)': isOpen && !disabled,
+    'Bgc($navBarBg)': !isOpen || disabled,
+    'C($headingDarkGrey)': !disabled,
+    'C($disabledGrey2)': disabled,
     'H($2xl)': true,
     [`W($${width})`]: true,
     'Pos(r)': true,
-    'Bdb($bdheadingDarkGrey)': !isOpen,
-    'Bd($bdprimaryButton):h': true,
-    'Bdb($bdprimaryButton)': isOpen,
+    'Bdb($bdheadingDarkGrey)': !isOpen && !disabled,
+    'Bdb($bddisabledGrey2)': disabled,
+    'Bd($bdprimaryButton):h': !disabled,
+    'Bdb($bdprimaryButton)': !disabled,
     'Bdrs($bdrsinput)': true,
     'Trsdu(0.3s)': true,
     'Trsp(a)': true,
     'Trstf(e)': true,
     'Bxz(bb)': true,
+    'O(n)': true,
   });
 
   return (
@@ -53,7 +59,7 @@ const FormikComboBox = ({
         role="button"
         className={labelStyle}
         onClick={toggleOpen}
-        onKeyDown={() => {}}
+        onKeyDown={toggleOpen}
         tabIndex={tabIndex}
       >
         <div className="D(f) Ai(c) Jc(sb) Pt($sm) Px($sm)">
@@ -87,6 +93,7 @@ FormikComboBox.propTypes = {
   items: PropTypes.array,
   values: PropTypes.arrayOf(PropTypes.string),
   tabIndex: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 FormikComboBox.defaultProps = {
@@ -94,7 +101,8 @@ FormikComboBox.defaultProps = {
   width: 'full',
   onSelect: () => {},
   items: [],
-  tabIndex: 1,
+  tabIndex: 0,
+  disabled: true,
 };
 
 export default FormikComboBox;

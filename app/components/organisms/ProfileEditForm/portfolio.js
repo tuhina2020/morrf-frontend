@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormikCheckBox from 'components/molecules/FormikCheckBox';
-import Input from 'components/molecules/Input';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { Form, FieldArray, Formik } from 'formik';
@@ -10,7 +8,6 @@ import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 import get from 'lodash/get';
-import sortBy from 'lodash/sortBy';
 import { wordCount } from 'utils/helper';
 
 const removeProps = {
@@ -30,12 +27,9 @@ const PortfolioFormCard = ({
   errors,
   touched,
   handleChange,
-  setFieldValue,
   remove,
   current = false,
 }) => {
-  // if (!current) return null;
-  console.log('RENDER ', index, current);
   const getError = (key, i) =>
     key &&
     get(errors, `allPortfolios[${i}][${key}]`, null) &&
@@ -43,11 +37,8 @@ const PortfolioFormCard = ({
       ? get(errors, `allPortfolios[${i}][${key}]`, null)
       : null;
   return (
-    <div
-      key={`portfolio_${index}`}
-      className="Px($xlg) Py($md) Bgc(white) W($60xl)"
-    >
-      <div className="D(f) Ai(c) Jc(sb) H($2xl)">
+    <div key={`portfolio_${index}`} className="P($lg)">
+      <div className="D(f) Ai(c) Jc(sb)">
         <div>
           <FormikInput
             label="Project name"
@@ -59,7 +50,7 @@ const PortfolioFormCard = ({
             onChange={handleChange}
           />
         </div>
-        <div className="Mstart($2xl)">
+        <div className="Mstart(52px)">
           <FormikInput
             name={`allPortfolios[${index}].client`}
             id={`client_${index}`}
@@ -78,7 +69,7 @@ const PortfolioFormCard = ({
         id={`completion_${index}`}
         tabIndex={6 * index + 3}
         autoComplete="off"
-        dimensionClasses="W($15xl)"
+        dimensionClasses="W($15xl) H($2xl) My($lg)"
         error={getError('completion', index)}
         value={portfolio.completion}
         onChange={handleChange}
@@ -89,7 +80,7 @@ const PortfolioFormCard = ({
         id="description"
         heightClass="H($5xl)"
         placeholder="Brief description of your work"
-        dimensionClasses="W($full) Mt($2xl)"
+        dimensionClasses="W($full) My($lg)"
         tabIndex={6 * index + 6}
         onChange={handleChange}
         value={portfolio.description}
@@ -106,7 +97,7 @@ const PortfolioFormCard = ({
   );
 };
 
-const ExperienceCounter = ({ onNext, onBack, total, current }) => {
+const PortfolioCounter = ({ onNext, onBack, total, current }) => {
   if (total === 0 || !total) return null;
   return (
     <div className="D(f) Jc(c) Ai(c)">
@@ -133,7 +124,7 @@ const ExperienceCounter = ({ onNext, onBack, total, current }) => {
   );
 };
 
-const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
+const PortfolioEditForm = ({ onCancel, data: portfolio, onSave }) => {
   const validationSchema = Yup.object().shape({
     allPortfolios: Yup.array().of(
       Yup.object().shape({
@@ -215,23 +206,16 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
       }}
       validationSchema={validationSchema}
     >
-      {({
-        values,
-        handleChange,
-        setFieldValue,
-        handleSubmit,
-        touched,
-        errors,
-      }) => (
+      {({ values, handleChange, handleSubmit, touched, errors }) => (
         <div className="Bdrs($xs) Bgc(white) H($fc) W($60xl)">
           <Form onSubmit={handleSubmit}>
             <FieldArray
               name="allPortfolios"
-              render={({ remove, push, insert, unshift }) => (
+              render={({ remove, unshift }) => (
                 <>
                   <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
                     <div>Edit Portfolio</div>
-                    <ExperienceCounter
+                    <PortfolioCounter
                       total={values.allPortfolios.length}
                       current={currentIndex}
                       onNext={() => {
@@ -250,7 +234,6 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
                     <Button
                       {...addProps}
                       onClick={() => {
-                        console.log('ADD FRIEND');
                         setTimeout(() => {
                           unshift(emptyPortfolio);
                           setCurrentIndex(0);
@@ -281,7 +264,6 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
                               : currentIndex === index + 1
                           }
                           handleChange={handleChange}
-                          setFieldValue={setFieldValue}
                         />
                       ))}
                     </div>
@@ -307,11 +289,13 @@ const PortfolioEditForm = ({ onCancel, portfolio, onSave }) => {
 
 PortfolioEditForm.propTypes = {
   onCancel: PropTypes.func,
-  portfolio: PropTypes.array,
+  onSave: PropTypes.func.isRequired,
+  data: PropTypes.array,
 };
 
 PortfolioEditForm.defaultProps = {
   onCancel: () => {},
+  data: [],
 };
 
 export default PortfolioEditForm;
