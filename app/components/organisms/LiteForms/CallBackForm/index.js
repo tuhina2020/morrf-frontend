@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '../../../molecules/Button/index';
 import Input from '../../../molecules/Input/index';
+import BaseIcon from 'components/atoms/BaseIcon';
 
 const getDesktopForm = setCallBackForm => ({
   handleSubmit,
@@ -20,109 +21,81 @@ const getDesktopForm = setCallBackForm => ({
   const getError = key => (key && errors[key] ? errors[key] : null);
   return (
     <div
-      className="W(540px) H(575px) Bxsh(0px 0px 8px #0000001F)"
-      style={{
-        boxShadow: '0px 0px 8px #0000001f',
-        margin: 'auto',
-        borderRadius: '8px',
-        padding: '24px',
-        opacity: '1',
-      }}
+      className="W(540px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)"
     >
       <div>
         <Button
+          kind="tertiary"
+          classes="Pos(a)"
           onClick={() => {
             setCallBackForm(false);
           }}
-          kind="secondary"
-          style={{ position: 'relative', width: '24px', height: '18px' }}
-        />
+        >
+          <BaseIcon icon="arrowback" width="24px" height="18px" />
+        </Button>
       </div>
-      <div style={{ height: '72px' }} />
+      <div className="D(f) Jc(c) H($5xl) Mt($lg)" >
+        <div className="W($5xl) H($5xl) Bgc($inputGrey)"></div>
+      </div>
       <div
-        className="Ff($ffmanrope)"
-        style={{
-          fontSize: '20px',
-          textAlign: 'center',
-          marginTop: '24px',
-          marginBottom: '48px',
-        }}
-      >
+        className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
         Request a Call Back
       </div>
       <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          alignContent: 'flex-start',
-          justifyContent: 'flex-start',
-        }}
+        className="D(f) Fld(c) W($full) Ai(fs) Jc(fs)"
         onSubmit={handleSubmit}
       >
-        <div style={{ height: '72px' }}>
-          <FormikInput
-            dimensionClasses="W(100%) H(48px) Mb(12px)"
-            label="Your name"
-            name="name"
-            id="name"
-            tabIndex={1}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.name}
-            error={getError('name')}
-          />
-        </div>
-        <div style={{ height: '72px' }}>
-          <FormikInput
-            dimensionClasses="W(100%) H(48px) Mb(12px)"
-            label="Your phone no."
-            name="phone"
-            id="phone"
-            tabIndex={1}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.phone}
-            error={getError('phone')}
-          />
-        </div>
+        <FormikInput
+          dimensionClasses="W($full) H($2xl) Mb($lg)"
+          label="Your name"
+          name="name"
+          id="name"
+          tabIndex={1}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.name}
+          error={getError('name')}
+        />
+        <FormikInput
+          dimensionClasses="W($full) H($2xl) Mb($lg)"
+          label="Your phone no."
+          name="phone"
+          id="phone"
+          tabIndex={1}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.phone}
+          error={getError('phone')}
+        />
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            height: '72px',
-          }}
+          className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)"
         >
-          <div style={{ width: '45%' }}>
-            <FormikInput
-              dimensionClasses="W(100%) H(48px) Mb(12px)"
-              label="Preffered date"
-              name="date"
-              id="date"
-              tabIndex={1}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.date}
-              error={getError('date')}
-            />
-          </div>
-          <div style={{ width: '45%' }}>
-            <FormikInput
-              dimensionClasses="W(100%) H(48px) Mb(12px)"
-              label="Preffered time"
-              name="time"
-              id="time"
-              tabIndex={1}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.time}
-              error={getError('time')}
-            />
-          </div>
+          <FormikInput
+            dimensionClasses="W(218px) H($2xl)"
+            label="Preffered date"
+            name="date"
+            id="date"
+            tabIndex={1}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.date}
+            error={getError('date')}
+          />
+          <FormikInput
+            dimensionClasses="W(218px) H($2xl)"
+            label="Preffered time"
+            name="time"
+            id="time"
+            tabIndex={1}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.time}
+            error={getError('time')}
+          />
         </div>
 
         <Button
-          style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: '24px' }}
+          classes="Mx(a) Mt($lg) Mb($2xl)"
           type="submit"
         >
           Submit Request
@@ -132,76 +105,105 @@ const getDesktopForm = setCallBackForm => ({
   );
 };
 
-const getMobileForm = setCallBackForm => (
-  <div
-    className="W(540px) H(575px) Bxsh(0px 0px 8px #0000001F)"
-    style={{
-      boxShadow: '0px 0px 8px #0000001f',
-      margin: 'auto',
-      borderRadius: '8px',
-      padding: '24px',
-      opacity: '1',
-    }}
-  >
-    <div>
-      <Button
-        onClick={() => {
-          setCallBackForm(false);
-        }}
-        kind="secondary"
-        style={{ position: 'relative', width: '24px', height: '18px' }}
-      />
-    </div>
-    <div style={{ height: '72px' }} />
+const getMobileForm = setCallBackForm => ({
+  handleSubmit,
+  handleChange,
+  handleBlur,
+  values,
+  touched,
+  errors,
+  validateField,
+  validateForm,
+  setFieldError,
+}) => {
+  const getError = key => (key && errors[key] ? errors[key] : null);
+  return (
     <div
-      className="Ff($ffmanrope)"
-      style={{
-        fontSize: '20px',
-        textAlign: 'center',
-        marginTop: '24px',
-        marginBottom: '48px',
-      }}
+      className="W(540px) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)"
     >
-      Request a Call Back
-    </div>
-    <form
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        alignContent: 'flex-start',
-        justifyContent: 'flex-start',
-      }}
-    >
-      <div style={{ height: '72px' }}>
-        <Input labelText="" placeholder="Your Name" size="auto" />
+      <div>
+        <Button
+          kind="tertiary"
+          classes="Pos(a)"
+          onClick={() => {
+            setCallBackForm(false);
+          }}
+        >
+          <BaseIcon icon="arrowback" width="24px" height="18px" />
+        </Button>
       </div>
-      <div style={{ height: '72px' }}>
-        <Input size="auto" labelText="" placeholder="Your phone no." />
+      <div className="D(f) Jc(c) H($5xl) Mt($lg)" >
+        <div className="W($5xl) H($5xl) Bgc($inputGrey)"></div>
       </div>
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          height: '72px',
-        }}
-      >
-        <div style={{ width: '45%' }}>
-          <Input size="auto" labelText="" placeholder="Preferred date" />
-        </div>
-        <div style={{ width: '45%' }}>
-          <Input size="auto" labelText="" placeholder="Preferred time" />
-        </div>
+        className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
+        Request a Call Back
       </div>
-
-      <Button
-        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: '24px' }}
+      <form
+        className="D(f) Fld(c) W($full) Ai(fs) Jc(fs)"
+        onSubmit={handleSubmit}
       >
-        Submit Request
-      </Button>
-    </form>
-  </div>
-);
+        <FormikInput
+          dimensionClasses="W($full) H($2xl) Mb($lg)"
+          label="Your name"
+          name="name"
+          id="name"
+          tabIndex={1}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.name}
+          error={getError('name')}
+        />
+        <FormikInput
+          dimensionClasses="W($full) H($2xl) Mb($lg)"
+          label="Your phone no."
+          name="phone"
+          id="phone"
+          tabIndex={1}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.phone}
+          error={getError('phone')}
+        />
+        <div
+          className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)"
+        >
+          <FormikInput
+            dimensionClasses="W(218px) H($2xl)"
+            label="Preffered date"
+            name="date"
+            id="date"
+            tabIndex={1}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.date}
+            error={getError('date')}
+          />
+          <FormikInput
+            dimensionClasses="W(218px) H($2xl)"
+            label="Preffered time"
+            name="time"
+            id="time"
+            tabIndex={1}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.time}
+            error={getError('time')}
+          />
+        </div>
+
+        <Button
+          classes="Mx(a) Mt($lg) Mb($2xl)"
+          type="submit"
+        >
+          Submit Request
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+
 
 const CallBackForm = props => {
   const { setCallBackForm, isDesktopOrLaptop } = props;

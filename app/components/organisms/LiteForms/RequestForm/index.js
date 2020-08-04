@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { Form, Formik } from 'formik';
 import Input from '../../../molecules/Input/index';
+import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
+import Tag from 'components/molecules/Tag';
 
 import Button from '../../../molecules/Button/index';
-const getDesktopForm = setCallBackForm => ({
+const getDesktopForm = ({
+  setCallBackForm,
+  viewableSpecialist,
+  setViewableSpecialist,
+  specialistList,
+  selectObj,
+  deleteSkill,
+}) => ({
   handleSubmit,
   handleChange,
   handleBlur,
@@ -21,30 +30,13 @@ const getDesktopForm = setCallBackForm => ({
   const getError = key => (key && errors[key] ? errors[key] : null);
 
   return (
-    <div
-      className="W(540px) H(575px) D(f) Ai(c) Jc(c) Bxsh(0px 0px 8px #0000001F)"
-      style={{
-        boxShadow: '0px 0px 8px #0000001f',
-        margin: 'auto',
-        borderRadius: '8px',
-        padding: '24px',
-        paddingTop: '0px',
-        opacity: '1',
-      }}
-    >
+    <div className="W(540px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)">
       <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          height: '100%',
-          alignContent: 'flex-start',
-          justifyContent: 'flex-start',
-        }}
+        className="D(f) Fld(c) W($full) H($full) Ai(fs) Jc(fs)"
         onSubmit={handleSubmit}
       >
         <FormikInput
-          dimensionClasses="W(100%) H(60px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Your name"
           name="name"
           id="name"
@@ -54,20 +46,37 @@ const getDesktopForm = setCallBackForm => ({
           value={values.name}
           error={getError('phone')}
         />
-        <FormikInput
-          dimensionClasses="W(100%) H(60px) Mb(12px)"
-          label="Design specialist you are looking for"
-          name="specialist"
-          id="specialist"
-          tabIndex={1}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={values.specialist}
-          error={getError('specialist')}
-        />
+        <div className="W($full) Mb($sm)">
+          <div className="D(f) Ai(c) Jc(s) Flw(w)">
+            {viewableSpecialist.map(skill => (
+              <div className="Mend($sm) Mb($sm)" key={skill.id}>
+                <Tag
+                  filter
+                  disabled={false}
+                  onDelete={() => deleteSkill(skill)}
+                >
+                  {skill.name}
+                </Tag>
+              </div>
+            ))}
+          </div>
+          <NestedFormikComboBox
+            className="H($2xl)"
+            id="search"
+            name="search"
+            type="text"
+            prependIcon="showmore"
+            labelText="Design specialist you are looking for"
+            // onKeyPress={onEnter}
+            onSelect={selectObj}
+            items={specialistList}
+            values={viewableSpecialist.map(sk => sk.id)}
+            label="Design specialist you are looking for"
+          />
+        </div>
         <FormikTextArea
-          dimensionClasses="W(100%) H(100px) Mt(12px)"
-          heightClass="H(100px)"
+          dimensionClasses="W($full) Mb($sm)"
+          heightClass="H($10x)"
           placeholder="Brief description of the job"
           name="description"
           id="description"
@@ -78,7 +87,7 @@ const getDesktopForm = setCallBackForm => ({
           error={getError('description')}
         />
         <FormikInput
-          dimensionClasses="W(100%) H(60px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Job budget in INR"
           name="budget"
           id="budget"
@@ -89,7 +98,7 @@ const getDesktopForm = setCallBackForm => ({
           error={getError('budget')}
         />
         <FormikInput
-          dimensionClasses="W(100%) H(60px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Your email address"
           name="email"
           id="email"
@@ -100,41 +109,13 @@ const getDesktopForm = setCallBackForm => ({
           error={getError('email')}
         />
 
-        <Button
-          type="submit"
-          style={{
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '24px',
-            marginBottom: '12px',
-          }}
-        >
+        <Button type="submit" classes="Mx(a) My($sm)">
           Submit Request
         </Button>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '254px',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '12px',
-            marginBottom: '12px',
-          }}
-        >
-          <hr
-            width="40%"
-            style={{
-              opacity: '0.5',
-            }}
-          />
+        <div className="D(f) Fld(r) W($half) Mx(a) My($sm)">
+          <hr className="W(40%) O(0.5)" />
           or
-          <hr
-            width="40%"
-            style={{
-              opacity: '0.5',
-            }}
-          />
+          <hr className="W(40%) O(0.5)" />
         </div>
         <Button
           type="button"
@@ -142,11 +123,7 @@ const getDesktopForm = setCallBackForm => ({
             setCallBackForm(true);
           }}
           kind="secondary"
-          style={{
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '12px',
-          }}
+          classes="Mx(a) Mt($sm)"
         >
           Request a Callback
         </Button>
@@ -155,7 +132,14 @@ const getDesktopForm = setCallBackForm => ({
   );
 };
 
-const getMobileForm = setCallBackForm => ({
+const getMobileForm = ({
+  setCallBackForm,
+  viewableSpecialist,
+  setViewableSpecialist,
+  specialistList,
+  selectObj,
+  deleteSkill,
+}) => ({
   handleSubmit,
   handleChange,
   handleBlur,
@@ -169,112 +153,92 @@ const getMobileForm = setCallBackForm => ({
   const getError = key => (key && errors[key] ? errors[key] : null);
 
   return (
-    <div
-      className="W(540px) H(575px) D(f) Ai(c) Jc(c) Bxsh(0px 0px 8px #0000001F)"
-      style={{
-        boxShadow: '0px 0px 8px #0000001f',
-        margin: 'auto',
-        borderRadius: '8px',
-        padding: '24px',
-        paddingTop: '0px',
-        opacity: '1',
-      }}
-    >
+    <div className="W(540px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)">
       <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          height: '100%',
-          alignContent: 'flex-start',
-          justifyContent: 'flex-start',
-        }}
+        className="D(f) Fld(c) W($full) H($full) Ai(fs) Jc(fs)"
+        onSubmit={handleSubmit}
       >
         <FormikInput
-          dimensionClasses="W(100%) H(48px) Mb(12px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Your name"
           name="name"
           id="name"
           tabIndex={1}
+          onBlur={handleBlur}
           onChange={handleChange}
           value={values.name}
           error={getError('phone')}
         />
-        <FormikInput
-          dimensionClasses="W(100%) H(60px) "
-          label="Design specialist you are looking for"
-          name="specialist"
-          id="specialist"
-          tabIndex={1}
-          onChange={handleChange}
-          value={values.specialist}
-          error={getError('specialist')}
-        />
+        <div className="W($full) Mb($sm)">
+          <div className="D(f) Ai(c) Jc(s) Flw(w)">
+            {viewableSpecialist.map(skill => (
+              <div className="Mend($sm) Mb($sm)" key={skill.id}>
+                <Tag
+                  filter
+                  disabled={false}
+                  onDelete={() => deleteSkill(skill)}
+                >
+                  {skill.name}
+                </Tag>
+              </div>
+            ))}
+          </div>
+          <NestedFormikComboBox
+            className="H($2xl)"
+            id="search"
+            name="search"
+            type="text"
+            prependIcon="showmore"
+            labelText="Design specialist you are looking for"
+            // onKeyPress={onEnter}
+            onSelect={selectObj}
+            items={specialistList}
+            values={viewableSpecialist.map(sk => sk.id)}
+            label="Design specialist you are looking for"
+          />
+        </div>
         <FormikTextArea
-          dimensionClasses="W(100%) H(100px) "
-          heightClass="H(100px)"
+          dimensionClasses="W($full) Mb($sm)"
+          heightClass="H($10x)"
           placeholder="Brief description of the job"
           name="description"
           id="description"
           tabIndex={1}
+          onBlur={handleBlur}
           onChange={handleChange}
           value={values.description}
           error={getError('description')}
         />
         <FormikInput
-          dimensionClasses="W(100%) H(48px) Mb(12px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Job budget in INR"
           name="budget"
           id="budget"
           tabIndex={1}
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.budget}
           error={getError('budget')}
         />
         <FormikInput
-          dimensionClasses="W(100%) H(48px) Mb(12px)"
+          dimensionClasses="W($full) H($2xl) Mb($sm)"
           label="Your email address"
           name="email"
           id="email"
           tabIndex={1}
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.email}
           error={getError('email')}
         />
-        <Button
-          style={{
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '24px',
-            marginBottom: '12px',
-          }}
-        >
+
+        <Button type="submit" classes="Mx(a) My($sm)">
           Submit Request
         </Button>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '254px',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '12px',
-            marginBottom: '12px',
-          }}
-        >
-          <hr
-            width="40%"
-            style={{
-              opacity: '0.5',
-            }}
-          />
+        <div className="D(f) Fld(r) W($half) Mx(a) My($sm)">
+          <hr className="W(40%) O(0.5)" />
           or
-          <hr
-            width="40%"
-            style={{
-              opacity: '0.5',
-            }}
-          />
+          <hr className="W(40%) O(0.5)" />
         </div>
         <Button
           type="button"
@@ -282,11 +246,7 @@ const getMobileForm = setCallBackForm => ({
             setCallBackForm(true);
           }}
           kind="secondary"
-          style={{
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: '12px',
-          }}
+          classes="Mx(a) Mt($sm)"
         >
           Request a Callback
         </Button>
@@ -296,23 +256,38 @@ const getMobileForm = setCallBackForm => ({
 };
 
 const RequestForm = props => {
-  const { setCallBackForm, isDesktopOrLaptop } = props;
+  const [viewableSpecialist, setViewableSpecialist] = useState([]);
+  const { setCallBackForm, isDesktopOrLaptop, specialistList } = props;
+
   const YupObj = {
     name: Yup.string().required('Required'),
     email: Yup.string()
       .email('Enter a valid email')
       .required('Required'),
-    specialist: Yup.string().required('Required'),
     description: Yup.string().required('Required'),
     budget: Yup.number()
       .integer('Enter amount')
       .required('Required'),
   };
+
   const validationSchema = Yup.object(YupObj);
 
+  const selectObj = ({ item, add }) => {
+    const newSpecialist = add
+      ? [...viewableSpecialist, item]
+      : viewableSpecialist.filter(sk => sk.id !== item.id);
+    setViewableSpecialist(newSpecialist);
+  };
+
+  const deleteSkill = skill => {
+    selectObj({
+      item: skill,
+      add: false,
+    });
+  };
   const initialValues = {
     name: '',
-    specialist: '',
+    specialist: [],
     description: '',
     budget: '',
     email: '',
@@ -321,14 +296,21 @@ const RequestForm = props => {
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        (values.specialist = [...viewableSpecialist]), console.log(values);
         alert(JSON.stringify(values));
         setSubmitting(false);
       }}
       validationSchema={validationSchema}
     >
       {isDesktopOrLaptop
-        ? getDesktopForm(setCallBackForm)
+        ? getDesktopForm({
+            setCallBackForm,
+            viewableSpecialist,
+            setViewableSpecialist,
+            specialistList,
+            selectObj,
+            deleteSkill,
+          })
         : getMobileForm(setCallBackForm)}
     </Formik>
   );

@@ -3,26 +3,13 @@ import React from 'react';
 const getDesktopCard = (title, description, image) => {
   return (
     <div
-      style={{
-        width: '417px',
-        paddingLeft: '12px',
-        minWidth: '417px',
-        paddingRight: '12px',
-        backgroundColor: '#F5F5F5',
-        textAlign: 'center',
-        paddingBottom: '24px',
-      }}
+      className="W(417px) Mw($417px) Px($sm) Bgc($navBarBg) Ta(c) Pb($lg)"
     >
       <div
-        style={{
-          backgroundColor: '#FFFFFF',
-          width: '100%',
-          height: '236px',
-          marginBottom: '11px',
-        }}
+        className="W($full) Bgc(white) Mb($sm) H($24xl)"
       />
       <div
-        className="Ff($ffmanrope) Fw($fwregular)"
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Mb($md) Fz($fztitle) Lh(28px)"
         style={{
           width: '100%',
           marginBottom: '16px',
@@ -33,8 +20,8 @@ const getDesktopCard = (title, description, image) => {
         {title}
       </div>
       <div
-        className="Ff($ffmanrope) Fw($fwregular)"
-        style={{ width: '100%', fontSize: '16px', lineHeight: '24px' }}
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Fz($fzmessage) Lh($input)"
+        
       >
         {description}
       </div>
@@ -42,29 +29,17 @@ const getDesktopCard = (title, description, image) => {
   );
 };
 
+
 const getMobileCard = (title, description, image) => {
   return (
     <div
-      style={{
-        width: '417px',
-        paddingLeft: '12px',
-        minWidth: '417px',
-        paddingRight: '12px',
-        backgroundColor: '#F5F5F5',
-        textAlign: 'center',
-        paddingBottom: '24px',
-      }}
+      className="W(417px) Mw($417px) Px($sm) Bgc($navBarBg) Ta(c) Pb($lg)"
     >
       <div
-        style={{
-          backgroundColor: '#FFFFFF',
-          width: '100%',
-          height: '236px',
-          marginBottom: '11px',
-        }}
+        className="W($full) Bgc(white) Mb($sm) H($24xl)"
       />
       <div
-        className="Ff($ffmanrope) Fw($fwregular)"
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Mb($md) Fz($fztitle) Lh(28px)"
         style={{
           width: '100%',
           marginBottom: '16px',
@@ -75,8 +50,8 @@ const getMobileCard = (title, description, image) => {
         {title}
       </div>
       <div
-        className="Ff($ffmanrope) Fw($fwregular)"
-        style={{ width: '100%', fontSize: '16px', lineHeight: '24px' }}
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Fz($fzmessage) Lh($input)"
+        
       >
         {description}
       </div>
