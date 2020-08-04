@@ -44,7 +44,7 @@
     "svg:comp": "rm -rf app/Assets/svg-comp && npx @svgr/cli --filename-case=kebab --no-svgo --no-dimensions -d app/Assets/svg-comp app/Assets/svg-svgo",
     "base:svg:comp": "rm -rf app/Assets/svg-comp && npx @svgr/cli --filename-case=kebab --no-svgo --no-dimensions -d app/Assets/svg-comp app/Assets/svg",
     "grunt": "grunt atomizer:pwa",
-    "generate:svg": "npm run svg:optimize && npm run svg:comp",
+    "generate:svg": "rm -rf app/Assets/svg-comp && npx @svgr/cli --filename-case=kebab --no-svgo --no-dimensions -d app/Assets/svg-comp app/Assets/svg",
     "deploy:prod": "firebase deploy --only hosting:production",
     "deploy:staging": "firebase deploy --only hosting:staging",
     "storybook": "npm run grunt && start-storybook -s ./css -p 9001"
