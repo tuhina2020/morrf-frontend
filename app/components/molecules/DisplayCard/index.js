@@ -14,9 +14,9 @@ const ChildDisplayCardWrapper = ({
   return React.Children.map(children, (child, i) => (
     <div
       className={`${
-        i == number - 1 ? (lastChildPadding ? childPadding : '') : childPadding
-      } ${number == 1 || i == number - 1 ? '' : 'Bdb($bdcardGrey)'}`}
-      key={i}
+        i === number - 1 ? (lastChildPadding ? childPadding : '') : childPadding
+      } ${number === 1 || i === number - 1 ? '' : 'Bdb($bdcardGrey)'}`}
+      key={new Date().toString()}
     >
       {child}
     </div>
@@ -75,6 +75,7 @@ const DisplayCard = React.forwardRef((props, ref) => {
 });
 
 DisplayCard.propTypes = {
+  children: PropTypes.node,
   heading: PropTypes.string,
   topRightIcon: PropTypes.string,
   color: PropTypes.string,
@@ -85,7 +86,7 @@ DisplayCard.propTypes = {
 
 DisplayCard.defaultProps = {
   color: '#0847f4',
-  childPadding: 'Px($lg) Pt($sm) Pb($mmd)',
+  childPadding: 'Px($lg) Py($sm)',
   lastChildPadding: true,
   onClickIcon: () => {},
 };

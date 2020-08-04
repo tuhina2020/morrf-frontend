@@ -18,6 +18,7 @@ module.exports = () => ({
     iconBlue: '#0847f4',
     activeTagBlue: '#e3ebff',
     checkBoxBg: '#fefefe',
+    checkboxMore: '#e80000',
   },
   fontFamily: {
     prefix: 'ff',

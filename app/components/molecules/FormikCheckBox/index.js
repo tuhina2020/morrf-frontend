@@ -73,7 +73,7 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
   return (
     <Field name={props.name}>
       {({ field }) => (
-        <label className="D(f) Jc(s) Cur(p) Bg(i) W($full) Pos(r)">
+        <label className="D(f) Jc(fs) Cur(p) Bg(i) W($full) Pos(r)">
           <span className={checkmarkBg} />
           <span className={checkmarkStyle} />
           <span className={blueBorderOnFocus} />

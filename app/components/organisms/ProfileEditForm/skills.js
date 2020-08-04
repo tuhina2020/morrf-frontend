@@ -73,7 +73,7 @@ const SkillEditForm = ({
           >
             <div>
               {!isEmpty(viewableSkills) ? (
-                <div className="D(f) Ai(c) Jc(s) Mb($lg) Flw(w)">
+                <div className="D(f) Ai(c) Jc(s) Mb($sm) Flw(w)">
                   {viewableSkills.map(skill => (
                     <div className="Mend($sm) Mb($sm)" key={skill.id}>
                       <Tag
@@ -92,12 +92,12 @@ const SkillEditForm = ({
                 name="search"
                 type="text"
                 prependIcon="showmore"
-                labelText="Select one or more skills"
+                labelText="Select skills"
                 // onKeyPress={onEnter}
                 onSelect={selectObj}
                 items={allSkills}
-                values={viewableSkills.map(sk => sk.id)}
-                label="Select one or more skills"
+                deleteEntity={deleteSkill}
+                values={viewableSkills}
               />
             </div>
             <div className="D(f) Ai(c) Jc(c)">

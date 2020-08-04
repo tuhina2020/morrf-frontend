@@ -24,8 +24,8 @@ const getButtonStyle = ({
     'O(n)': true,
     [`W($${size})`]: size && size.length > 0,
     'Jc(c) D(f) Ai(c)': !alignContent || alignContent === 'center',
-    'Jc(s) D(f) Ai(c)': alignContent === 'start',
-    'Jc(e) D(f) Ai(c)': alignContent === 'end',
+    'Jc(fs) D(f) Ai(c)': alignContent === 'start',
+    'Jc(fe) D(f) Ai(c)': alignContent === 'end',
   };
 
   const primaryButtonStyles = {
