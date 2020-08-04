@@ -27,7 +27,7 @@ const MobilePage = ({
           <div
             className={`Bdend($bdlightGrey) ${'Pt(2.5vw)'} Pstart($lg) Mend($lg)`}
           />
-          <div className={`Ff($ffmanrope) Fw($fwregular) Fz($fztitle)`}>
+          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fztitle)">
             Design Made Easy
           </div>
         </div>

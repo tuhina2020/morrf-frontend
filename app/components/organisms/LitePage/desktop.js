@@ -33,7 +33,7 @@ const DesktopPage = ({
           <div
             className={`Bdend($bdlightGrey) ${'Pt(2.5vw)'} Pstart($lg) Mend($lg)`}
           />
-          <div className={`Ff($ffmanrope) Fw($fwregular) Fz($fztitle)`}>
+          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fztitle)">
             Design Made Easy
           </div>
         </div>
@@ -64,13 +64,10 @@ const DesktopPage = ({
 
         <div className="Pb($2xl)">
           {callBackForm ? (
-            <CallBackForm
-              isDesktopOrLaptop={true}
-              setCallBackForm={setCallBackForm}
-            />
+            <CallBackForm isDesktopOrLaptop setCallBackForm={setCallBackForm} />
           ) : (
             <RequestForm
-              isDesktopOrLaptop={true}
+              isDesktopOrLaptop
               setCallBackForm={setCallBackForm}
               specialistList={specialistList}
             />
@@ -103,24 +100,24 @@ const DesktopPage = ({
           <div ref={secondPage}>
             <div className="D(f) Ai(s) Jc(c) Flw(w)">
               <LiteCard
-                isDesktopOrLaptop={true}
+                isDesktopOrLaptop
                 title="Ease of finding reliable freelance"
                 description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
               />
               <LiteCard
-                isDesktopOrLaptop={true}
+                isDesktopOrLaptop
                 title="Get help in preparing contracts"
                 description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
               />
 
               <LiteCard
-                isDesktopOrLaptop={true}
+                isDesktopOrLaptop
                 title="Payment management"
                 description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
               />
 
               <LiteCard
-                isDesktopOrLaptop={true}
+                isDesktopOrLaptop
                 title="Project management assistance"
                 description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
               />
