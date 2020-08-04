@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import DisplayCard from 'components/molecules/DisplayCard';
+import React from 'react';
 import BaseIcon from 'components/atoms/BaseIcon';
 import BaseImage from 'components/atoms/BaseImage';
 import isEmpty from 'lodash/isEmpty';
-
-const PersonalDetails = ({ personal, onSave, onEdit }) => {
+import PropTypes from 'prop-types';
+const PersonalDetails = ({ personal, onEdit }) => {
   if (isEmpty(personal)) return null;
-  console.log(personal);
   const { firstName, lastName, profession, city, state } = personal;
-  // const [open, setOpen] = useState(false);
-  // Modal.setAppElement('#app');
 
   return (
     <div className="Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)">
@@ -32,31 +28,16 @@ const PersonalDetails = ({ personal, onSave, onEdit }) => {
           height="28px"
           iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs)"
           fill="#0847f4"
-          onClick={() => {
-            console.log('OPEN PERSONAL');
-            onEdit();
-          }}
+          onClick={onEdit}
         />
       </div>
-      {/* <Modal
-        isOpen={open}
-        contentLabel="onRequestClose Example"
-        onRequestClose={() => setOpen(false)}
-        className="W($61xl) M(a) H($fc) Pos(r) T($quarter) Bd(n) O(n)"
-        overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
-      >
-        <ProfileEditForm
-          onCancel={() => setOpen(false)}
-          city={city}
-          state={state}
-          onSave={onSave}
-          profession={profession}
-          firstName={firstName}
-          lastName={lastName}
-        />
-      </Modal> */}
     </div>
   );
+};
+
+PersonalDetails.propTypes = {
+  personal: PropTypes.object,
+  onEdit: PropTypes.func,
 };
 
 export default PersonalDetails;

@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import EditCard from 'components/organisms/EditCard';
 import DisplayCard from 'components/molecules/DisplayCard';
-import Input from 'components/molecules/Input';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -56,8 +54,7 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
       <DisplayCard
         heading="Edit About Me"
         lastChildPadding={false}
-        // childPadding="Px($lg) Py($md)"
-        childPadding="Px($lg) Pb($lmg) Pt($md)"
+        childPadding="P($lg)"
       >
         <FormikTextArea
           label="About"
@@ -65,7 +62,6 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
           id="about"
           placeholder="Please write a brief description about your work, passion or what drives you to pursue design."
           dimensionClasses="W($full)"
-          tabIndex={1}
           onChange={Formik.handleChange}
           value={Formik.values.about}
           error={getError('about')}
@@ -81,12 +77,13 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
 
 AboutEditForm.propTypes = {
   onCancel: PropTypes.func,
-  about: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
+  data: PropTypes.string,
 };
 
 AboutEditForm.defaultProps = {
   onCancel: () => {},
-  about: '',
+  data: '',
 };
 
 export default AboutEditForm;

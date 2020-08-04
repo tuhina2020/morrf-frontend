@@ -72,8 +72,8 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
 
   return (
     <Field name={props.name}>
-      {({ field, form }) => (
-        <label className="D(f) Jc(s) Ai(c) Cur(p) Bg(i) W($full) Pos(r)">
+      {({ field }) => (
+        <label className="D(f) Jc(fs) Ai(c) Cur(p) Bg(i) W($full) Pos(r)">
           <span className={checkmarkBg} />
           <span className={checkmarkStyle} />
           <span className={blueBorderOnFocus} />
@@ -86,9 +86,9 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
             checked={props.value}
             onChange={props.onChange}
             aria-checked={props.value}
-            onFocus={e => setFocus(true)}
+            onFocus={() => setFocus(true)}
             ref={ref}
-            onBlur={e => setFocus(false)}
+            onBlur={() => setFocus(false)}
           />
           <div className={labelStyle}>{props.labelText}</div>
         </label>
@@ -98,7 +98,7 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
 });
 
 FormikCheckbox.propTypes = {
-  labelText: PropTypes.string.isRequired,
+  labelText: PropTypes.string,
   value: PropTypes.bool.isRequired,
   tabIndex: PropTypes.number,
   disabled: PropTypes.bool,
@@ -110,9 +110,10 @@ FormikCheckbox.propTypes = {
 
 FormikCheckbox.defaultProps = {
   disabled: false,
-  label: 'Label',
+  labelText: 'Label',
   labelSize: 'sm',
   bluePosition: 'Start(-2px)',
+  tabIndex: 0,
 };
 
 export default FormikCheckbox;

@@ -24,8 +24,8 @@ const getButtonStyle = ({
     'O(n)': true,
     [`W($${size})`]: size && size.length > 0,
     'Jc(c) D(f) Ai(c)': !alignContent || alignContent === 'center',
-    'Jc(s) D(f) Ai(c)': alignContent === 'start',
-    'Jc(e) D(f) Ai(c)': alignContent === 'end',
+    'Jc(fs) D(f) Ai(c)': alignContent === 'start',
+    'Jc(fe) D(f) Ai(c)': alignContent === 'end',
   };
 
   const primaryButtonStyles = {
@@ -193,6 +193,8 @@ Button.propTypes = {
   height: PropTypes.oneOf(['H($2xl)', 'H($lg)']),
   iconFill: PropTypes.string,
   roundCorners: PropTypes.bool,
+  children: PropTypes.node,
+  size: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -200,7 +202,7 @@ Button.defaultProps = {
   kind: 'primary',
   onClick: () => {},
   alignContent: 'center',
-  tabIndex: 1,
+  tabIndex: 0,
   height: 'H($2xl)',
   iconWidth: '16px',
   iconHeight: '16px',

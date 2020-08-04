@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
@@ -57,10 +57,6 @@ const FormikTextField = React.forwardRef((props, ref) => {
     error,
     tabIndex,
     dimensionClasses,
-    prependIcon,
-    iconWidth,
-    iconHeight,
-    iconFill,
     placeholder,
     ...others
   } = props;
@@ -135,9 +131,7 @@ FormikTextField.defaultProps = {
   label: '',
   value:"",
   dimensionClasses: 'W($25x)',
-  iconFill: '#333',
-  iconWidth: '24px',
-  iconHeight: '24px',
+  tabIndex: 0,
 };
 
 export default FormikTextField;

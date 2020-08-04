@@ -60,7 +60,7 @@ const ProfileDetails = ({
             onEdit={() => setOpen('experience')}
           />
         </div>
-        <Portfolio portfolio={portfolio} onSave={() => {}} />
+        <Portfolio portfolio={portfolio} onEdit={() => setOpen('portfolio')} />
       </div>
       <Modal
         isOpen={!isEmpty(open)}

@@ -18,9 +18,10 @@ const parseNestedObj = items => {
   return finalList;
 };
 
-const CheckList = ({ items, id, values, onSelect, isOpen }) => {
+const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
   if (!isOpen || isEmpty(items)) return null;
   const iterableList = parseNestedObj(items);
+  const selectedIds = values.map(sk => sk.id);
   return (
     <div
       id={`${id}_menu`}
@@ -33,20 +34,20 @@ const CheckList = ({ items, id, values, onSelect, isOpen }) => {
           role="option"
           aria-selected="false"
           id={`${id}_item_${index}`}
-          key={`${item.name}_${item.id}_${index}`}
+          key={`${item.name}_${item.id}`}
         >
           <div className="Ff($ffmanrope) Fz($sm) Lh(1) Px($sm) C($headingDarkGrey) Pb($xs)">
             {item.groupLabel}
           </div>
           <div className="W($full) Ta(start)">
-            {item.options.map((option, i) => (
+            {item.options.map(option => (
               <div
                 key={option.id}
                 className="Py($xs) Px($lg) Bgc($activeTagBlue):h"
               >
                 <FormikCheckBox
                   name={`${option.name}.selected`}
-                  value={values.includes(option.id)}
+                  value={selectedIds.includes(option.id)}
                   labelText={option.name}
                   labelSize="sm"
                   bluePosition="Start(58px)"
@@ -67,19 +68,18 @@ const CheckList = ({ items, id, values, onSelect, isOpen }) => {
   );
 };
 
-CheckList.propTypes = {
+NestedFormikCheckList.propTypes = {
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
   id: PropTypes.string.isRequired,
   items: PropTypes.array,
-  values: PropTypes.arrayOf(PropTypes.string),
-  onSelect: PropTypes.func,
+  values: PropTypes.arrayOf(PropTypes.object),
 };
 
-CheckList.defaultProps = {
+NestedFormikCheckList.defaultProps = {
   isOpen: false,
   onSelect: () => {},
   items: [],
 };
 
-export default CheckList;
+export default NestedFormikCheckList;

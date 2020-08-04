@@ -5,6 +5,7 @@ import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 import Button from 'components/molecules/Button';
 import { Formik, Form } from 'formik';
+import { isEmpty } from 'lodash';
 
 const SkillEditForm = ({
   onCancel,
@@ -68,33 +69,35 @@ const SkillEditForm = ({
           <DisplayCard
             heading="Edit Skills"
             lastChildPadding={false}
-            childPadding="Px($lg) Pb($lmg) Pt($md)"
+            childPadding="P($lg)"
           >
             <div>
-              <div className="D(f) Ai(c) Jc(s) Mb($3xxl) Flw(w)">
-                {viewableSkills.map(skill => (
-                  <div className="Mend($sm) Mb($sm)" key={skill.id}>
-                    <Tag
-                      filter
-                      disabled={false}
-                      onDelete={() => deleteSkill(skill)}
-                    >
-                      {skill.name}
-                    </Tag>
-                  </div>
-                ))}
-              </div>
+              {!isEmpty(viewableSkills) ? (
+                <div className="D(f) Ai(c) Jc(s) Mb($sm) Flw(w)">
+                  {viewableSkills.map(skill => (
+                    <div className="Mend($sm) Mb($sm)" key={skill.id}>
+                      <Tag
+                        filter
+                        disabled={false}
+                        onDelete={() => deleteSkill(skill)}
+                      >
+                        {skill.name}
+                      </Tag>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
               <NestedFormikComboBox
                 id="search"
                 name="search"
                 type="text"
                 prependIcon="showmore"
-                labelText="Select one or more skills"
+                labelText="Select skills"
                 // onKeyPress={onEnter}
                 onSelect={selectObj}
                 items={allSkills}
-                values={viewableSkills.map(sk => sk.id)}
-                label="Select one or more skills"
+                deleteEntity={deleteSkill}
+                values={viewableSkills}
               />
             </div>
             <div className="D(f) Ai(c) Jc(c)">
