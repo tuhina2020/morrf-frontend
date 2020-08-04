@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import {
   GET_AVAILABLE_SKILLS,
@@ -10,7 +10,7 @@ import {
   SET_REMOTE_PORTFOLIO,
   SET_REMOTE_SKILLS,
 } from './constants';
-import { makeSelectProfilePage } from './selectors';
+// import { makeSelectProfilePage } from './selectors';
 
 import {
   setPhone,
@@ -25,7 +25,7 @@ import {
 function* getSkills({ payload }) {
   const { search } = payload;
   // const { getAllSkills } = yield select(makeSelectProfilePage());
-  const allSkillsObj = [
+  const allSkills = [
     {
       label: 'Architecture',
       id: 'newcategory-1',
@@ -97,52 +97,52 @@ function* getSkills({ payload }) {
       ],
     },
   ];
-  const allSkills = [
-    {
-      id: '1234',
-      name: 'furnace design',
-    },
-    {
-      id: '2452',
-      name: 'UI/UX Research',
-    },
-    {
-      id: '5469-b',
-      name: 'Town planning',
-    },
-    {
-      id: '123-b',
-      name: 'interior design',
-    },
-    {
-      id: '2451',
-      name: 'Illustration Tools',
-    },
-    {
-      id: '5469-a',
-      name: '3ds Max',
-    },
-    {
-      id: '123-a',
-      name: 'furniture design',
-    },
-    {
-      id: '245',
-      name: 'UI/UX',
-    },
-    {
-      id: '546-es',
-      name: 'Architecture',
-    },
-    {
-      id: '245-bx',
-      name: 'Illustrator',
-    },
-    {
-      id: '546',
-      name: 'Photoshop',
-    },
-  ];
+  // const allSkills = [
+  //   {
+  //     id: '1234',
+  //     name: 'furnace design',
+  //   },
+  //   {
+  //     id: '2452',
+  //     name: 'UI/UX Research',
+  //   },
+  //   {
+  //     id: '5469-b',
+  //     name: 'Town planning',
+  //   },
+  //   {
+  //     id: '123-b',
+  //     name: 'interior design',
+  //   },
+  //   {
+  //     id: '2451',
+  //     name: 'Illustration Tools',
+  //   },
+  //   {
+  //     id: '5469-a',
+  //     name: '3ds Max',
+  //   },
+  //   {
+  //     id: '123-a',
+  //     name: 'furniture design',
+  //   },
+  //   {
+  //     id: '245',
+  //     name: 'UI/UX',
+  //   },
+  //   {
+  //     id: '546-es',
+  //     name: 'Architecture',
+  //   },
+  //   {
+  //     id: '245-bx',
+  //     name: 'Illustrator',
+  //   },
+  //   {
+  //     id: '546',
+  //     name: 'Photoshop',
+  //   },
+  // ];
   if (isEmpty(search)) {
     yield put(setLocalSkillsList(allSkills));
   } else {

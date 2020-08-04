@@ -5,14 +5,13 @@ import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 import Button from 'components/molecules/Button';
 import { Formik, Form } from 'formik';
-import isEmpty from 'lodash/isEmpty';
 
 const SkillEditForm = ({
   onCancel,
   onSave,
   data: skills,
   allSkills,
-  getFilteredSkills,
+  // getFilteredSkills,
 }) => {
   const [viewableSkills, setViewableSkills] = useState(skills);
 
@@ -73,8 +72,8 @@ const SkillEditForm = ({
           >
             <div>
               <div className="D(f) Ai(c) Jc(s) Mb($3xxl) Flw(w)">
-                {viewableSkills.map((skill, i) => (
-                  <div className="Mend($sm) Mb($sm)" key={`i ${i}`}>
+                {viewableSkills.map(skill => (
+                  <div className="Mend($sm) Mb($sm)" key={skill.id}>
                     <Tag
                       filter
                       disabled={false}
@@ -112,6 +111,9 @@ const SkillEditForm = ({
 SkillEditForm.propTypes = {
   onCancel: PropTypes.func,
   allSkills: PropTypes.array,
+  onSave: PropTypes.func,
+  data: PropTypes.array,
+  getFilteredSkills: PropTypes.func,
 };
 
 SkillEditForm.defaultProps = {
