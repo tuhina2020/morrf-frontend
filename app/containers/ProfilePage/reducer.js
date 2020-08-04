@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { getDefaultState } from 'utils/helper';
 import {
   SET_LOCAL_PERSONAL_DATA,
   SET_EMAIL,
@@ -357,8 +356,10 @@ const profilePageReducer = (state = initialState, action) =>
         break;
       case SET_AVAILABLE_SKILLS:
         draft.getAllSkills = action.payload;
+        break;
       case SET_LOCAL_SKILLS:
         draft.skills = action.payload;
+        break;
     }
   });
 

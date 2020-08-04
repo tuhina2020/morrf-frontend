@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import PersonalDetails from 'components/organisms/ProfileDetails/personal';
 import AboutMe from 'components/organisms/ProfileDetails/about';
 import Contact from 'components/organisms/ProfileDetails/contact';
@@ -7,8 +8,6 @@ import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
 import GetStarted from 'components/organisms/EditCarousels';
 import isEmpty from 'lodash/isEmpty';
-import flatten from 'lodash/flatten';
-import compact from 'lodash/compact';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
 
@@ -45,8 +44,6 @@ const ProfileDetails = ({
     allSkills: open === 'skills' ? getAllSkills : undefined,
     onSendCode: open === 'contact' ? sendCode : undefined,
   };
-  console.log(profile.skills);
-  debugger;
   return (
     <div>
       <div className="D(f) Ai(s) Jc(s) Mih($100vh)">
@@ -63,7 +60,7 @@ const ProfileDetails = ({
             onEdit={() => setOpen('experience')}
           />
         </div>
-        {/* <Portfolio portfolio={portfolio} onSave={savePortfolio} /> */}
+        <Portfolio portfolio={portfolio} onSave={() => {}} />
       </div>
       <Modal
         isOpen={!isEmpty(open)}
@@ -85,6 +82,13 @@ const ProfileDetails = ({
       {countEmptyLarge > 1 ? <GetStarted profile={profile} /> : null}
     </div>
   );
+};
+
+ProfileDetails.propTypes = {
+  profile: PropTypes.object,
+  sendCode: PropTypes.func,
+  getFilteredSkills: PropTypes.func,
+  saveFunctionMap: PropTypes.object,
 };
 
 export default ProfileDetails;
