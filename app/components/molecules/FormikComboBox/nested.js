@@ -64,7 +64,6 @@ const CheckList = ({ items, id, values, onSelect, isOpen }) => {
                       e.preventDefault();
                       e.stopPropagation();
                       console.log(v);
-                      debugger;
                     }}
                   />
                 </div>

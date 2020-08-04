@@ -45,6 +45,8 @@ const ProfileDetails = ({
     allSkills: open === 'skills' ? getAllSkills : undefined,
     onSendCode: open === 'contact' ? sendCode : undefined,
   };
+  console.log(profile.skills);
+  debugger;
   return (
     <div>
       <div className="D(f) Ai(s) Jc(s) Mih($100vh)">

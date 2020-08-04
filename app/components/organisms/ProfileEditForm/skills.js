@@ -34,16 +34,15 @@ const SkillEditForm = ({
     onClick: onCancel,
   };
 
-  const getSelectObj = ({ item, add }) => {
+  const selectObj = ({ item, add }) => {
     const newSkills = add
       ? [...viewableSkills, item]
       : viewableSkills.filter(sk => sk.id !== item.id);
-    debugger;
     setViewableSkills(newSkills);
   };
 
   const deleteSkill = skill => {
-    getSelectObj({
+    selectObj({
       item: skill,
       add: false,
     });
@@ -93,12 +92,7 @@ const SkillEditForm = ({
                 prependIcon="showmore"
                 labelText="Select one or more skills"
                 // onKeyPress={onEnter}
-                onSelect={({ item, add }) => {
-                  getSelectObj({
-                    item,
-                    add,
-                  });
-                }}
+                onSelect={selectObj}
                 items={allSkills}
                 values={viewableSkills.map(sk => sk.id)}
                 label="Select one or more skills"
