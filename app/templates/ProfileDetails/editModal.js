@@ -33,10 +33,10 @@ const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
 };
 
 EditFormModal.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
-  open: PropTypes.bool,
+  open: PropTypes.string,
 };
 
 export default EditFormModal;

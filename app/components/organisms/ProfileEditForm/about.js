@@ -54,7 +54,6 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
       <DisplayCard
         heading="Edit About Me"
         lastChildPadding={false}
-        // childPadding="Px($lg) Py($md)"
         childPadding="P($lg)"
       >
         <FormikTextArea

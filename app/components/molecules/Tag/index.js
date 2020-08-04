@@ -25,9 +25,9 @@ const Tag = ({
 
   const svgStyleJSON = {
     'Mstart($xxs)': true,
-    'W($mmd)': true,
-    'H($mmd)': true,
-    'P($3xs)': true,
+    'W($smd)': true,
+    'H($smd)': true,
+    'P(1px)': true,
     'Bd(n)': true,
     'Va(bl)': true,
     'Cur(p)': true,
@@ -42,10 +42,11 @@ const Tag = ({
     'Miw($xxl)': true,
     'Maw($full)': true,
     'Px($sm)': true,
-    'Py($xms)': true,
+    'Py(5px)': true,
     'H(a)': true,
     'Bdrs($mmd)': true,
     'Ff($ffmanrope)': true,
+    'Lh(1)': true,
     'Fz($smd)': true,
     'Bgc($navBarBg)': disabled || !filter,
     'Bgc($activeTagBlue)': !disabled && filter,
@@ -55,6 +56,7 @@ const Tag = ({
     'Bd($bdprimaryButton):f': true,
     'C(black)': !disabled,
     'C($hoverInput)': disabled,
+    'H($lg)': true,
   };
 
   const onClickHandler = e => {
@@ -78,8 +80,6 @@ const Tag = ({
         <BaseIcon
           onClick={onClickHandler}
           icon="close"
-          width="16px"
-          height="16px"
           iconClasses={classnames(svgStyleJSON)}
         />
       </div>

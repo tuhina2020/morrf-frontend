@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
-const ContactFormComponent = ({ onCancel, onSendCode }) => ({
+const ContactFormComponent = ({ onCancel, onSendCode, phone }) => ({
   handleSubmit,
   handleChange,
   values,
@@ -51,7 +51,6 @@ const ContactFormComponent = ({ onCancel, onSendCode }) => ({
       <DisplayCard
         heading="Edit Contact Information"
         lastChildPadding={false}
-        // childPadding="Px($lg) Py($md)"
         childPadding="P($lg)"
       >
         <div>
