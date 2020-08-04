@@ -113,7 +113,6 @@ const FormikComboBox = ({
         id={id}
         values={values}
         onSelect={onSelect}
-        inline={inline}
       />
     </div>
   );
