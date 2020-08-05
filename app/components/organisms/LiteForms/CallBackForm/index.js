@@ -106,15 +106,13 @@ const getMobileForm = setCallBackForm => ({
   return (
     <div className="W(320px) Bgc(white) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) Py($lg) Px($md) O(1)">
       <div>
-        <Button
-          kind="tertiary"
-          classes="Pos(a)"
-          onClick={() => {
-            setCallBackForm(false);
-          }}
-        >
-          <BaseIcon icon="arrowback" width="24px" height="18px" />
-        </Button>
+        <BaseIcon
+        width="24px"
+          icon="arrowback"
+          className="Px)$lg)"
+        iconClasses="Bdrs($mmd) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
+        onClick={() => setCallBackForm(false)}
+      />
       </div>
       <div className="D(f) Jc(c) H($5xl) Mt($lg)">
         <div className="W($5xl) H($5xl) Bgc($inputGrey)" />
