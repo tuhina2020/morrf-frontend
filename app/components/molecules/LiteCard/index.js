@@ -39,18 +39,13 @@ const getMobileCard = (title, description, image) => {
         className="W($full) Bgc(white) Mb($sm) H($24xl)"
       />
       <div
-        className="Ff($ffmanrope) Fw($fwregular) W($full) Mb($md) Fz($fztitle) Lh(28px)"
-        style={{
-          width: '100%',
-          marginBottom: '16px',
-          fontSize: '20px',
-          lineHeight: '28px',
-        }}
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Mb($md) Fz($smx) Lh(28px)"
+        
       >
         {title}
       </div>
       <div
-        className="Ff($ffmanrope) Fw($fwregular) W($full) Fz($fzmessage) Lh($input)"
+        className="Ff($ffmanrope) Fw($fwregular) W($full) Fz($fzbutton) Lh($input)"
         
       >
         {description}

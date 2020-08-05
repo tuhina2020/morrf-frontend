@@ -11,8 +11,9 @@ import LiteCard from 'components/molecules/LiteCard';
 import Gradient from 'Assets/images/Gradient_BG.png';
 import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
+import BaseIcon from '../../atoms/BaseIcon/index';
 
-const MobilePage = ({ specialistList }) => {
+const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
   const [callBackForm, setCallBackForm] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
@@ -32,7 +33,6 @@ const MobilePage = ({ specialistList }) => {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
-
   const onClickShowMore = () => {
     setScrollStatus(!scrolled);
     const showMore = () => {
@@ -49,137 +49,147 @@ const MobilePage = ({ specialistList }) => {
   };
   return (
     <div>
-      <div className="W($full) H($5xl) D(f) Fld(r) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Ai(c)">
-        <div className="D(f) Ai(c)">
-          <MorrfLogo className="W(172px)" />
+      <div
+        className="W($full) H($5xl) D(f) Jc(c) Ai(c) Bgr(nr) Bxz(pb)"
+        style={{
+          backgroundImage: `url(${menuHeader})`,
+          backgroundPosition: 'center top',
+        }}
+      >
+        <div className="D(f) W($full) Ai(c) Jc(c)">
+          <MorrfLogo className="W(140px)" />
           <div
-            className={`Bdend($bdlightGrey) ${'Pt(2.5vw)'} Pstart($lg) Mend($lg)`}
+            className={`Bdend($bdlightGrey) Pstart($md) Mend($md)`}
+            style={{
+              paddingTop: '2.5vh',
+            }}
           />
-          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fztitle)">
+          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fzmessage)">
             Design Made Easy
           </div>
         </div>
-        <Button kind="tertiary" size="8xl">
-          <div className="Ff($ffmanrope) W($8xl) Fw($fwregular) Fz($button)">
-            FAQ
+      </div>
+
+      <div
+        className="Bgr(nr)"
+        style={{
+          backgroundImage: `url(${Splash}),url(${Gradient})`,
+          backgroundPosition: 'center top',
+          backgroundSize: 'auto auto, 100% 100%',
+        }}
+      >
+        <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
+          <div className="Fz($xl) Mb($md)">
+            Looking for a freelance designer?
           </div>
-        </Button>
-      </div>
-      <div className="Ff($ffmanrope) D(f) Mt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
-        <div className="Fz($4xl) Mb($sm)">
-          Looking for a freelance designer?
+          <div className="Fz($smx)">
+            Drop your details and we will find the best pick for you
+          </div>
         </div>
-        <div className="Fz($desktopTitle)">
-          Drop your details and we will find the best pick for you
+
+        <div className="Pb($2xl)">
+          {callBackForm ? (
+            <CallBackForm
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              setCallBackForm={setCallBackForm}
+            />
+          ) : (
+            <RequestForm
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              setCallBackForm={setCallBackForm}
+              specialistList={specialistList}
+            />
+          )}
         </div>
       </div>
-
-      <div className="Pb($2xl)">
-        {callBackForm ? (
-          <CallBackForm
-            isDesktopOrLaptop={false}
-            setCallBackForm={setCallBackForm}
-          />
-        ) : (
-          <RequestForm
-            isDesktopOrLaptop={false}
-            setCallBackForm={setCallBackForm}
-            specialistList={specialistList}
-          />
-        )}
-      </div>
-
-      <div className="Bgc($navBarBg) Pb($5xl)">
-        <div className="Ff($ffmanrope) D(f) Ai(c) Jc(c) Fz($xl) Pt($2xl)">
+      <div className="Bgc($navBarBg)">
+        <div className="Ff($ffmanrope) D(f) Fw($fwmedium) Ai(c) Jc(c) Fz($lmg) Pt($lg)">
           How is Morff different
         </div>
-        {
-          <div className="Mt(2vw) D(f) Ai(c) Jc(c) Fld(c)">
-            <div
-              className={`Bdrs(2.5vw) W(5vw) H(5vw) Mx(47.5%) Bxsh($bxshlightInset):h ${getTransitionClass(
-                0.4,
-              )} ${scrolled ? 'Op(0)' : ''}`}
-            >
-              <ShowMore width="5vw" height="5vw" onClick={onClickShowMore} />
+        <div className="Pt($lg)" ref={secondPage}>
+          <div className="D(f) Px($mmd) Ai(s) Jc(c) Flw(w)">
+            <LiteCard
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              title="Ease of finding reliable freelance"
+              description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
+            />
+            <LiteCard
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              title="Get help in preparing contracts"
+              description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
+            />
+
+            <LiteCard
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              title="Payment management"
+              description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
+            />
+
+            <LiteCard
+              isDesktopOrLaptop={isDesktopOrLaptop}
+              title="Project management assistance"
+              description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
+            />
+          </div>
+          <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)"/>
+          <div className="W($full) Px($mmd) Ta(c) Pb($2xl) D(f) Fld(c) Pt($lg)">
+            <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($lmg) Lh(38px) Mb($xl)">
+              About Us
             </div>
-            <div
-              className={`${getTransitionClass(2)} Trsde(0.5s) ${
-                scrolled ? 'Pos(r) B(3vw)' : 'Op(0)'
-              }`}
-            >
-              <MovingDots />
+            <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($fzbutton) Lh($lg)">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              mollis turpis augue, nec ultrices ipsum maximus a. Quisque leo
+              metus, lobortis ac mattis sed, cursus ut nisl. Nulla ut eros quam.
+              Curabitur quis nisi erat. Phasellus vel pharetra tellus. Nam et
+              nulla viverra, commodo velit pellentesque, consequat nulla.
             </div>
           </div>
-        }
-        {scrolled ? (
-          <div ref={secondPage}>
-            <div className="D(f) Ai(s) Jc(c) Flw(w)">
-              <LiteCard
-                isDesktopOrLaptop={false}
-                title="Ease of finding reliable freelance"
-                description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
-              />
-              <LiteCard
-                isDesktopOrLaptop={false}
-                title="Get help in preparing contracts"
-                description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
-              />
-
-              <LiteCard
-                isDesktopOrLaptop={false}
-                title="Payment management"
-                description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
-              />
-
-              <LiteCard
-                isDesktopOrLaptop={false}
-                title="Project management assistance"
-                description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
-              />
-            </div>
-            <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)" />
-            <div className="W(810px) Ta(c) M(a) D(f) Fld(c) Pt($lg)">
-              <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($xl) Lh(44px) Mb($xl)">
-                About Us
-              </div>
-              <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($fzmessage)">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                mollis turpis augue, nec ultrices ipsum maximus a. Quisque leo
-                metus, lobortis ac mattis sed, cursus ut nisl. Nulla ut eros
-                quam. Curabitur quis nisi erat. Phasellus vel pharetra tellus.
-                Nam et nulla viverra, commodo velit pellentesque, consequat
-                nulla. Integer iaculis, ipsum quis tincidunt commodo, urna nisi
-                sollicitudin ipsum, ut euismod risus erat non tortor. Aenean
-                posuere tincidunt sapien a maximus. Fusce tempor egestas
-                volutpat. Proin dictum risus nec mi luctus, sit amet elementum
-                sapien sollicitudin. Morbi interdum tincidunt blandit. Phasellus
-                vel varius justo. Maecenas elit dolor, tempus at neque lacinia,
-                lobortis molestie augue. Phasellus pulvinar, ex vitae dapibus
-                vulputate, metus eros aliquet velit, vel ultrices mauris ante
-                hendrerit tellus. Proin a luctus ex. Quisque quis.
-              </div>
-            </div>
-          </div>
-        ) : null}
+        </div>
       </div>
-      <div className="H($12xl) Bgc($inputGrey) D(f) Jc(sb) Ai(c) Pstart(15vw) Pend(7.5vw)">
-        <div>
-          <div className="Fz($fztitle) Ff($ffmanrope) C(white)">
+      <div className="H($20xl) Bgc($inputGrey) Px($mmd) Py($sm) D(f) Jc(fs) Ai(c)">
+        <div className="W($20xl) D(f) Fld(c) Jc(fs) Ai(fs)">
+          <div className="Fz($fzmessage) Ff($ffmanrope) C(white)">
             Like to know more?
           </div>
-          <div className="Ff($ffmanrope) C(white) Fz($smd)">
-            Reach us at:{' '}
-            <Link to="mailto : contact@morff.io" className="Td(n) C(white)">
+          <div className="Ff($ffmanrope) C(white) Fz($sm) Mb($lg)">
+            Reach us at: 
+            <a href="mailto:contact@morff.io" className="Td(n) C(white)">
               contact@morff.io
-            </Link>
+            </a>
           </div>
-          <div className="Ff($ffmanrope) C($placeholderGrey) Fz($smd)">
+          <div>
+            <a
+              href="https://www.linkedin.com/company/morff-io"
+              className="Pend(10px)"
+            >
+              <BaseIcon
+                icon="linkedin"
+                width="32px"
+                height="32px"
+              >
+
+              </BaseIcon>
+            </a>
+            <a
+            href="https://www.instagram.com/morff.io/"
+            >
+              <BaseIcon
+                icon="instagram"
+                width="32px"
+                height="32px"
+              >
+
+              </BaseIcon>
+            </a>
+          </div>
+          <div className="Ff($ffmanrope) Fz($sm) C(white) Mb($md) Mt($lg)">
+          Officially recognised by DIIPT, India
+        </div>
+          <div className="Ff($ffmanrope) C($placeholderGrey) Fz($fzlabel)">
             © 2020 Morff
           </div>
         </div>
-        <div className="Ff($ffmanrope) Fz($fztitle) C(white)">
-          Officially recognised by DIIPT, India
-        </div>
+        
       </div>
     </div>
   );

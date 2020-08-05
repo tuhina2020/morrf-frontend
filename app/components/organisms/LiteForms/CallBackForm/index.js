@@ -104,7 +104,7 @@ const getMobileForm = setCallBackForm => ({
 }) => {
   const getError = key => (key && errors[key] ? errors[key] : null);
   return (
-    <div className="W(540px) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1)">
+    <div className="W(320px) Bgc(white) H(a) Bxsh($bxshhighlight) M(a) Bdrs($xs) Py($lg) Px($md) O(1)">
       <div>
         <Button
           kind="tertiary"
@@ -148,9 +148,8 @@ const getMobileForm = setCallBackForm => ({
           value={values.phone}
           error={getError('phone')}
         />
-        <div className=" W($full) D(f) Jc(sb) Ai(c) Mb($lg)">
           <FormikInput
-            dimensionClasses="W(218px) H($2xl)"
+            dimensionClasses="W($full) H($2xl) Mb($lg)"
             label="Preffered date"
             name="date"
             id="date"
@@ -161,7 +160,7 @@ const getMobileForm = setCallBackForm => ({
             error={getError('date')}
           />
           <FormikInput
-            dimensionClasses="W(218px) H($2xl)"
+            dimensionClasses="W($full) H($2xl) Mb($lg)" 
             label="Preffered time"
             name="time"
             id="time"
@@ -171,9 +170,8 @@ const getMobileForm = setCallBackForm => ({
             value={values.time}
             error={getError('time')}
           />
-        </div>
 
-        <Button classes="Mx(a) Mt($lg) Mb($2xl)" type="submit">
+        <Button classes="Mx(a) Mt=b($lg)" type="submit">
           Submit Request
         </Button>
       </form>

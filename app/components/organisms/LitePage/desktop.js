@@ -10,6 +10,7 @@ import LiteCard from 'components/molecules/LiteCard';
 import Gradient from 'Assets/images/Gradient_BG.png';
 import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
+import BaseIcon from '../../atoms/BaseIcon/index';
 
 const DesktopPage = ({ specialistList }) => {
   const [callBackForm, setCallBackForm] = useState(false);
@@ -52,6 +53,8 @@ const DesktopPage = ({ specialistList }) => {
         className="W($full) H($5xl) D(f) Fld(r) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Ai(c) Bgr(nr) Bxz(pb)"
         style={{
           backgroundImage: `url(${menuHeader})`,
+                    backgroundPosition: 'center top',
+
         }}
       >
         <div className="D(f) Ai(c)">
@@ -75,10 +78,13 @@ const DesktopPage = ({ specialistList }) => {
         className="Bgr(nr)"
         style={{
           backgroundImage: `url(${Splash}),url(${Gradient})`,
+                    backgroundPosition: 'center top',
+
+          //backgroundSize: '100% 549px, 100% 100%'
         }}
       >
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
-          <div className="Fz($4xl) Mb($sm)">
+          <div className="Fz($4xl) Ta(c) Mb($sm)">
             Looking for a freelance designer?
           </div>
           <div className="Fz($fzdesktopTitle)">
@@ -178,17 +184,44 @@ const DesktopPage = ({ specialistList }) => {
           </div>
           <div className="Ff($ffmanrope) C(white) Fz($smd)">
             Reach us at
-            <Link to="mailto : contact@morff.io" className="Td(n) C(white)">
+            <a href="mailto:contact@morff.io" className="Td(n) C(white)">
               contact@morff.io
-            </Link>
+            </a>
           </div>
           <div className="Ff($ffmanrope) C($placeholderGrey) Fz($smd)">
             © 2020 Morff
           </div>
         </div>
-        <div className="Ff($ffmanrope) Fz($fztitle) C(white)">
-          Officially recognised by DIIPT, India
+        <div>
+          <div style={{ textAlign: "right"}}>
+            <a
+              href="https://www.linkedin.com/company/morff-io"
+              className="Pend(10px)"
+            >
+              <BaseIcon
+                icon="linkedin"
+                width="32px"
+                height="32px"
+              >
+
+              </BaseIcon>
+            </a>
+            <a
+            href="https://www.instagram.com/morff.io/"
+            >
+              <BaseIcon
+                icon="instagram"
+                width="32px"
+                height="32px"
+              >
+
+              </BaseIcon>
+            </a>
+          </div>
+        <div className="Ff($ffmanrope) Fz($fzbutton) C(white)">
+            Officially recognised by DIIPT, India
         </div>
+          </div>
       </div>
     </div>
   );

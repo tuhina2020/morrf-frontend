@@ -22,6 +22,7 @@ const LitePage = ({ responsiveData }) => {
 
   const props = {
     specialistList,
+    isDesktopOrLaptop,
   };
 
   return isDesktopOrLaptop ? (
