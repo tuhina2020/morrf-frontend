@@ -10,12 +10,7 @@ const getDesktopCard = (title, description, image) => {
       />
       <div
         className="Ff($ffmanrope) Fw($fwregular) W($full) Mb($md) Fz($fztitle) Lh(28px)"
-        style={{
-          width: '100%',
-          marginBottom: '16px',
-          fontSize: '20px',
-          lineHeight: '28px',
-        }}
+        
       >
         {title}
       </div>
