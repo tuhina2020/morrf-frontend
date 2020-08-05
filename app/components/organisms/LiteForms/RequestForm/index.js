@@ -15,7 +15,7 @@ const getDesktopForm = ({
   setViewableSpecialist,
   specialistList,
   selectObj,
-  deleteSkill,
+  deleteSpecialist,
 }) => ({
   handleSubmit,
   handleChange,
@@ -52,11 +52,12 @@ const getDesktopForm = ({
             id="search"
             name="search"
             type="text"
-            inline={true}
+            inline
             prependIcon="showmore"
             labelText="Design specialist you are looking for"
             // onKeyPress={onEnter}
             onSelect={selectObj}
+            deleteEntity={deleteSpecialist}
             items={specialistList}
             values={viewableSpecialist.map(sk => sk.id)}
             label="Design specialist you are looking for"
@@ -263,13 +264,13 @@ const RequestForm = props => {
   const selectObj = ({ item, add }) => {
     const newSpecialist = add
       ? [...viewableSpecialist, item]
-      : viewableSpecialist.filter(sk => sk.id !== item.id);
+      : viewableSpecialist.filter(sk => sk.id !== item);
     setViewableSpecialist(newSpecialist);
   };
 
-  const deleteSkill = skill => {
+  const deleteSpecialist = specialist => {
     selectObj({
-      item: skill,
+      item: specialist,
       add: false,
     });
   };
@@ -297,7 +298,7 @@ const RequestForm = props => {
             setViewableSpecialist,
             specialistList,
             selectObj,
-            deleteSkill,
+            deleteSpecialist,
           })
         : getMobileForm(setCallBackForm)}
     </Formik>
