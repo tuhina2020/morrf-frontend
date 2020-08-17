@@ -5,6 +5,14 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { toast } from 'react-toastify';
 
+export const datesAreOnSameDay = (first = new Date(), second = new Date()) => {
+  return (
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate()
+  );
+};
+
 export const wordCount = word => {
   return word
     .trim()

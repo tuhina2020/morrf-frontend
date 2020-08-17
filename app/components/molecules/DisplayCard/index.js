@@ -85,7 +85,7 @@ DisplayCard.propTypes = {
 };
 
 DisplayCard.defaultProps = {
-  color: '#0847f4',
+  color: '#555',
   childPadding: 'Px($lg) Py($sm)',
   lastChildPadding: true,
   onClickIcon: () => {},

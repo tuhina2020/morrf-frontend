@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormikCheckBox from 'components/molecules/FormikCheckBox';
-import FormikInput from 'components/molecules/FormikInput';
-import FormikTextArea from 'components/molecules/FormikTextArea';
+import FormikCheckBox from './ExperienceEdit/node_modules/components/molecules/FormikCheckBox';
+import FormikInput from './ExperienceEdit/node_modules/components/molecules/FormikInput';
+import FormikTextArea from './ExperienceEdit/node_modules/components/molecules/FormikTextArea';
 import { Form, FieldArray, Formik } from 'formik';
 import * as Yup from 'yup';
-import Button from 'components/molecules/Button';
+import Button from './ExperienceEdit/node_modules/components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
-import { wordCount } from 'utils/helper';
+import { wordCount } from './ExperienceEdit/node_modules/utils/helper';
 
 const removeProps = {
   iconDescription: 'Remove',
@@ -139,10 +139,10 @@ const ExperienceEditForm = ({ onCancel, data: experience, onSave }) => {
             /^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
             'Enter valid date mm/yyyy',
           )
-          .test('no-present', 'Required', toD =>
-            this.parent.present ? true : !isEmpty(toD),
-          )
-          .test('date-range-start', 'Less than start date', toD => {
+          .test('no-present', 'Required', function(toD) {
+            return this.parent.present ? true : !isEmpty(toD);
+          })
+          .test('date-range-start', 'Less than start date', function(toD) {
             const fromString = this.parent.from;
             if (!fromString || this.parent.present) return true;
             const toDate = (toD || '/').split('/');

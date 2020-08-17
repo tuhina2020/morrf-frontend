@@ -12,8 +12,13 @@ import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 
-const DesktopPage = ({ specialistList }) => {
-  const [callBackForm, setCallBackForm] = useState(false);
+const DesktopPage = ({
+  allProfessionTypes,
+  sendEmail,
+  callbackReq,
+  success,
+}) => {
+  const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
   const onScroll = () => {
@@ -48,13 +53,12 @@ const DesktopPage = ({ specialistList }) => {
     setTimeout(showMore, 200);
   };
   return (
-    <div>
+    <>
       <div
-        className="W($full) H($5xl) D(f) Fld(r) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Ai(c) Bgr(nr) Bxz(pb)"
+        className="W($full) H($5xl) D(f) Ai(c) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Bgr(nr) Bxz(pb)"
         style={{
           backgroundImage: `url(${menuHeader})`,
-                    backgroundPosition: 'center top',
-
+          backgroundPosition: 'center top',
         }}
       >
         <div className="D(f) Ai(c)">
@@ -73,13 +77,14 @@ const DesktopPage = ({ specialistList }) => {
           FAQ
         </Link>
       </div>
-
+      {/* url(${Splash}), */}
+      <div style={{ backgroundImage: `url(${Splash})` }} className="lol" />
       <div
         className="Bgr(nr)"
         style={{
-          backgroundImage: `url(${Splash}),url(${Gradient})`,
-                    backgroundPosition: 'center top',
-
+          backgroundImage: `url(${Gradient})`,
+          backgroundPosition: 'center top',
+          backgroundSize: '100% 100%',
           //backgroundSize: '100% 549px, 100% 100%'
         }}
       >
@@ -94,12 +99,19 @@ const DesktopPage = ({ specialistList }) => {
 
         <div className="Pb($2xl)">
           {callBackForm ? (
-            <CallBackForm isDesktopOrLaptop setCallBackForm={setCallBackForm} />
+            <CallBackForm
+              isDesktopOrLaptop
+              setCallToggle={setCallToggle}
+              callbackReq={callbackReq}
+              success={success}
+            />
           ) : (
             <RequestForm
               isDesktopOrLaptop
-              setCallBackForm={setCallBackForm}
-              specialistList={specialistList}
+              setCallToggle={setCallToggle}
+              allProfessionTypes={allProfessionTypes}
+              sendEmail={sendEmail}
+              success={success}
             />
           )}
         </div>
@@ -193,37 +205,23 @@ const DesktopPage = ({ specialistList }) => {
           </div>
         </div>
         <div>
-          <div style={{ textAlign: "right"}}>
+          <div style={{ textAlign: 'right' }}>
             <a
               href="https://www.linkedin.com/company/morff-io"
-              className="Pend(10px)"
+              className="Pend($xxs)"
             >
-              <BaseIcon
-                icon="linkedin"
-                width="32px"
-                height="32px"
-              >
-
-              </BaseIcon>
+              <BaseIcon icon="linkedin" width="32px" height="32px" />
             </a>
-            <a
-            href="https://www.instagram.com/morff.io/"
-            >
-              <BaseIcon
-                icon="instagram"
-                width="32px"
-                height="32px"
-              >
-
-              </BaseIcon>
+            <a href="https://www.instagram.com/morff.io/">
+              <BaseIcon icon="instagram" width="32px" height="32px" />
             </a>
           </div>
-        <div className="Ff($ffmanrope) Fz($fzbutton) C(white)">
+          <div className="Ff($ffmanrope) Fz($fzbutton) C(white)">
             Officially recognised by DIIPT, India
-        </div>
           </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

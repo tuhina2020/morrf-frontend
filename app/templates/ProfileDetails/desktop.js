@@ -37,12 +37,15 @@ const ProfileDetails = ({
     experience,
   ].filter(isEmpty).length;
   const [open, setOpen] = useState('');
+  const [currentIndex, setIndex] = useState();
   Modal.setAppElement('#app');
   const onCancel = () => setOpen('');
   const extraProps = {
     getFilteredSkills: open === 'skills' ? getFilteredSkills : undefined,
     allSkills: open === 'skills' ? getAllSkills : undefined,
     onSendCode: open === 'contact' ? sendCode : undefined,
+    currentIndex:
+      open === 'portfolio' || open === 'experience' ? currentIndex : undefined,
   };
   return (
     <div>
@@ -57,7 +60,16 @@ const ProfileDetails = ({
           <Skills skills={skills} onEdit={() => setOpen('skills')} />
           <Experience
             experience={experience}
-            onEdit={() => setOpen('experience')}
+            onEdit={index => {
+              console.log('EDITING');
+              setIndex(index);
+              setOpen('experience');
+            }}
+            onAdd={() => {
+              console.log('ADDING');
+              setIndex();
+              setOpen('experience');
+            }}
           />
         </div>
         <Portfolio portfolio={portfolio} onEdit={() => setOpen('portfolio')} />

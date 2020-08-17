@@ -19,7 +19,7 @@ const getClasses = ({ active, disabled, value, invalid }) => ({
       ? 'C($primaryButton)'
       : 'C($inputGrey)'
   }`,
-  inputWrapperClasses: `Ff($ffmanrope) Bgc($navBarBg) ${
+  inputWrapperClasses: `Ff($ffmanrope) Bgc($navBarBg) H($2xl) ${
     disabled ? 'Bdb($bddisabledGrey2)' : 'Bgc($hoverInput):h'
   } ${
     invalid
@@ -83,6 +83,7 @@ const FormikTextField = React.forwardRef((props, ref) => {
       </label>
       <div className={classes.inputWrapperClasses}>
         <Field
+          value={value}
           name={name}
           id={id}
           className={classes.inputClasses}
@@ -129,7 +130,7 @@ FormikTextField.defaultProps = {
   onBlur: () => {},
   disabled: false,
   label: '',
-  value:"",
+  value: '',
   dimensionClasses: 'W($25x)',
   tabIndex: 0,
 };

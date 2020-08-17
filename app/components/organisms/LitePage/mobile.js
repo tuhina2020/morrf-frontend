@@ -13,8 +13,14 @@ import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 
-const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
-  const [callBackForm, setCallBackForm] = useState(false);
+const MobilePage = ({
+  allProfessionTypes,
+  isDesktopOrLaptop,
+  sendEmail,
+  callbackReq,
+  success,
+}) => {
+  const [callToggle, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
   const onScroll = () => {
@@ -48,7 +54,7 @@ const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
     setTimeout(showMore, 200);
   };
   return (
-    <div>
+    <>
       <div
         className="W($full) H($5xl) D(f) Jc(c) Ai(c) Bgr(nr) Bxz(pb)"
         style={{
@@ -90,14 +96,18 @@ const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
         <div className="Pb($2xl)">
           {callBackForm ? (
             <CallBackForm
-              isDesktopOrLaptop={isDesktopOrLaptop}
-              setCallBackForm={setCallBackForm}
+              isDesktopOrLaptop
+              setCallToggle={setCallToggle}
+              callbackReq={callbackReq}
+              success={success}
             />
           ) : (
             <RequestForm
-              isDesktopOrLaptop={isDesktopOrLaptop}
-              setCallBackForm={setCallBackForm}
-              specialistList={specialistList}
+              isDesktopOrLaptop
+              setCallToggle={setCallToggle}
+              allProfessionTypes={allProfessionTypes}
+              sendEmail={sendEmail}
+              success={success}
             />
           )}
         </div>
@@ -109,29 +119,29 @@ const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
         <div className="Pt($lg)" ref={secondPage}>
           <div className="D(f) Px($mmd) Ai(s) Jc(c) Flw(w)">
             <LiteCard
-              isDesktopOrLaptop={isDesktopOrLaptop}
+              isDesktopOrLaptop={false}
               title="Ease of finding reliable freelance"
               description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
             />
             <LiteCard
-              isDesktopOrLaptop={isDesktopOrLaptop}
+              isDesktopOrLaptop={false}
               title="Get help in preparing contracts"
               description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
             />
 
             <LiteCard
-              isDesktopOrLaptop={isDesktopOrLaptop}
+              isDesktopOrLaptop={false}
               title="Payment management"
               description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
             />
 
             <LiteCard
-              isDesktopOrLaptop={isDesktopOrLaptop}
+              isDesktopOrLaptop={false}
               title="Project management assistance"
               description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
             />
           </div>
-          <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)"/>
+          <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)" />
           <div className="W($full) Px($mmd) Ta(c) Pb($2xl) D(f) Fld(c) Pt($lg)">
             <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($lmg) Lh(38px) Mb($xl)">
               About Us
@@ -152,7 +162,7 @@ const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
             Like to know more?
           </div>
           <div className="Ff($ffmanrope) C(white) Fz($sm) Mb($lg)">
-            Reach us at: 
+            Reach us at:
             <a href="mailto:contact@morff.io" className="Td(n) C(white)">
               contact@morff.io
             </a>
@@ -160,38 +170,23 @@ const MobilePage = ({ specialistList, isDesktopOrLaptop }) => {
           <div>
             <a
               href="https://www.linkedin.com/company/morff-io"
-              className="Pend(10px)"
+              className="Pend($xxs)"
             >
-              <BaseIcon
-                icon="linkedin"
-                width="32px"
-                height="32px"
-              >
-
-              </BaseIcon>
+              <BaseIcon icon="linkedin" width="32px" height="32px" />
             </a>
-            <a
-            href="https://www.instagram.com/morff.io/"
-            >
-              <BaseIcon
-                icon="instagram"
-                width="32px"
-                height="32px"
-              >
-
-              </BaseIcon>
+            <a href="https://www.instagram.com/morff.io/">
+              <BaseIcon icon="instagram" width="32px" height="32px" />
             </a>
           </div>
           <div className="Ff($ffmanrope) Fz($sm) C(white) Mb($md) Mt($lg)">
-          Officially recognised by DIIPT, India
-        </div>
+            Officially recognised by DIIPT, India
+          </div>
           <div className="Ff($ffmanrope) C($placeholderGrey) Fz($fzlabel)">
             © 2020 Morff
           </div>
         </div>
-        
       </div>
-    </div>
+    </>
   );
 };
 

@@ -26,8 +26,7 @@ const PersonalDetails = ({ personal, onEdit }) => {
           icon="edit"
           width="28px"
           height="28px"
-          iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs)"
-          fill="#0847f4"
+          iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey)"
           onClick={onEdit}
         />
       </div>

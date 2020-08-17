@@ -19,22 +19,26 @@ const parseNestedObj = items => {
 };
 
 const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
-  if (!isOpen || isEmpty(items)) return null;
   const iterableList = parseNestedObj(items);
+  const iterableLen = iterableList.length;
   const selectedIds = values.map(sk => sk.id);
   return (
     <div
       id={`${id}_menu`}
       aria-labelledby={`${id}_input_label`}
-      className="Bgc($navBarBg) Ov(s) H($20x)"
+      className={`Bgc($navBarBg) W($full) Trsdu(0.6s) Trsp(a) Trstf(e) Bxsh($bxshcheckbox) ${
+        isOpen ? 'H($20x) Pos(r) Ov(s)' : 'H(0) B($xxs) Ov(h)'
+      }`}
     >
       {iterableList.map((item, index) => (
         <div
-          className="Bxz(bb) Pos(r) Bdb($bdinputGrey) Py($md)"
+          className={`Bxz(bb) Pos(r) ${
+            iterableLen === index + 1 ? '' : 'Bdb($bdinputGrey)'
+          } Py($md)`}
           role="option"
           aria-selected="false"
           id={`${id}_item_${index}`}
-          key={`${item.name}_${item.id}`}
+          key={item.category}
         >
           <div className="Ff($ffmanrope) Fz($sm) Lh(1) Px($sm) C($headingDarkGrey) Pb($xs)">
             {item.groupLabel}

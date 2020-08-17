@@ -7,12 +7,12 @@ import {
   RESEND_CODE,
   SET_GLOBAL_CHOICE,
   SIGNIN_GOOGLE,
-} from 'containers/LoginPage/constants';
+} from './constants';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
 import request from 'utils/request';
-import { makeSelectLoginPage } from 'containers/LoginPage/selectors';
+import { makeSelectLoginPage } from './selectors';
 import {
   setLoginData,
   setToastData,

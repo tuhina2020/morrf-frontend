@@ -244,3 +244,13 @@
       var(--avatar-position), var(--footer-position), 0 0;
   }
 }
+.react-datepicker__day-name,
+.react-datepicker__day {
+  width: 40px !important;
+  height: 40px;
+}
+.react-datepicker__month-container {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}

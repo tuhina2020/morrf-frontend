@@ -137,6 +137,7 @@ module.exports = () => ({
     checkbox: '0px 3px 6px #00000029',
     navBar: '0px 3px 3px #00000014',
     lightInset: 'inset 0 0 4px 0 rgba(0,0,0,0.1)',
+    calendar: '0 2px 6px rgba(0,0,0,.2)',
   },
   transition: {
     prefix: 'trs',
