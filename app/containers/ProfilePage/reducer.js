@@ -192,21 +192,51 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai',
       client: 'Novo Matrix',
-      completion: '07/2018',
+      from: '07/2018',
+      to: '08/2019',
+      duration: 18,
       description: 'New house at Panvel 1',
       order: 1,
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The ceiling',
           name: 'ScreenShot-11',
           order: 1,
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12',
+          description: 'The window',
+          order: 2,
+        },
+        {
+          id: '12', // optional (Will depend on the edit portfolio design)
+          link: 'https://lorempixel.com/200/200/',
+          description: 'The ceiling',
+          name: 'ScreenShot-11a',
+          order: 1,
+        },
+        {
+          id: 'abcw', // optional (Will depend on the edit portfolio design)
+          link: 'https://lorempixel.com/200/200/',
+          name: 'ScreenShot-12a',
+          description: 'The window',
+          order: 2,
+        },
+        {
+          id: '12b', // optional (Will depend on the edit portfolio design)
+          link: 'https://lorempixel.com/200/200/',
+          description: 'The ceiling',
+          name: 'ScreenShot-11ab',
+          order: 1,
+        },
+        {
+          id: 'abcqw', // optional (Will depend on the edit portfolio design)
+          link: 'https://lorempixel.com/200/200/',
+          name: 'ScreenShot-12ab',
           description: 'The window',
           order: 2,
         },
@@ -215,20 +245,22 @@ const dummyFilled = {
     {
       project: 'Heavy Security Bank, Singapore',
       client: 'Novo Matrix',
-      completion: '03/2017',
+      from: '03/2017',
+      to: '08/2019',
+      duration: 36,
       description: 'New house at Koramangala 2',
       order: 2,
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The view from outside',
           name: 'ScreenShot-9',
           order: 1,
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-10',
           description: 'The window',
           order: 2,
@@ -238,20 +270,22 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai 2',
       client: 'Novo Matrix',
-      completion: '07/2018',
+      from: '07/2018',
+      to: '08/2019',
+      duration: 21,
       description: 'New house at Panvel 3',
       order: 3,
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The ceiling',
           name: 'ScreenShot-7',
           order: 1,
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The window',
           name: 'ScreenShot-8',
           order: 2,
@@ -261,20 +295,22 @@ const dummyFilled = {
     {
       project: 'Heavy Security Bank, Singapore 2',
       client: 'Novo Matrix',
-      completion: '03/2017',
+      from: '03/2017',
+      to: '08/2019',
+      duration: 16,
       description: 'New house at Koramangala 4',
       order: 4,
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The view from outside',
           name: 'ScreenShot-1',
           order: 1,
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The window',
           name: 'ScreenShot-2',
           order: 2,
@@ -284,20 +320,22 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai 3',
       client: 'Novo Matrix',
-      completion: '07/2018',
+      from: '07/2018',
+      to: '08/2019',
+      duration: 31,
       description: 'New house at Panvel 5',
       order: 5,
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-3',
           description: 'The ceiling',
           order: 1,
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           description: 'The window',
           order: 2,
         },
@@ -306,20 +344,22 @@ const dummyFilled = {
     {
       project: 'Heavy Security Bank, Singapore 3',
       client: 'Novo Matrix',
-      completion: '03/2017',
+      from: '03/2017',
+      to: '08/2019',
       description: 'New house at Koramangala 6',
       order: 6,
+      duration: 21,
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-5',
           description: 'The view from outside',
           order: 1,
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
-          link: 'http:lorempixel.com/g/400/200/',
+          link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-6',
           description: 'The window',
           order: 2,

@@ -37,19 +37,19 @@ app.get('*.js', (req, res, next) => {
 // Start your app.
 app.listen(port, host, async err => {
   if (err) {
-    return logger.error(err.message);
+    return err.message;
   }
 
   // Connect to ngrok in dev mode
-  if (ngrok) {
-    let url;
-    try {
-      url = await ngrok.connect(port);
-    } catch (e) {
-      return logger.error(e);
-    }
-    logger.appStarted(port, prettyHost, url);
-  } else {
-    logger.appStarted(port, prettyHost);
-  }
+  // if (ngrok) {
+  //   let url;
+  //   try {
+  //     url = await ngrok.connect(port);
+  //   } catch (e) {
+  //     return e;
+  //   }
+  //   // logger.appStarted(port, prettyHost, url);
+  // } else {
+  logger.appStarted(port, prettyHost);
+  // }
 });

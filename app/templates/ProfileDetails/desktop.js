@@ -72,7 +72,19 @@ const ProfileDetails = ({
             }}
           />
         </div>
-        <Portfolio portfolio={portfolio} onEdit={() => setOpen('portfolio')} />
+        <Portfolio
+          portfolio={portfolio}
+          onEdit={index => {
+            console.log('EDITING');
+            setIndex(index);
+            setOpen('portfolio');
+          }}
+          onAdd={() => {
+            console.log('ADDING');
+            setIndex();
+            setOpen('portfolio');
+          }}
+        />
       </div>
       <Modal
         isOpen={!isEmpty(open)}

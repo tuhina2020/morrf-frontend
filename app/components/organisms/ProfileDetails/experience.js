@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import sortBy from 'lodash/sortBy';
 import isEmpty from 'lodash/isEmpty';
@@ -42,6 +43,11 @@ const Experience = ({ experience, onEdit, onSave, onAdd }) => {
       )}
     </DisplayCard>
   );
+};
+Experience.propTypes = {
+  experience: PropTypes.array,
+  onEdit: PropTypes.func,
+  onAdd: PropTypes.func,
 };
 
 export default Experience;

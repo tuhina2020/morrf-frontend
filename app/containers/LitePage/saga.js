@@ -28,7 +28,6 @@ export function* emailReq({ payload }) {
   }
 }
 export function* callbackReq({ payload }) {
-  debugger;
   const requestURL =
     'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/project-details';
   try {

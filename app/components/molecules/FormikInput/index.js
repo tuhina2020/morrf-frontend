@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
 
-const getClasses = ({ active, disabled, value, invalid }) => ({
+const getClasses = ({ active, disabled, value, invalid, joined }) => ({
   labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Pstart($md) W(fc) Pstart($md) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
@@ -20,9 +20,17 @@ const getClasses = ({ active, disabled, value, invalid }) => ({
       : 'C($inputGrey)'
   }`,
   inputWrapperClasses: `Ff($ffmanrope) Bgc($navBarBg) H($2xl) ${
-    disabled ? 'Bdb($bddisabledGrey2)' : 'Bgc($hoverInput):h'
+    joined
+      ? disabled
+        ? ''
+        : 'Bgc($hoverInput):h'
+      : disabled
+      ? 'Bdb($bddisabledGrey2)'
+      : 'Bgc($hoverInput):h'
   } ${
-    invalid
+    joined
+      ? ''
+      : invalid
       ? 'Bdb($bderrorColor)'
       : disabled
       ? ''
@@ -58,6 +66,7 @@ const FormikTextField = React.forwardRef((props, ref) => {
     tabIndex,
     dimensionClasses,
     placeholder,
+    joined,
     ...others
   } = props;
   const [active, setActive] = useState(false);
@@ -74,7 +83,13 @@ const FormikTextField = React.forwardRef((props, ref) => {
     onFocus(e);
   };
 
-  const classes = getClasses({ active, disabled, value, invalid: error });
+  const classes = getClasses({
+    active,
+    disabled,
+    value,
+    invalid: error,
+    joined,
+  });
 
   return (
     <div className={`${dimensionClasses} Pos(r) Ta(start)`}>
@@ -121,6 +136,7 @@ FormikTextField.propTypes = {
   tabIndex: PropTypes.number,
   dimensionClasses: PropTypes.string,
   placeholder: PropTypes.string,
+  joined: PropTypes.bool,
 };
 
 FormikTextField.defaultProps = {
@@ -133,6 +149,7 @@ FormikTextField.defaultProps = {
   value: '',
   dimensionClasses: 'W($25x)',
   tabIndex: 0,
+  joined: false,
 };
 
 export default FormikTextField;

@@ -5,7 +5,7 @@ import ProfileEditForm from 'components/organisms/ProfileEditForm/personal';
 import ContactEditForm from 'components/organisms/ProfileEditForm/contact';
 import SkillEditForm from 'components/organisms/ProfileEditForm/skills';
 import ExperienceEditForm from 'components/organisms/ProfileEditForm/ExperienceEdit';
-import PortfolioEditForm from 'components/organisms/ProfileEditForm/portfolio';
+import PortfolioEditForm from 'components/organisms/ProfileEditForm/PortfolioEdit';
 
 const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
   const props = {

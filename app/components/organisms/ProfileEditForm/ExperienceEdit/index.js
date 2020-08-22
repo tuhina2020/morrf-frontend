@@ -23,7 +23,7 @@ const removeProps = {
 };
 
 const ExperienceFormCard = ({
-  index,
+  currentIndex,
   designation,
   company,
   from,
@@ -34,6 +34,7 @@ const ExperienceFormCard = ({
   touched,
   handleChange,
   setFieldValue,
+  onRemove,
 }) => {
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
@@ -111,9 +112,11 @@ const ExperienceFormCard = ({
           error={getError('description')}
         />
       </div>
-      <Button {...removeProps} onClick={() => remove(index)}>
-        Remove
-      </Button>
+      {currentIndex >= 0 ? (
+        <Button {...removeProps} onClick={onRemove}>
+          Remove
+        </Button>
+      ) : null}
     </div>
   );
 };
@@ -124,6 +127,13 @@ const ExperienceEditForm = ({
   onSave,
   currentIndex,
 }) => {
+  const onRemove = () => {
+    if (currentIndex >= 0) {
+      const newExperience = experience.filter((obj, i) => i !== currentIndex);
+      onSave({ experience: newExperience });
+      onCancel();
+    }
+  };
   const validationSchema = Yup.object().shape({
     designation: Yup.string()
       .min(3, 'too short')
@@ -218,21 +228,21 @@ const ExperienceEditForm = ({
         touched,
         errors,
       }) => (
-        <div className="Bdrs($xs) Bgc(white) H($fc) W($60xl)">
+        <div className="Bdrs($xs) Bgc(white) W($60xl)">
           <Form onSubmit={handleSubmit}>
             <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
               Edit Experience
             </div>
-            <div>{JSON.stringify(errors)}</div>
-            <div className="Mah($6xxl) Ov(s)">
+            <div className="Mah($45x) Ov(s)">
               <ExperienceFormCard
-                index={currentIndex}
+                currentIndex={currentIndex}
                 {...values}
                 errors={errors}
                 touched={touched}
                 // remove={remove}
                 handleChange={handleChange}
                 setFieldValue={setFieldValue}
+                onRemove={onRemove}
               />
             </div>
             <div className={`D(f) Ai(c) Jc(c)`}>

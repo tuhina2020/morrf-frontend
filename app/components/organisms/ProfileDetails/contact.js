@@ -63,10 +63,7 @@ const Contact = ({ data, onEdit }) => {
 };
 
 Contact.propTypes = {
-  data: PropTypes.objectOf({
-    email: PropTypes.string,
-    phone: PropTypes.string,
-  }),
+  data: PropTypes.object,
   onEdit: PropTypes.func,
 };
 
