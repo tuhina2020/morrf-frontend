@@ -6,10 +6,16 @@ export function* emailReq({ payload }) {
   const requestURL =
     'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/project-details';
   try {
-    const data = payload;
-    const response = yield call(request, requestURL, {
-      data,
-    });
+    const data = { ...payload };
+    data.specialist = data.specialist.map(s => s.name).join(',');
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        data,
+      },
+      false,
+    );
     yield put(setSuccess(true));
     yield put(
       setToastData({
@@ -20,7 +26,7 @@ export function* emailReq({ payload }) {
   } catch (err) {
     yield put(
       setToastData({
-        message: 'This part is done',
+        message: err.message,
         type: 'info',
       }),
     );
@@ -29,12 +35,17 @@ export function* emailReq({ payload }) {
 }
 export function* callbackReq({ payload }) {
   const requestURL =
-    'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/project-details';
+    'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/call-details';
   try {
-    const data = payload;
-    const response = yield call(request, requestURL, {
-      data,
-    });
+    const data = { ...payload };
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        data,
+      },
+      false,
+    );
     yield put(
       setToastData({
         message: response.message,

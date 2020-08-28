@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import BaseIcon from 'components/atoms/BaseIcon';
 import { classnames } from 'utils/helper';
@@ -9,18 +9,15 @@ const FormikComboBox = ({
   id,
   labelText,
   items,
-  values,
-  onSelect,
+  viewableValues,
+  onChange,
   width,
-  tabIndex,
   disabled,
   inline,
-  deleteEntity,
   sliceInline,
   error,
 }) => {
   const [isOpen, setOpen] = useState(false);
-
   const toggleOpen = e => {
     e.preventDefault();
     e.stopPropagation();
@@ -29,6 +26,19 @@ const FormikComboBox = ({
   };
 
   const invalid = error && error.length > 1;
+
+  const selectObj = ({ item, add = false }) => {
+    const newValues = add
+      ? [...viewableValues, item]
+      : viewableValues.filter(sk => sk.id !== item.id);
+    onChange(newValues);
+  };
+
+  const deleteValues = skill => {
+    selectObj({
+      item: skill,
+    });
+  };
 
   const labelStyle = classnames({
     // 'Bxsh($bxshcheckbox)': true,
@@ -55,106 +65,111 @@ const FormikComboBox = ({
     'O(n)': true,
   });
 
-  const inlineTagsList = values.slice(0, sliceInline);
-  console.log('inline tags ', inlineTagsList);
+  const inlineTagsList = viewableValues.slice(0, sliceInline);
 
-  const InlineTags = () => (
-    <>
-      <div className="D(f) Ai(c) Jc(fs)">
-        {inlineTagsList.map((skill, i) => (
-          <div
-            // className={
-            //   inlineTagsList.length <= sliceInline && i === 1
-            //     ? ''
-            //     : i === inlineTagsList.length - 1
-            //     ? 'Mend($sm)'
-            //     : 'Mend($xs)'
-            // }
-            key={skill.id}
-          >
-            <Tag filter disabled={false} onDelete={() => deleteEntity(skill)}>
-              {skill.name}
-            </Tag>
-          </div>
-        ))}
-      </div>
-      {values.length > sliceInline ? (
-        <div className="Mstart($xs) Bgc($checkboxMore) C($navBarBg) Ff($ffmanrope) Fw($fwbold) Fz($sm) Bdrs($xs) W($lg) H($md) Ta(c)">
-          + {values.length - sliceInline}
+  const InlineValues = useCallback(
+    () => (
+      <>
+        <div className="D(f) Ai(c) Jc(fs)">
+          {inlineTagsList.map((val, i) => (
+            <div key={val.id + '_inline' + i} className="Mend($xxs)">
+              <Tag filter disabled={false} onDelete={() => deleteValues(val)}>
+                {val.name}
+              </Tag>
+            </div>
+          ))}
         </div>
-      ) : null}
-    </>
+        {viewableValues.length > sliceInline ? (
+          <div className="Mstart($xs) Bgc($checkboxMore) C($navBarBg) Ff($ffmanrope) Fw($fwbold) Fz($sm) Bdrs($xs) W($lg) H($md) Ta(c)">
+            + {viewableValues.length - sliceInline}
+          </div>
+        ) : null}
+      </>
+    ),
+    [viewableValues],
+  );
+
+  const NotInlineValues = () => (
+    <div className="D(f) Ai(c) Jc(s) Mb($sm) Flw(w)">
+      {viewableValues.map((val, i) => (
+        <div className="Mend($sm) Mb($sm)" key={val.id + '_notinline_' + i}>
+          <Tag filter disabled={false} onDelete={() => deleteValues(val)}>
+            {val.name}
+          </Tag>
+        </div>
+      ))}
+    </div>
   );
 
   return (
-    <div
-      className="W($full)"
-      aria-haspopup="listbox"
-      aria-owns={`${id}_menu`}
-      aria-expanded={isOpen}
-    >
+    <>
+      {!inline && <NotInlineValues />}
       <div
-        role="button"
-        className={labelStyle}
-        onClick={toggleOpen}
-        onKeyDown={toggleOpen}
-        tabIndex={tabIndex}
+        className="W($full)"
+        aria-haspopup="listbox"
+        aria-owns={`${id}_menu`}
+        aria-expanded={isOpen}
       >
         <div
-          className={`D(f) Ai(c) Jc(fs) Pt($sm) Px($sm) Pos(r) ${
-            inlineTagsList.length > 0 ? '' : 'T($xxs)'
-          }`}
+          role="button"
+          className={labelStyle}
+          onClick={toggleOpen}
+          onKeyDown={toggleOpen}
+          tabIndex={0}
         >
-          <div className="Lh($md) Ff($ffmanrope) Fz($smd) Whs(nw) C($inputGrey)">
-            {inlineTagsList.length > 2 ? labelText.slice(0, 10) : labelText}
-          </div>
-          {inline && <InlineTags />}
-          <BaseIcon
-            icon="showmore"
-            iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) Pos(a) End(0) ${
-              isOpen ? 'Rotate(180deg)' : ''
+          <div
+            className={`D(f) Ai(c) Jc(fs) Pt($md) Px($sm) Pos(r) ${
+              inlineTagsList.length > 0 ? '' : 'T($xxs)'
             }`}
-          />
+          >
+            <div className="Lh($md) Ff($ffmanrope) Fz($smd) Whs(nw) C($inputGrey)">
+              {labelText}
+            </div>
+            {inline && <InlineValues />}
+            <BaseIcon
+              icon="showmore"
+              iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) Pos(a) End(0) ${
+                isOpen ? 'Rotate(180deg)' : ''
+              }`}
+            />
+          </div>
+        </div>
+        <NestedFormikCheckList
+          isOpen={isOpen}
+          items={items}
+          id={id}
+          values={viewableValues}
+          onSelect={selectObj}
+        />
+        <div
+          className={`Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
+            invalid ? 'Op(1)' : 'Op(0)'
+          } Trsdu(0.8s) Trsp(a) Trstf(e)`}
+        >
+          {error || ''}
         </div>
       </div>
-      <NestedFormikCheckList
-        isOpen={isOpen}
-        items={items}
-        id={id}
-        values={values}
-        onSelect={onSelect}
-      />
-      <div
-        className={`Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
-          invalid ? 'Op(1)' : 'Op(0)'
-        } Trsdu(0.8s) Trsp(a) Trstf(e)`}
-      >
-        {error || ''}
-      </div>
-    </div>
+    </>
   );
 };
 
 FormikComboBox.propTypes = {
-  onSelect: PropTypes.func,
+  onChange: PropTypes.func,
   labelText: PropTypes.string,
   width: PropTypes.string,
   id: PropTypes.string.isRequired,
   items: PropTypes.array,
-  values: PropTypes.arrayOf(PropTypes.object),
-  tabIndex: PropTypes.number,
+  initValues: PropTypes.arrayOf(PropTypes.object),
   disabled: PropTypes.bool,
   inline: PropTypes.bool,
-  deleteEntity: PropTypes.func,
   sliceInline: PropTypes.number,
 };
 
 FormikComboBox.defaultProps = {
   labelText: 'Label',
   width: 'full',
-  onSelect: () => {},
+  onChange: () => {},
   items: [],
-  tabIndex: 0,
   disabled: false,
   inline: false,
   sliceInline: 2,

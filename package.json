@@ -1,5 +1,6 @@
 {
   "name": "morrf-frontend",
+  "sideEffects": false,
   "version": "1.0.0",
   "description": "Morrf PWA",
   "repository": {
@@ -94,7 +95,6 @@
     "react-redux": "7.0.2",
     "react-responsive": "^8.1.0",
     "react-router-dom": "5.0.0",
-    "react-slick": "^0.27.0",
     "react-toastify": "^6.0.8",
     "redux": "4.0.1",
     "redux-logger": "^3.0.6",

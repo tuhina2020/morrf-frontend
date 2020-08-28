@@ -10,6 +10,7 @@ import BaseIcon from 'components/atoms/BaseIcon';
 import get from 'lodash/get';
 import { wordCount } from 'utils/helper';
 import FileUpload from 'components/molecules/DragDrop/file2';
+import { values } from 'lodash';
 
 const PortfolioFormCard = ({
   errors,
@@ -117,6 +118,7 @@ const PortfolioFormCard = ({
         maxSize={10}
         filesExisting={portfolio.images}
         onChange={setImage}
+        showPreview={true}
       />
       <Button
         {...removeProps}
@@ -186,6 +188,19 @@ const PortfolioEditForm = ({
     roundCorners: false,
   };
 
+  const onCancelHandler = ({ values, mode }) => () => {
+    const index = currentIndex >= 0 ? currentIndex : portfolio.length;
+    let newPortfolio = [...portfolio];
+    newPortfolio[index] = {
+      ...values,
+      mode,
+    };
+    // alert(values);
+    alert(JSON.stringify(newPortfolio[index]));
+    onSave({ portfolio: newPortfolio });
+    onCancel();
+  };
+
   const cancelProps = {
     iconDescription: 'Cancel',
     alignContent: 'center',
@@ -193,20 +208,14 @@ const PortfolioEditForm = ({
     size: 'half',
     type: 'button',
     roundCorners: false,
-    onClick: onCancel,
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
-        const index = currentIndex >= 0 ? currentIndex : portfolio.length;
-        let newPortfolio = [...portfolio];
-        newPortfolio[index] = values;
-        onSave({ portfolio: newPortfolio });
+        onCancelHandler({ values, mode: 'completed' })();
         setSubmitting(false);
-        onCancel();
       }}
       validationSchema={validationSchema}
     >
@@ -224,7 +233,6 @@ const PortfolioEditForm = ({
               <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
                 Edit Portfolio
               </div>
-              <div>{values.images.length}</div>
               <PortfolioFormCard
                 {...values}
                 errors={errors}
@@ -243,7 +251,12 @@ const PortfolioEditForm = ({
                 }}
               />
               <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
-                <Button {...cancelProps}>Cancel</Button>
+                <Button
+                  {...cancelProps}
+                  onClick={onCancelHandler({ values, mode: 'draft' })}
+                >
+                  Cancel
+                </Button>
                 <Button
                   {...activeSaveProps}
                   // disabled={values.length === 0}

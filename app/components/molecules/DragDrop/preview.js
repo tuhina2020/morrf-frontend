@@ -13,6 +13,7 @@ const FilePreview = ({ onRemove, data, onload }) => {
     }
     const reader = new FileReader();
     const type = (() => {
+      if (!localdata.type) return 'link';
       if (localdata.type.match('text')) {
         return 'text';
       } else if (localdata.type.match('image')) {
@@ -28,12 +29,20 @@ const FilePreview = ({ onRemove, data, onload }) => {
       setLoading(false);
     };
     useEffect(() => {
-      onload({ name: localdata.name, data: src });
+      if (src)
+        onload({
+          name: localdata.name,
+          data: src,
+          type: localdata.type,
+          id: new Date().toString() + Math.random(),
+        });
     }, [src]);
     if (type === 'text') {
       reader.readAsText(localdata);
     } else if (type === 'image') {
       reader.readAsDataURL(localdata);
+    } else if (type === 'application/pdf') {
+      reader.readAsBinaryString(localdata);
     } else {
       setSrc(false);
       setLoading(false);

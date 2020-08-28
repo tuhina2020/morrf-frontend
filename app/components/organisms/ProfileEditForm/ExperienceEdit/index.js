@@ -36,23 +36,24 @@ const ExperienceFormCard = ({
   setFieldValue,
   onRemove,
 }) => {
+  debugger;
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
 
   return (
-    <div className={'P($lg) Bdb($bdcardGrey)'}>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-        <FormikInput
-          label="Designation"
-          name={`designation`}
-          id={`designation`}
-          error={getError('designation')}
-          value={designation}
-          onChange={handleChange}
-        />
-        <FormikInput
-          name={`company`}
-          id={`company`}
+    <div className="P($lg) Bdb($bdcardGrey)">
+      {/* <div className="D(f) Ai(c) Jc(sb) H($2xl)"> */}
+      <FormikInput
+        label="Designation"
+        name="designation"
+        id="designation"
+        error={getError('designation')}
+        value={designation}
+        onChange={handleChange}
+      />
+      {/* <FormikInput
+          name="company"
+          id="company"
           label="Company"
           error={getError('company')}
           value={company}
@@ -62,9 +63,9 @@ const ExperienceFormCard = ({
       <div className="D(f) Ai(c) Jc(s) H($2xl) My($lg)">
         <FormikInput
           label="From"
-          name={`from`}
+          name="from"
           placeholder="mm/yyyy"
-          id={`from`}
+          id="from"
           autoComplete="off"
           dimensionClasses="W($10x) Mend($2xl)"
           error={getError('from')}
@@ -72,8 +73,8 @@ const ExperienceFormCard = ({
           onChange={handleChange}
         />
         <FormikInput
-          name={`to`}
-          id={`to`}
+          name="to"
+          id="to"
           label="To"
           autoComplete="off"
           placeholder="mm/yyyy"
@@ -85,7 +86,7 @@ const ExperienceFormCard = ({
         />
         <div className="Mstart($lg) Pos(r) T($xs) Bgc(white)">
           <FormikCheckBox
-            name={`present`}
+            name="present"
             value={present || false}
             labelText="I work here currently"
             onChange={e => {
@@ -102,7 +103,7 @@ const ExperienceFormCard = ({
       <div className="My($lg)">
         <FormikTextArea
           label="Description"
-          name={`description`}
+          name="description"
           id="description"
           heightClass="H($5xl)"
           placeholder="Brief description of your work"
@@ -111,7 +112,7 @@ const ExperienceFormCard = ({
           value={description}
           error={getError('description')}
         />
-      </div>
+      </div> */}
       {currentIndex >= 0 ? (
         <Button {...removeProps} onClick={onRemove}>
           Remove
@@ -227,36 +228,39 @@ const ExperienceEditForm = ({
         handleSubmit,
         touched,
         errors,
-      }) => (
-        <div className="Bdrs($xs) Bgc(white) W($60xl)">
-          <Form onSubmit={handleSubmit}>
-            <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
-              Edit Experience
-            </div>
-            <div className="Mah($45x) Ov(s)">
-              <ExperienceFormCard
-                currentIndex={currentIndex}
-                {...values}
-                errors={errors}
-                touched={touched}
-                // remove={remove}
-                handleChange={handleChange}
-                setFieldValue={setFieldValue}
-                onRemove={onRemove}
-              />
-            </div>
-            <div className={`D(f) Ai(c) Jc(c)`}>
-              <Button {...cancelProps}>Cancel</Button>
-              <Button
-                {...activeSaveProps}
-                disabled={isEmpty(errors) ? isEmpty(experience) : false}
-              >
-                Save
-              </Button>
-            </div>
-          </Form>
-        </div>
-      )}
+      }) => {
+        // debugger;
+        return (
+          <div className="Bdrs($xs) Bgc(white) W($60xl)">
+            <Form onSubmit={handleSubmit}>
+              <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+                Edit Experience
+              </div>
+              <div className="Mah($45x) Ov(s)">
+                <ExperienceFormCard
+                  currentIndex={currentIndex}
+                  {...values}
+                  errors={errors}
+                  touched={touched}
+                  // remove={remove}
+                  handleChange={handleChange}
+                  setFieldValue={setFieldValue}
+                  onRemove={onRemove}
+                />
+              </div>
+              <div className="D(f) Ai(c) Jc(c)">
+                <Button {...cancelProps}>Cancel</Button>
+                <Button
+                  {...activeSaveProps}
+                  disabled={isEmpty(errors) ? isEmpty(experience) : false}
+                >
+                  Save
+                </Button>
+              </div>
+            </Form>
+          </div>
+        );
+      }}
     </Formik>
   );
 };

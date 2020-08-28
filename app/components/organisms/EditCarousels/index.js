@@ -6,25 +6,30 @@ import Modal from 'react-modal';
 import DisplayCard from 'components/molecules/DisplayCard';
 import GetStartedForm from 'components/organisms/EditCarousels/getStarted';
 
-const GetStarted = ({ width, profile }) => {
+const GetStarted = ({ width, onStart }) => {
   const [open, setOpen] = useState(false);
   const saveProps = {
     iconDescription: 'Save',
     alignContent: 'center',
     kind: 'primary',
-    size: 'half',
+    size: 'full',
     type: 'submit',
     roundCorners: true,
     onClick: () => {
       console.log('lol');
+      onStart();
     },
   };
   return (
     <div className="W($60xl) H($30xl) Bgc(white) Bdrs($bdrsbutton) M(a) Ff($ffmanrope) D(f) Ai(c) Jc(c) Fld(c) Pos(r) T($20x)">
-      <BaseIcon icon="check" fill="gray" iconClasses="W($10x) H($10x)" />
-      <div>Add more details about you to get more projects</div>
-      <Button {...saveProps}>Lets get started</Button>
-      <Modal
+      <BaseIcon icon="check" fill="lightgray" iconClasses="W($10x) H($10x)" />
+      <div className="Fz($mmd) Lh(2.4) C($inputGrey)">
+        Add more details about you to get more projects
+      </div>
+      <div className="My($lg) W($quarter)">
+        <Button {...saveProps}>Lets get started</Button>
+      </div>
+      {/* <Modal
         isOpen={open}
         contentLabel="onRequestClose Example"
         onRequestClose={() => setOpen(false)}
@@ -32,7 +37,7 @@ const GetStarted = ({ width, profile }) => {
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
         <GetStartedForm profile={profile} />
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

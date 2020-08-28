@@ -20,6 +20,7 @@ const FileUpload2 = ({
   name,
   multiple,
   label,
+  showPreview,
   filesExisting,
   onChange,
   // uploadFileToServer = uploadFileToServer,
@@ -82,6 +83,7 @@ const FileUpload2 = ({
   // };
 
   const previews = () => {
+    if (!showPreview) return null;
     return fileList.map((file, index) => {
       const removeItemCurrent = () => {
         removeItem(index);
@@ -127,8 +129,13 @@ const FileUpload2 = ({
 
   return (
     <>
-      <input type="hidden" name={`${name}:maxSize`} value={maxSize} />
-      <div>
+      <input
+        type="hidden"
+        name={`${name}:maxSize`}
+        value={maxSize}
+        className="D(n)"
+      />
+      <div className="W($full) H($full)">
         <label>
           <div
             className={dragClasses}
@@ -136,12 +143,13 @@ const FileUpload2 = ({
             onDragLeave={handleDragOver}
             onDrop={handleFileSelect}
           >
-            <div className="input-wrapper">
+            <div>
               <input
                 type="file"
                 tabIndex={0}
+                accept="image/jpeg,image/png,application/pdf"
                 ref={inputRef}
-                className="input"
+                className="D(n)"
                 name={name}
                 multiple={multiple}
                 onChange={handleFileSelect}
@@ -168,6 +176,7 @@ FileUpload2.defaultProps = {
   onChange: (data, i) => {
     console.log('setting upsteam', i);
   },
+  showPreview: false,
 };
 
 export default FileUpload2;

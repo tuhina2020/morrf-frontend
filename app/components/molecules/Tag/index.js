@@ -72,6 +72,7 @@ const Tag = ({
       {...other}
       onMouseEnter={() => !disabled && setHover(true)}
       onMouseLeave={() => !disabled && setHover(false)}
+      type="button"
     >
       <div className="D(f) Ai(c) Jc(c)">
         <div className="Whs(nw)">

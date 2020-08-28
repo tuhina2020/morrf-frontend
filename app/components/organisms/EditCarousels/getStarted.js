@@ -6,7 +6,6 @@ import Modal from 'react-modal';
 import DisplayCard from 'components/molecules/DisplayCard';
 import isEmpty from 'lodash/isEmpty';
 import times from 'lodash/times';
-import Slider from 'react-slick';
 import compact from 'lodash/compact';
 
 const UI_STATES = {
@@ -26,88 +25,53 @@ const NEXT_STATES = {
   EXPERIENCE: 'PORTFOLIO',
 };
 
-const MESSAGES = {
-  personal: {
+const MESSAGES = [
+  {
     heading: 'My Details',
     subheading: 'Name, Profile picture, Profession, Location',
+    add: 'personal',
+    reason: 'Your phone number is essential in making your work faster.',
   },
-  contact: {
+  {
     heading: 'Contact Information',
-    subheading: 'Name, Profile picture, Profession, Location',
+    subheading: 'Phone number',
+    add: 'contact',
+    reason: 'Your phone number is essential in making your work faster.',
   },
-  about: {
+  {
     heading: 'About Yourself',
+    add: 'about',
     subheading: 'Name, Profile picture, Profession, Location',
   },
-  skills: {
+  {
     heading: 'Skills',
-    subheading: 'Name, Profile picture, Profession, Location',
+    add: 'skills',
+    subheading: 'Please update your skills',
   },
-  experience: {
+  {
     heading: 'Experience',
-    subheading: 'Name, Profile picture, Profession, Location',
+    add: 'experience',
+    subheading: 'Please update your experience for more visibility',
   },
-  portfolio: {
+  {
     heading: 'Portfolio',
-    subheading: 'Name, Profile picture, Profession, Location',
+    add: 'portfolio',
+    subheading: 'Add your portfolio for points',
   },
-};
+];
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: 'block', background: 'red' }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: 'block', background: 'green' }}
-      onClick={onClick}
-    />
-  );
-}
-
-const geCurrentState = profile => {
-  const LOOKUP = {
-    personal: 'PERSONAL_DETAILS',
-    phone: 'CONTACT_INFO',
-    about: 'ABOUT_ME',
-    skills: 'SKILLS',
-    experience: 'EXPERIENCE',
-    portfolio: 'PORTFOLIO',
+const GetStartedForm = ({ data, onClickAdd }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const total = MESSAGES.length;
+  const onNext = () => {
+    if (currentIndex === total - 1) return;
+    setTimeout(() => setCurrentIndex(currentIndex + 1), 600);
   };
-  let currentState;
-
-  const messageList = compact(
-    [
-      'personal',
-      'about',
-      'phone',
-      'email',
-      'experience',
-      'portfolio',
-      'skills',
-    ].filter(info => isEmpty(profile[info])),
-  ).map(info => MESSAGES[info]);
-
-  console.log(messageList);
-
-  for (const info in LOOKUP) {
-    if (isEmpty(profile[info]) && !currentState) currentState = LOOKUP[info];
-  }
-  return { currentState, messageList };
-};
-
-const GetStartedForm = ({ profile }) => {
-  const cancelProps = {
+  const onBack = () => {
+    if (currentIndex === 0) return;
+    setTimeout(() => setCurrentIndex(currentIndex - 1), 600);
+  };
+  const addProps = {
     iconDescription: 'Cancel',
     alignContent: 'center',
     kind: 'tertiary',
@@ -116,24 +80,11 @@ const GetStartedForm = ({ profile }) => {
     roundCorners: false,
     onClick: () => {
       console.log('add me');
+      const currentPage = MESSAGES[currentIndex].add;
+      onClickAdd(currentPage);
     },
   };
-  const currentData = geCurrentState(profile);
-  const [currentState, setCurrentState] = useState(currentData.currentState);
-  // const RENDER_MESSAGES = MESSAGES[currentData.messageList];
-  const msg = {
-    heading: 'Contact Information',
-    subheading: 'Name, Profile picture, Profession, Location',
-  };
-  const {
-    personal,
-    about,
-    phone,
-    email,
-    experience,
-    portfolio,
-    skills,
-  } = profile;
+  const { personal, about, phone, email, experience, portfolio, skills } = data;
   const countEmpty = [
     personal,
     about,
@@ -142,15 +93,6 @@ const GetStartedForm = ({ profile }) => {
     skills,
     experience,
   ].filter(isEmpty).length;
-  const Dots = countEmpty > 1 && times(countEmpty);
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
 
   return (
     <DisplayCard>
@@ -159,40 +101,59 @@ const GetStartedForm = ({ profile }) => {
         <div className="Ff($ffopensans)">Your profile is x % complete</div>
         <div>A complete profile increases your chances of being recognised</div>
       </div>
-      <div className="D(f) Ai(c) Jc(c) Fld(c)">
-        <BaseIcon icon="check" fill="gray" iconClasses="W($10x) H($10x)" />
-        <Button {...cancelProps}>Add +</Button>
-        <div className="W($45x) Ff($ffmanrope)">
-          <Slider {...settings}>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
+      <div className="">
+        <BaseIcon
+          icon="check"
+          fill="gray"
+          iconClasses="W($10x) H($10x) Mx(a) D(b)"
+        />
+        <div className="Mx(a) W(fc)">
+          <Button {...addProps}>Add +</Button>
+        </div>
+
+        <div className="D(f) Jc(fs) Ai(c) Ff($ffmanrope)">
+          <BaseIcon
+            icon="showmore"
+            iconClasses={`W($xl) H($xl) Rotate(90deg) Bdrs($lg) ${
+              currentIndex === 0
+                ? 'C($hoverInput)'
+                : 'Bgc($navBarBg):h C($inputGrey)'
+            } Trsdu(0.4s) Trsp(a) Trstf(e)`}
+            onClick={onBack}
+          />
+          <div className="W($45x) TranslateZ(0) Ov(h)">
+            <div
+              className="D(f) Ai(c) W(fc) Jc(fs) Trsdu(1s) Trsp(a) Trstf(e)"
+              style={{
+                transform: `translateX(${-1 * currentIndex * 450}px)`,
+              }}
+            >
+              {MESSAGES.map(msg => (
+                <div className="W($45x)" key={msg.add}>
+                  <div>{msg.heading}</div>
+                  <div>{msg.subheading}</div>
+                  <div>{msg.reason || ''}</div>
+                </div>
+              ))}
             </div>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
-            </div>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
-            </div>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
-            </div>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
-            </div>
-            <div>
-              <div>{msg.heading}</div>
-              <div>{msg.subheading}</div>
-            </div>
-          </Slider>
+          </div>
+          <BaseIcon
+            icon="showmore"
+            iconClasses={`W($xl) H($xl) Rotate(-90deg) Bdrs($lg) ${
+              currentIndex === total - 1
+                ? 'C($hoverInput)'
+                : 'Bgc($navBarBg):h C($inputGrey)'
+            } Trsdu(0.4s) Trsp(a) Trstf(e)`}
+            onClick={onNext}
+          />
         </div>
       </div>
     </DisplayCard>
   );
+};
+
+GetStartedForm.defaultProps = {
+  data: {},
 };
 
 export default GetStartedForm;

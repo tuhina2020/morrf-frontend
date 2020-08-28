@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import FormikInput from 'components/molecules/FormikInput';
@@ -14,6 +14,7 @@ const generateRequestForm = ({
   setCallToggle,
   allProfessionTypes,
   isDesktopOrLaptop,
+  setName,
 }) => ({
   handleSubmit,
   handleChange,
@@ -22,24 +23,8 @@ const generateRequestForm = ({
   errors,
   setFieldValue,
 }) => {
-  const [viewableSpecialist, setViewableSpecialist] = useState([]);
-  const selectObj = ({ item, add }) => {
-    const newSpecialist = add
-      ? [...viewableSpecialist, item]
-      : viewableSpecialist.filter(sk => sk.id !== item.id);
-    console.log(newSpecialist, add);
-    setViewableSpecialist(newSpecialist);
-    setFieldValue('specialist', newSpecialist);
-  };
-  const deleteSpecialist = item => {
-    selectObj({
-      item,
-      add: false,
-    });
-  };
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
-  console.log(getError('name'));
   const submitProps = {
     iconDescription: 'submit',
     alignContent: 'center',
@@ -62,14 +47,16 @@ const generateRequestForm = ({
         label="Your name"
         name="name"
         id="name"
-        tabIndex={1}
-        onChange={handleChange}
+        tabIndex={0}
+        onChange={e => {
+          handleChange(e);
+          setName(e.target.value);
+        }}
         value={values.name}
         error={getError('name')}
       />
       <div className="W($full) Mb($sm)">
         <NestedFormikComboBox
-          className="H($2xl)"
           id="search"
           name="search"
           type="text"
@@ -83,10 +70,11 @@ const generateRequestForm = ({
               : 'Looking For'
           }
           // onKeyPress={onEnter}
-          onSelect={selectObj}
-          deleteEntity={deleteSpecialist}
+          onChange={useCallback(params => {
+            setFieldValue('specialist', params);
+          }, [])}
           items={allProfessionTypes}
-          values={values.specialist}
+          viewableValues={values.specialist}
         />
       </div>
       <FormikTextArea
@@ -145,11 +133,13 @@ const RequestForm = props => {
     isDesktopOrLaptop,
     allProfessionTypes,
     sendEmail,
+    setName,
+    initName,
   } = props;
 
   const YupObj = {
     name: Yup.string()
-      // .matches(/^[A-Za-z]+$/, 'Numbers not allowed')
+      .matches(/^[a-zA-Z ]*$/, 'Numbers not allowed')
       .min(3, 'Enter atleast 3 letters')
       .required('Required'),
     email: Yup.string()
@@ -172,7 +162,7 @@ const RequestForm = props => {
   const validationSchema = Yup.object(YupObj);
 
   const initialValues = {
-    name: '',
+    name: initName,
     specialist: [],
     description: '',
     budget: '',
@@ -186,8 +176,15 @@ const RequestForm = props => {
     >
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           sendEmail(values);
+          setName('');
+          resetForm({
+            values: {
+              ...initialValues,
+              name: '',
+            },
+          });
           setSubmitting(false);
         }}
         validationSchema={validationSchema}
@@ -196,6 +193,7 @@ const RequestForm = props => {
           setCallToggle,
           allProfessionTypes,
           isDesktopOrLaptop,
+          setName,
         })}
       </Formik>
     </div>
@@ -205,6 +203,8 @@ const RequestForm = props => {
 RequestForm.propTypes = {
   setCallToggle: PropTypes.func,
   isDesktopOrLaptop: PropTypes.bool,
+  name: PropTypes.string,
+  setName: PropTypes.func,
 };
 
 RequestForm.defaultProps = {

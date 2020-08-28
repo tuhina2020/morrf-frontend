@@ -26,125 +26,174 @@ const emptyState = {
   skills: [],
   portfolio: [],
   experience: [],
+  getAllSkills: allSkillsObj1,
 };
 
 const currentSkillsObj1 = [
   {
-    id: '123-a',
-    name: 'furniture design',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-2',
+    id: '222',
+    name: 'Furniture',
+    groupLabel: 'Product design',
   },
   {
-    id: '546-es',
-    name: 'Architecture',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
-  },
-  {
-    id: '123-b',
-    name: 'interior design',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
-  },
-  {
-    id: '245',
-    name: 'UI/UX',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
-  },
-  {
-    id: '245-bx',
-    name: 'Illustrator',
-    category: 'newcategory-3',
-    groupLabel: 'Software Skills',
-  },
-  {
-    id: '546',
-    name: 'Photoshop',
-    category: 'newcategory-3',
-    groupLabel: 'Software Skills',
+    category: 'category-3',
+    id: '332',
+    name: 'packaging',
+    groupLabel: 'Graphic design',
   },
 ];
 
 const allSkillsObj1 = [
   {
-    id: '1234',
-    name: 'furnace design',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-3',
+    id: '332',
+    name: 'packaging',
+    groupLabel: 'Graphic design',
   },
   {
-    id: '2451',
-    name: 'Illustration Tools',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-1',
+    id: '115',
+    name: 'Museum designer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '123-a',
-    name: 'furniture design',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-1',
+    id: '118',
+    name: 'Recce engineer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '245',
-    name: 'UI/UX',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-2',
+    id: '222',
+    name: 'Furniture',
+    groupLabel: 'Product design',
   },
   {
-    id: '546-es',
-    name: 'Architecture',
-    category: 'newcategory-1',
-    groupLabel: 'Architecture',
+    category: 'category-1',
+    id: '116',
+    name: 'Landscape designer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '2452',
-    name: 'UI/UX Research',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
+    category: 'category-4',
+    id: '442',
+    name: 'researcher',
+    groupLabel: 'Strategy design',
   },
   {
-    id: '2452-xd',
-    name: 'Geo mapping',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
+    category: 'category-1',
+    id: '117',
+    name: 'Lighting designer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '2452-ab',
-    name: 'Metallurgy',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
+    category: 'category-1',
+    id: '114',
+    name: 'Exhibition designer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '5469-b',
-    name: 'Town planning',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
+    category: 'category-3',
+    id: '331',
+    name: 'Logo',
+    groupLabel: 'Graphic design',
   },
   {
-    id: '123-b',
-    name: 'interior design',
-    category: 'newcategory-2',
-    groupLabel: 'Design Skills',
+    category: 'category-3',
+    id: '334',
+    name: 'website',
+    groupLabel: 'Graphic design',
   },
   {
-    id: '245-bx',
-    name: 'Illustrator',
-    category: 'newcategory-3',
-    groupLabel: 'Software Skills',
+    category: 'category-1',
+    id: '113',
+    name: 'Retail designer',
+    groupLabel: 'Space design / Architecture',
   },
   {
-    id: '546',
-    name: 'Photoshop',
-    category: 'newcategory-3',
-    groupLabel: 'Software Skills',
+    category: 'category-4',
+    id: '441',
+    name: 'presentation',
+    groupLabel: 'Strategy design',
   },
   {
-    id: '5469-a',
-    name: '3ds Max',
-    category: 'newcategory-3',
-    groupLabel: 'Software Skills',
+    category: 'category-2',
+    id: '224',
+    name: 'Ceramic',
+    groupLabel: 'Product design',
+  },
+  {
+    category: 'category-3',
+    id: '337',
+    name: 'spatial graphics',
+    groupLabel: 'Graphic design',
+  },
+  {
+    category: 'category-3',
+    id: '336',
+    name: 'book',
+    groupLabel: 'Graphic design',
+  },
+  {
+    category: 'category-4',
+    id: '443',
+    name: 'infographic',
+    groupLabel: 'Strategy design',
+  },
+  {
+    category: 'category-2',
+    id: '223',
+    name: 'Toy',
+    groupLabel: 'Product design',
+  },
+  {
+    category: 'category-4',
+    id: '444',
+    name: 'Marketing',
+    groupLabel: 'Strategy design',
+  },
+  {
+    category: 'category-2',
+    id: '221',
+    name: 'Industrial',
+    groupLabel: 'Product design',
+  },
+  {
+    category: 'category-1',
+    id: '111',
+    name: 'Architect',
+    groupLabel: 'Space design / Architecture',
+  },
+  {
+    category: 'category-1',
+    id: '112',
+    name: 'Residential interior designer',
+    groupLabel: 'Space design / Architecture',
+  },
+  {
+    category: 'category-3',
+    id: '333',
+    name: 'branding',
+    groupLabel: 'Graphic design',
+  },
+  {
+    category: 'category-2',
+    id: '226',
+    name: 'Textile',
+    groupLabel: 'Product design',
+  },
+  {
+    category: 'category-2',
+    id: '225',
+    name: 'Digital product',
+    groupLabel: 'Product design',
+  },
+  {
+    category: 'category-3',
+    id: '335',
+    name: 'brochure',
+    groupLabel: 'Graphic design',
   },
 ];
 
@@ -197,10 +246,12 @@ const dummyFilled = {
       duration: 18,
       description: 'New house at Panvel 1',
       order: 1,
+      mode: 'completed',
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
+          type: 'image',
           description: 'The ceiling',
           name: 'ScreenShot-11',
           order: 1,
@@ -209,6 +260,7 @@ const dummyFilled = {
           id: 'abc', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12',
+          type: 'image',
           description: 'The window',
           order: 2,
         },
@@ -217,6 +269,7 @@ const dummyFilled = {
           link: 'https://lorempixel.com/200/200/',
           description: 'The ceiling',
           name: 'ScreenShot-11a',
+          type: 'image',
           order: 1,
         },
         {
@@ -224,6 +277,7 @@ const dummyFilled = {
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12a',
           description: 'The window',
+          type: 'image',
           order: 2,
         },
         {
@@ -231,6 +285,7 @@ const dummyFilled = {
           link: 'https://lorempixel.com/200/200/',
           description: 'The ceiling',
           name: 'ScreenShot-11ab',
+          type: 'image',
           order: 1,
         },
         {
@@ -238,6 +293,7 @@ const dummyFilled = {
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12ab',
           description: 'The window',
+          type: 'image',
           order: 2,
         },
       ],
@@ -250,6 +306,7 @@ const dummyFilled = {
       duration: 36,
       description: 'New house at Koramangala 2',
       order: 2,
+      mode: 'completed',
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
@@ -257,6 +314,7 @@ const dummyFilled = {
           description: 'The view from outside',
           name: 'ScreenShot-9',
           order: 1,
+          type: 'image',
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
@@ -264,6 +322,7 @@ const dummyFilled = {
           name: 'ScreenShot-10',
           description: 'The window',
           order: 2,
+          type: 'image',
         },
       ],
     },
@@ -275,6 +334,7 @@ const dummyFilled = {
       duration: 21,
       description: 'New house at Panvel 3',
       order: 3,
+      mode: 'completed',
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
@@ -282,6 +342,7 @@ const dummyFilled = {
           description: 'The ceiling',
           name: 'ScreenShot-7',
           order: 1,
+          type: 'image',
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
@@ -289,6 +350,7 @@ const dummyFilled = {
           description: 'The window',
           name: 'ScreenShot-8',
           order: 2,
+          type: 'image',
         },
       ],
     },
@@ -298,6 +360,7 @@ const dummyFilled = {
       from: '03/2017',
       to: '08/2019',
       duration: 16,
+      mode: 'draft',
       description: 'New house at Koramangala 4',
       order: 4,
       images: [
@@ -307,6 +370,7 @@ const dummyFilled = {
           description: 'The view from outside',
           name: 'ScreenShot-1',
           order: 1,
+          type: 'image',
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
@@ -314,6 +378,7 @@ const dummyFilled = {
           description: 'The window',
           name: 'ScreenShot-2',
           order: 2,
+          type: 'image',
         },
       ],
     },
@@ -325,6 +390,7 @@ const dummyFilled = {
       duration: 31,
       description: 'New house at Panvel 5',
       order: 5,
+      mode: 'draft',
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
@@ -332,12 +398,14 @@ const dummyFilled = {
           name: 'ScreenShot-3',
           description: 'The ceiling',
           order: 1,
+          type: 'image',
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           description: 'The window',
           order: 2,
+          type: 'image',
         },
       ],
     },
@@ -349,6 +417,7 @@ const dummyFilled = {
       description: 'New house at Koramangala 6',
       order: 6,
       duration: 21,
+      mode: 'draft',
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
@@ -356,6 +425,7 @@ const dummyFilled = {
           name: 'ScreenShot-5',
           description: 'The view from outside',
           order: 1,
+          type: 'image',
         },
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
@@ -363,6 +433,7 @@ const dummyFilled = {
           name: 'ScreenShot-6',
           description: 'The window',
           order: 2,
+          type: 'image',
         },
       ],
     },

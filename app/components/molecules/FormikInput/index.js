@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
@@ -69,6 +69,7 @@ const FormikTextField = React.forwardRef((props, ref) => {
     joined,
     ...others
   } = props;
+
   const [active, setActive] = useState(false);
   const onBlurWrapper = e => {
     setActive(false);

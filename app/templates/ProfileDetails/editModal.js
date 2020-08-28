@@ -6,7 +6,7 @@ import ContactEditForm from 'components/organisms/ProfileEditForm/contact';
 import SkillEditForm from 'components/organisms/ProfileEditForm/skills';
 import ExperienceEditForm from 'components/organisms/ProfileEditForm/ExperienceEdit';
 import PortfolioEditForm from 'components/organisms/ProfileEditForm/PortfolioEdit';
-
+import GetStartedForm from 'components/organisms/EditCarousels/getStarted';
 const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
   const props = {
     ...extraProps,
@@ -27,6 +27,8 @@ const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
       return <ExperienceEditForm {...props} />;
     case 'portfolio':
       return <PortfolioEditForm {...props} />;
+    case 'getstarted':
+      return <GetStartedForm {...props} />;
     default:
       return null;
   }

@@ -16,6 +16,7 @@ const generateMorffLiteForm = ({
   setCallToggle,
   setFieldValue,
   isDesktopOrLaptop,
+  setName,
 }) => {
   const submitProps = {
     iconDescription: 'submit',
@@ -37,18 +38,21 @@ const generateMorffLiteForm = ({
         label="Your name"
         name="name"
         id="name"
-        onChange={handleChange}
+        onChange={e => {
+          handleChange(e);
+          setName(values.name);
+        }}
         value={values.name}
         error={getError('name')}
       />
       <FormikInput
         dimensionClasses={dimensionClasses}
         label="Your phone no."
-        name="phone"
-        id="phone"
+        name="phone_number"
+        id="phone_number"
         onChange={handleChange}
-        value={values.phone}
-        error={getError('phone')}
+        value={values.phone_number}
+        error={getError('phone_number')}
       />
       <div
         className={isDesktopOrLaptop ? 'D(f) Jc(sb) Ai(c)' : dimensionClasses}
@@ -146,13 +150,20 @@ const generateMorffLiteForm = ({
 // };
 
 const CallBackForm = props => {
-  const { setCallToggle, isDesktopOrLaptop, callbackReq, success } = props;
+  const {
+    setCallToggle,
+    isDesktopOrLaptop,
+    callbackReq,
+    success,
+    setName,
+    initName,
+  } = props;
   const YupObj = {
     name: Yup.string()
-      .matches(/^[A-Za-z]+$/, 'Numbers not allowed')
+      .matches(/^[a-zA-Z ]*$/, 'Numbers not allowed')
       .min(3, 'Enter atleast 3 letters')
       .required('Required'),
-    phone: Yup.string()
+    phone_number: Yup.string()
       .matches(/^[0-9]{10}$/, 'Enter valid phone number')
       .required('Required'),
     date: Yup.string().required('Required'),
@@ -161,11 +172,13 @@ const CallBackForm = props => {
   const validationSchema = Yup.object(YupObj);
 
   const initialValues = {
-    name: '',
-    phone: '',
+    name: initName,
+    phone_number: '',
     date: '',
     time: '',
   };
+
+  console.log('INIT NAME PHONE', initName);
 
   return (
     <div
@@ -186,6 +199,8 @@ const CallBackForm = props => {
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           callbackReq(values);
+          resetForm({ values: initialValues });
+          setName('');
           setSubmitting(false);
         }}
         validationSchema={validationSchema}
@@ -194,6 +209,7 @@ const CallBackForm = props => {
           generateMorffLiteForm({
             setCallToggle,
             isDesktopOrLaptop,
+            setName,
             ...props,
           })
         }
@@ -205,6 +221,8 @@ const CallBackForm = props => {
 CallBackForm.propTypes = {
   setCallToggle: PropTypes.func,
   isDesktopOrLaptop: PropTypes.bool,
+  name: PropTypes.string,
+  setName: PropTypes.func,
 };
 
 CallBackForm.defaultProps = {

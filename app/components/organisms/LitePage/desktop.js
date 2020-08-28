@@ -21,6 +21,7 @@ const DesktopPage = ({
   const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
+  const [name, setName] = useState('');
   const onScroll = () => {
     if (
       document.documentElement.scrollTop > 100 ||
@@ -51,6 +52,14 @@ const DesktopPage = ({
       else scrollTo({});
     };
     setTimeout(showMore, 200);
+  };
+  const props = {
+    isDesktopOrLaptop: true,
+    setCallToggle,
+    allProfessionTypes,
+    success,
+    initName: name,
+    setName,
   };
   return (
     <>
@@ -99,20 +108,9 @@ const DesktopPage = ({
 
         <div className="Pb($2xl)">
           {callBackForm ? (
-            <CallBackForm
-              isDesktopOrLaptop
-              setCallToggle={setCallToggle}
-              callbackReq={callbackReq}
-              success={success}
-            />
+            <CallBackForm callbackReq={callbackReq} {...props} />
           ) : (
-            <RequestForm
-              isDesktopOrLaptop
-              setCallToggle={setCallToggle}
-              allProfessionTypes={allProfessionTypes}
-              sendEmail={sendEmail}
-              success={success}
-            />
+            <RequestForm {...props} sendEmail={sendEmail} />
           )}
         </div>
       </div>

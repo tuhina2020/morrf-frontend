@@ -84,7 +84,11 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
             type="checkbox"
             tabIndex={props.tabIndex}
             checked={props.value}
-            onChange={props.onChange}
+            onChange={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              props.onChange(e);
+            }}
             aria-checked={props.value}
             onFocus={() => setFocus(true)}
             ref={ref}

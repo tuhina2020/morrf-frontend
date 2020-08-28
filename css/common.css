@@ -248,6 +248,18 @@
 .react-datepicker__day {
   width: 40px !important;
   height: 40px;
+  border: none !important;
+}
+
+.react-datepicker__day-name:active,
+.react-datepicker__day:active {
+  width: 40px !important;
+  height: 40px;
+  border: none !important;
+}
+.react-datepicker__day--keyboard-selected {
+  background-color: #f5f5f5 !important;
+  color: black;
 }
 .react-datepicker__month-container {
   background-color: #f5f5f5;

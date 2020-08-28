@@ -27,12 +27,12 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
       id={`${id}_menu`}
       aria-labelledby={`${id}_input_label`}
       className={`Bgc($navBarBg) W($full) Trsdu(0.6s) Trsp(a) Trstf(e) Bxsh($bxshcheckbox) ${
-        isOpen ? 'H($20x) Pos(r) Ov(s)' : 'H(0) B($xxs) Ov(h)'
+        isOpen ? 'H($20x) Ov(s)' : 'H(0) B($xxs) Ov(h)'
       }`}
     >
       {iterableList.map((item, index) => (
         <div
-          className={`Bxz(bb) Pos(r) ${
+          className={`Bxz(bb) ${
             iterableLen === index + 1 ? '' : 'Bdb($bdinputGrey)'
           } Py($md)`}
           role="option"
@@ -46,7 +46,7 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
           <div className="W($full) Ta(start)">
             {item.options.map(option => (
               <div
-                key={option.id}
+                key={option.id + '_checklist'}
                 className="Py($xs) Px($lg) Bgc($activeTagBlue):h"
               >
                 <FormikCheckBox
@@ -57,10 +57,10 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
                   bluePosition="Start(58px)"
                   bgColorStyle="Bgc($navBarBg)"
                   onChange={e => {
-                    const v = e.target.checked;
-                    onSelect({ item: option, add: v });
                     e.preventDefault();
                     e.stopPropagation();
+                    const v = e.target.checked;
+                    onSelect({ item: option, add: v });
                   }}
                 />
               </div>

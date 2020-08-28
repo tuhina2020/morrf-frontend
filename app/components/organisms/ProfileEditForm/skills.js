@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 import Button from 'components/molecules/Button';
 import { Formik, Form } from 'formik';
-import { isEmpty } from 'lodash';
+import { isEmpty, values } from 'lodash';
 
 const SkillEditForm = ({
   onCancel,
@@ -14,8 +14,6 @@ const SkillEditForm = ({
   allSkills,
   // getFilteredSkills,
 }) => {
-  const [viewableSkills, setViewableSkills] = useState(skills);
-
   const saveProps = {
     iconDescription: 'Save',
     alignContent: 'center',
@@ -33,73 +31,37 @@ const SkillEditForm = ({
     roundCorners: false,
     onClick: onCancel,
   };
-
-  const selectObj = ({ item, add }) => {
-    const newSkills = add
-      ? [...viewableSkills, item]
-      : viewableSkills.filter(sk => sk.id !== item.id);
-    setViewableSkills(newSkills);
-  };
-
-  const deleteSkill = skill => {
-    selectObj({
-      item: skill,
-      add: false,
-    });
-  };
-
-  // const handleSubmit = () => {
-  //   alert(JSON.stringify(viewableSkills));
-  //   onSave({ skills: viewableSkills });
-  //   onCancel();
-  // };
-
   return (
     <Formik
-      initialValues={{ skills: [] }}
+      initialValues={{ skills }}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(viewableSkills));
-        onSave({ skills: viewableSkills });
+        alert(JSON.stringify(values));
+        onSave(values);
         setSubmitting(false);
         onCancel();
       }}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, setFieldValue, values }) => (
         <Form onSubmit={handleSubmit}>
           <DisplayCard
             heading="Edit Skills"
             lastChildPadding={false}
             childPadding="P($lg)"
           >
-            <div>
-              {!isEmpty(viewableSkills) ? (
-                <div className="D(f) Ai(c) Jc(s) Mb($sm) Flw(w)">
-                  {viewableSkills.map(skill => (
-                    <div className="Mend($sm) Mb($sm)" key={skill.id}>
-                      <Tag
-                        filter
-                        disabled={false}
-                        onDelete={() => deleteSkill(skill)}
-                      >
-                        {skill.name}
-                      </Tag>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              <NestedFormikComboBox
-                id="search"
-                name="search"
-                type="text"
-                prependIcon="showmore"
-                labelText="Select skills"
-                // onKeyPress={onEnter}
-                onSelect={selectObj}
-                items={allSkills}
-                deleteEntity={deleteSkill}
-                values={viewableSkills}
-              />
-            </div>
+            <NestedFormikComboBox
+              id="search"
+              name="search"
+              type="text"
+              labelText="Select skills"
+              // sliceInline={isDesktopOrLaptop ? 2 : 1}
+              prependIcon="showmore"
+              // onKeyPress={onEnter}
+              onChange={params => {
+                setFieldValue('skills', params);
+              }}
+              items={allSkills}
+              viewableValues={values.skills}
+            />
             <div className="D(f) Ai(c) Jc(c)">
               <Button {...cancelProps}>Cancel</Button>
               <Button {...saveProps}>Save</Button>

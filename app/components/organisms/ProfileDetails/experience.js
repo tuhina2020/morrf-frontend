@@ -5,7 +5,7 @@ import sortBy from 'lodash/sortBy';
 import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 
-const Experience = ({ experience, onEdit, onSave, onAdd }) => {
+const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
   if (isEmpty(experience)) return null;
   return (
     <DisplayCard
@@ -21,7 +21,7 @@ const Experience = ({ experience, onEdit, onSave, onAdd }) => {
               key={company + from}
             >
               <div className="D(f) Ai(c) Jc(fs)">
-                <div className="Fz($smx) Fw($fwsemibold) W(69%)">
+                <div className="Fz($smx) Fw($fwsemibold) W(66%)">
                   {designation}
                 </div>
                 <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import PersonalDetails from 'components/organisms/ProfileDetails/personal';
 import AboutMe from 'components/organisms/ProfileDetails/about';
@@ -38,14 +38,28 @@ const ProfileDetails = ({
   ].filter(isEmpty).length;
   const [open, setOpen] = useState('');
   const [currentIndex, setIndex] = useState();
+  const [source, setSourcePage] = useState('main');
   Modal.setAppElement('#app');
-  const onCancel = () => setOpen('');
+  const onCancel = useCallback(() => {
+    const getstarted = () => {
+      setOpen('getstarted');
+      setSourcePage('getstarted');
+    };
+    const main = () => {
+      setOpen('');
+      setSourcePage('main');
+    };
+    return source === 'getstarted' ? getstarted() : main();
+  }, [source]);
+
   const extraProps = {
     getFilteredSkills: open === 'skills' ? getFilteredSkills : undefined,
     allSkills: open === 'skills' ? getAllSkills : undefined,
     onSendCode: open === 'contact' ? sendCode : undefined,
+    source,
     currentIndex:
       open === 'portfolio' || open === 'experience' ? currentIndex : undefined,
+    onClickAdd: open === 'getstarted' ? setOpen : undefined,
   };
   return (
     <div>
@@ -59,12 +73,12 @@ const ProfileDetails = ({
           <AboutMe about={about} onEdit={() => setOpen('about')} />
           <Skills skills={skills} onEdit={() => setOpen('skills')} />
           <Experience
-            experience={experience}
             onEdit={index => {
               console.log('EDITING');
               setIndex(index);
               setOpen('experience');
             }}
+            experience={experience}
             onAdd={() => {
               console.log('ADDING');
               setIndex();
@@ -103,7 +117,15 @@ const ProfileDetails = ({
           {...extraProps}
         />
       </Modal>
-      {countEmptyLarge > 1 ? <GetStarted profile={profile} /> : null}
+      {countEmptyLarge > 1 ? (
+        <GetStarted
+          profile={profile}
+          onStart={() => {
+            setSourcePage('getstarted');
+            setOpen('getstarted');
+          }}
+        />
+      ) : null}
     </div>
   );
 };

@@ -12,8 +12,9 @@ const CalendarInput = ({
   onChange,
   error,
   setUpstreamDate,
+  value,
 }) => {
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(value || undefined);
   const ExampleCustomInput = ({ value, onClick }) => (
     <FormikInput
       label={label}
