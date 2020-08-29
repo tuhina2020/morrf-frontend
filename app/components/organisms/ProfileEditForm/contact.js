@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DisplayCard from 'components/molecules/DisplayCard';
 import FormikInput from 'components/molecules/FormikInput';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';
-const ContactFormComponent = ({ onCancel, onSendCode, phone }) => ({
+const ContactFormComponent = ({
   handleSubmit,
   handleChange,
   values,
   errors,
   validateForm,
   setFieldError,
+  onCancel,
+  onSendCode,
+  phone,
 }) => {
   const onSendCodeClick = () =>
     validateForm().then(data => {
@@ -47,13 +49,12 @@ const ContactFormComponent = ({ onCancel, onSendCode, phone }) => ({
     size: 'fc',
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <DisplayCard
-        heading="Edit Contact Information"
-        lastChildPadding={false}
-        childPadding="P($lg)"
-      >
-        <div>
+    <div className="Bdrs($xs) Bgc(white)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+        Edit Contact Information
+      </div>
+      <Form onSubmit={handleSubmit}>
+        <div className="P($lg)">
           <div className="D(f) Ai(c) Jc(sb) H($2xl)">
             <FormikInput
               label="Phone"
@@ -93,12 +94,12 @@ const ContactFormComponent = ({ onCancel, onSendCode, phone }) => ({
             </div>
           )}
         </div>
-        <div className="D(f) Ai(c) Jc(c)">
+        <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
           <Button {...cancelProps}>Cancel</Button>
           <Button {...saveProps}>Save</Button>
         </div>
-      </DisplayCard>
-    </form>
+      </Form>
+    </div>
   );
 };
 
@@ -137,13 +138,18 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
       }}
       validationSchema={validationSchema}
     >
-      {ContactFormComponent({
-        onCancel,
-        phone,
-        email,
-        onSave,
-        onSendCode,
-      })}
+      {props => (
+        <ContactFormComponent
+          {...{
+            onCancel,
+            phone,
+            email,
+            onSave,
+            onSendCode,
+          }}
+          {...props}
+        />
+      )}
     </Formik>
   );
 };

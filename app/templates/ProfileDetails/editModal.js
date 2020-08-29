@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AboutEditForm from 'components/organisms/ProfileEditForm/about';
-import ProfileEditForm from 'components/organisms/ProfileEditForm/personal';
+import PersonalEditForm from 'components/organisms/ProfileEditForm/personal';
 import ContactEditForm from 'components/organisms/ProfileEditForm/contact';
 import SkillEditForm from 'components/organisms/ProfileEditForm/skills';
 import ExperienceEditForm from 'components/organisms/ProfileEditForm/ExperienceEdit';
@@ -18,7 +18,7 @@ const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
     case 'about':
       return <AboutEditForm {...props} />;
     case 'personal':
-      return <ProfileEditForm {...props} />;
+      return <PersonalEditForm {...props} />;
     case 'contact':
       return <ContactEditForm {...props} />;
     case 'skills':

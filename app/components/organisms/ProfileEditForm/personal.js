@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import FormikInput from 'components/molecules/FormikInput';
@@ -19,13 +19,13 @@ const EditPersonalFormBody = ({
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
   return (
-    <>
+    <div className="P($lg)">
       <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
         <FormikInput
-          label="First Name"
-          name="firstName"
-          id="firstName"
-          onChange={handleChange}
+          label={`First Name`}
+          name={`firstName`}
+          id={`firstName`}
+          onChange={useCallback(handleChange, [])}
           value={firstName}
           error={getError('firstName')}
         />
@@ -48,7 +48,7 @@ const EditPersonalFormBody = ({
           error={getError('profession')}
         />
       </div>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
+      <div className="D(f) Ai(c) Jc(sb) H($2xl)">
         <FormikInput
           label="City / Town"
           name="city"
@@ -66,7 +66,7 @@ const EditPersonalFormBody = ({
           error={getError('state')}
         />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -102,10 +102,10 @@ const EditPersonalForm = ({ onCancel, data, onSave }) => {
     city: Yup.string().required('Required'),
     state: Yup.string().required('Required'),
   });
-
+  const initialValues = { ...data };
   return (
     <Formik
-      initialValues={{ ...data }}
+      initialValues={initialValues}
       onSubmit={values => {
         alert(JSON.stringify(values, null, 2));
         onSave(values);
@@ -114,94 +114,24 @@ const EditPersonalForm = ({ onCancel, data, onSave }) => {
       validationSchema={validationSchema}
     >
       {({ values, handleSubmit, handleChange, errors, touched }) => (
-        <Form onSubmit={handleSubmit}>
-          <DisplayCard
-            heading="Edit My Details"
-            lastChildPadding={false}
-            childPadding="P($lg)"
-          >
+        <div className="Bdrs($xs) Bgc(white)">
+          <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+            Edit Your Details
+          </div>
+          <Form onSubmit={handleSubmit}>
             <EditPersonalFormBody
               {...values}
               handleChange={handleChange}
               errors={errors}
               touched={touched}
             />
-            <div className="D(f) Ai(c) Jc(c)">
+            <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
               <Button {...cancelProps}>Cancel</Button>
               <Button {...saveProps}>Save</Button>
             </div>
-          </DisplayCard>
-        </Form>
+          </Form>
+        </div>
       )}
-
-      {/* {({ values, handleSubmit, handleChange, errors, touched }) => {
-        const getError = useCallback(
-          key => (key && errors[key] && touched[key] ? errors[key] : null),
-          [touched, errors],
-        );
-        return (
-          <div>
-            <Form onSubmit={handleSubmit}>
-              <DisplayCard
-                heading="Edit My Details"
-                lastChildPadding={false}
-                childPadding="P($lg)"
-              >
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="First Name"
-                    name="firstName"
-                    id="firstName"
-                    onChange={handleChange}
-                    value={values.firstName}
-                    error={getError('firstName')}
-                  />
-                  <FormikInput
-                    name="lastName"
-                    id="lastName"
-                    label="Last Name"
-                    onChange={handleChange}
-                    value={values.lastName}
-                    error={getError('lastName')}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="Profession"
-                    name="profession"
-                    id="profession"
-                    onChange={handleChange}
-                    value={values.profession}
-                    error={getError('profession')}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-                  <FormikInput
-                    label="City / Town"
-                    name="city"
-                    id="city"
-                    onChange={handleChange}
-                    value={values.city}
-                    error={getError('city')}
-                  />
-                  <FormikInput
-                    name="state"
-                    id="state"
-                    label="State"
-                    onChange={handleChange}
-                    value={values.state}
-                    error={getError('state')}
-                  />
-                </div>
-                <div className="D(f) Ai(c) Jc(c)">
-                  <Button {...cancelProps}>Cancel</Button>
-                  <Button {...saveProps}>Save</Button>
-                </div>
-              </DisplayCard>
-            </Form>
-          </div>
-        );
-      }} */}
     </Formik>
   );
 };

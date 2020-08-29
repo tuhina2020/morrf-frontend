@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
@@ -93,12 +93,12 @@ const FormikTextField = React.forwardRef((props, ref) => {
   });
 
   return (
-    <div className={`${dimensionClasses} Pos(r) Ta(start)`}>
+    <div className={`${dimensionClasses} Pos(r) Ta(start)`} key="firstName">
       <label htmlFor={id} className={classes.labelClasses} id={`${id}_label`}>
         {label}
       </label>
       <div className={classes.inputWrapperClasses}>
-        <Field
+        <input
           value={value}
           name={name}
           id={id}

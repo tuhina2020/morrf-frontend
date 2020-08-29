@@ -32,44 +32,51 @@ const SkillEditForm = ({
     onClick: onCancel,
   };
   return (
-    <Formik
-      initialValues={{ skills }}
-      onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
-        onSave(values);
-        setSubmitting(false);
-        onCancel();
-      }}
-    >
-      {({ handleSubmit, setFieldValue, values }) => (
-        <Form onSubmit={handleSubmit}>
-          <DisplayCard
+    <div className="Bdrs($xs) Bgc(white)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+        Edit Skills
+      </div>
+      <Formik
+        initialValues={{ skills }}
+        onSubmit={(values, { setSubmitting }) => {
+          alert(JSON.stringify(values));
+          onSave(values);
+          setSubmitting(false);
+          onCancel();
+        }}
+      >
+        {({ handleSubmit, setFieldValue, values }) => (
+          <Form onSubmit={handleSubmit}>
+            {/* <DisplayCard
             heading="Edit Skills"
             lastChildPadding={false}
             childPadding="P($lg)"
-          >
-            <NestedFormikComboBox
-              id="search"
-              name="search"
-              type="text"
-              labelText="Select skills"
-              // sliceInline={isDesktopOrLaptop ? 2 : 1}
-              prependIcon="showmore"
-              // onKeyPress={onEnter}
-              onChange={params => {
-                setFieldValue('skills', params);
-              }}
-              items={allSkills}
-              viewableValues={values.skills}
-            />
-            <div className="D(f) Ai(c) Jc(c)">
+          > */}
+            <div className="P($lg)">
+              <NestedFormikComboBox
+                id="search"
+                name="search"
+                type="text"
+                labelText="Select skills"
+                // sliceInline={isDesktopOrLaptop ? 2 : 1}
+                prependIcon="showmore"
+                // onKeyPress={onEnter}
+                onChange={params => {
+                  setFieldValue('skills', params);
+                }}
+                items={allSkills}
+                viewableValues={values.skills}
+              />
+            </div>
+            <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
               <Button {...cancelProps}>Cancel</Button>
               <Button {...saveProps}>Save</Button>
             </div>
-          </DisplayCard>
-        </Form>
-      )}
-    </Formik>
+            {/* </DisplayCard> */}
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

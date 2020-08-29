@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DisplayCard from 'components/molecules/DisplayCard';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -50,28 +49,29 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
   };
 
   return (
-    <form noValidate onSubmit={Formik.handleSubmit}>
-      <DisplayCard
-        heading="Edit About Me"
-        lastChildPadding={false}
-        childPadding="P($lg)"
-      >
-        <FormikTextArea
-          label="About"
-          name="about"
-          id="about"
-          placeholder="Please write a brief description about your work, passion or what drives you to pursue design."
-          dimensionClasses="W($full)"
-          onChange={Formik.handleChange}
-          value={Formik.values.about}
-          error={getError('about')}
-        />
-        <div className="D(f) Ai(c) Jc(c)">
+    <div className="Bdrs($xs) Bgc(white)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+        Edit About Me
+      </div>
+      <form noValidate onSubmit={Formik.handleSubmit}>
+        <div className="P($lg)">
+          <FormikTextArea
+            label="About"
+            name="about"
+            id="about"
+            placeholder="Please write a brief description about your work, passion or what drives you to pursue design."
+            dimensionClasses="W($full)"
+            onChange={Formik.handleChange}
+            value={Formik.values.about}
+            error={getError('about')}
+          />
+        </div>
+        <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
           <Button {...cancelProps}>Cancel</Button>
           <Button {...saveProps}>Save</Button>
         </div>
-      </DisplayCard>
-    </form>
+      </form>
+    </div>
   );
 };
 

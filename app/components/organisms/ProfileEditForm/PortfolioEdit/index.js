@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
@@ -21,10 +21,15 @@ const PortfolioFormCard = ({
   onCancel,
   ...portfolio
 }) => {
+  debugger;
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
-  const fromRef = useRef();
-
+  useEffect(() => {
+    return () => {
+      console.log('destoryed');
+      debugger;
+    };
+  }, []);
   const removeProps = {
     iconDescription: 'Remove',
     alignContent: 'center',
@@ -35,17 +40,8 @@ const PortfolioFormCard = ({
     roundCorners: false,
     postIcon: 'remove',
   };
-  const changeFrom = useCallback(
-    e => {
-      const reg = new RegExp(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/);
-      handleChange(e);
-      console.log(fromRef.current, 'THIS IS ITT');
-      if (reg.test(portfolio.from)) fromRef.current.focus();
-    },
-    [fromRef.current],
-  );
   return (
-    <div className="Pos(r) Trsdu(0.8s) Trsp(a) Trstf(e) Mah($45x) Ov(s) P($lg)">
+    <div className="Pos(r) Mah($45x) Ov(s) P($lg)">
       <div className="D(f) Ai(c) Jc(sb)">
         <FormikInput
           label="Project name"
@@ -56,7 +52,7 @@ const PortfolioFormCard = ({
           value={portfolio.project}
           onChange={handleChange}
         />
-        <FormikInput
+        {/* <FormikInput
           dimensionClasses="W($xmd) H($2xl) Mstart($2xl)"
           name={`client`}
           id={`client`}
@@ -64,9 +60,9 @@ const PortfolioFormCard = ({
           error={getError('client')}
           value={portfolio.client}
           onChange={handleChange}
-        />
+        /> */}
       </div>
-      <div
+      {/* <div
         className="D(f) Ai(c) Jc(s) Bgc($navBarBg) W(fc) H($2xl) My($lg) Bdrs($bdrsinput) Bdb($bdinputGrey)"
         style={{ boxSizing: 'initial' }}
       >
@@ -89,7 +85,6 @@ const PortfolioFormCard = ({
         <FormikInput
           label="To"
           name={`to`}
-          ref={fromRef}
           placeholder="mm/yyyy"
           id={`to`}
           autoComplete="off"
@@ -110,7 +105,7 @@ const PortfolioFormCard = ({
         onChange={handleChange}
         value={portfolio.description}
         error={getError('description')}
-      />
+      /> */}
       <div className="Fz($smx) Lh(1) Ff($ffmanrope)">Add Files</div>
       <FileUpload
         multiple={true}
@@ -193,7 +188,7 @@ const PortfolioEditForm = ({
     let newPortfolio = [...portfolio];
     newPortfolio[index] = {
       ...values,
-      mode,
+      mode: values.mode === 'completed' ? 'completed' : mode,
     };
     // alert(values);
     alert(JSON.stringify(newPortfolio[index]));
@@ -226,48 +221,50 @@ const PortfolioEditForm = ({
         touched,
         errors,
         setFieldValue,
-      }) => (
-        <div className="Bdrs($xs) Bgc(white)">
-          <Form onSubmit={handleSubmit}>
-            <>
-              <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
-                Edit Portfolio
-              </div>
-              <PortfolioFormCard
-                {...values}
-                errors={errors}
-                touched={touched}
-                handleChange={handleChange}
-                onRemove={onRemove}
-                onCancel={onCancel}
-                setImage={v => {
-                  // let oldImages = values.images;
-                  // if (index < oldImages.length && index >= 0) {
-                  //   oldImages[index] = v;
-                  // } else if (index === oldImages.length) {
-                  //   oldImages.push(v);
-                  // }
-                  setFieldValue('images', v);
-                }}
-              />
-              <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
-                <Button
-                  {...cancelProps}
-                  onClick={onCancelHandler({ values, mode: 'draft' })}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  {...activeSaveProps}
-                  // disabled={values.length === 0}
-                >
-                  Save
-                </Button>
-              </div>
-            </>
-          </Form>
-        </div>
-      )}
+      }) => {
+        useEffect(() => {
+          return () => {
+            console.log('destoryed');
+            debugger;
+          };
+        }, []);
+        return (
+          <div className="Bdrs($xs) Bgc(white)">
+            <Form onSubmit={handleSubmit}>
+              <>
+                <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+                  Edit Portfolio
+                </div>
+                <PortfolioFormCard
+                  {...values}
+                  errors={errors}
+                  touched={touched}
+                  handleChange={handleChange}
+                  onRemove={onRemove}
+                  onCancel={onCancel}
+                  setImage={v => {
+                    setFieldValue('images', v);
+                  }}
+                />
+                <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
+                  <Button
+                    {...cancelProps}
+                    onClick={onCancelHandler({ values, mode: 'draft' })}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    {...activeSaveProps}
+                    // disabled={values.length === 0}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </>
+            </Form>
+          </div>
+        );
+      }}
     </Formik>
   );
 };

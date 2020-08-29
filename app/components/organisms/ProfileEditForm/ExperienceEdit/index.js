@@ -36,22 +36,21 @@ const ExperienceFormCard = ({
   setFieldValue,
   onRemove,
 }) => {
-  debugger;
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
 
   return (
     <div className="P($lg) Bdb($bdcardGrey)">
-      {/* <div className="D(f) Ai(c) Jc(sb) H($2xl)"> */}
-      <FormikInput
-        label="Designation"
-        name="designation"
-        id="designation"
-        error={getError('designation')}
-        value={designation}
-        onChange={handleChange}
-      />
-      {/* <FormikInput
+      <div className="D(f) Ai(c) Jc(sb) H($2xl)">
+        <FormikInput
+          label="Designation"
+          name="designation"
+          id="designation"
+          error={getError('designation')}
+          value={designation}
+          onChange={handleChange}
+        />
+        <FormikInput
           name="company"
           id="company"
           label="Company"
@@ -112,7 +111,7 @@ const ExperienceFormCard = ({
           value={description}
           error={getError('description')}
         />
-      </div> */}
+      </div>
       {currentIndex >= 0 ? (
         <Button {...removeProps} onClick={onRemove}>
           Remove

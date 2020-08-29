@@ -141,7 +141,7 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
           mode === 'completed' ? (
             <div
               className="Ff($ffopensans) Lh(1)"
-              key={project.replace(/ /g, '') + i}
+              key={project.replace(/ /g, '') + order}
             >
               <div className="D(f) Ai(fe) Jc(s)">
                 <div className="Fw($fwsemibold) Mend($md) Fz($smx) W(69%)">
