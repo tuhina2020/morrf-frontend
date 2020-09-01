@@ -17,19 +17,19 @@ export function* emailReq({ payload }) {
       false,
     );
     yield put(setSuccess(true));
-    yield put(
-      setToastData({
-        message: response.message,
-        type: 'info',
-      }),
-    );
+    // yield put(
+    //   setToastData({
+    //     message: response.message,
+    //     type: 'info',
+    //   }),
+    // );
   } catch (err) {
-    yield put(
-      setToastData({
-        message: err.message,
-        type: 'info',
-      }),
-    );
+    // yield put(
+    //   setToastData({
+    //     message: err.message,
+    //     type: 'info',
+    //   }),
+    // );
     yield put(setSuccess(false));
   }
 }
@@ -46,20 +46,20 @@ export function* callbackReq({ payload }) {
       },
       false,
     );
-    yield put(
-      setToastData({
-        message: response.message,
-        type: 'info',
-      }),
-    );
+    // yield put(
+    //   setToastData({
+    //     message: response.message,
+    //     type: 'info',
+    //   }),
+    // );
     yield put(setSuccess(true));
   } catch (err) {
-    yield put(
-      setToastData({
-        message: 'This part is done',
-        type: 'info',
-      }),
-    );
+    // yield put(
+    //   setToastData({
+    //     message: 'This part is done',
+    //     type: 'info',
+    //   }),
+    // );
     yield put(setSuccess(false));
   }
 }

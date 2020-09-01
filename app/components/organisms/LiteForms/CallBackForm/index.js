@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikCalendar from 'components/molecules/Calendar';
@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button/index';
 import BaseIcon from 'components/atoms/BaseIcon';
-
+import SuccessAnimation from 'Assets/gifs/success.gif';
 const generateMorffLiteForm = ({
   handleSubmit,
   handleChange,
@@ -88,67 +88,6 @@ const generateMorffLiteForm = ({
   );
 };
 
-// const getMobileForm = setCallToggle => ({
-//   handleSubmit,
-//   handleChange,
-//   handleBlur,
-//   values,
-//   touched,
-//   errors,
-//   validateField,
-//   validateForm,
-//   setFieldError,
-// }) => {
-//   const getError = key => (key && errors[key] ? errors[key] : null);
-//   return (
-//     <Form
-//       className="D(f) Fld(c) W($full) Ai(fs) Jc(fs)"
-//       onSubmit={handleSubmit}
-//     >
-//       <FormikInput
-//         dimensionClasses="W($full) H($2xl) Mb($lg)"
-//         label="Your name"
-//         name="name"
-//         id="name"
-//         onChange={handleChange}
-//         value={values.name}
-//         error={getError('name')}
-//       />
-//       <FormikInput
-//         dimensionClasses="W($full) H($2xl) Mb($lg)"
-//         label="Your phone no."
-//         name="phone"
-//         id="phone"
-//         onChange={handleChange}
-//         value={values.phone}
-//         error={getError('phone')}
-//       />
-//       <FormikInput
-//         dimensionClasses="W($full) H($2xl) Mb($lg)"
-//         label="Preffered date"
-//         name="date"
-//         id="date"
-//         onChange={handleChange}
-//         value={values.date}
-//         error={getError('date')}
-//       />
-//       <FormikInput
-//         dimensionClasses="W($full) H($2xl) Mb($lg)"
-//         label="Preffered time"
-//         name="time"
-//         id="time"
-//         onChange={handleChange}
-//         value={values.time}
-//         error={getError('time')}
-//       />
-
-//       <Button classes="Mx(a) Mt=b($lg)" type="submit">
-//         Submit Request
-//       </Button>
-//     </Form>
-//   );
-// };
-
 const CallBackForm = props => {
   const {
     setCallToggle,
@@ -178,7 +117,22 @@ const CallBackForm = props => {
     time: '',
   };
 
-  console.log('INIT NAME PHONE', initName);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitCount, setCount] = useState(0);
+  useEffect(() => {
+    if (submitted) {
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 1000);
+    }
+  }, [submitted]);
+  const anotherReqButton = {
+    iconDescription: 'again',
+    alignContent: 'center',
+    kind: 'secondary',
+    type: 'button',
+    onClick: () => setCount(0),
+  };
 
   return (
     <div
@@ -186,34 +140,47 @@ const CallBackForm = props => {
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
       } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
     >
-      <BaseIcon
-        icon="arrowback"
-        iconClasses="Bdrs($mmd) W($lg) H($lg) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
-        onClick={() => setCallToggle(false)}
-      />
-      <div className="W($5xl) H($5xl) Bgc($inputGrey) Mt($lg) Mx(a)" />
-      <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
-        Request a Call Back
-      </div>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          callbackReq(values);
-          resetForm({ values: initialValues });
-          setName('');
-          setSubmitting(false);
-        }}
-        validationSchema={validationSchema}
-      >
-        {props =>
-          generateMorffLiteForm({
-            setCallToggle,
-            isDesktopOrLaptop,
-            setName,
-            ...props,
-          })
-        }
-      </Formik>
+      {submitCount > 0 && !submitted ? (
+        <div className="Mx(a) W(fc) H($50xl) Pos(r) T($20x)">
+          <Button {...anotherReqButton}>Submit Another response</Button>
+        </div>
+      ) : null}
+      {submitted && submitCount === 1 ? (
+        <img src={SuccessAnimation} className="W($full)" />
+      ) : submitCount === 0 ? (
+        <>
+          <BaseIcon
+            icon="arrowback"
+            iconClasses="Bdrs($mmd) W($lg) H($lg) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
+            onClick={() => setCallToggle(false)}
+          />
+          <div className="W($5xl) H($5xl) Bgc($inputGrey) Mt($lg) Mx(a)" />
+          <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
+            Request a Call Back
+          </div>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              callbackReq(values);
+              resetForm({ values: initialValues });
+              setName('');
+              setSubmitting(false);
+              setCount(1);
+              setSubmitted(true);
+            }}
+            validationSchema={validationSchema}
+          >
+            {props =>
+              generateMorffLiteForm({
+                setCallToggle,
+                isDesktopOrLaptop,
+                setName,
+                ...props,
+              })
+            }
+          </Formik>
+        </>
+      ) : null}
     </div>
   );
 };

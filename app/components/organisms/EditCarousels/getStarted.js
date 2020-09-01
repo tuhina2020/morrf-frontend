@@ -25,44 +25,59 @@ const NEXT_STATES = {
   EXPERIENCE: 'PORTFOLIO',
 };
 
-const MESSAGES = [
-  {
+const MESSAGES = {
+  personal: {
     heading: 'My Details',
     subheading: 'Name, Profile picture, Profession, Location',
     add: 'personal',
     reason: 'Your phone number is essential in making your work faster.',
   },
-  {
+  contact: {
     heading: 'Contact Information',
     subheading: 'Phone number',
     add: 'contact',
     reason: 'Your phone number is essential in making your work faster.',
   },
-  {
+  about: {
     heading: 'About Yourself',
     add: 'about',
     subheading: 'Name, Profile picture, Profession, Location',
+    reason: 'Tell us something about yourself',
   },
-  {
+  skills: {
     heading: 'Skills',
     add: 'skills',
     subheading: 'Please update your skills',
+    reason: 'Skills paint a good picture of your profile to your clients',
   },
-  {
+  experience: {
     heading: 'Experience',
     add: 'experience',
     subheading: 'Please update your experience for more visibility',
+    reason: 'This will give you higher visibility',
   },
-  {
+  portfolio: {
     heading: 'Portfolio',
     add: 'portfolio',
     subheading: 'Add your portfolio for points',
+    reason: 'Portfolio of all the start projects to showcase your skills',
   },
-];
+};
 
 const GetStartedForm = ({ data, onClickAdd }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const total = MESSAGES.length;
+  var countEmpty = 0;
+  const filteredMessages = [];
+  const { personal, about, phone, email, experience, portfolio, skills } = data;
+  Object.keys(data).forEach(key => {
+    if (isEmpty(data[key]) && !isEmpty(MESSAGES[key])) {
+      filteredMessages.push(MESSAGES[key]);
+      countEmpty++;
+    }
+  });
+
+  const percentage = ((6 - countEmpty) * 100) / 6.0;
+  const total = filteredMessages.length;
   const onNext = () => {
     if (currentIndex === total - 1) return;
     setTimeout(() => setCurrentIndex(currentIndex + 1), 600);
@@ -80,28 +95,23 @@ const GetStartedForm = ({ data, onClickAdd }) => {
     roundCorners: false,
     onClick: () => {
       console.log('add me');
-      const currentPage = MESSAGES[currentIndex].add;
+      const currentPage = filteredMessages[currentIndex].add;
       onClickAdd(currentPage);
     },
   };
-  const { personal, about, phone, email, experience, portfolio, skills } = data;
-  const countEmpty = [
-    personal,
-    about,
-    phone,
-    portfolio,
-    skills,
-    experience,
-  ].filter(isEmpty).length;
 
   return (
     <DisplayCard>
-      <div className="Ff($ffmanrope)">
-        <div>Lets build your profile</div>
-        <div className="Ff($ffopensans)">Your profile is x % complete</div>
-        <div>A complete profile increases your chances of being recognised</div>
+      <div className="Ff($ffmanrope) Lh(1)">
+        <div className="Fz($mmd) Fw($fwbold)">Lets build your profile</div>
+        <div className="Ff($ffopensans) Fz($sm) Mt($xs) Mb($sm)">
+          Your profile is {percentage.toFixed(1)} % complete
+        </div>
+        <div className="Fz($sm) C($inputGrey)">
+          A complete profile increases your chances of being recognised
+        </div>
       </div>
-      <div className="">
+      <div>
         <BaseIcon
           icon="check"
           fill="gray"
@@ -128,11 +138,11 @@ const GetStartedForm = ({ data, onClickAdd }) => {
                 transform: `translateX(${-1 * currentIndex * 450}px)`,
               }}
             >
-              {MESSAGES.map(msg => (
-                <div className="W($45x)" key={msg.add}>
-                  <div>{msg.heading}</div>
-                  <div>{msg.subheading}</div>
-                  <div>{msg.reason || ''}</div>
+              {filteredMessages.map(msg => (
+                <div className="W($45x) Ta(c)" key={msg.add}>
+                  <div className="Fz($smx)">{msg.heading}</div>
+                  <div className="Fz($sm) Mb($lg)">{msg.subheading}</div>
+                  <div className="Fz($sm)">{msg.reason || ''}</div>
                 </div>
               ))}
             </div>

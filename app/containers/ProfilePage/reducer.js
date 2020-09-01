@@ -15,20 +15,6 @@ import {
   SET_LOCAL_ABOUT_ME,
 } from './constants';
 
-const emptyState = {
-  email: {
-    id: 'xyz@xyz.com',
-    verified: true,
-  },
-  phone: {},
-  personal: {},
-  about: '',
-  skills: [],
-  portfolio: [],
-  experience: [],
-  getAllSkills: allSkillsObj1,
-};
-
 const currentSkillsObj1 = [
   {
     category: 'category-2',
@@ -196,6 +182,19 @@ const allSkillsObj1 = [
     groupLabel: 'Graphic design',
   },
 ];
+const emptyState = {
+  email: {
+    id: 'xyz@xyz.com',
+    verified: true,
+  },
+  phone: {},
+  personal: {},
+  about: '',
+  skills: [],
+  portfolio: [],
+  experience: [],
+  getAllSkills: allSkillsObj1,
+};
 
 const dummyFilled = {
   personal: {
@@ -256,6 +255,14 @@ const dummyFilled = {
           description: 'The ceiling',
           name: 'ScreenShot-11',
           order: 1,
+        },
+        {
+          id: 'nonce',
+          // link: 'http://seinfeld.co/library/meditations.pdf',
+          link: '/sample.pdf',
+          type: 'application/pdf',
+          description: 'lol',
+          name: 'meditations.pdf',
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
@@ -442,7 +449,7 @@ const dummyFilled = {
   getAllSkills: allSkillsObj1,
 };
 
-export const initialState = dummyFilled;
+export const initialState = emptyState;
 
 /* eslint-disable default-case, no-param-reassign */
 const profilePageReducer = (state = initialState, action) =>

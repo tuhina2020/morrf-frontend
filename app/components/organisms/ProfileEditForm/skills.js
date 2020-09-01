@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import DisplayCard from 'components/molecules/DisplayCard';
 import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 import Button from 'components/molecules/Button';
@@ -47,11 +46,6 @@ const SkillEditForm = ({
       >
         {({ handleSubmit, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
-            {/* <DisplayCard
-            heading="Edit Skills"
-            lastChildPadding={false}
-            childPadding="P($lg)"
-          > */}
             <div className="P($lg)">
               <NestedFormikComboBox
                 id="search"
@@ -72,7 +66,6 @@ const SkillEditForm = ({
               <Button {...cancelProps}>Cancel</Button>
               <Button {...saveProps}>Save</Button>
             </div>
-            {/* </DisplayCard> */}
           </Form>
         )}
       </Formik>

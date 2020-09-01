@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import Tag from 'components/molecules/Tag';
 import isEmpty from 'lodash/isEmpty';
 const Skills = ({ skills, onEdit }) => {
-  const [localSkills, setSkills] = useState(skills);
   if (isEmpty(skills)) return null;
-  useEffect(() => {
-    setSkills(skills);
-  }, [skills]);
   return (
     <DisplayCard
       heading="Skills"
@@ -17,7 +13,7 @@ const Skills = ({ skills, onEdit }) => {
       childPadding="Px($lg) Pt($sm)"
     >
       <div className="D(f) Ai(c) Jc(s) Flw(w)">
-        {localSkills.map(skill => (
+        {skills.map(skill => (
           <div className="Mend($sm) Mb($sm)" key={`${skill.id}`}>
             <Tag>{skill.name}</Tag>
           </div>

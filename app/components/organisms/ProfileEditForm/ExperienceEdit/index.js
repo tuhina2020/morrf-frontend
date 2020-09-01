@@ -152,7 +152,10 @@ const ExperienceEditForm = ({
         if (!fromString || this.parent.present) return true;
         const toDate = (toD || '/').split('/');
         const fromDate = fromString.split('/');
-        return toDate[0] >= fromDate[0] && toDate[1] >= fromDate[1];
+        return (
+          toDate[1] >= fromDate[1] ||
+          (toDate[0] >= fromDate[0] && toDate[1] === fromDate[1])
+        );
       }),
     present: Yup.boolean(),
     description: Yup.string()
@@ -249,12 +252,7 @@ const ExperienceEditForm = ({
               </div>
               <div className="D(f) Ai(c) Jc(c)">
                 <Button {...cancelProps}>Cancel</Button>
-                <Button
-                  {...activeSaveProps}
-                  disabled={isEmpty(errors) ? isEmpty(experience) : false}
-                >
-                  Save
-                </Button>
+                <Button {...activeSaveProps}>Save</Button>
               </div>
             </Form>
           </div>

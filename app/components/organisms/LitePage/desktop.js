@@ -12,12 +12,7 @@ import Splash from 'Assets/images/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 
-const DesktopPage = ({
-  allProfessionTypes,
-  sendEmail,
-  callbackReq,
-  success,
-}) => {
+const DesktopPage = ({ sendEmail, callbackReq, success, resetParentForm }) => {
   const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
@@ -33,7 +28,6 @@ const DesktopPage = ({
   window.addEventListener('scroll', onScroll);
 
   useEffect(() => {
-    setTimeout(() => {}, 500);
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
@@ -53,6 +47,158 @@ const DesktopPage = ({
     };
     setTimeout(showMore, 200);
   };
+  const allProfessionTypes = [
+    {
+      category: 'category-3',
+      id: '332',
+      name: 'packaging',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-1',
+      id: '115',
+      name: 'Museum designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-1',
+      id: '118',
+      name: 'Recce engineer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-2',
+      id: '222',
+      name: 'Furniture',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-1',
+      id: '116',
+      name: 'Landscape designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-4',
+      id: '442',
+      name: 'researcher',
+      groupLabel: 'Strategy design',
+    },
+    {
+      category: 'category-1',
+      id: '117',
+      name: 'Lighting designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-1',
+      id: '114',
+      name: 'Exhibition designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-3',
+      id: '331',
+      name: 'Logo',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-3',
+      id: '334',
+      name: 'website',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-1',
+      id: '113',
+      name: 'Retail designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-4',
+      id: '441',
+      name: 'presentation',
+      groupLabel: 'Strategy design',
+    },
+    {
+      category: 'category-2',
+      id: '224',
+      name: 'Ceramic',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-3',
+      id: '337',
+      name: 'spatial graphics',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-3',
+      id: '336',
+      name: 'book',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-4',
+      id: '443',
+      name: 'infographic',
+      groupLabel: 'Strategy design',
+    },
+    {
+      category: 'category-2',
+      id: '223',
+      name: 'Toy',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-4',
+      id: '444',
+      name: 'Marketing',
+      groupLabel: 'Strategy design',
+    },
+    {
+      category: 'category-2',
+      id: '221',
+      name: 'Industrial',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-1',
+      id: '111',
+      name: 'Architect',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-1',
+      id: '112',
+      name: 'Residential interior designer',
+      groupLabel: 'Space design / Architecture',
+    },
+    {
+      category: 'category-3',
+      id: '333',
+      name: 'branding',
+      groupLabel: 'Graphic design',
+    },
+    {
+      category: 'category-2',
+      id: '226',
+      name: 'Textile',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-2',
+      id: '225',
+      name: 'Digital product',
+      groupLabel: 'Product design',
+    },
+    {
+      category: 'category-3',
+      id: '335',
+      name: 'brochure',
+      groupLabel: 'Graphic design',
+    },
+  ];
   const props = {
     isDesktopOrLaptop: true,
     setCallToggle,
@@ -60,6 +206,7 @@ const DesktopPage = ({
     success,
     initName: name,
     setName,
+    resetParentForm,
   };
   return (
     <>

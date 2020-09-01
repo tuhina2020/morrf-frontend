@@ -21,15 +21,9 @@ const PortfolioFormCard = ({
   onCancel,
   ...portfolio
 }) => {
-  debugger;
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
-  useEffect(() => {
-    return () => {
-      console.log('destoryed');
-      debugger;
-    };
-  }, []);
+
   const removeProps = {
     iconDescription: 'Remove',
     alignContent: 'center',
@@ -52,7 +46,7 @@ const PortfolioFormCard = ({
           value={portfolio.project}
           onChange={handleChange}
         />
-        {/* <FormikInput
+        <FormikInput
           dimensionClasses="W($xmd) H($2xl) Mstart($2xl)"
           name={`client`}
           id={`client`}
@@ -60,27 +54,19 @@ const PortfolioFormCard = ({
           error={getError('client')}
           value={portfolio.client}
           onChange={handleChange}
-        /> */}
+        />
       </div>
-      {/* <div
-        className="D(f) Ai(c) Jc(s) Bgc($navBarBg) W(fc) H($2xl) My($lg) Bdrs($bdrsinput) Bdb($bdinputGrey)"
-        style={{ boxSizing: 'initial' }}
-      >
+      <div className="D(f) Ai(c) Jc(s) My($lg)">
         <FormikInput
           label="From"
           name={`from`}
           placeholder="mm/yyyy"
           id={`from`}
           autoComplete="off"
-          dimensionClasses="W($11xl) H($2xl)"
+          dimensionClasses="W($11xl) H($2xl) Mend($2xl)"
           error={getError('from')}
           value={portfolio.from}
           onChange={handleChange}
-          joined={true}
-        />
-        <BaseIcon
-          icon="arrowback"
-          iconClasses="W($md) H($md) Rotate(180deg) C($inputGrey)"
         />
         <FormikInput
           label="To"
@@ -92,7 +78,6 @@ const PortfolioFormCard = ({
           error={getError('to')}
           value={portfolio.to}
           onChange={handleChange}
-          joined={true}
         />
       </div>
       <FormikTextArea
@@ -105,7 +90,7 @@ const PortfolioFormCard = ({
         onChange={handleChange}
         value={portfolio.description}
         error={getError('description')}
-      /> */}
+      />
       <div className="Fz($smx) Lh(1) Ff($ffmanrope)">Add Files</div>
       <FileUpload
         multiple={true}
@@ -222,12 +207,6 @@ const PortfolioEditForm = ({
         errors,
         setFieldValue,
       }) => {
-        useEffect(() => {
-          return () => {
-            console.log('destoryed');
-            debugger;
-          };
-        }, []);
         return (
           <div className="Bdrs($xs) Bgc(white)">
             <Form onSubmit={handleSubmit}>
@@ -253,12 +232,7 @@ const PortfolioEditForm = ({
                   >
                     Cancel
                   </Button>
-                  <Button
-                    {...activeSaveProps}
-                    // disabled={values.length === 0}
-                  >
-                    Save
-                  </Button>
+                  <Button {...activeSaveProps}>Save</Button>
                 </div>
               </>
             </Form>

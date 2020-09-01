@@ -18,11 +18,12 @@ const FormikComboBox = ({
   error,
 }) => {
   const [isOpen, setOpen] = useState(false);
-  const toggleOpen = e => {
+  const setOpenValue = (e, set) => {
     e.preventDefault();
     e.stopPropagation();
     if (disabled) return;
-    setOpen(!isOpen);
+    // debugger;
+    setOpen(set);
   };
 
   const invalid = error && error.length > 1;
@@ -40,10 +41,16 @@ const FormikComboBox = ({
     });
   };
 
-  const labelStyle = classnames({
+  const inputStyle = classnames({
     // 'Bxsh($bxshcheckbox)': true,
     // 'Pb($md)': true,
     // 'Px($sm)': true,
+    // 'Bdt(n)': true,
+    // 'Bdstart(n)': true,
+    // 'Bdend(n)': true,
+    'Bd(n)': true,
+    'Bdb($bdheadingDarkGrey)': !isOpen && !disabled && !invalid,
+    'Bdb($bderrorColor)': invalid && !disabled,
     'Bgc($hoverInput):h': !disabled,
     'Bgc($hoverInput)': isOpen && !disabled,
     'Bgc($navBarBg)': !isOpen || disabled,
@@ -52,18 +59,28 @@ const FormikComboBox = ({
     'H($2xl)': true,
     [`W($${width})`]: true,
     'Pos(r)': true,
-    'Bdb($bdheadingDarkGrey)': !isOpen && !disabled && !invalid,
-    'Bdb($bderrorColor)': invalid && !disabled,
-    'Bdb($bddisabledGrey2)': disabled,
-    'Bd($bdprimaryButton):h': !disabled,
-    'Bdb($bdprimaryButton)': isOpen && !disabled,
     'Bdrs($bdrsinput)': true,
     'Trsdu(0.3s)': true,
     'Trsp(a)': true,
     'Trstf(e)': true,
     'Bxz(bb)': true,
     'O(n)': true,
+    'Bdb($bddisabledGrey2)': disabled,
+    'Bdb($bdprimaryButton):h': !disabled,
+    'Bdb($bdprimaryButton)': isOpen && !disabled,
   });
+
+  const labelStyle = classnames({
+    'H(fc)': true,
+    'Lh($md)': true,
+    'Ff($ffmanrope)': true,
+    'Fz($smd)': true,
+    'Whs(nw)': true,
+    'C($inputGrey)': true,
+    // 'Pos(a)': true,
+  });
+
+  // const labelWrapper = classNa;
 
   const inlineTagsList = viewableValues.slice(0, sliceInline);
 
@@ -78,12 +95,12 @@ const FormikComboBox = ({
               </Tag>
             </div>
           ))}
+          {viewableValues.length > sliceInline ? (
+            <div className="Mstart($xs) Bgc($checkboxMore) C($navBarBg) Ff($ffmanrope) Fw($fwbold) Fz($sm) Bdrs($xs) W($lg) H($md) Ta(c)">
+              + {viewableValues.length - sliceInline}
+            </div>
+          ) : null}
         </div>
-        {viewableValues.length > sliceInline ? (
-          <div className="Mstart($xs) Bgc($checkboxMore) C($navBarBg) Ff($ffmanrope) Fw($fwbold) Fz($sm) Bdrs($xs) W($lg) H($md) Ta(c)">
-            + {viewableValues.length - sliceInline}
-          </div>
-        ) : null}
       </>
     ),
     [viewableValues],
@@ -105,30 +122,37 @@ const FormikComboBox = ({
     <>
       {!inline && <NotInlineValues />}
       <div
-        className="W($full)"
+        className="W($full) Pos(r)"
         aria-haspopup="listbox"
         aria-owns={`${id}_menu`}
         aria-expanded={isOpen}
       >
-        <div
+        {/* <div
           role="button"
           className={labelStyle}
           onClick={toggleOpen}
           onKeyDown={toggleOpen}
           tabIndex={0}
+        > */}
+        <div
+          className={inputStyle}
+          // readOnly
+          // id={id}
+          // autoComplete="off"
+          // onFocus={e => setOpenValue(e, !isOpen)}
+          // onBlur={e => setOpenValue(e, false)}
+          tabIndex={0}
         >
           <div
-            className={`D(f) Ai(c) Jc(fs) Pt($md) Px($sm) Pos(r) ${
-              inlineTagsList.length > 0 ? '' : 'T($xxs)'
-            }`}
+            className={`D(f) Ai(c) Jc(sb) Px($sm) Pos(a)  T(0) H($2xl) W($full)`}
+            onClick={e => setOpenValue(e, !isOpen)}
           >
-            <div className="Lh($md) Ff($ffmanrope) Fz($smd) Whs(nw) C($inputGrey)">
-              {labelText}
-            </div>
+            <div className={labelStyle}>{labelText}</div>
+
             {inline && <InlineValues />}
             <BaseIcon
               icon="showmore"
-              iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) Pos(a) End(0) ${
+              iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) ${
                 isOpen ? 'Rotate(180deg)' : ''
               }`}
             />

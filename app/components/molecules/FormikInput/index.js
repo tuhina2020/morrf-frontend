@@ -4,7 +4,7 @@ import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
 
 const getClasses = ({ active, disabled, value, invalid, joined }) => ({
-  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Pstart($md) W(fc) Pstart($md) Trsdu(0.8s) Trsp(a) Trstf(e) Cur(a) ${
+  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Pstart($md) W(fc) Pstart($md) Trsdu(0.3s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
     active && !disabled
@@ -37,16 +37,16 @@ const getClasses = ({ active, disabled, value, invalid, joined }) => ({
       : active
       ? 'Bdb($bdprimaryButton)'
       : 'Bdb($bdinputGrey)'
-  } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.3s) Trsp(a) Trstf(e)`,
   inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
     active ? 'Op(1)::ph' : 'Op(0)::ph'
   } Trsdu(0.6s)::ph Trsp(a)::ph Trstf(e)::ph`,
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
-  } Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  } Trsdu(0.3s) Trsp(a) Trstf(e)`,
   errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
-  } Trsdu(0.8s) Trsp(a) Trstf(e)`,
+  } Trsdu(0.3s) Trsp(a) Trstf(e)`,
   warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
 });
 

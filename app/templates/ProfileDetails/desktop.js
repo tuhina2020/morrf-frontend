@@ -6,7 +6,8 @@ import Contact from 'components/organisms/ProfileDetails/contact';
 import Experience from 'components/organisms/ProfileDetails/experience';
 import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
-import GetStarted from 'components/organisms/EditCarousels';
+import GetStartedMajor from 'components/organisms/EditCarousels/major';
+import GetStartedMinor from 'components/organisms/EditCarousels/minor';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
@@ -28,19 +29,19 @@ const ProfileDetails = ({
     getAllSkills,
   } = profile;
 
-  const countEmptyLarge = [
-    // personal,
-    // about,
-    // phone,
-    portfolio,
-    skills,
-    experience,
-  ].filter(isEmpty).length;
+  const countEmptyLarge = [portfolio, experience].filter(isEmpty).length;
+  const countEmptySmall = [personal, about, phone, skills].filter(isEmpty)
+    .length;
   const [open, setOpen] = useState('');
   const [currentIndex, setIndex] = useState();
   const [source, setSourcePage] = useState('main');
   Modal.setAppElement('#app');
-  const onCancel = useCallback(() => {
+  const onCancelModal = () => {
+    setOpen('');
+    setSourcePage('main');
+  };
+
+  const onCancelForm = useCallback(() => {
     const getstarted = () => {
       setOpen('getstarted');
       setSourcePage('getstarted');
@@ -53,13 +54,12 @@ const ProfileDetails = ({
   }, [source]);
 
   const extraProps = {
-    getFilteredSkills: open === 'skills' ? getFilteredSkills : undefined,
-    allSkills: open === 'skills' ? getAllSkills : undefined,
-    onSendCode: open === 'contact' ? sendCode : undefined,
+    getFilteredSkills,
+    allSkills: getAllSkills,
+    onSendCode: sendCode,
     source,
-    currentIndex:
-      open === 'portfolio' || open === 'experience' ? currentIndex : undefined,
-    onClickAdd: open === 'getstarted' ? setOpen : undefined,
+    currentIndex,
+    onClickAdd: setOpen,
   };
   return (
     <div>
@@ -103,23 +103,32 @@ const ProfileDetails = ({
       <Modal
         isOpen={!isEmpty(open)}
         contentLabel="onRequestClose Example"
-        onRequestClose={onCancel}
+        onRequestClose={onCancelModal}
         className={`W($61xl) M(a) H($fc) Pos(r) ${
           ['skills', 'experience'].includes(open) ? 'T($deci)' : 'T($quarter)'
         } Bd(n) O(n)`}
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
         <EditFormModal
-          onCancel={onCancel}
-          data={profile[open]}
+          onCancel={onCancelForm}
+          data={open === 'getstarted' ? profile : profile[open]}
           onSave={saveFunctionMap[open]}
           open={open}
           {...extraProps}
         />
       </Modal>
-      {countEmptyLarge > 1 ? (
-        <GetStarted
-          profile={profile}
+      {countEmptyLarge > 1 && countEmptySmall >= 2 ? (
+        <GetStartedMajor
+          data={profile}
+          onStart={() => {
+            setSourcePage('getstarted');
+            setOpen('getstarted');
+          }}
+        />
+      ) : null}
+      {countEmptyLarge <= 1 && countEmptySmall >= 2 ? (
+        <GetStartedMinor
+          data={profile}
           onStart={() => {
             setSourcePage('getstarted');
             setOpen('getstarted');

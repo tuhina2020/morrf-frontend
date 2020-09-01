@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import FormikInput from 'components/molecules/FormikInput';
@@ -8,7 +8,7 @@ import Input from 'components/molecules/Input/index';
 import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
 import { wordCount } from 'utils/helper';
-
+import SuccessAnimation from 'Assets/gifs/success.gif';
 import Button from 'components/molecules/Button/index';
 const generateRequestForm = ({
   setCallToggle,
@@ -168,34 +168,62 @@ const RequestForm = props => {
     budget: '',
     email: '',
   };
+  const [submitted, setSubmitted] = useState(false);
+  const [submitCount, setCount] = useState(0);
+  useEffect(() => {
+    if (submitted) {
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 1000);
+    }
+  }, [submitted]);
+  const anotherReqButton = {
+    iconDescription: 'again',
+    alignContent: 'center',
+    kind: 'secondary',
+    type: 'button',
+    onClick: () => setCount(0),
+  };
+
   return (
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
       } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg)`}
     >
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          sendEmail(values);
-          setName('');
-          resetForm({
-            values: {
-              ...initialValues,
-              name: '',
-            },
-          });
-          setSubmitting(false);
-        }}
-        validationSchema={validationSchema}
-      >
-        {generateRequestForm({
-          setCallToggle,
-          allProfessionTypes,
-          isDesktopOrLaptop,
-          setName,
-        })}
-      </Formik>
+      {submitCount > 0 && !submitted ? (
+        <div className="Mx(a) W(fc) H($50xl) Pos(r) T($20x)">
+          <Button {...anotherReqButton}>Submit Another response</Button>
+        </div>
+      ) : null}
+      {submitted && submitCount === 1 ? (
+        <img src={SuccessAnimation} className="W($full)" />
+      ) : submitCount === 0 ? (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            sendEmail(values);
+            setName('');
+            resetForm({
+              values: {
+                ...initialValues,
+                name: '',
+              },
+            });
+            setCount(1);
+            setSubmitted(true);
+            setSubmitting(false);
+          }}
+          validationSchema={validationSchema}
+        >
+          {generateRequestForm({
+            setCallToggle,
+            allProfessionTypes,
+            isDesktopOrLaptop,
+            setName,
+          })}
+        </Formik>
+      ) : null}
     </div>
   );
 };

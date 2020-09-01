@@ -34,7 +34,7 @@ const FilePreview = ({ onRemove, data, onload }) => {
           name: localdata.name,
           data: src,
           type: localdata.type,
-          id: new Date().toString() + Math.random(),
+          id: Date.parse(new Date()) + Math.random(),
         });
     }, [src]);
     if (type === 'text') {
@@ -42,7 +42,7 @@ const FilePreview = ({ onRemove, data, onload }) => {
     } else if (type === 'image') {
       reader.readAsDataURL(localdata);
     } else if (type === 'application/pdf') {
-      reader.readAsBinaryString(localdata);
+      reader.readAsText(localdata);
     } else {
       setSrc(false);
       setLoading(false);
