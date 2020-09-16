@@ -14,7 +14,9 @@ import {
   SET_AVAILABLE_SKILLS,
   SET_LOCAL_ABOUT_ME,
 } from './constants';
-
+import { getDefaultState } from 'utils/helper';
+import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 const currentSkillsObj1 = [
   {
     category: 'category-2',
@@ -182,14 +184,22 @@ const allSkillsObj1 = [
     groupLabel: 'Graphic design',
   },
 ];
+
+const loginData = getDefaultState('loginData', {});
+const getDataFromLogin = key =>
+  isEmpty(get(loginData, key)) ? '' : loginData[key];
+
 const emptyState = {
-  email: {
-    id: 'xyz@xyz.com',
-    verified: true,
+  email: getDataFromLogin('email'),
+  phone: {
+    number: getDataFromLogin('phone_number'),
   },
-  phone: {},
-  personal: {},
-  about: '',
+  id: getDataFromLogin('id'),
+  personal: {
+    // firstName: getDataFromLogin('name').split(' ')[0],
+    // lastName: getDataFromLogin('name').split(' ')[1],
+  },
+  about: getDataFromLogin('about'),
   skills: [],
   portfolio: [],
   experience: [],
@@ -198,19 +208,14 @@ const emptyState = {
 
 const dummyFilled = {
   personal: {
-    id: '112233',
     firstName: 'Prasanth',
     lastName: 'Sarvepalli',
     profession: 'Architect',
     city: 'Bengaluru',
     state: 'Karnataka',
-    address: '',
   },
 
-  email: {
-    id: 'xyz@xyz.com',
-    verified: true,
-  },
+  email: 'xyz@xyz.com',
   about:
     'I am an architect with xyz years of experience. I love working on ideas and implementing from end to end.',
   skills: currentSkillsObj1,
@@ -218,18 +223,18 @@ const dummyFilled = {
     {
       designation: 'Senior Architect',
       company: 'Arup',
-      from: '08/2017',
-      to: '', // have to figure out a way if it is the present workplace
-      description: 'Designed and coordinated on site.\nManaged teams',
+      startYear: '08/2017',
+      endYear: '', // have to figure out a way if it is the present workplace
+      highlights: 'Designed and coordinated on site.\nManaged teams',
       order: 1,
       present: true,
     },
     {
       designation: 'Architect',
       company: 'Arup',
-      description: 'Designed and coordinated on site.',
-      from: '07/2015',
-      to: '07/2017',
+      highlights: 'Designed and coordinated on site.',
+      startYear: '07/2015',
+      endYear: '07/2017',
       order: 2,
     },
   ],
@@ -241,10 +246,9 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai',
       client: 'Novo Matrix',
-      from: '07/2018',
-      to: '08/2019',
-      duration: 18,
-      description: 'New house at Panvel 1',
+      startYear: '07/2018',
+      endYear: '08/2019',
+      highlights: 'New house at Panvel 1',
       order: 1,
       mode: 'completed',
       images: [
@@ -252,30 +256,19 @@ const dummyFilled = {
           id: '1', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           type: 'image',
-          description: 'The ceiling',
           name: 'ScreenShot-11',
           order: 1,
-        },
-        {
-          id: 'nonce',
-          // link: 'http://seinfeld.co/library/meditations.pdf',
-          link: '/sample.pdf',
-          type: 'application/pdf',
-          description: 'lol',
-          name: 'meditations.pdf',
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12',
           type: 'image',
-          description: 'The window',
           order: 2,
         },
         {
           id: '12', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The ceiling',
           name: 'ScreenShot-11a',
           type: 'image',
           order: 1,
@@ -284,14 +277,12 @@ const dummyFilled = {
           id: 'abcw', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12a',
-          description: 'The window',
           type: 'image',
           order: 2,
         },
         {
           id: '12b', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The ceiling',
           name: 'ScreenShot-11ab',
           type: 'image',
           order: 1,
@@ -300,7 +291,6 @@ const dummyFilled = {
           id: 'abcqw', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-12ab',
-          description: 'The window',
           type: 'image',
           order: 2,
         },
@@ -319,7 +309,6 @@ const dummyFilled = {
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The view from outside',
           name: 'ScreenShot-9',
           order: 1,
           type: 'image',
@@ -328,7 +317,6 @@ const dummyFilled = {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-10',
-          description: 'The window',
           order: 2,
           type: 'image',
         },
@@ -337,17 +325,15 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai 2',
       client: 'Novo Matrix',
-      from: '07/2018',
-      to: '08/2019',
-      duration: 21,
-      description: 'New house at Panvel 3',
+      startYear: '07/2018',
+      endYear: '08/2019',
+      highlights: 'New house at Panvel 3',
       order: 3,
       mode: 'completed',
       images: [
         {
           id: '1', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The ceiling',
           name: 'ScreenShot-7',
           order: 1,
           type: 'image',
@@ -355,7 +341,6 @@ const dummyFilled = {
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The window',
           name: 'ScreenShot-8',
           order: 2,
           type: 'image',
@@ -365,17 +350,16 @@ const dummyFilled = {
     {
       project: 'Heavy Security Bank, Singapore 2',
       client: 'Novo Matrix',
-      from: '03/2017',
-      to: '08/2019',
+      startYear: '03/2017',
+      endYear: '08/2019',
       duration: 16,
       mode: 'draft',
-      description: 'New house at Koramangala 4',
+      highlights: 'New house at Koramangala 4',
       order: 4,
       images: [
         {
           id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The view from outside',
           name: 'ScreenShot-1',
           order: 1,
           type: 'image',
@@ -383,7 +367,6 @@ const dummyFilled = {
         {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The window',
           name: 'ScreenShot-2',
           order: 2,
           type: 'image',
@@ -393,10 +376,10 @@ const dummyFilled = {
     {
       project: 'Aviation Academy at Mumbai 3',
       client: 'Novo Matrix',
-      from: '07/2018',
-      to: '08/2019',
+      startYear: '07/2018',
+      endYear: '08/2019',
       duration: 31,
-      description: 'New house at Panvel 5',
+      highlights: 'New house at Panvel 5',
       order: 5,
       mode: 'draft',
       images: [
@@ -404,14 +387,12 @@ const dummyFilled = {
           id: '1', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-3',
-          description: 'The ceiling',
           order: 1,
           type: 'image',
         },
         {
           id: 'abc', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
-          description: 'The window',
           order: 2,
           type: 'image',
         },
@@ -420,9 +401,9 @@ const dummyFilled = {
     {
       project: 'Heavy Security Bank, Singapore 3',
       client: 'Novo Matrix',
-      from: '03/2017',
-      to: '08/2019',
-      description: 'New house at Koramangala 6',
+      startYear: '03/2017',
+      endYear: '08/2019',
+      highlights: 'New house at Koramangala 6',
       order: 6,
       duration: 21,
       mode: 'draft',
@@ -431,7 +412,6 @@ const dummyFilled = {
           id: '23423', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-5',
-          description: 'The view from outside',
           order: 1,
           type: 'image',
         },
@@ -439,7 +419,6 @@ const dummyFilled = {
           id: 'sdfsdff', // optional (Will depend on the edit portfolio design)
           link: 'https://lorempixel.com/200/200/',
           name: 'ScreenShot-6',
-          description: 'The window',
           order: 2,
           type: 'image',
         },

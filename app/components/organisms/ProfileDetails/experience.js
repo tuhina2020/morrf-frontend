@@ -14,18 +14,21 @@ const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
       onClickIcon={onAdd}
     >
       {sortBy(experience, 'order').map(
-        ({ designation, company, description, from, to, present }, i) => {
+        (
+          { designation, company, highlights, startYear, endYear, present },
+          i,
+        ) => {
           return (
             <div
               className="Ff($ffopensans) Fz($fzbutton) Lh(1)"
-              key={company + from}
+              key={company + startYear}
             >
-              <div className="D(f) Ai(c) Jc(fs)">
+              <div className="D(f) Ai(c) Jc(sb)">
                 <div className="Fz($smx) Fw($fwsemibold) W(66%)">
                   {designation}
                 </div>
                 <div>
-                  {from} - {present ? 'present' : to}
+                  {startYear} - {present ? 'present' : endYear}
                 </div>
                 <BaseIcon
                   icon="edit"
@@ -36,7 +39,7 @@ const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
                 />
               </div>
               <div className="Mt($sm) Mb($mmd)">{company}</div>
-              <div>{description}</div>
+              <div>{highlights}</div>
             </div>
           );
         },

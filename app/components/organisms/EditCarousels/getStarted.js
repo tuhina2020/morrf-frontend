@@ -121,7 +121,7 @@ const GetStartedForm = ({ data, onClickAdd }) => {
           <Button {...addProps}>Add +</Button>
         </div>
 
-        <div className="D(f) Jc(fs) Ai(c) Ff($ffmanrope)">
+        <div className="D(f) Jc(c) Ai(c) Ff($ffmanrope)">
           <BaseIcon
             icon="showmore"
             iconClasses={`W($xl) H($xl) Rotate(90deg) Bdrs($lg) ${

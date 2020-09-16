@@ -14,6 +14,7 @@ const ContactFormComponent = ({
   setFieldError,
   onCancel,
   onSendCode,
+  verifyPhone,
   phone,
 }) => {
   const onSendCodeClick = () =>
@@ -114,15 +115,15 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
       .min(4, 'Enter atleast four characters')
       .email('Enter a valid email')
       .required('Required'),
-    code: Yup.string()
-      .min(4, 'Minimum 4 characters long')
-      .required('Required'),
+    // code: Yup.string()
+    //   .min(4, 'Minimum 4 characters long')
+    //   .required('Required'),
   };
   const validationSchema = Yup.object(YupObj);
 
   const initialValues = {
     phone: phone.number || '',
-    email: email.id,
+    email,
     code: '',
   };
 
@@ -132,7 +133,7 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
       onSubmit={(values, { setSubmitting }) => {
         console.log(onSave);
         alert(JSON.stringify(values));
-        onSave({ phone: values.phone, code: values.code });
+        onSave({ phone: values.phone, otp: values.code });
         setSubmitting(false);
         onCancel();
       }}

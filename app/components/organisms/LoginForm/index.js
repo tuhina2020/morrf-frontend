@@ -8,6 +8,8 @@ import ResetPasswordForm from './resetPassword';
 import CongratulationsScreen from './congratulations';
 import { EMAIL_LOGIN_STATES } from './constants';
 import Header from './header';
+import { Redirect } from 'react-router-dom';
+import { isLoggedIn } from 'utils/helper';
 
 const LoginForm = ({
   signInAllUsers,
@@ -29,7 +31,7 @@ const LoginForm = ({
   signInWithGoogle,
 }) => {
   const [switchState, setSwitchState] = useState(false);
-
+  const [google, setGoogle] = useState(false);
   const token = localStorage.getItem('token');
 
   const [currentState, setCurrentState] = useState(
@@ -38,6 +40,8 @@ const LoginForm = ({
       : EMAIL_LOGIN_STATES.ENTER_EMAIL,
     // EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD,
   );
+
+  console.log('LoginForm rendered');
 
   useEffect(() => {
     let newState;
@@ -66,7 +70,9 @@ const LoginForm = ({
       default:
         return;
     }
-    if (newState && switchState) {
+    console.log(newState, switchState, google, 'THIS IS IT');
+    // debugger;
+    if (newState && switchState && !google) {
       console.log(
         'SWITCH STATE TO from',
         currentState,
@@ -74,10 +80,54 @@ const LoginForm = ({
         newState,
         loginData && loginData.id,
       );
+      // debugger;
       setCurrentState(newState);
       setSwitchState(false);
     }
   }, [loginData]);
+
+  const getHeaderProps = current => {
+    const LOOKUP = {
+      [EMAIL_LOGIN_STATES.ENTER_EMAIL]: {
+        heading: "Let's get Started",
+        subheading: 'Enter your email to continue to Morff',
+        topBannerStyle: 'D(f) Ai(c) Jc(c)',
+      },
+      [EMAIL_LOGIN_STATES.CREATE_ACCOUNT_MESSAGE]: {
+        heading: 'Create Account',
+        subheading: email,
+        back: () => setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL),
+      },
+      [EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD]: {
+        heading: 'Welcome Back',
+        subheading: email,
+        back: () => setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL),
+      },
+      [EMAIL_LOGIN_STATES.FORGOT_PASSWORD_MESSAGE]: {
+        heading: 'Password Recovery',
+        subheading: email,
+        back: () => setCurrentState(EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD),
+      },
+      [EMAIL_LOGIN_STATES.RESET_PASSWORD]: {
+        heading: 'Password Recovery',
+        subheading:
+          (loginData && (loginData.name || loginData.email)) || 'Dummy',
+        back: () => {},
+      },
+      [EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT]: {
+        heading: 'Create Account',
+        subheading: email,
+        back: () => {
+          setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL);
+        },
+      },
+      [EMAIL_LOGIN_STATES.CONGRATULATIONS]: {
+        heading: 'Congrats!',
+        subheading: 'You have successfully created your account.',
+      },
+    };
+    return LOOKUP[current];
+  };
 
   const renderStates = () => {
     switch (currentState) {
@@ -90,8 +140,13 @@ const LoginForm = ({
               checkUser({ email });
               setSwitchState(true);
             }}
-            signInGoogleApi={({ code }) => {
-              signInWithGoogle({ code, email });
+            checkUser={params => {
+              setGoogle(true);
+              checkUser(params);
+              setSwitchState(true);
+            }}
+            signInGoogleApi={params => {
+              signInWithGoogle(params);
             }}
           />
         );
@@ -178,59 +233,13 @@ const LoginForm = ({
         );
     }
   };
-
-  const getHeaderProps = current => {
-    const LOOKUP = {
-      [EMAIL_LOGIN_STATES.ENTER_EMAIL]: {
-        heading: "Let's get Started",
-        subheading: 'Enter your email to continue to Morff',
-        topBannerStyle: 'D(f) Ai(c) Jc(c)',
-      },
-      [EMAIL_LOGIN_STATES.CREATE_ACCOUNT_MESSAGE]: {
-        heading: 'Create Account',
-        subheading: email,
-        back: () => setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL),
-      },
-      [EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD]: {
-        heading: 'Welcome Back',
-        subheading: email,
-        back: () => setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL),
-      },
-      [EMAIL_LOGIN_STATES.FORGOT_PASSWORD_MESSAGE]: {
-        heading: 'Password Recovery',
-        subheading: email,
-        back: () => setCurrentState(EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD),
-      },
-      [EMAIL_LOGIN_STATES.RESET_PASSWORD]: {
-        heading: 'Password Recovery',
-        subheading:
-          (loginData && (loginData.name || loginData.email)) || 'Dummy',
-        back: () => {},
-      },
-      [EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT]: {
-        heading: 'Create Account',
-        subheading: email,
-        back: () => {
-          setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL);
-        },
-      },
-      [EMAIL_LOGIN_STATES.CONGRATULATIONS]: {
-        heading: 'Congrats!',
-        subheading: 'You have successfully created your account.',
-      },
-    };
-    return LOOKUP[current];
-  };
-
-  const [headerProps, setHeaderProps] = useState(getHeaderProps(currentState));
-
-  useEffect(() => {
-    setHeaderProps(getHeaderProps(currentState));
-  }, [currentState]);
-
+  const loggedIn = isLoggedIn();
+  if (loggedIn) {
+    return <Redirect to="/profile/details" />;
+  }
   return (
     <div className="Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W(fc) Bdrs($bdrscontainer) Pt($2xl) Pb($9xl) Mb($2xl) Mih($60xl)">
-      <Header {...headerProps} />
+      <Header {...getHeaderProps(currentState)} />
       <div className="Px($5xl)">{renderStates()}</div>
     </div>
   );

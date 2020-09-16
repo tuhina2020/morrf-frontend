@@ -28,9 +28,9 @@ import configureStore from './configureStore';
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
+const ManropeObserver = new FontFaceObserver('Manrope', {});
 
-// When Open Sans is loaded, add a font-family using Open Sans to the body
-openSansObserver.load().then(() => {
+Promise.all([openSansObserver.load(), ManropeObserver.load()]).then(function() {
   document.body.classList.add('fontLoaded');
 });
 

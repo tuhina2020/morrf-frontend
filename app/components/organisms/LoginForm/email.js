@@ -12,6 +12,7 @@ const EnterEmail = ({
   email,
   setEmail,
   signInGoogleApi,
+  checkUser,
 }) => {
   const [validate, setValidate] = useState(false);
   const [submittable, setSubmittable] = useState(false);
@@ -61,7 +62,7 @@ const EnterEmail = ({
         <div className="H(1px) W($half) Bgc($hoverInput)" />
       </div>
       <div className="Mx(a) W(fc)">
-        <GoogleLogin signInApi={signInGoogleApi} />
+        <GoogleLogin signInApi={signInGoogleApi} checkUser={checkUser} />
       </div>
     </>
   );

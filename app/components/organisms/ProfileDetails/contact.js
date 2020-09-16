@@ -39,22 +39,13 @@ const Contact = ({ data, onEdit }) => {
         <div className="W($half)">
           <div className="Fw($fwbold) Fz($smx) Lh(1) Mb($xs)">Email id</div>
           <div className="D(f) Ai(c) Jc(fs)">
-            <div className="Fz($smd) Mend($xs)">{email.id}</div>
-            {email.verified ? (
-              <BaseIcon
-                icon="checkcircle"
-                width="16px"
-                height="16px"
-                fill="#00a04a"
-              />
-            ) : (
-              <BaseIcon
-                icon="warning"
-                width="16px"
-                height="16px"
-                fill="#ff0356"
-              />
-            )}
+            <div className="Fz($smd) Mend($xs)">{email}</div>
+            <BaseIcon
+              icon="checkcircle"
+              width="16px"
+              height="16px"
+              fill="#00a04a"
+            />
           </div>
         </div>
       </div>

@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { RESTART_ON_REMOUNT } from 'utils/constants';
-import { setToast, isLoggedIn } from 'utils/helper';
+import { setToast } from 'utils/helper';
 import LoginDesktopTemplate from 'templates/Login/desktop';
 import { makeSelectLoginPage } from './selectors';
 import reducer from './reducer';
@@ -42,11 +41,6 @@ const LoginPage = ({
   if (error.message) {
     setToast(error);
     dispatchToastData({});
-  }
-  const loggedIn = isLoggedIn();
-  console.log('ALREADY LOGGED IN ', loggedIn);
-  if (loggedIn) {
-    return <Redirect to="/profile/details" />;
   }
   return (
     <LoginDesktopTemplate

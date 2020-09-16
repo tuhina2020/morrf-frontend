@@ -25,6 +25,7 @@ export default function request(url, options, internal = true) {
     body: options.data ? JSON.stringify(options.data) : undefined,
     ...omit(options, ['headers', 'data']),
   };
+  // debugger;
 
   return fetch(internal ? BASE_URL.default + url : url, modifiedOptions).then(
     response =>

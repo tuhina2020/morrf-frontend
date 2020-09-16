@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Button from 'components/molecules/Button';
 import PropTypes from 'prop-types';
 import { useScript } from 'utils/hooks';
@@ -37,15 +37,15 @@ const setUpFirebase = () => {
       });
     });
 
-    // useScript(
-    //   'https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js',
-    //   cbInit,
-    // );
+    useScript(
+      'https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js',
+      cbInit,
+    );
 
-    // useScript(
-    //   'https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js',
-    //   cbAuth,
-    // );
+    useScript(
+      'https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js',
+      cbAuth,
+    );
   }
 };
 
@@ -55,42 +55,67 @@ const desktopSignIn = ({ signInApi }) => {
     .grantOfflineAccess()
     .then(authResult => {
       console.log(authResult);
-      signInApi(authResult);
+      if (auth2.isSignedIn.get()) {
+        var profile = auth2.currentUser.get().getBasicProfile();
+        const email = profile.getEmail();
+        const firstName = profile.getGivenName();
+        const lastName = profile.getFamilyName();
+        // console.log('ID: ' + profile.getId());
+        // console.log('Full Name: ' + profile.getName());
+        // console.log('Given Name: ' + profile.getGivenName());
+        // console.log('Family Name: ' + profile.getFamilyName());
+        // console.log('Image URL: ' + profile.getImageUrl());
+        // console.log('Email: ' + email);
+        console.log({
+          email,
+          firstName,
+          lastName,
+        });
+        signInApi({
+          email,
+          firstName,
+          lastName,
+          ...authResult,
+        });
+      }
     })
     .catch(error => {
       console.log(error);
     });
 };
 
-//   const options = {
-//     // prompt: 'Are you sure?',
-//   };
-//   auth2.signIn(options).then(googleUser => {
-//     var profile = googleUser.getBasicProfile();
-//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-//     console.log('Name: ' + profile.getName());
-//     console.log('Image URL: ' + profile.getImageUrl());
-//     console.log('Email: ' + profile.getEmail());
-//   });
-//   var provider = new firebase.auth.GoogleAuthProvider();
-//   provider.addScope(‘profile’);
-//   provider.addScope(‘email’);
-//   firebase
-//     .auth()
-//     .signInWithPopup(provider)
-//     .then(function(result) {
-//       var token = result.credential.accessToken;
-//       var user = result.user;
-//       console.log(JSON.stringify(result));
-//     })
-//     .catch(function(error) {
-//       var errorCode = error.code;
-//       var errorMessage = error.message;
-//       var email = error.email;
-//       var credential = error.credential;
-//       // ...
-//     });
-// };
+const firebaseSignin = ({ signInApi, checkUser }) => {
+  const auth2 = gapi.auth2.getAuthInstance();
+  // const options = {
+  //   // prompt: 'Are you sure?',
+  // };
+  // auth2.signIn(options).then(googleUser => {
+  //   var profile = googleUser.getBasicProfile();
+  //   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  //   console.log('Name: ' + profile.getName());
+  //   console.log('Image URL: ' + profile.getImageUrl());
+  //   console.log('Email: ' + profile.getEmail());
+  // });
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+      const refreshToken = user.refreshToken;
+      console.log(user);
+      // debugger;
+      const email = user.email;
+      // const { given_name: firstName, family_name: lastName } = user;
+      checkUser({ email, refreshToken });
+    })
+    .catch(function(error) {
+      checkUser({ error });
+    });
+};
 
 const setUpGapi = ({ ref }) => {
   useScript('https://apis.google.com/js/platform.js', () => {
@@ -107,7 +132,7 @@ const setUpGapi = ({ ref }) => {
   });
 };
 
-const GoogleLogin = ({ size, tabIndex, text, signInApi }) => {
+const GoogleLogin = ({ size, tabIndex, text, signInApi, checkUser }) => {
   const buttonProps = {
     iconDescription: 'sign in with google',
     alignContent: 'center',
@@ -116,14 +141,12 @@ const GoogleLogin = ({ size, tabIndex, text, signInApi }) => {
     tabIndex,
     prependIcon: 'google',
     // 'data-onsuccess': desktopSignIn,
-    onClick: () => desktopSignIn({ signInApi }),
+    onClick: () => firebaseSignin({ signInApi, checkUser }),
   };
-  const ref = useRef(null);
-
-  setUpGapi({ ref });
+  setUpFirebase();
 
   return (
-    <Button {...buttonProps} ref={ref}>
+    <Button {...buttonProps}>
       <div>{text}</div>
     </Button>
   );

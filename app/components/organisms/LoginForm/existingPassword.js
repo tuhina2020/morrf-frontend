@@ -6,7 +6,6 @@ import { PASSWORD_VALIDATION_OBJ } from './constants';
 
 const ExistingPassword = ({
   next,
-  back,
   forgot,
   wrapperClass,
   submitText,
@@ -75,7 +74,6 @@ ExistingPassword.propTypes = {
   wrapperClass: PropTypes.string,
   width: PropTypes.string,
   next: PropTypes.func.isRequired,
-  back: PropTypes.func.isRequired,
   forgot: PropTypes.func.isRequired,
   password: PropTypes.string,
   setPassword: PropTypes.func,

@@ -21,38 +21,48 @@ import {
 } from './actions';
 
 export function* getExistingUser({ payload }) {
-  const { email } = payload;
+  const { email, refreshToken, error } = payload;
   const requestURL = '/user/check-user';
   try {
     const data = { email };
+    if (!isEmpty(refreshToken)) localStorage.setItem('token', refreshToken);
     const existingUser = yield call(request, requestURL, {
       data,
+      headers: !isEmpty(refreshToken)
+        ? {
+            authType: 'google',
+            Authorization: refreshToken,
+          }
+        : undefined,
     });
-    if (existingUser && existingUser.id) {
+    if (existingUser && existingUser.id && isEmpty(refreshToken)) {
       yield put(setLoginData(existingUser));
       localStorage.setItem('loginData', JSON.stringify(existingUser));
     }
     if (existingUser.role) localStorage.setItem('role', existingUser.role);
+    if (!isEmpty(refreshToken)) {
+      yield signInGoogle({ email, refreshToken, error });
+    }
   } catch (err) {
+    localStorage.removeItem('loginData');
+    localStorage.removeItem('token');
     yield put(setLoginData({}));
   }
 }
 
-export function* signInGoogle({ payload }) {
-  const { email, code } = payload;
+export function* signInGoogle({ email, refreshToken, error }) {
   const requestURL = '/user/login';
   try {
-    const data = {
-      // username: email,
-      code,
-    };
-
+    debugger;
+    if (error) throw error;
     const existingUser = yield call(request, requestURL, {
       headers: {
         authType: 'google',
+        Authorization: refreshToken,
       },
-      data,
+      data: { email },
     });
+    debugger;
     if (existingUser && existingUser.token) {
       localStorage.setItem('loginData', JSON.stringify(existingUser.user));
       localStorage.setItem('token', existingUser.token);
@@ -61,14 +71,16 @@ export function* signInGoogle({ payload }) {
     if (get(existingUser, 'user.role'))
       localStorage.setItem('role', existingUser.user.role);
   } catch (err) {
+    console.log(err);
+    localStorage.removeItem('loginData');
+    localStorage.removeItem('token');
+    // debugger;
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'info',
       }),
     );
-    localStorage.removeItem('loginData');
-    localStorage.removeItem('token');
   }
 }
 

@@ -40,8 +40,9 @@ export const getDefaultState = (key, DEFAULT = '') => {
 export const isLoggedIn = () => {
   const role = localStorage.getItem('role');
   const token = localStorage.getItem('token');
+  const loginData = localStorage.getItem('loginData');
   const valid = l => !isEmpty(l) && l !== 'undefined';
-  return valid(role) && valid(token);
+  return valid(role) && valid(token) && valid(loginData);
 };
 
 export const deviceScreenInfo = () => {

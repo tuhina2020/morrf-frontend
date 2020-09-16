@@ -19,6 +19,7 @@ const PortfolioFormCard = ({
   onRemove,
   setImage,
   onCancel,
+  uploadImageData,
   ...portfolio
 }) => {
   const getError = key =>
@@ -59,37 +60,37 @@ const PortfolioFormCard = ({
       <div className="D(f) Ai(c) Jc(s) My($lg)">
         <FormikInput
           label="From"
-          name={`from`}
+          name={`startYear`}
           placeholder="mm/yyyy"
-          id={`from`}
+          id={`startYear`}
           autoComplete="off"
           dimensionClasses="W($11xl) H($2xl) Mend($2xl)"
-          error={getError('from')}
-          value={portfolio.from}
+          error={getError('startYear')}
+          value={portfolio.startYear}
           onChange={handleChange}
         />
         <FormikInput
           label="To"
-          name={`to`}
+          name={`endYear`}
           placeholder="mm/yyyy"
-          id={`to`}
+          id={`endYear`}
           autoComplete="off"
           dimensionClasses="W($11xl) H($2xl)"
-          error={getError('to')}
-          value={portfolio.to}
+          error={getError('endYear')}
+          value={portfolio.endYear}
           onChange={handleChange}
         />
       </div>
       <FormikTextArea
         label="Description"
-        name={`description`}
-        id="description"
+        name={`highlights`}
+        id="highlights"
         heightClass="H($5xl)"
         placeholder="Brief description of your work"
         dimensionClasses="W($full) My($lg)"
         onChange={handleChange}
-        value={portfolio.description}
-        error={getError('description')}
+        value={portfolio.highlights}
+        error={getError('highlights')}
       />
       <div className="Fz($smx) Lh(1) Ff($ffmanrope)">Add Files</div>
       <FileUpload
@@ -116,19 +117,20 @@ const PortfolioEditForm = ({
   data: portfolio,
   currentIndex,
   onSave,
+  uploadImageData,
 }) => {
   const validationSchema = Yup.object().shape({
     project: Yup.string()
       .min(3, 'too short')
       .required('Required'),
     client: Yup.string().required('Required'),
-    from: Yup.string()
+    startYear: Yup.string()
       .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
       .required('Required'),
-    to: Yup.string()
+    endYear: Yup.string()
       .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
       .required('Required'),
-    description: Yup.string()
+    highlights: Yup.string()
       .required('Required')
       .test('word-count-limit', 'Min 5 words and Max 100 words', value => {
         if (!value) return false;
@@ -140,9 +142,9 @@ const PortfolioEditForm = ({
   const emptyPortfolio = {
     project: '',
     client: '',
-    from: '',
-    to: '',
-    description: '',
+    startYear: '',
+    endYear: '',
+    highlights: '',
     images: [],
   };
   const initialValues =
@@ -177,7 +179,7 @@ const PortfolioEditForm = ({
     };
     // alert(values);
     alert(JSON.stringify(newPortfolio[index]));
-    onSave({ portfolio: newPortfolio });
+    onSave({ portfolio: newPortfolio[index], newPortfolio });
     onCancel();
   };
 
@@ -222,7 +224,10 @@ const PortfolioEditForm = ({
                   onRemove={onRemove}
                   onCancel={onCancel}
                   setImage={v => {
+                    // let { images } = values;
+                    // images[index] = v;
                     setFieldValue('images', v);
+                    uploadImageData({ files: v });
                   }}
                 />
                 <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">

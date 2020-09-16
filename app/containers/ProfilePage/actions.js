@@ -3,6 +3,7 @@ import {
   SET_REMOTE_PERSONAL_DATA,
   SET_EMAIL,
   SET_PHONE,
+  SET_REMOTE_PHONE,
   SET_LOCAL_PORTFOLIO,
   SET_REMOTE_PORTFOLIO,
   SET_LOCAL_EXPERIENCE,
@@ -11,11 +12,19 @@ import {
   SET_AVAILABLE_SKILLS,
   SET_LOCAL_ABOUT_ME,
   SET_REMOTE_ABOUT_ME,
-  GET_AVAILABLE_SKILLS,
   SEND_VERIFICATION,
   VERIFY_PHONE,
   SET_REMOTE_SKILLS,
+  GET_USER,
+  UPLOAD_IMAGE,
 } from './constants';
+
+export function getUser(payload) {
+  return {
+    type: GET_USER,
+    payload,
+  };
+}
 
 export function setLocalPersonalData(payload) {
   return {
@@ -52,9 +61,16 @@ export function setRemoteAboutMe(payload) {
   };
 }
 
-export function setPhone(payload) {
+export function setLocalPhone(payload) {
   return {
     type: SET_PHONE,
+    payload,
+  };
+}
+
+export function setRemotePhone(payload) {
+  return {
+    type: SET_REMOTE_PHONE,
     payload,
   };
 }
@@ -108,13 +124,6 @@ export function setRemoteSkills(payload) {
   };
 }
 
-export function getSkills(payload) {
-  return {
-    type: GET_AVAILABLE_SKILLS,
-    payload,
-  };
-}
-
 export function setLocalSkillsList(payload) {
   return {
     type: SET_AVAILABLE_SKILLS,
@@ -125,6 +134,13 @@ export function setLocalSkillsList(payload) {
 export function sendVerificationCode(payload) {
   return {
     type: SEND_VERIFICATION,
+    payload,
+  };
+}
+
+export function uploadImage(payload) {
+  return {
+    type: UPLOAD_IMAGE,
     payload,
   };
 }

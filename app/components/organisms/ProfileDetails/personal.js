@@ -4,11 +4,10 @@ import BaseImage from 'components/atoms/BaseImage';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 const PersonalDetails = ({ personal, onEdit }) => {
-  if (isEmpty(personal)) return null;
   const { firstName, lastName, profession, city, state } = personal;
-
+  if (isEmpty(personal) || isEmpty(firstName) || isEmpty(lastName)) return null;
   return (
-    <div className="Bdrs($xs) M($lg) Bgc(white) H($fc) Maw($60xl)">
+    <div className="Bdrs($xs) Bgc(white) H($fc) Maw($60xl)">
       <div className="D(f) Ai(s) Jc(sb) Px($lg) Pb($sm) Pt($mmd) Lh(1)">
         <div>
           <div className="Ff($ffmanrope) Fz($xml)">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProfileDetails from 'templates/ProfileDetails/desktop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectProfilePage } from './selectors';
 import {
   setEmail,
-  setPhone,
+  setLocalPhone,
   sendVerificationCode,
   verifyPhone,
   setRemoteExperience,
@@ -21,6 +21,9 @@ import {
   setRemotePortfolio,
   setRemoteSkills,
   getSkills,
+  setRemotePhone,
+  getUser,
+  uploadImage,
 } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -34,14 +37,19 @@ const ProfilePage = ({
   saveAboutMe,
   savePersonalDetails,
   savePortfolio,
-  getFilteredSkills,
   saveSkills,
+  savePhone,
+  getUserData,
+  uploadImageData,
 }) => {
   useInjectReducer({ key: 'profilePage', reducer });
   useInjectSaga({ key: 'profilePage', saga, mode: RESTART_ON_REMOUNT });
   const {
     params: { tabId },
   } = match;
+  useEffect(() => {
+    getUserData();
+  }, [profilePage.id]);
   if (tabId === 'details')
     return (
       <ProfileDetails
@@ -54,11 +62,12 @@ const ProfilePage = ({
           about: saveAboutMe,
           personal: savePersonalDetails,
           portfolio: savePortfolio,
-          contact: formVerifyPhone,
           skills: saveSkills,
+          contact: savePhone,
         }}
-        getFilteredSkills={getFilteredSkills}
+        verifyPhone={formVerifyPhone}
         sendCode={sendCode}
+        uploadImageData={uploadImageData}
       />
     );
   return <div>LOL TTHIS IS EMPTY</div>;
@@ -80,8 +89,10 @@ function mapDispatchToProps(dispatch) {
     saveAboutMe: params => dispatch(setRemoteAboutMe(params)),
     savePersonalDetails: params => dispatch(setRemotePersonalData(params)),
     savePortfolio: params => dispatch(setRemotePortfolio(params)),
-    getFilteredSkills: params => dispatch(getSkills(params)),
     saveSkills: params => dispatch(setRemoteSkills(params)),
+    savePhone: params => dispatch(setRemotePhone(params)),
+    getUserData: () => dispatch(getUser()),
+    uploadImageData: params => dispatch(uploadImage(params)),
   };
 }
 

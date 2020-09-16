@@ -52,8 +52,10 @@ const FileUpload2 = ({
       ...dataList,
       ...Object.keys(files).map(file => files[file]),
     ];
-    setDataList(dataListTemp);
-    onChange(dataListTemp);
+    if (dataListTemp.length < maxSize) {
+      setDataList(dataListTemp);
+      onChange(dataListTemp);
+    }
   };
 
   const removeItem = index => {
@@ -101,8 +103,10 @@ const FileUpload2 = ({
                 tempDataList.push(params);
               }
               console.log('SETTING DATA ');
-              setDataList(tempDataList);
-              onChange(tempDataList);
+              if (tempDataList.length < maxSize) {
+                setDataList(tempDataList);
+                onChange(tempDataList);
+              }
             }}
           />
         </div>
@@ -147,7 +151,7 @@ const FileUpload2 = ({
               <input
                 type="file"
                 tabIndex={0}
-                accept="image/jpeg,image/png,application/pdf"
+                accept="image/jpeg,image/png"
                 ref={inputRef}
                 className="D(n)"
                 name={name}

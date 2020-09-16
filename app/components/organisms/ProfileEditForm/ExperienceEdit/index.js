@@ -26,10 +26,10 @@ const ExperienceFormCard = ({
   currentIndex,
   designation,
   company,
-  from,
-  to,
+  startYear,
+  endYear,
   present = false,
-  description,
+  highlights,
   errors,
   touched,
   handleChange,
@@ -62,25 +62,25 @@ const ExperienceFormCard = ({
       <div className="D(f) Ai(c) Jc(s) H($2xl) My($lg)">
         <FormikInput
           label="From"
-          name="from"
+          name="startYear"
           placeholder="mm/yyyy"
-          id="from"
+          id="startYear"
           autoComplete="off"
           dimensionClasses="W($10x) Mend($2xl)"
-          error={getError('from')}
-          value={from}
+          error={getError('startYear')}
+          value={startYear}
           onChange={handleChange}
         />
         <FormikInput
-          name="to"
-          id="to"
+          name="endYear"
+          id="endYear"
           label="To"
           autoComplete="off"
           placeholder="mm/yyyy"
           disabled={present}
           dimensionClasses="W($10x)"
-          error={getError('to')}
-          value={to}
+          error={getError('endYear')}
+          value={endYear}
           onChange={handleChange}
         />
         <div className="Mstart($lg) Pos(r) T($xs) Bgc(white)">
@@ -93,7 +93,7 @@ const ExperienceFormCard = ({
               const value = e.target.value;
               const v = value && value.length > 0 && JSON.parse(value);
               if (!v) {
-                setFieldValue('to', '');
+                setFieldValue('endYear', '');
               }
             }}
           />
@@ -102,14 +102,14 @@ const ExperienceFormCard = ({
       <div className="My($lg)">
         <FormikTextArea
           label="Description"
-          name="description"
-          id="description"
+          name="highlights"
+          id="highlights"
           heightClass="H($5xl)"
           placeholder="Brief description of your work"
           dimensionClasses="W($full)"
           onChange={handleChange}
-          value={description}
-          error={getError('description')}
+          value={highlights}
+          error={getError('highlights')}
         />
       </div>
       {currentIndex >= 0 ? (
@@ -139,16 +139,16 @@ const ExperienceEditForm = ({
       .min(3, 'too short')
       .required('Required'),
     company: Yup.string().required('Required'),
-    from: Yup.string()
+    startYear: Yup.string()
       .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
       .required('Required'),
-    to: Yup.string()
+    endYear: Yup.string()
       .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
       .test('no-present', 'Required', function(toD) {
         return this.parent.present ? true : !isEmpty(toD);
       })
       .test('date-range-start', 'Less than start date', function(toD) {
-        const fromString = this.parent.from;
+        const fromString = this.parent.startYear;
         if (!fromString || this.parent.present) return true;
         const toDate = (toD || '/').split('/');
         const fromDate = fromString.split('/');
@@ -158,7 +158,7 @@ const ExperienceEditForm = ({
         );
       }),
     present: Yup.boolean(),
-    description: Yup.string()
+    highlights: Yup.string()
       .required('Required')
       .test('word-count-limit', 'Min 5 words and Max 100 words', value => {
         if (!value) return false;
@@ -170,9 +170,9 @@ const ExperienceEditForm = ({
   const emptyExperience = {
     designation: '',
     company: '',
-    from: '',
-    to: '',
-    description: '',
+    startYear: '',
+    endYear: '',
+    highlights: '',
     present: false,
   };
   const initialValues =
@@ -217,7 +217,8 @@ const ExperienceEditForm = ({
         const index = currentIndex >= 0 ? currentIndex : experience.length;
         let newExperience = [...experience];
         newExperience[index] = values;
-        onSave({ experience: newExperience });
+        debugger;
+        onSave({ experience: values, newExperience });
         setSubmitting(false);
         onCancel();
       }}

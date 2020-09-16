@@ -15,8 +15,9 @@ import EditFormModal from './editModal';
 const ProfileDetails = ({
   profile,
   sendCode,
-  getFilteredSkills,
   saveFunctionMap,
+  verifyPhone,
+  uploadImageData,
 }) => {
   const {
     personal,
@@ -54,16 +55,17 @@ const ProfileDetails = ({
   }, [source]);
 
   const extraProps = {
-    getFilteredSkills,
     allSkills: getAllSkills,
     onSendCode: sendCode,
     source,
     currentIndex,
     onClickAdd: setOpen,
+    verifyPhone,
+    uploadImageData,
   };
   return (
     <div>
-      <div className="D(f) Ai(s) Jc(s) Mih($100vh)">
+      <div className="D(f) Ai(s) Jc(s) Mih($100vh) P($lg)">
         <div className="Mend($lg) Miw($60xl)">
           <PersonalDetails
             personal={personal}
@@ -142,7 +144,6 @@ const ProfileDetails = ({
 ProfileDetails.propTypes = {
   profile: PropTypes.object,
   sendCode: PropTypes.func,
-  getFilteredSkills: PropTypes.func,
   saveFunctionMap: PropTypes.object,
 };
 

@@ -6,13 +6,7 @@ import Button from 'components/molecules/Button';
 import { Formik, Form } from 'formik';
 import { isEmpty, values } from 'lodash';
 
-const SkillEditForm = ({
-  onCancel,
-  onSave,
-  data: skills,
-  allSkills,
-  // getFilteredSkills,
-}) => {
+const SkillEditForm = ({ onCancel, onSave, data: skills, allSkills }) => {
   const saveProps = {
     iconDescription: 'Save',
     alignContent: 'center',
@@ -78,7 +72,6 @@ SkillEditForm.propTypes = {
   allSkills: PropTypes.array,
   onSave: PropTypes.func,
   data: PropTypes.array,
-  getFilteredSkills: PropTypes.func,
 };
 
 SkillEditForm.defaultProps = {
