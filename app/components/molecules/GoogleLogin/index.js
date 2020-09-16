@@ -56,7 +56,7 @@ const desktopSignIn = ({ signInApi }) => {
     .then(authResult => {
       console.log(authResult);
       if (auth2.isSignedIn.get()) {
-        var profile = auth2.currentUser.get().getBasicProfile();
+        const profile = auth2.currentUser.get().getBasicProfile();
         const email = profile.getEmail();
         const firstName = profile.getGivenName();
         const lastName = profile.getFamilyName();
@@ -96,19 +96,19 @@ const firebaseSignin = ({ signInApi, checkUser }) => {
   //   console.log('Image URL: ' + profile.getImageUrl());
   //   console.log('Email: ' + profile.getEmail());
   // });
-  var provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope('profile');
   provider.addScope('email');
   firebase
     .auth()
     .signInWithPopup(provider)
     .then(function(result) {
-      var token = result.credential.accessToken;
-      var user = result.user;
-      const refreshToken = user.refreshToken;
+      const token = result.credential.accessToken;
+      const { user } = result;
+      const { refreshToken } = user;
       console.log(user);
       // debugger;
-      const email = user.email;
+      const { email } = user;
       // const { given_name: firstName, family_name: lastName } = user;
       checkUser({ email, refreshToken });
     })

@@ -90,7 +90,7 @@ const ExperienceFormCard = ({
             labelText="I work here currently"
             onChange={e => {
               handleChange(e);
-              const value = e.target.value;
+              const { value } = e.target;
               const v = value && value.length > 0 && JSON.parse(value);
               if (!v) {
                 setFieldValue('endYear', '');
@@ -215,7 +215,7 @@ const ExperienceEditForm = ({
       onSubmit={(values, { setSubmitting }) => {
         alert(JSON.stringify(values));
         const index = currentIndex >= 0 ? currentIndex : experience.length;
-        let newExperience = [...experience];
+        const newExperience = [...experience];
         newExperience[index] = values;
         debugger;
         onSave({ experience: values, newExperience });
@@ -231,34 +231,33 @@ const ExperienceEditForm = ({
         handleSubmit,
         touched,
         errors,
-      }) => {
+      }) => (
         // debugger;
-        return (
+        (
           <div className="Bdrs($xs) Bgc(white) W($60xl)">
-            <Form onSubmit={handleSubmit}>
-              <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
-                Edit Experience
-              </div>
-              <div className="Mah($45x) Ov(s)">
-                <ExperienceFormCard
-                  currentIndex={currentIndex}
-                  {...values}
-                  errors={errors}
-                  touched={touched}
-                  // remove={remove}
-                  handleChange={handleChange}
-                  setFieldValue={setFieldValue}
-                  onRemove={onRemove}
-                />
-              </div>
-              <div className="D(f) Ai(c) Jc(c)">
-                <Button {...cancelProps}>Cancel</Button>
-                <Button {...activeSaveProps}>Save</Button>
-              </div>
-            </Form>
-          </div>
-        );
-      }}
+          <Form onSubmit={handleSubmit}>
+            <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+              Edit Experience
+            </div>
+            <div className="Mah($45x) Ov(s)">
+              <ExperienceFormCard
+                currentIndex={currentIndex}
+                {...values}
+                errors={errors}
+                touched={touched}
+                // remove={remove}
+                handleChange={handleChange}
+                setFieldValue={setFieldValue}
+                onRemove={onRemove}
+              />
+            </div>
+            <div className="D(f) Ai(c) Jc(c)">
+              <Button {...cancelProps}>Cancel</Button>
+              <Button {...activeSaveProps}>Save</Button>
+            </div>
+          </Form>
+        </div>
+      )}
     </Formik>
   );
 };

@@ -1,6 +1,8 @@
 import { put, takeLatest, select, call, all } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
+import request from 'utils/request';
+import { setLoginData, setToastData } from 'containers/LoginPage/actions';
 import {
   SEND_VERIFICATION,
   VERIFY_PHONE,
@@ -14,7 +16,6 @@ import {
   UPLOAD_IMAGE,
 } from './constants';
 import { makeSelectProfilePage } from './selectors';
-import request from 'utils/request';
 import {
   setLocalPhone,
   setLocalExperience,
@@ -24,8 +25,6 @@ import {
   setLocalSkillsList,
   setLocalSkills,
 } from './actions';
-
-import { setLoginData, setToastData } from 'containers/LoginPage/actions';
 
 async function getSignedUrlById({ file_name, file_type, id }) {
   const requestURL = `/user/${id}`;

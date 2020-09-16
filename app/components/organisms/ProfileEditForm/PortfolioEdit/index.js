@@ -41,16 +41,16 @@ const PortfolioFormCard = ({
         <FormikInput
           label="Project name"
           dimensionClasses="W($xmd) H($2xl)"
-          name={`project`}
-          id={`project`}
+          name="project"
+          id="project"
           error={getError('project')}
           value={portfolio.project}
           onChange={handleChange}
         />
         <FormikInput
           dimensionClasses="W($xmd) H($2xl) Mstart($2xl)"
-          name={`client`}
-          id={`client`}
+          name="client"
+          id="client"
           label="Client"
           error={getError('client')}
           value={portfolio.client}
@@ -60,9 +60,9 @@ const PortfolioFormCard = ({
       <div className="D(f) Ai(c) Jc(s) My($lg)">
         <FormikInput
           label="From"
-          name={`startYear`}
+          name="startYear"
           placeholder="mm/yyyy"
-          id={`startYear`}
+          id="startYear"
           autoComplete="off"
           dimensionClasses="W($11xl) H($2xl) Mend($2xl)"
           error={getError('startYear')}
@@ -71,9 +71,9 @@ const PortfolioFormCard = ({
         />
         <FormikInput
           label="To"
-          name={`endYear`}
+          name="endYear"
           placeholder="mm/yyyy"
-          id={`endYear`}
+          id="endYear"
           autoComplete="off"
           dimensionClasses="W($11xl) H($2xl)"
           error={getError('endYear')}
@@ -83,7 +83,7 @@ const PortfolioFormCard = ({
       </div>
       <FormikTextArea
         label="Description"
-        name={`highlights`}
+        name="highlights"
         id="highlights"
         heightClass="H($5xl)"
         placeholder="Brief description of your work"
@@ -94,12 +94,12 @@ const PortfolioFormCard = ({
       />
       <div className="Fz($smx) Lh(1) Ff($ffmanrope)">Add Files</div>
       <FileUpload
-        multiple={true}
+        multiple
         name="example-upload"
         maxSize={10}
         filesExisting={portfolio.images}
         onChange={setImage}
-        showPreview={true}
+        showPreview
       />
       <Button
         {...removeProps}
@@ -172,7 +172,7 @@ const PortfolioEditForm = ({
 
   const onCancelHandler = ({ values, mode }) => () => {
     const index = currentIndex >= 0 ? currentIndex : portfolio.length;
-    let newPortfolio = [...portfolio];
+    const newPortfolio = [...portfolio];
     newPortfolio[index] = {
       ...values,
       mode: values.mode === 'completed' ? 'completed' : mode,
@@ -208,42 +208,40 @@ const PortfolioEditForm = ({
         touched,
         errors,
         setFieldValue,
-      }) => {
-        return (
-          <div className="Bdrs($xs) Bgc(white)">
-            <Form onSubmit={handleSubmit}>
-              <>
-                <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
-                  Edit Portfolio
-                </div>
-                <PortfolioFormCard
-                  {...values}
-                  errors={errors}
-                  touched={touched}
-                  handleChange={handleChange}
-                  onRemove={onRemove}
-                  onCancel={onCancel}
-                  setImage={v => {
-                    // let { images } = values;
-                    // images[index] = v;
-                    setFieldValue('images', v);
-                    uploadImageData({ files: v });
-                  }}
-                />
-                <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
-                  <Button
-                    {...cancelProps}
-                    onClick={onCancelHandler({ values, mode: 'draft' })}
-                  >
-                    Cancel
-                  </Button>
-                  <Button {...activeSaveProps}>Save</Button>
-                </div>
-              </>
-            </Form>
-          </div>
-        );
-      }}
+      }) => (
+        <div className="Bdrs($xs) Bgc(white)">
+          <Form onSubmit={handleSubmit}>
+            <>
+              <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+                Edit Portfolio
+              </div>
+              <PortfolioFormCard
+                {...values}
+                errors={errors}
+                touched={touched}
+                handleChange={handleChange}
+                onRemove={onRemove}
+                onCancel={onCancel}
+                setImage={v => {
+                  // let { images } = values;
+                  // images[index] = v;
+                  setFieldValue('images', v);
+                  uploadImageData({ files: v });
+                }}
+              />
+              <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
+                <Button
+                  {...cancelProps}
+                  onClick={onCancelHandler({ values, mode: 'draft' })}
+                >
+                  Cancel
+                </Button>
+                <Button {...activeSaveProps}>Save</Button>
+              </div>
+            </>
+          </Form>
+        </div>
+      )}
     </Formik>
   );
 };

@@ -17,32 +17,30 @@ const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
         (
           { designation, company, highlights, startYear, endYear, present },
           i,
-        ) => {
-          return (
-            <div
-              className="Ff($ffopensans) Fz($fzbutton) Lh(1)"
-              key={company + startYear}
-            >
-              <div className="D(f) Ai(c) Jc(sb)">
-                <div className="Fz($smx) Fw($fwsemibold) W(66%)">
-                  {designation}
-                </div>
-                <div>
-                  {startYear} - {present ? 'present' : endYear}
-                </div>
-                <BaseIcon
-                  icon="edit"
-                  width="28px"
-                  height="28px"
-                  iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
-                  onClick={() => onEdit(i)}
-                />
+        ) => (
+          <div
+            className="Ff($ffopensans) Fz($fzbutton) Lh(1)"
+            key={company + startYear}
+          >
+            <div className="D(f) Ai(c) Jc(sb)">
+              <div className="Fz($smx) Fw($fwsemibold) W(66%)">
+                {designation}
               </div>
-              <div className="Mt($sm) Mb($mmd)">{company}</div>
-              <div>{highlights}</div>
+              <div>
+                {startYear} - {present ? 'present' : endYear}
+              </div>
+              <BaseIcon
+                icon="edit"
+                width="28px"
+                height="28px"
+                iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
+                onClick={() => onEdit(i)}
+              />
             </div>
-          );
-        },
+            <div className="Mt($sm) Mb($mmd)">{company}</div>
+            <div>{highlights}</div>
+          </div>
+        ),
       )}
     </DisplayCard>
   );

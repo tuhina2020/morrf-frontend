@@ -66,7 +66,7 @@ const MESSAGES = {
 
 const GetStartedForm = ({ data, onClickAdd }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  var countEmpty = 0;
+  let countEmpty = 0;
   const filteredMessages = [];
   const { personal, about, phone, email, experience, portfolio, skills } = data;
   Object.keys(data).forEach(key => {

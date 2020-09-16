@@ -5,20 +5,16 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { toast } from 'react-toastify';
 
-export const datesAreOnSameDay = (first = new Date(), second = new Date()) => {
-  return (
-    first.getFullYear() === second.getFullYear() &&
-    first.getMonth() === second.getMonth() &&
-    first.getDate() === second.getDate()
-  );
-};
+export const datesAreOnSameDay = (first = new Date(), second = new Date()) =>
+  first.getFullYear() === second.getFullYear() &&
+  first.getMonth() === second.getMonth() &&
+  first.getDate() === second.getDate();
 
-export const wordCount = word => {
-  return word
+export const wordCount = word =>
+  word
     .trim()
     .replace(/\s+/gi, ' ')
     .split(' ').length;
-};
 
 export const setToast = ({ message }) => {
   if (isEmpty(message)) return;

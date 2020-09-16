@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import { Redirect } from 'react-router-dom';
+import { isLoggedIn } from 'utils/helper';
 import EnterEmail from './email';
 import ExistingPassword from './existingPassword';
 import GenericMessage from './genericMsg';
@@ -8,8 +10,6 @@ import ResetPasswordForm from './resetPassword';
 import CongratulationsScreen from './congratulations';
 import { EMAIL_LOGIN_STATES } from './constants';
 import Header from './header';
-import { Redirect } from 'react-router-dom';
-import { isLoggedIn } from 'utils/helper';
 
 const LoginForm = ({
   signInAllUsers,

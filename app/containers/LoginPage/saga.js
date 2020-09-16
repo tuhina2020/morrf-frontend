@@ -1,4 +1,8 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
+
+import request from 'utils/request';
 import {
   GET_EXISTING_USER,
   SIGNIN_ALL_USERS,
@@ -8,10 +12,6 @@ import {
   SET_GLOBAL_CHOICE,
   SIGNIN_GOOGLE,
 } from './constants';
-import isEmpty from 'lodash/isEmpty';
-import get from 'lodash/get';
-
-import request from 'utils/request';
 import { makeSelectLoginPage } from './selectors';
 import {
   setLoginData,

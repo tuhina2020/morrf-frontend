@@ -4,6 +4,9 @@
  *
  */
 import produce from 'immer';
+import { getDefaultState } from 'utils/helper';
+import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 import {
   SET_LOCAL_PERSONAL_DATA,
   SET_EMAIL,
@@ -14,9 +17,6 @@ import {
   SET_AVAILABLE_SKILLS,
   SET_LOCAL_ABOUT_ME,
 } from './constants';
-import { getDefaultState } from 'utils/helper';
-import isEmpty from 'lodash/isEmpty';
-import get from 'lodash/get';
 const currentSkillsObj1 = [
   {
     category: 'category-2',

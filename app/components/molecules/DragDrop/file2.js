@@ -1,8 +1,8 @@
-import FilePreview from './preview';
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { classnames } from 'utils/helper';
 import { cloneDeep } from 'lodash';
+import FilePreview from './preview';
 const uploadFileToServer = file => {
   const delay = file.size / 100;
   return new Promise((resolve, reject) => {
@@ -96,7 +96,7 @@ const FileUpload2 = ({
             data={file}
             onRemove={removeItemCurrent}
             onload={params => {
-              let tempDataList = [...dataList];
+              const tempDataList = [...dataList];
               if (index >= 0 && index < dataList.length) {
                 tempDataList[index] = params;
               } else if (index === dataList.length) {
