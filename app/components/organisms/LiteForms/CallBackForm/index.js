@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import Button from 'components/molecules/Button/index';
 import BaseIcon from 'components/atoms/BaseIcon';
 import SuccessAnimation from 'Assets/gifs/success.gif';
+import { morff as MorffLogo } from 'Assets/svg-comp';
 const generateMorffLiteForm = ({
   handleSubmit,
   handleChange,
@@ -17,6 +18,7 @@ const generateMorffLiteForm = ({
   setFieldValue,
   isDesktopOrLaptop,
   setName,
+  ...focused
 }) => {
   const submitProps = {
     iconDescription: 'submit',
@@ -24,13 +26,13 @@ const generateMorffLiteForm = ({
     kind: 'primary',
     type: 'submit',
   };
+  console.log(focused);
   const dimensionClasses = 'Mb($lg) W($full)';
   const dateDimensionClasses = isDesktopOrLaptop
     ? 'Mb($lg) W(217px) Mend($2xl)'
     : 'Mb($lg) W(265px)';
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
-  console.log(values.date, 'THIS IS DATE');
   return (
     <form onSubmit={handleSubmit}>
       <FormikInput
@@ -93,7 +95,6 @@ const CallBackForm = props => {
     setCallToggle,
     isDesktopOrLaptop,
     callbackReq,
-    success,
     setName,
     initName,
   } = props;
@@ -123,7 +124,7 @@ const CallBackForm = props => {
     if (submitted) {
       setTimeout(() => {
         setSubmitted(false);
-      }, 1000);
+      }, 1500);
     }
   }, [submitted]);
   const anotherReqButton = {
@@ -134,27 +135,42 @@ const CallBackForm = props => {
     onClick: () => setCount(0),
   };
 
+  const requestButtonProps = {
+    iconDescription: 'callback',
+    alignContent: 'center',
+    kind: 'secondary',
+    type: 'button',
+    onClick: () => setCallToggle(true),
+  };
+
+  const NewRequestButton = () => (
+    <div
+      className={
+        'Mx(a) W(fc) Pos(r) Trsdu(1s) Trstf(e) Trsp(a) ' +
+        (submitted ? 'H(fc)' : 'T($20x) H($50xl)')
+      }
+    >
+      <Button {...anotherReqButton}>Submit Another response</Button>
+    </div>
+  );
   return (
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
       } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
     >
-      {submitCount > 0 && !submitted ? (
-        <div className="Mx(a) W(fc) H($50xl) Pos(r) T($20x)">
-          <Button {...anotherReqButton}>Submit Another response</Button>
-        </div>
-      ) : null}
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />
       ) : submitCount === 0 ? (
-        <>
+        <div className="Pos(r)">
           <BaseIcon
             icon="arrowback"
             iconClasses="Bdrs($mmd) W($lg) H($lg) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
             onClick={() => setCallToggle(false)}
           />
-          <div className="W($5xl) H($5xl) Bgc($inputGrey) Mt($lg) Mx(a)" />
+          <div className="Mt($lg) Mx(a) W(fc)">
+            <MorffLogo className="W($6xl) H($5xl)" />
+          </div>
           <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
             Request a Call Back
           </div>
@@ -179,8 +195,9 @@ const CallBackForm = props => {
               })
             }
           </Formik>
-        </>
+        </div>
       ) : null}
+      {submitCount > 0 ? <NewRequestButton /> : null}
     </div>
   );
 };
@@ -194,6 +211,8 @@ CallBackForm.propTypes = {
 
 CallBackForm.defaultProps = {
   setCallToggle: () => {},
+  setName: () => {},
+  initName: '',
 };
 
 export default CallBackForm;

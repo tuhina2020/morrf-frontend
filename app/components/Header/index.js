@@ -1,22 +1,47 @@
 import { morrflogo as MorrfLogo } from 'Assets/svg-comp';
 import React from 'react';
 import { getTransitionClass } from 'utils/helper';
-export default function Header({ isDesktopOrLaptop, shadow }) {
+import Button from 'components/molecules/Button';
+export default function Header({
+  isDesktopOrLaptop,
+  shadow,
+  bgImg,
+  height,
+  padding,
+  bgc,
+  logout,
+  logoutAction,
+}) {
+  const buttonProps = {
+    iconDescription: 'sign in with google',
+    alignContent: 'center',
+    kind: 'secondary',
+    size: '10x',
+    onClick: logoutAction,
+  };
   return (
     <div
-      className={`Pos(f) T(0) W(100%) Op(1) Z(2) Bgc($navBarBg) ${getTransitionClass(
-        2,
-      )} ${shadow ? 'Bxsh($bxshnavBar)' : ''}`}
+      className={`Pos(f) T(0) W(100%) Op(1) Z(2) ${padding} ${!bgImg &&
+        !bgc &&
+        'Bgc(#d4d4d4)'} ${getTransitionClass(2)} ${
+        shadow ? 'Bxsh($bxshnavBar)' : ''
+      }`}
+      style={{
+        height,
+        backgroundImage: bgImg && `url(${bgImg})`,
+        backgroundSize: bgImg && 'cover',
+        backgroundColor: !bgImg && bgc,
+      }}
     >
       <div
         className={`D(f) ${
           isDesktopOrLaptop ? 'Jc(s) P(1vw)' : 'Jc(c) Py(5vw)'
         } Ai(c)`}
+        style={{ height }}
       >
         <MorrfLogo
-          width={isDesktopOrLaptop ? '11vw' : null}
-          height={isDesktopOrLaptop ? null : '10vw'}
-          className="Mstart(3.6vw)"
+          width={isDesktopOrLaptop ? null : '33%'}
+          height={isDesktopOrLaptop ? '90%' : null}
         />
         <div
           className={`Bdend($bdlightGrey) ${
@@ -27,11 +52,16 @@ export default function Header({ isDesktopOrLaptop, shadow }) {
         />
         <div
           className={`Fw($fwregular) ${
-            isDesktopOrLaptop ? 'Fz($fzsubheading)' : 'Fz($fzmobilesubheading)'
+            isDesktopOrLaptop ? 'Fz($md)' : 'Fz($fzmobilesubheading)'
           }`}
         >
           Design Made Easy
         </div>
+        {logout && (
+          <div className="Pos(a) End(10px)">
+            <Button {...buttonProps}>Logout</Button>
+          </div>
+        )}
       </div>
     </div>
   );

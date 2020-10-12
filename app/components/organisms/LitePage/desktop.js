@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { morrflogo as MorrfLogo, showmore as ShowMore } from 'Assets/svg-comp';
+import {
+  morrflogo as MorrfLogo,
+  showmore as ShowMore,
+  morff as Morff,
+} from 'Assets/svg-comp';
 
 import { getTransitionClass, scrollTo, scrollToElement } from 'utils/helper';
 import MovingDots from 'components/MovingDots';
@@ -7,17 +11,34 @@ import CallBackForm from 'components/organisms/LiteForms/CallBackForm/index';
 import RequestForm from 'components/organisms/LiteForms/RequestForm/index';
 import { Link } from 'react-router-dom';
 import LiteCard from 'components/molecules/LiteCard';
-import Gradient from 'Assets/images/Gradient_BG.png';
-import Splash from 'Assets/images/Splash_BG.png';
+import Gradient from 'Assets/images/lite/Gradient_BG.png';
+import Splash from 'Assets/images/lite/Splash_BG.png';
+import HeadingBg from 'Assets/images/lite/heading.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
-import BaseIcon from '../../atoms/BaseIcon/index';
-
-const DesktopPage = ({ sendEmail, callbackReq, success, resetParentForm }) => {
+import BaseIcon from 'components/atoms/BaseIcon/index';
+import Button from 'components/molecules/Button/index';
+import Steps from './steps';
+import Awesomeness from './awesomeness';
+import Header from 'components/Header';
+const DesktopPage = ({
+  sendEmail,
+  callbackReq,
+  success,
+  resetParentForm,
+  allProfessionTypes,
+  isDesktopOrLaptop,
+}) => {
   const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
   const [name, setName] = useState('');
+  const [headerShadow, setHeaderShadow] = useState(false);
   const onScroll = () => {
+    if (document.documentElement.scrollTop > 0) {
+      setHeaderShadow(true);
+    } else {
+      setHeaderShadow(false);
+    }
     if (
       document.documentElement.scrollTop > 100 ||
       (document.body.scrollTop > 100 && !scrolled)
@@ -25,9 +46,9 @@ const DesktopPage = ({ sendEmail, callbackReq, success, resetParentForm }) => {
       setScrollStatus(true);
     }
   };
-  window.addEventListener('scroll', onScroll);
 
   useEffect(() => {
+    window.addEventListener('scroll', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
@@ -47,203 +68,41 @@ const DesktopPage = ({ sendEmail, callbackReq, success, resetParentForm }) => {
     };
     setTimeout(showMore, 200);
   };
-  const allProfessionTypes = [
-    {
-      category: 'category-3',
-      id: '332',
-      name: 'packaging',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-1',
-      id: '115',
-      name: 'Museum designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-1',
-      id: '118',
-      name: 'Recce engineer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-2',
-      id: '222',
-      name: 'Furniture',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-1',
-      id: '116',
-      name: 'Landscape designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-4',
-      id: '442',
-      name: 'researcher',
-      groupLabel: 'Strategy design',
-    },
-    {
-      category: 'category-1',
-      id: '117',
-      name: 'Lighting designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-1',
-      id: '114',
-      name: 'Exhibition designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-3',
-      id: '331',
-      name: 'Logo',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-3',
-      id: '334',
-      name: 'website',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-1',
-      id: '113',
-      name: 'Retail designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-4',
-      id: '441',
-      name: 'presentation',
-      groupLabel: 'Strategy design',
-    },
-    {
-      category: 'category-2',
-      id: '224',
-      name: 'Ceramic',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-3',
-      id: '337',
-      name: 'spatial graphics',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-3',
-      id: '336',
-      name: 'book',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-4',
-      id: '443',
-      name: 'infographic',
-      groupLabel: 'Strategy design',
-    },
-    {
-      category: 'category-2',
-      id: '223',
-      name: 'Toy',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-4',
-      id: '444',
-      name: 'Marketing',
-      groupLabel: 'Strategy design',
-    },
-    {
-      category: 'category-2',
-      id: '221',
-      name: 'Industrial',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-1',
-      id: '111',
-      name: 'Architect',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-1',
-      id: '112',
-      name: 'Residential interior designer',
-      groupLabel: 'Space design / Architecture',
-    },
-    {
-      category: 'category-3',
-      id: '333',
-      name: 'branding',
-      groupLabel: 'Graphic design',
-    },
-    {
-      category: 'category-2',
-      id: '226',
-      name: 'Textile',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-2',
-      id: '225',
-      name: 'Digital product',
-      groupLabel: 'Product design',
-    },
-    {
-      category: 'category-3',
-      id: '335',
-      name: 'brochure',
-      groupLabel: 'Graphic design',
-    },
-  ];
+
   const props = {
-    isDesktopOrLaptop: true,
+    isDesktopOrLaptop,
     setCallToggle,
-    allProfessionTypes,
     success,
     initName: name,
     setName,
     resetParentForm,
   };
+
+  const formRef = useRef(null);
+  const anotherReqButton = {
+    iconDescription: 'again',
+    alignContent: 'center',
+    kind: 'secondary',
+    type: 'button',
+    onClick: () =>
+      scrollToElement({
+        element: formRef.current,
+        offset: 0,
+        duration: 500,
+      }),
+  };
   return (
     <>
-      <div
-        className="W($full) H($5xl) D(f) Ai(c) Jc(sb) Pstart(7.2vw) Pend(1.8vw) Bgr(nr) Bxz(pb)"
-        style={{
-          backgroundImage: `url(${menuHeader})`,
-          backgroundPosition: 'center top',
-        }}
-      >
-        <div className="D(f) Ai(c)">
-          <MorrfLogo className="W(172px)" />
-          <div
-            className={`Bdend($bdlightGrey) ${'Pt(2.5vw)'} Pstart($lg) Mend($lg)`}
-          />
-          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fztitle)">
-            Design Made Easy
-          </div>
-        </div>
-        <Link
-          to="/faq"
-          className="Ff($ffmanrope) Td(n) W($8xl) Fw($fwregular) Fz($button)"
-        >
-          FAQ
-        </Link>
-      </div>
-      {/* url(${Splash}), */}
-      <div style={{ backgroundImage: `url(${Splash})` }} className="lol" />
-      <div
-        className="Bgr(nr)"
-        style={{
-          backgroundImage: `url(${Gradient})`,
-          backgroundPosition: 'center top',
-          backgroundSize: '100% 100%',
-          //backgroundSize: '100% 549px, 100% 100%'
-        }}
-      >
+      <Header
+        shadow={headerShadow}
+        isDesktopOrLaptop={true}
+        bgImg={HeadingBg}
+        height="72px"
+        padding="Px(6%)"
+      />
+      <img src={Splash} className="Pos(a) Z(-1) W($full) T($5xl)" />
+      <img src={Gradient} className="Pos(a) Z(-2) W($full) T($5xl) H($full)" />
+      <div className="Pos(r) T($5xl)">
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($4xl) Ta(c) Mb($sm)">
             Looking for a freelance designer?
@@ -253,116 +112,110 @@ const DesktopPage = ({ sendEmail, callbackReq, success, resetParentForm }) => {
           </div>
         </div>
 
-        <div className="Pb($2xl)">
+        <div ref={formRef} className="Pb($xl)">
           {callBackForm ? (
             <CallBackForm callbackReq={callbackReq} {...props} />
           ) : (
-            <RequestForm {...props} sendEmail={sendEmail} />
+            <RequestForm
+              {...props}
+              sendEmail={sendEmail}
+              allProfessionTypes={allProfessionTypes}
+            />
           )}
         </div>
-      </div>
-      <div className="Bgc($navBarBg) Pb($5xl)">
-        <div className="Ff($ffmanrope) D(f) Ai(c) Jc(c) Fz($xl) Pt($2xl)">
-          How is Morff different
-        </div>
-        {
+
+        <div className="Bgc($navBarBg)">
+          <div className="Ff($ffmanrope) D(f) Ai(c) Jc(c) Fz($xxl) Pt($2xl)">
+            What makes us awesome!
+          </div>
           <div className="Mt(2vw) D(f) Ai(c) Jc(c) Fld(c)">
             <div
-              className={`Bdrs(2.5vw) W(5vw) H(5vw) Mx(47.5%) Bxsh($bxshlightInset):h ${getTransitionClass(
+              className={`Bdrs(2.5vw) Mx(a) Bxsh($bxshlightInset):h ${getTransitionClass(
                 0.4,
               )} ${scrolled ? 'Op(0)' : ''}`}
             >
-              <ShowMore width="5vw" height="5vw" onClick={onClickShowMore} />
+              <ShowMore width="2vw" height="2vw" onClick={onClickShowMore} />
             </div>
             <div
-              className={`${getTransitionClass(2)} Trsde(0.5s) ${
+              className={`H(1vw) ${getTransitionClass(2)} Trsde(0.5s) ${
                 scrolled ? 'Pos(r) B(3vw)' : 'Op(0)'
               }`}
             >
-              <MovingDots />
+              <MovingDots margin="Mt(0)" />
             </div>
           </div>
-        }
-        {scrolled ? (
-          <div ref={secondPage}>
-            <div className="D(f) Ai(s) Jc(c) Flw(w)">
-              <LiteCard
-                isDesktopOrLaptop
-                title="Ease of finding reliable freelance"
-                description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
-              />
-              <LiteCard
-                isDesktopOrLaptop
-                title="Get help in preparing contracts"
-                description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
-              />
-
-              <LiteCard
-                isDesktopOrLaptop
-                title="Payment management"
-                description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
-              />
-
-              <LiteCard
-                isDesktopOrLaptop
-                title="Project management assistance"
-                description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
-              />
-            </div>
-            <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)" />
+          <Awesomeness />
+          <div className="Bg($lite) Ff($ffmanrope) C(white) Py($xl) My($xl) Ta(c)">
+            <div className="Fz($xxl)">Want to hire a freelance designer?</div>
+            <div className="Fz($mmd)">Here’s a simple and efficient way</div>
+          </div>
+          <Steps />
+          <div className="Mx(a) W(fc) Bgc(i) Mb($2xl)">
+            <Button {...anotherReqButton}>Drop a project request</Button>
+          </div>
+          <div className="Bgc(white)">
             <div className="W(810px) Ta(c) M(a) D(f) Fld(c) Pt($lg)">
-              <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($xl) Lh(44px) Mb($xl)">
+              <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($xxl) Mb($lg)">
                 About Us
               </div>
-              <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($fzmessage)">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                mollis turpis augue, nec ultrices ipsum maximus a. Quisque leo
-                metus, lobortis ac mattis sed, cursus ut nisl. Nulla ut eros
-                quam. Curabitur quis nisi erat. Phasellus vel pharetra tellus.
-                Nam et nulla viverra, commodo velit pellentesque, consequat
-                nulla. Integer iaculis, ipsum quis tincidunt commodo, urna nisi
-                sollicitudin ipsum, ut euismod risus erat non tortor. Aenean
-                posuere tincidunt sapien a maximus. Fusce tempor egestas
-                volutpat. Proin dictum risus nec mi luctus, sit amet elementum
-                sapien sollicitudin. Morbi interdum tincidunt blandit. Phasellus
-                vel varius justo. Maecenas elit dolor, tempus at neque lacinia,
-                lobortis molestie augue. Phasellus pulvinar, ex vitae dapibus
-                vulputate, metus eros aliquet velit, vel ultrices mauris ante
-                hendrerit tellus. Proin a luctus ex. Quisque quis.
+              <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($mmd)">
+                <div className="Mb($xl)">
+                  We are a team that is passionate to change the way businesses
+                  use design. Our mission is to make Design easy, reliable and
+                  approachable.
+                </div>
+                <div className="Mb($xl)">
+                  Our team consists of people at the top of their careers (read
+                  as IIT and NID Alumni) working together to cater to a great
+                  need. Morff is built out of our own experience in the design
+                  and business world. Trying to make one small change at a time.
+                </div>
+                <div className="Mb($xl)">
+                  We’re an enthusiastic bunch that likes having deep
+                  conversations regarding design systems, psychology, social
+                  behaviour, tech.. well, you get the gist! We are motivated by
+                  the current changing times and the needs of the new world.
+                </div>
               </div>
             </div>
           </div>
-        ) : null}
-      </div>
-      <div className="H($12xl) Bgc($inputGrey) D(f) Jc(sb) Ai(c) Pstart(15vw) Pend(7.5vw)">
-        <div>
-          <div className="Fz($fztitle) Ff($ffmanrope) C(white)">
-            Like to know more?
-          </div>
-          <div className="Ff($ffmanrope) C(white) Fz($smd)">
-            Reach us at
-            <a href="mailto:contact@morff.io" className="Td(n) C(white)">
-              contact@morff.io
-            </a>
-          </div>
-          <div className="Ff($ffmanrope) C($placeholderGrey) Fz($smd)">
-            © 2020 Morff
-          </div>
         </div>
-        <div>
-          <div style={{ textAlign: 'right' }}>
-            <a
-              href="https://www.linkedin.com/company/morff-io"
-              className="Pend($xxs)"
-            >
-              <BaseIcon icon="linkedin" width="32px" height="32px" />
-            </a>
-            <a href="https://www.instagram.com/morff.io/">
-              <BaseIcon icon="instagram" width="32px" height="32px" />
-            </a>
+
+        <div className="Bgc($footer) C(white)">
+          <div className="H($12xl) D(f) Jc(sb) Ai(c) Mx($11xl) Ff($ffmanrope)">
+            <div>
+              <div className="Fz($fztitle)">Like to know more?</div>
+              <div className="Fz($smd)">
+                Reach us at :{' '}
+                <a href="mailto:contact@morff.io" className="Td(n) C(white)">
+                  contact@morff.io
+                </a>
+              </div>
+            </div>
+            <div className="Ta(c)">
+              <Morff className="W($5x) H($xl)" />
+              <div className="Fz($smd) C($placeholderGrey) Mb($lg)">
+                A recognised startup by DPIIT, Govt. of India
+              </div>
+            </div>
+            <div>
+              <div style={{ textAlign: 'right' }}>
+                <a
+                  href="https://www.linkedin.com/company/morff-io"
+                  className="Pend($xxs)"
+                >
+                  <BaseIcon icon="linkedin" width="32px" height="32px" />
+                </a>
+                <a href="https://www.instagram.com/morff.io/">
+                  <BaseIcon icon="instagram" width="32px" height="32px" />
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="Ff($ffmanrope) Fz($fzbutton) C(white)">
-            Officially recognised by DIIPT, India
+          <div className="D(f) Ai(c) Jc(c) Fz($md) Py($xs) Mx($10x) Bdt($bdsolidLightestGray) Ff($ffmanrope)">
+            <div className="C($placeholderGrey)">© 2020 Morff</div>
+            <div className="Mx($3xxl)">Privacy Policy</div>
+            <div className="">Terms of Use</div>
           </div>
         </div>
       </div>

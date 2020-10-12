@@ -16,6 +16,7 @@ const FormikComboBox = ({
   inline,
   sliceInline,
   error,
+  tabIndex,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const setOpenValue = (e, set) => {
@@ -141,7 +142,7 @@ const FormikComboBox = ({
           // autoComplete="off"
           // onFocus={e => setOpenValue(e, !isOpen)}
           // onBlur={e => setOpenValue(e, false)}
-          tabIndex={0}
+          tabIndex={tabIndex}
         >
           <div
             className={`D(f) Ai(c) Jc(sb) Px($sm) Pos(a)  T(0) H($2xl) W($full)`}
@@ -198,6 +199,7 @@ FormikComboBox.defaultProps = {
   inline: false,
   sliceInline: 2,
   error: '',
+  tabIndex: 0,
 };
 
 export default FormikComboBox;

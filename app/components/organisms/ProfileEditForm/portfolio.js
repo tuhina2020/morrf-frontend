@@ -199,7 +199,6 @@ const PortfolioEditForm = ({ onCancel, data: portfolio, onSave }) => {
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
         onSave({ portfolio: values.allPortfolios });
         setSubmitting(false);
         onCancel();
@@ -213,7 +212,7 @@ const PortfolioEditForm = ({ onCancel, data: portfolio, onSave }) => {
               name="allPortfolios"
               render={({ remove, unshift }) => (
                 <>
-                  <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+                  <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
                     <div>Edit Portfolio</div>
                     <PortfolioCounter
                       total={values.allPortfolios.length}

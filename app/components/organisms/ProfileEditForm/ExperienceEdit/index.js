@@ -99,19 +99,17 @@ const ExperienceFormCard = ({
           />
         </div>
       </div>
-      <div className="My($lg)">
-        <FormikTextArea
-          label="Description"
-          name="highlights"
-          id="highlights"
-          heightClass="H($5xl)"
-          placeholder="Brief description of your work"
-          dimensionClasses="W($full)"
-          onChange={handleChange}
-          value={highlights}
-          error={getError('highlights')}
-        />
-      </div>
+      <FormikTextArea
+        label="Description"
+        name="highlights"
+        id="highlights"
+        heightClass="H($5xl)"
+        placeholder="Brief description of your work"
+        dimensionClasses="W($full)"
+        onChange={handleChange}
+        value={highlights}
+        error={getError('highlights')}
+      />
       {currentIndex >= 0 ? (
         <Button {...removeProps} onClick={onRemove}>
           Remove
@@ -126,11 +124,13 @@ const ExperienceEditForm = ({
   data: experience,
   onSave,
   currentIndex,
+  removeExperience,
 }) => {
   const onRemove = () => {
     if (currentIndex >= 0) {
-      const newExperience = experience.filter((obj, i) => i !== currentIndex);
-      onSave({ experience: newExperience });
+      const newExperience = experience.filter((obj, i) => i === currentIndex);
+      // debugger;
+      removeExperience(newExperience[0]);
       onCancel();
     }
   };
@@ -213,11 +213,9 @@ const ExperienceEditForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
         const index = currentIndex >= 0 ? currentIndex : experience.length;
         const newExperience = [...experience];
         newExperience[index] = values;
-        debugger;
         onSave({ experience: values, newExperience });
         setSubmitting(false);
         onCancel();
@@ -232,11 +230,9 @@ const ExperienceEditForm = ({
         touched,
         errors,
       }) => (
-        // debugger;
-        (
-          <div className="Bdrs($xs) Bgc(white) W($60xl)">
+        <div className="Bdrs($xs) Bgc(white) W($60xl)">
           <Form onSubmit={handleSubmit}>
-            <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+            <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
               Edit Experience
             </div>
             <div className="Mah($45x) Ov(s)">

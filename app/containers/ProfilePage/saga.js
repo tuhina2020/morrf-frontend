@@ -1,6 +1,7 @@
 import { put, takeLatest, select, call, all } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
+import compact from 'lodash/compact';
 import request from 'utils/request';
 import { setLoginData, setToastData } from 'containers/LoginPage/actions';
 import {
@@ -14,6 +15,13 @@ import {
   SET_REMOTE_PHONE,
   GET_USER,
   UPLOAD_IMAGE,
+  GET_ALL_SKILLS,
+  REMOVE_PORTFOLIO,
+  EDIT_PORTFOLIO,
+  EDIT_EXPERIENCE,
+  REMOVE_EXPERIENCE,
+  LOGOUT,
+  REMOVE_PORTFOLIO_IMAGE,
 } from './constants';
 import { makeSelectProfilePage } from './selectors';
 import {
@@ -24,52 +32,106 @@ import {
   setLocalPortfolio,
   setLocalSkillsList,
   setLocalSkills,
+  setEmail,
+  getUser,
+  setId,
+  setPortfolioImages,
 } from './actions';
+import { setToast } from 'utils/helper';
+import { Field } from 'formik';
 
-async function getSignedUrlById({ file_name, file_type, id }) {
-  const requestURL = `/user/${id}`;
-  try {
-    const url = await request(requestURL, {
-      method: 'POST',
-      data: { file_name, file_type },
-    });
-    debugger;
-    return url;
-  } catch (err) {
-    console.log(err);
-    debugger;
-  }
+function* logout() {
+  localStorage.removeItem('loginData');
+  localStorage.removeItem('authType');
+  localStorage.removeItem('role');
+  localStorage.removeItem('skillList');
+  localStorage.removeItem('token');
+  yield put(setLoginData({}));
+  yield put(setLocalAboutMe(''));
+  yield put(setLocalPhone({}));
+  yield put(setLocalPortfolio([]));
+  yield put(setLocalExperience([]));
+  yield put(setLocalPersonalData({}));
+  yield put(setLocalSkills([]));
+  yield put(setId());
+  setToast({
+    message: 'You have been logged out.',
+    type: 'info',
+  });
+}
+async function getSignedUrlById({ file_name, file_type, id, type }) {
+  const requestURL = `/user/${id}/upload`;
+  const url = await request(requestURL, {
+    method: 'POST',
+    data: { file_name, file_type, type },
+  });
+  return url;
 }
 
 function* uploadImage({ payload }) {
-  const { files } = payload;
+  const { files, type, id = 'new-portfolio' } = payload;
   const profilePage = yield select(makeSelectProfilePage());
+  const TYPE_LOOKUP = {
+    png: 'image/png',
+    jpg: 'image/jpg',
+    jpeg: 'image/jpeg',
+  };
+  const {
+    portfolioImages: { images },
+  } = profilePage;
+  console.log(profilePage);
   try {
-    const res = yield all(
-      files.map(async file => {
+    let newImages = yield all(
+      Array.from(files).map(async file => {
+        const lastIndex = file.name.lastIndexOf('.');
+        const file_name = file.name.substr(0, lastIndex);
+        const extension = file.name.substr(lastIndex + 1);
+        debugger;
+
         const signedUrl = await getSignedUrlById({
-          file_name: file.name,
-          file_type: file.type,
+          file_name: file_name + new Date().getTime() + '.' + extension,
+          file_type: type,
+          type: TYPE_LOOKUP[extension],
           id: profilePage.id,
         });
-        const uploadResponse = call(request, signedUrl, {
-          method: 'POST',
-          data: { file },
+        var form = new FormData();
+
+        const ALL_FIELDS = signedUrl.url.fields;
+        Object.keys(ALL_FIELDS).forEach(field => {
+          form.append(field, ALL_FIELDS[field]);
         });
-        debugger;
-        return uploadResponse;
+        form.append('file', file);
+        const uploadResponse = await request(
+          signedUrl.url.url,
+          {
+            method: 'POST',
+            form,
+          },
+          false,
+        );
+        return uploadResponse.success ? signedUrl.id : undefined;
       }),
     );
-    debugger;
-  } catch (err) {
-    console.log(err);
+    if (compact(newImages).length < files.length)
+      throw 'Error Uploading Images';
+
+    newImages = [...images, ...newImages];
     debugger;
     yield put(
+      setPortfolioImages({
+        id,
+        images: newImages,
+      }),
+    );
+  } catch (err) {
+    console.log(err);
+    yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
+    yield put(setPortfolioImages({ id: '', images: [] }));
   }
 }
 
@@ -79,25 +141,15 @@ function* setRemoteSkills({ payload }) {
   const requestURL = `/user/${profilePage.id}`;
   try {
     const data = [
-      { op: 'add', path: '/skills', value: map(payload.skills, 'name') },
+      { op: 'add', path: '/skills', value: map(payload.skills, 'id') },
     ];
-    const user = yield call(request, requestURL, {
-      method: 'PATCH',
-      data,
-    });
-
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      debugger;
-      yield put(setLocalSkills(payload.skills));
-    }
+    yield call(request, requestURL, { method: 'PATCH', data });
+    yield put(getUser());
   } catch (err) {
     console.log(err);
-    debugger;
-    yield put(setLocalSkills([]));
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -105,57 +157,103 @@ function* setRemoteSkills({ payload }) {
 }
 
 function* sendVerificationCode({ payload }) {
-  console.log(payload.phone, 'sent code 1234');
-  // else alert('Enter a valid phone number');
-}
-
-function* verifyPhone({ payload }) {
-  console.log('Phone verified', payload.phone, 'CODE ', payload.code);
-  yield put(setLocalPhone({ number: payload.phone, verified: true }));
-}
-
-function* setRemoteExperience({ payload }) {
-  console.log('Experience has been set', payload);
-  debugger;
-  const { experience, newExperience } = payload;
+  const { phone } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  const requestURL = `/user/${profilePage.id}/experience`;
+  const requestURL = `/user/${profilePage.id}/resend-phone-verification`;
   try {
     const user = yield call(request, requestURL, {
       method: 'POST',
-      data: experience,
+      data: {},
     });
-    debugger;
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      debugger;
-      yield put(setLocalExperience(user.experience));
-    }
   } catch (err) {
     console.log(err);
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
   }
 }
 
-function* getUser() {
+function* verifyPhone({ payload }) {
+  const { phone, code } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${profilePage.id}/confirm-phonenumber`;
+  try {
+    yield call(request, requestURL, {
+      method: 'POST',
+      data: {
+        code,
+      },
+    });
+    yield put(getUser());
+  } catch (err) {
+    console.log('err', err);
+    setToast({
+      message: typeof err === 'string' ? err : err.message,
+      type: 'error',
+    });
+  }
+}
+
+function* setRemoteExperience({ payload }) {
+  console.log('Experience has been set', payload);
+  const { experience, newExperience } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${profilePage.id}/experience`;
+  try {
+    yield call(request, requestURL, {
+      method: 'POST',
+      data: experience,
+    });
+    yield put(getUser());
+  } catch (err) {
+    console.log(err);
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
+function* getCurrentUser({ payload = {} }) {
+  const { phone_verified = true } = payload;
   const profilePage = yield select(makeSelectProfilePage());
   if (profilePage && profilePage.id) {
     const requestURL = `/user/${profilePage.id}?experience=true&portfolio=true`;
     try {
-      const user = yield call(request, requestURL, {
-        method: 'GET',
-      });
+      const user = yield call(request, requestURL, { method: 'GET' });
       localStorage.setItem('loginData', JSON.stringify(user));
       yield put(setLocalAboutMe(user.about));
-      yield put(setLocalPhone({ number: user.phone_number, verified: true }));
+      yield put(setEmail(user.email.email));
+      yield put(
+        setLocalPhone({
+          number: user.phone.phone_number,
+          verified: phone_verified ? user.phone.verified : false,
+        }),
+      );
+      yield put(
+        setLocalPersonalData({
+          firstName: user.first_name,
+          lastName: user.second_name,
+          profession: user.profession,
+          city: user.city,
+          state: user.state,
+        }),
+      );
+      yield put(setLocalSkills(user.skills));
+      yield put(setLocalExperience(user.experience));
+      yield put(setLocalPortfolio(user.portfolio));
     } catch (err) {
       yield put(setLocalAboutMe(''));
       yield put(setLocalPhone({}));
+      yield put(setLocalPortfolio([]));
+      yield put(setLocalExperience([]));
+      yield put(setLocalPersonalData([]));
+      yield put(setLocalSkills([]));
     }
   }
 }
@@ -168,20 +266,13 @@ function* setRemoteAboutMe({ payload }) {
   yield put(setLocalAboutMe(about));
   try {
     const data = [{ op: 'add', path: '/about', value: about }];
-    const user = yield call(request, requestURL, {
-      method: 'PATCH',
-      data,
-    });
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      yield put(setLocalAboutMe(user.about));
-    }
+    yield call(request, requestURL, { method: 'PATCH', data });
+    yield put(getUser());
   } catch (err) {
     console.log(err);
-    yield put(setLocalAboutMe(''));
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -200,23 +291,12 @@ function* setRemotePersonalData({ payload }) {
       { op: 'add', path: '/city', value: payload.city },
       { op: 'add', path: '/state', value: payload.state },
     ];
-    const user = yield call(request, requestURL, {
-      method: 'PATCH',
-      data,
-    });
-
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      debugger;
-      yield put(setLocalPersonalData(payload));
-    }
+    yield call(request, requestURL, { method: 'PATCH', data });
+    yield put(getUser());
   } catch (err) {
-    console.log(err);
-    debugger;
-    yield put(setLocalPersonalData({}));
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -225,28 +305,153 @@ function* setRemotePersonalData({ payload }) {
 
 function* setRemotePortfolio({ payload }) {
   console.log('Portfolio Data has been set', payload);
-
-  const { portfolio, newPortfolio } = payload;
+  const { portfolio } = payload;
   const profilePage = yield select(makeSelectProfilePage());
+  const {
+    portfolioImages: { images },
+  } = profilePage;
   const requestURL = `/user/${profilePage.id}/portfolio`;
+  const data = {
+    client: portfolio.client,
+    project: portfolio.project,
+    startYear: portfolio.startYear,
+    endYear: portfolio.endYear,
+    highlights: portfolio.highlights,
+    files: images,
+  };
   debugger;
   try {
     const user = yield call(request, requestURL, {
       method: 'POST',
-      data: portfolio,
+      data,
     });
-    debugger;
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      debugger;
-      yield put(setLocalPortfolio(user.portfolio));
-    }
+    yield put(getUser());
   } catch (err) {
-    console.log(err);
-    // yield put(setLocalPortfolio([]));
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
+function* editPortfolio({ payload }) {
+  const {
+    portfolio: { id, project, highlights, startYear, endYear, client, user_id },
+  } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const {
+    portfolioImages: { images },
+  } = profilePage;
+  const requestURL = `/user/${user_id}/portfolio/${id}`;
+  const data = compact([
+    project && { op: 'replace', path: '/project', value: project },
+    startYear && { op: 'replace', path: '/startYear', value: startYear },
+    endYear && { op: 'replace', path: '/endYear', value: endYear },
+    highlights && { op: 'replace', path: '/highlights', value: highlights },
+    client && { op: 'replace', path: '/client', value: client },
+    !isEmpty(images) && { op: 'replace', path: '/files', value: images },
+  ]);
+  if (isEmpty(data)) return;
+  try {
+    yield call(request, requestURL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json-patch+json',
+      },
+      data,
+    });
+    yield put(getUser());
+    setToast({
+      message: 'Successfully Edited Portfolio',
+      mode: 'info',
+    });
+  } catch (err) {
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
+function* editExperience({ payload }) {
+  const {
+    experience: {
+      id,
+      designation,
+      highlights,
+      startYear,
+      endYear,
+      company,
+      present,
+      user_id,
+    },
+  } = payload;
+  const requestURL = `/user/${user_id}/experience/${id}`;
+  const data = compact([
+    designation && { op: 'replace', path: '/designation', value: designation },
+    startYear && { op: 'replace', path: '/startYear', value: startYear },
+    endYear && { op: 'replace', path: '/endYear', value: endYear },
+    highlights && { op: 'replace', path: '/highlights', value: highlights },
+    company && { op: 'replace', path: '/company', value: company },
+    { op: 'replace', path: '/present', value: present },
+  ]);
+  if (isEmpty(data)) return;
+  try {
+    yield call(request, requestURL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json-patch+json',
+      },
+      data,
+    });
+    yield put(getUser());
+    setToast({
+      message: 'Successfully Edited Experience',
+      mode: 'info',
+    });
+  } catch (err) {
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
+function* removePortfolio({ payload }) {
+  const { id } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${profilePage.id}/portfolio/${id}`;
+  try {
+    yield call(request, requestURL, { method: 'DELETE' });
+    yield put(getUser());
+  } catch (err) {
+    console.log(err);
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
+function* removeExperience({ payload }) {
+  const { id } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${profilePage.id}/experience/${id}`;
+  try {
+    yield call(request, requestURL, { method: 'DELETE' });
+    yield put(getUser());
+  } catch (err) {
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -256,32 +461,57 @@ function* setRemotePortfolio({ payload }) {
 function* setRemotePhone({ payload }) {
   const { phone, otp } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-
-  console.log('About has been set', payload);
-  debugger;
+  console.log('Phone has been set', payload);
   const requestURL = `/user/${profilePage.id}`;
-
   try {
     const data = [{ op: 'add', path: '/phone_number', value: phone }];
-    const user = yield call(request, requestURL, {
+    yield call(request, requestURL, {
       method: 'PATCH',
       data,
+      headers: { 'Content-Type': 'application/json-patch+json' },
     });
-
-    if (!isEmpty(user)) {
-      localStorage.setItem('loginData', JSON.stringify(user));
-      yield put(setLocalPhone({ number: user.phone_number, verified: true }));
-    }
-  } catch (err) {
-    console.log(err);
-    yield put(setLocalPhone({}));
     yield put(
       setToastData({
-        message: err,
+        message: 'Code sent to your mobile',
+        type: 'info',
+      }),
+    );
+    // yield put(getUser({ phone_verified: false }));
+  } catch (err) {
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
   }
+}
+
+function* getAllSkills() {
+  const requestURL =
+    'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/skills';
+  try {
+    const response = yield call(request, requestURL, { method: 'GET' }, false);
+    yield put(setLocalSkillsList(response));
+    localStorage.setItem('skillsList', JSON.stringify(response));
+  } catch (error) {
+    yield put(setLocalSkillsList([]));
+    localStorage.removeItem('skillsList');
+  }
+}
+
+function* removePortfolioImage({ payload }) {
+  const { index, id } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const {
+    portfolioImages: { images },
+  } = profilePage;
+  yield put(
+    setPortfolioImages({
+      id,
+      images: images.splice(index, 1),
+    }),
+  );
 }
 
 export default function* profilePageSaga() {
@@ -294,6 +524,13 @@ export default function* profilePageSaga() {
   yield takeLatest(SET_REMOTE_PERSONAL_DATA, setRemotePersonalData);
   yield takeLatest(SET_REMOTE_PORTFOLIO, setRemotePortfolio);
   yield takeLatest(SET_REMOTE_SKILLS, setRemoteSkills);
-  yield takeLatest(GET_USER, getUser);
+  yield takeLatest(GET_USER, getCurrentUser);
   yield takeLatest(UPLOAD_IMAGE, uploadImage);
+  yield takeLatest(GET_ALL_SKILLS, getAllSkills);
+  yield takeLatest(REMOVE_PORTFOLIO, removePortfolio);
+  yield takeLatest(EDIT_PORTFOLIO, editPortfolio);
+  yield takeLatest(EDIT_EXPERIENCE, editExperience);
+  yield takeLatest(REMOVE_EXPERIENCE, removeExperience);
+  yield takeLatest(REMOVE_PORTFOLIO_IMAGE, removePortfolioImage);
+  yield takeLatest(LOGOUT, logout);
 }

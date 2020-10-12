@@ -13,11 +13,14 @@ const Skills = ({ skills, onEdit }) => {
       childPadding="Px($lg) Pt($sm)"
     >
       <div className="D(f) Ai(c) Jc(s) Flw(w)">
-        {skills.map(skill => (
-          <div className="Mend($sm) Mb($sm)" key={`${skill.id}`}>
-            <Tag>{skill.name}</Tag>
-          </div>
-        ))}
+        {skills.map(
+          skill =>
+            skill.name && (
+              <div className="Mend($sm) Mb($sm)" key={`${skill.id}`}>
+                <Tag>{skill.name}</Tag>
+              </div>
+            ),
+        )}
       </div>
     </DisplayCard>
   );

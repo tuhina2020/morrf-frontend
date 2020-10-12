@@ -32,10 +32,13 @@ const DisplayCard = React.forwardRef((props, ref) => {
     childPadding,
     lastChildPadding,
     onClickIcon,
+    wrapperClassName,
   } = props;
 
   return (
-    <div className="Bdrs($xs) Bgc(white) H($fc) Maw($60xl) Mt($lg)">
+    <div
+      className={'Bdrs($xs) Bgc(white) H($fc) Maw($60xl) ' + wrapperClassName}
+    >
       {heading ? (
         topRightIcon ? (
           <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
@@ -82,6 +85,7 @@ DisplayCard.propTypes = {
   childPadding: PropTypes.string,
   lastChildPadding: PropTypes.bool,
   onClickIcon: PropTypes.func,
+  wrapperClassName: PropTypes.string,
 };
 
 DisplayCard.defaultProps = {
@@ -89,6 +93,7 @@ DisplayCard.defaultProps = {
   childPadding: 'Px($lg) Py($sm)',
   lastChildPadding: true,
   onClickIcon: () => {},
+  wrapperClassName: 'Mt($lg)',
 };
 
 export default DisplayCard;

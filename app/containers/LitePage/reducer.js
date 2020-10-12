@@ -4,10 +4,11 @@
  *
  */
 import produce from 'immer';
-import { SET_TOAST_MESSAGE } from './constants';
-
+import { SET_TOAST_MESSAGE, SET_LOCAL_SKILLS } from './constants';
+import { getDefaultState } from 'utils/helper';
 export const initialState = {
   error: {},
+  skillsList: getDefaultState('skillsList', []),
   success: true,
 };
 
@@ -17,6 +18,9 @@ const litePageReducer = (state = initialState, action) =>
     switch (action.type) {
       case SET_TOAST_MESSAGE:
         draft.error = action.payload;
+        break;
+      case SET_LOCAL_SKILLS:
+        draft.skillsList = action.payload;
         break;
     }
   });

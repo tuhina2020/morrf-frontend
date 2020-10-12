@@ -6,10 +6,10 @@ import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 import { classnames } from 'utils/helper';
 import Modal from 'react-modal';
-const PortfolioScroll = ({ onNext, onBack, images, current = false }) => {
+const PortfolioScroll = ({ onNext, onBack, files, current = false }) => {
   Modal.setAppElement('#app');
-  const imageCount4 = images.length <= 4;
-  const remaining = imageCount4 ? [...Array(4 - images.length).keys()] : [];
+  const imageCount4 = files.length <= 4;
+  const remaining = imageCount4 ? [...Array(4 - files.length).keys()] : [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentImage, setCurrentImage] = useState({});
   const commonIconStyle = classnames({
@@ -32,7 +32,7 @@ const PortfolioScroll = ({ onNext, onBack, images, current = false }) => {
 
   const onNextClick = () => {
     if (imageCount4) return;
-    if (currentIndex < images.length / 4 - 1) {
+    if (currentIndex < files.length / 4 - 1) {
       setCurrentIndex(currentIndex + 1);
       onNext();
     }
@@ -58,17 +58,14 @@ const PortfolioScroll = ({ onNext, onBack, images, current = false }) => {
             transform: `translateX(${-1 * currentIndex * 400}px)`,
           }}
         >
-          {images.map(({ link, id, data, type, name }) => (
+          {files.map(({ url, id, data, type, name }) => (
             <div
               key={id}
               className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
-              onClick={e => onImageClick(e, { data: link || data, type })}
+              onClick={e => onImageClick(e, { data: url || data, type })}
             >
               {type.match('image') && (
-                <img
-                  src={link || data}
-                  className="W($10x) H($10x) Bdrs($xxs)"
-                />
+                <img src={url || data} className="W($10x) H($10x) Bdrs($xxs)" />
               )}
               {type.match('pdf') && (
                 <div className="W($10x) H($10x) Bdrs($xxs) Ff($ffmanrope) Fz($sm) Bd($bdinputGrey) P($xs)">
@@ -94,7 +91,7 @@ const PortfolioScroll = ({ onNext, onBack, images, current = false }) => {
       <Modal
         isOpen={!isEmpty(currentImage)}
         onRequestClose={() => setCurrentImage({})}
-        className={`W($61xl) M(a) H($fc) Pos(r) T(0) Bd(n) O(n)`}
+        className={`W($60xl) M(a) H($fc) Pos(r) T(0) Bd(n) O(n)`}
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
         <ImagePreview {...currentImage} onCancel={() => setCurrentImage({})} />
@@ -151,8 +148,20 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
         />
       </div>
       {portfolio.map(
-        ({ project, from, duration, description, images, order, mode }, i) =>
-          mode === 'completed' ? (
+        (
+          {
+            project,
+            startYear: from,
+            endYear: duration,
+            highlights: description,
+            files,
+            client,
+            order,
+            mode,
+          },
+          i,
+        ) =>
+          !isEmpty(files) ? (
             <div
               className={`Ff($ffopensans) Lh(1) P($lg) ${
                 i < portfolio.length - 1 ? 'Bdb($bdcardGrey)' : ''
@@ -176,7 +185,7 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
               </div>
               <div className="Mt($xs) Mb($lg)">{description}</div>
               <PortfolioScroll
-                images={images}
+                images={files}
                 onNext={() => {}}
                 onBack={() => {}}
               />
@@ -186,7 +195,7 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
               project={project}
               mode={mode}
               last={i < portfolio.length - 1}
-              loopKey={project.replace(/ /g, '') + i}
+              loopKey={project && project.replace(/ /g, '') + i}
               onEdit={() => onEdit(i)}
             />
           ),

@@ -10,6 +10,15 @@ export const datesAreOnSameDay = (first = new Date(), second = new Date()) =>
   first.getMonth() === second.getMonth() &&
   first.getDate() === second.getDate();
 
+export const clean = obj => {
+  for (var propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
+  return obj;
+};
+
 export const wordCount = word =>
   word
     .trim()
@@ -42,9 +51,14 @@ export const isLoggedIn = () => {
 };
 
 export const deviceScreenInfo = () => {
-  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
-  const isTabletOrMobile = useMediaQuery({ maxDeviceWidth: 1224 });
-
+  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1024 });
+  const isTabletOrMobile = false;
+  console.log(
+    'CALCULATING ',
+    isDesktopOrLaptop,
+    screen.width,
+    screen.width > 1224,
+  );
   return {
     isDesktopOrLaptop,
     isTabletOrMobile,

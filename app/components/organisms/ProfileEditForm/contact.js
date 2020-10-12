@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import { Formik, Form } from 'formik';
@@ -16,13 +16,20 @@ const ContactFormComponent = ({
   onSendCode,
   verifyPhone,
   phone,
+  touched,
 }) => {
-  const onSendCodeClick = () =>
+  const onSendCodeClick = () => {
     validateForm().then(data => {
       setFieldError('code', null);
       if (isEmpty(data.phone)) onSendCode({ phone: values.phone });
     });
-  const getError = key => (key && errors[key] ? errors[key] : null);
+  };
+  const getError = key =>
+    key && errors[key] && touched[key] ? errors[key] : null;
+
+  const [verifiedPhone, setVerified] = useState(
+    phone.verified && phone.number === values.phone,
+  );
 
   const saveProps = {
     iconDescription: 'Save',
@@ -51,7 +58,7 @@ const ContactFormComponent = ({
   };
   return (
     <div className="Bdrs($xs) Bgc(white)">
-      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
         Edit Contact Information
       </div>
       <Form onSubmit={handleSubmit}>
@@ -61,7 +68,12 @@ const ContactFormComponent = ({
               label="Phone"
               name="phone"
               id="phone"
-              onChange={handleChange}
+              iconFill="#00a04a"
+              prependIcon={verifiedPhone ? 'checkcircle' : null}
+              onChange={e => {
+                handleChange(e);
+                if (verifiedPhone) setVerified(values.phone === e.target.value);
+              }}
               value={values.phone}
               error={getError('phone')}
             />
@@ -72,10 +84,12 @@ const ContactFormComponent = ({
               label="Email ID"
               onChange={handleChange}
               value={values.email}
+              prependIcon="checkcircle"
+              iconFill="#00a04a"
               error={getError('email')}
             />
           </div>
-          {!phone.verified && (
+          {!verifiedPhone ? (
             <div className="D(f) Jc(s) Ai(c) H($2xl) Mt($lg)">
               <FormikInput
                 label="Verification Code"
@@ -84,16 +98,15 @@ const ContactFormComponent = ({
                 dimensionClasses="W($20xl)"
                 onChange={handleChange}
                 value={values.code}
-                // validate={validateCode}
                 error={getError('code')}
               />
-              <div className="Mt($sm) Mstart($xss)">
+              <div className="Mstart($xss)">
                 <Button {...sendCodeButton} onClick={onSendCodeClick}>
                   Send verification code
                 </Button>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
         <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
           <Button {...cancelProps}>Cancel</Button>
@@ -115,9 +128,9 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
       .min(4, 'Enter atleast four characters')
       .email('Enter a valid email')
       .required('Required'),
-    // code: Yup.string()
-    //   .min(4, 'Minimum 4 characters long')
-    //   .required('Required'),
+    code: Yup.string()
+      .min(4, 'Minimum 4 characters long')
+      .required('Required'),
   };
   const validationSchema = Yup.object(YupObj);
 
@@ -131,9 +144,7 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(onSave);
-        alert(JSON.stringify(values));
-        onSave({ phone: values.phone, otp: values.code });
+        onSave(values);
         setSubmitting(false);
         onCancel();
       }}
@@ -145,7 +156,6 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
             onCancel,
             phone,
             email,
-            onSave,
             onSendCode,
           }}
           {...props}
@@ -158,7 +168,7 @@ const ContactEditForm = ({ onCancel, data, onSave, onSendCode }) => {
 ContactEditForm.propTypes = {
   onCancel: PropTypes.func,
   onSave: PropTypes.func.isRequired,
-  data: PropTypes.array,
+  data: PropTypes.object,
   onSendCode: PropTypes.func,
 };
 

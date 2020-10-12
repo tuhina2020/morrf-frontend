@@ -26,13 +26,12 @@ const SkillEditForm = ({ onCancel, onSave, data: skills, allSkills }) => {
   };
   return (
     <div className="Bdrs($xs) Bgc(white)">
-      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
         Edit Skills
       </div>
       <Formik
         initialValues={{ skills }}
         onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values));
           onSave(values);
           setSubmitting(false);
           onCancel();

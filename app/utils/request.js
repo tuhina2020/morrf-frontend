@@ -1,7 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { BASE_URL } from './constants';
-
+import get from 'lodash/get';
 /**
  * Requests a URL, returning a promise
  *
@@ -12,32 +12,49 @@ import { BASE_URL } from './constants';
  */
 export default function request(url, options, internal = true) {
   const token = localStorage.getItem('token');
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(options.headers || {}),
-  };
-  if (!isEmpty(token) || token !== 'undefined') {
+  const { form: formData } = options;
+  const headers = Object.assign({}, options.headers);
+  if (headers && !headers['Content-Type'] && internal && isEmpty(formData))
+    headers['Content-Type'] = 'application/json';
+
+  if (!isEmpty(formData)) {
+    delete headers['Content-Type'];
+  }
+
+  if (internal && (!isEmpty(token) || token !== 'undefined')) {
     headers.Authorization = token;
   }
   const modifiedOptions = {
     method: 'POST',
     headers,
-    body: options.data ? JSON.stringify(options.data) : undefined,
-    ...omit(options, ['headers', 'data']),
+    body:
+      options.data && isEmpty(formData)
+        ? JSON.stringify(options.data)
+        : formData,
+    ...omit(options, ['headers', 'data', 'form']),
   };
-  // debugger;
+
+  if (formData)
+    console.log('HEADERS ', modifiedOptions, formData.getAll('file'));
 
   return fetch(internal ? BASE_URL.default + url : url, modifiedOptions).then(
     response =>
       new Promise((resolve, reject) => {
+        if (response.statusText === 'No Content')
+          if (response.ok) return resolve({ success: true });
+          else
+            return reject({
+              message: 'Something is wrong',
+              code: response.status,
+            });
         response.json().then(json => {
           if (response.ok && !json.errorMessage && !json.errorType) {
             return resolve(json);
           }
-          return reject(
-            (json && (json.message || json.errorMessage)) ||
-              'Something is wrong...',
-          );
+          return reject({
+            message: get(json, 'message', 'Something is wrong...'),
+            code: response.status,
+          });
         });
       }),
   );

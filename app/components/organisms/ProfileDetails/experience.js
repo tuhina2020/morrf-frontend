@@ -5,7 +5,7 @@ import sortBy from 'lodash/sortBy';
 import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 
-const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
+const Experience = ({ data: experience, onEdit, onSave, onAdd }) => {
   if (isEmpty(experience)) return null;
   return (
     <DisplayCard
@@ -13,14 +13,14 @@ const Experience = ({ data, experience, onEdit, onSave, onAdd }) => {
       topRightIcon="simpleadd"
       onClickIcon={onAdd}
     >
-      {sortBy(experience, 'order').map(
+      {experience.map(
         (
           { designation, company, highlights, startYear, endYear, present },
           i,
         ) => (
           <div
             className="Ff($ffopensans) Fz($fzbutton) Lh(1)"
-            key={company + startYear}
+            key={company + i}
           >
             <div className="D(f) Ai(c) Jc(sb)">
               <div className="Fz($smx) Fw($fwsemibold) W(66%)">

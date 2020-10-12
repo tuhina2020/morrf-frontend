@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Input from 'components/molecules/Input';
+import FormikInput from 'components/molecules/FormikInput';
 import Button from 'components/molecules/Button';
 import { PASSWORD_VALIDATION_OBJ } from './constants';
-
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
 const ExistingPassword = ({
   next,
   forgot,
   wrapperClass,
   submitText,
   password,
-  setPassword,
 }) => {
   const [validate, setValidate] = useState(false);
   const [submittable, setSubmittable] = useState(false);
-  const inputProps = {
-    dataType: 'string',
-    labelText: 'Password',
-    tabIndex: 1,
-    validationList: PASSWORD_VALIDATION_OBJ,
-    name: 'password',
-    type: 'password',
-    onChange: e => {
-      setPassword(e.target.value);
-      if (validate) setValidate(false);
-    },
-    animate: true,
-    setSubmittable,
-    validate,
-    value: password,
+  const YupObj = {
+    password: Yup.string()
+      .matches(/[A-Z]/, {
+        excludeEmptyString: true,
+        message: 'Password must have atleast one capital letter',
+      })
+      .matches(/[a-z]/, {
+        excludeEmptyString: true,
+        message: 'Password must have atleast one small letter',
+      })
+      .matches(/[0-9]/, {
+        excludeEmptyString: true,
+        message: 'Password must have atleast one digit',
+      })
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, {
+        excludeEmptyString: true,
+        message: 'Password must have atleast one special character',
+      })
+      .min(8, 'Enter atleast eight characters')
+      .required('Required'),
+  };
+  const validationSchema = Yup.object(YupObj);
+
+  const initialValues = {
+    password: '',
   };
 
   const forgotPasswordButton = {
@@ -38,12 +48,7 @@ const ExistingPassword = ({
     size: 'fc',
     tabIndex: 3,
     onClick: forgot,
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setValidate(true);
-    if (submittable) next();
+    type: 'button',
   };
 
   const signInButtonProps = {
@@ -52,20 +57,43 @@ const ExistingPassword = ({
     kind: 'primary',
     size: '10x',
     tabIndex: 2,
-    onClick: handleSubmit,
+    type: 'submit',
   };
   return (
-    <>
-      <Input {...inputProps} />
-      <div className="Mt($5x) D(f) Ai(c) Jc(sb)">
-        <Button {...forgotPasswordButton}>
-          <div>Forgot Password</div>
-        </Button>
-        <Button {...signInButtonProps}>
-          <div>{submitText}</div>
-        </Button>
-      </div>
-    </>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, { setSubmitting }) => {
+        next(values.password);
+      }}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit, values, errors, touched, handleChange }) => {
+        console.log(errors);
+        const getError = key =>
+          key && errors[key] && touched[key] ? errors[key] : null;
+        return (
+          <Form onSubmit={handleSubmit}>
+            <FormikInput
+              label="Password"
+              name="password"
+              id="password"
+              onChange={handleChange}
+              value={values.password}
+              error={getError('password')}
+              type="password"
+            />
+            <div className="Mt($5x) D(f) Ai(c) Jc(sb)">
+              <Button {...forgotPasswordButton}>
+                <div>Forgot Password</div>
+              </Button>
+              <Button {...signInButtonProps}>
+                <div>{submitText}</div>
+              </Button>
+            </div>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
@@ -76,7 +104,6 @@ ExistingPassword.propTypes = {
   next: PropTypes.func.isRequired,
   forgot: PropTypes.func.isRequired,
   password: PropTypes.string,
-  setPassword: PropTypes.func,
 };
 
 ExistingPassword.defaultProps = {

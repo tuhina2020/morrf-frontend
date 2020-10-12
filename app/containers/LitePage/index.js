@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,29 +12,37 @@ import { RESTART_ON_REMOUNT } from 'utils/constants';
 import { emailRequest, callbackRequest } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { setToastData } from './actions';
+import { setToastData, getAllSkills } from './actions';
 import { makeSelectLitePage } from './selectors';
 const LitePage = ({
   responsiveData,
   sendEmail,
   callbackReq,
   dispatchToastData,
+  getSkills,
   litePage,
 }) => {
   useInjectReducer({ key: 'litePage', reducer });
   useInjectSaga({ key: 'litePage', saga, mode: RESTART_ON_REMOUNT });
   const { isDesktopOrLaptop } = responsiveData;
-  const { error, success } = litePage;
+  const { error, success, skillsList } = litePage;
   if (error.message) {
     setToast(error);
     dispatchToastData({});
   }
+
+  useEffect(() => {
+    getSkills();
+  }, []);
+
+  console.log('RESPONSIVE ', responsiveData);
 
   const props = {
     isDesktopOrLaptop,
     callbackReq,
     success,
     sendEmail,
+    allProfessionTypes: skillsList,
   };
   return (
     <div>
@@ -60,6 +68,7 @@ function mapDispatchToProps(dispatch) {
     sendEmail: params => dispatch(emailRequest(params)),
     callbackReq: params => dispatch(callbackRequest(params)),
     dispatchToastData: params => dispatch(setToastData(params)),
+    getSkills: () => dispatch(getAllSkills()),
   };
 }
 

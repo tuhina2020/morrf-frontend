@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import { classnames } from 'utils/helper';
 import { cloneDeep } from 'lodash';
 import FilePreview from './preview';
-const uploadFileToServer = file => {
-  const delay = file.size / 100;
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, delay);
-  });
-};
 
 const FileUpload2 = ({
   heading,
@@ -23,7 +15,7 @@ const FileUpload2 = ({
   showPreview,
   filesExisting,
   onChange,
-  // uploadFileToServer = uploadFileToServer,
+  onRemove,
 }) => {
   const [fileList, setFiles] = useState(filesExisting);
   const [dataList, setDataList] = useState(filesExisting);
@@ -41,21 +33,20 @@ const FileUpload2 = ({
     }
   };
   const handleFileSelect = e => {
-    handleDragOver(e);
     const files = e.target.files || e.dataTransfer.files;
-    const fileListTemp = [
-      ...fileList,
-      ...Object.keys(files).map(file => files[file]),
-    ];
-    setFiles(fileListTemp);
-    const dataListTemp = [
-      ...dataList,
-      ...Object.keys(files).map(file => files[file]),
-    ];
-    if (dataListTemp.length < maxSize) {
-      setDataList(dataListTemp);
-      onChange(dataListTemp);
+    const fileListTemp = [...fileList, ...files];
+
+    const dataListTemp = [...dataList, ...files];
+
+    if (dataListTemp.length >= maxSize) {
+      return;
     }
+    setFiles(fileListTemp);
+
+    handleDragOver(e);
+
+    setDataList(dataListTemp);
+    onChange(files);
   };
 
   const removeItem = index => {
@@ -66,49 +57,18 @@ const FileUpload2 = ({
     console.log('REMOVE FILE', index);
     setFiles(fileListTemp);
     setDataList(dataListTemp);
-    onChange(dataListTemp);
+    onRemove(index);
   };
-  // const uploadFile = file => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileListTemp = [...fileList];
-  //     const index = fileListTemp.indexOf(file);
-  //     fileListTemp[index].loading = true;
-  //     console.log(fileListTemp);
-  //     setFiles(fileListTemp);
-  //     if (typeof file === 'file' || !('size' in file)) {
-  //       return reject(new Error('No file size'));
-  //     }
-  //     onUpload(file).then(data => {
-  //       resolve(data);
-  //     });
-  //   });
-  // };
 
-  const previews = () => {
+  const Previews = () => {
     if (!showPreview) return null;
     return fileList.map((file, index) => {
       const removeItemCurrent = () => {
         removeItem(index);
       };
       return (
-        <div key={file.name}>
-          <FilePreview
-            data={file}
-            onRemove={removeItemCurrent}
-            onload={params => {
-              const tempDataList = [...dataList];
-              if (index >= 0 && index < dataList.length) {
-                tempDataList[index] = params;
-              } else if (index === dataList.length) {
-                tempDataList.push(params);
-              }
-              console.log('SETTING DATA ');
-              if (tempDataList.length < maxSize) {
-                setDataList(tempDataList);
-                onChange(tempDataList);
-              }
-            }}
-          />
+        <div key={file.name + index}>
+          <FilePreview data={file} onRemove={removeItemCurrent} />
         </div>
       );
     });
@@ -133,12 +93,6 @@ const FileUpload2 = ({
 
   return (
     <>
-      <input
-        type="hidden"
-        name={`${name}:maxSize`}
-        value={maxSize}
-        className="D(n)"
-      />
       <div className="W($full) H($full)">
         <label>
           <div
@@ -155,19 +109,23 @@ const FileUpload2 = ({
                 ref={inputRef}
                 className="D(n)"
                 name={name}
-                multiple={multiple}
+                id="your-file-input"
+                multiple={true}
                 onChange={handleFileSelect}
               />
-              <div className="Ff($ffmanrope) Mx(a) My($lmg) W(fc) Ta(c)">
-                <div onClick={selectFile} className="C($iconBlue) Fz($smd)">
-                  {heading}
-                </div>
+              <div
+                className="Ff($ffmanrope) Mx(a) My($lmg) W(fc) Ta(c)"
+                onClick={selectFile}
+              >
+                <div className="C($iconBlue) Fz($smd)">{heading}</div>
                 <div className="C($inputGrey) Fz($sm)">{subheading}</div>
               </div>
             </div>
           </div>
         </label>
-        <div className="D(f) Flw(w)">{previews()}</div>
+        <div className="D(f) Flw(w)">
+          <Previews />
+        </div>
       </div>
     </>
   );
@@ -175,12 +133,13 @@ const FileUpload2 = ({
 
 FileUpload2.defaultProps = {
   heading: 'Drag and drop files here or click',
-  subheading: 'Max of 10 files. Only .Jpeg .png and .pdf accepted',
+  subheading: 'Max of 10 files. Only .Jpeg and .png accepted',
   filesExisting: [],
   onChange: (data, i) => {
     console.log('setting upsteam', i);
   },
   showPreview: false,
+  onRemove: ({ index }) => {},
 };
 
 export default FileUpload2;

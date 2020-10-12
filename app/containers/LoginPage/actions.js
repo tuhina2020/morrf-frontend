@@ -14,8 +14,16 @@ import {
   SET_TOAST_MESSAGE,
   RESEND_CODE,
   SET_GLOBAL_CHOICE,
-  SIGNIN_GOOGLE,
+  LOGIN_GOOGLE,
+  GET_USER_BY_ID,
 } from './constants';
+
+export function getUserById(payload) {
+  return {
+    type: GET_USER_BY_ID,
+    payload,
+  };
+}
 
 export function getExistingUser(payload) {
   return {
@@ -83,7 +91,7 @@ export function setGlobalChoice(payload) {
 
 export function googleLogin(payload) {
   return {
-    type: SIGNIN_GOOGLE,
+    type: LOGIN_GOOGLE,
     payload,
   };
 }

@@ -3,6 +3,8 @@ import {
   CALLBACK_REQUEST,
   SET_TOAST_MESSAGE,
   SET_SUCCESS,
+  GET_ALL_SKILLS,
+  SET_LOCAL_SKILLS,
 } from './constants';
 export function emailRequest(payload) {
   return { type: EMAIL_REQUEST, payload };
@@ -21,6 +23,19 @@ export function setToastData(payload) {
 export function setSuccess(payload) {
   return {
     type: SET_SUCCESS,
+    payload,
+  };
+}
+
+export function getAllSkills() {
+  return {
+    type: GET_ALL_SKILLS,
+  };
+}
+
+export function setLocalSkills(payload) {
+  return {
+    type: SET_LOCAL_SKILLS,
     payload,
   };
 }

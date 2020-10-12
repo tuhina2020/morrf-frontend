@@ -6,11 +6,12 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { RESTART_ON_REMOUNT } from 'utils/constants';
-import { setToast } from 'utils/helper';
+import { setToast, isLoggedIn } from 'utils/helper';
 import LoginDesktopTemplate from 'templates/Login/desktop';
 import { makeSelectLoginPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { Redirect } from 'react-router-dom';
 import {
   getExistingUser,
   signInAllUsers,
@@ -23,6 +24,7 @@ import {
 } from './actions';
 
 const LoginPage = ({
+  loggedIn,
   signIn,
   responsiveData,
   checkUser,

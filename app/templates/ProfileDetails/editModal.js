@@ -24,8 +24,10 @@ const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
     case 'skills':
       return <SkillEditForm {...props} />;
     case 'experience':
+    case 'editExperience':
       return <ExperienceEditForm {...props} />;
     case 'portfolio':
+    case 'editPortfolio':
       return <PortfolioEditForm {...props} />;
     case 'getstarted':
       return <GetStartedForm {...props} />;

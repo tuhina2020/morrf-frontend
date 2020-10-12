@@ -107,7 +107,6 @@ const EditPersonalForm = ({ onCancel, data, onSave }) => {
     <Formik
       initialValues={initialValues}
       onSubmit={values => {
-        alert(JSON.stringify(values, null, 2));
         onSave(values);
         onCancel();
       }}
@@ -115,7 +114,7 @@ const EditPersonalForm = ({ onCancel, data, onSave }) => {
     >
       {({ values, handleSubmit, handleChange, errors, touched }) => (
         <div className="Bdrs($xs) Bgc(white)">
-          <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+          <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
             Edit Your Details
           </div>
           <Form onSubmit={handleSubmit}>

@@ -16,6 +16,8 @@ import {
   SET_LOCAL_SKILLS,
   SET_AVAILABLE_SKILLS,
   SET_LOCAL_ABOUT_ME,
+  SET_ID,
+  SET_PORTFOLIO_IMAGES,
 } from './constants';
 const currentSkillsObj1 = [
   {
@@ -32,178 +34,33 @@ const currentSkillsObj1 = [
   },
 ];
 
-const allSkillsObj1 = [
-  {
-    category: 'category-3',
-    id: '332',
-    name: 'packaging',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-1',
-    id: '115',
-    name: 'Museum designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-1',
-    id: '118',
-    name: 'Recce engineer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-2',
-    id: '222',
-    name: 'Furniture',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-1',
-    id: '116',
-    name: 'Landscape designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-4',
-    id: '442',
-    name: 'researcher',
-    groupLabel: 'Strategy design',
-  },
-  {
-    category: 'category-1',
-    id: '117',
-    name: 'Lighting designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-1',
-    id: '114',
-    name: 'Exhibition designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-3',
-    id: '331',
-    name: 'Logo',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-3',
-    id: '334',
-    name: 'website',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-1',
-    id: '113',
-    name: 'Retail designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-4',
-    id: '441',
-    name: 'presentation',
-    groupLabel: 'Strategy design',
-  },
-  {
-    category: 'category-2',
-    id: '224',
-    name: 'Ceramic',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-3',
-    id: '337',
-    name: 'spatial graphics',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-3',
-    id: '336',
-    name: 'book',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-4',
-    id: '443',
-    name: 'infographic',
-    groupLabel: 'Strategy design',
-  },
-  {
-    category: 'category-2',
-    id: '223',
-    name: 'Toy',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-4',
-    id: '444',
-    name: 'Marketing',
-    groupLabel: 'Strategy design',
-  },
-  {
-    category: 'category-2',
-    id: '221',
-    name: 'Industrial',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-1',
-    id: '111',
-    name: 'Architect',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-1',
-    id: '112',
-    name: 'Residential interior designer',
-    groupLabel: 'Space design / Architecture',
-  },
-  {
-    category: 'category-3',
-    id: '333',
-    name: 'branding',
-    groupLabel: 'Graphic design',
-  },
-  {
-    category: 'category-2',
-    id: '226',
-    name: 'Textile',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-2',
-    id: '225',
-    name: 'Digital product',
-    groupLabel: 'Product design',
-  },
-  {
-    category: 'category-3',
-    id: '335',
-    name: 'brochure',
-    groupLabel: 'Graphic design',
-  },
-];
-
 const loginData = getDefaultState('loginData', {});
-const getDataFromLogin = key =>
-  isEmpty(get(loginData, key)) ? '' : loginData[key];
+const getDataFromLogin = (key, defaultValue = '') =>
+  isEmpty(get(loginData, key)) ? defaultValue : loginData[key];
 
 const emptyState = {
-  email: getDataFromLogin('email'),
+  email: getDataFromLogin('email.email'),
   phone: {
-    number: getDataFromLogin('phone_number'),
+    number: getDataFromLogin('phone.phone_number'),
+    verified: getDataFromLogin('phone.verified', false),
   },
   id: getDataFromLogin('id'),
   personal: {
-    // firstName: getDataFromLogin('name').split(' ')[0],
-    // lastName: getDataFromLogin('name').split(' ')[1],
+    firstName: getDataFromLogin('first_name'),
+    lastName: getDataFromLogin('second_name'),
+    profession: getDataFromLogin('profession'),
+    city: getDataFromLogin('city'),
+    state: getDataFromLogin('state'),
   },
   about: getDataFromLogin('about'),
-  skills: [],
-  portfolio: [],
-  experience: [],
-  getAllSkills: allSkillsObj1,
+  portfolio: getDataFromLogin('portfolio', []),
+  skills: getDataFromLogin('skills', []),
+  experience: getDataFromLogin('experience', []),
+  skillsList: getDefaultState('skillsList', []),
+  portfolioImages: {
+    id: '',
+    images: [],
+  },
 };
 
 const dummyFilled = {
@@ -214,6 +71,7 @@ const dummyFilled = {
     city: 'Bengaluru',
     state: 'Karnataka',
   },
+  id: getDataFromLogin('id'),
 
   email: 'xyz@xyz.com',
   about:
@@ -425,7 +283,11 @@ const dummyFilled = {
       ],
     },
   ],
-  getAllSkills: allSkillsObj1,
+  skillsList: getDefaultState('skillsList', []),
+  portfolioImages: {
+    id: '',
+    images: [],
+  },
 };
 
 export const initialState = emptyState;
@@ -453,11 +315,16 @@ const profilePageReducer = (state = initialState, action) =>
         draft.experience = action.payload;
         break;
       case SET_AVAILABLE_SKILLS:
-        draft.getAllSkills = action.payload;
+        draft.skillsList = action.payload;
         break;
       case SET_LOCAL_SKILLS:
         draft.skills = action.payload;
         break;
+      case SET_ID:
+        draft.id = '';
+        break;
+      case SET_PORTFOLIO_IMAGES:
+        draft.portfolioImages = action.payload;
     }
   });
 

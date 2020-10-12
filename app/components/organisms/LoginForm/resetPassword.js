@@ -26,6 +26,8 @@ const ResetPassword = ({
   setCode,
   heading,
   subheading,
+  label,
+  confirmLabel,
   ...props
 }) => {
   const [validate, setValidate] = useState([false, false, false]);
@@ -70,6 +72,16 @@ const ResetPassword = ({
     tabIndex: 2,
   };
 
+  const resendButtonProps = {
+    iconDescription: 'resend',
+    alignContent: 'center',
+    kind: 'tertiary',
+    onClick: () => {
+      console.log('YOYO CLICKER', typeof resend);
+      resend();
+    },
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} noValidate>
@@ -81,7 +93,7 @@ const ResetPassword = ({
               tabIndex: 0,
               dataType: 'string',
               type: 'password',
-              labelText: 'New password',
+              labelText: label,
               name: 'password',
               validationList: PASSWORD_VALIDATION_OBJ,
               setSubmittable: generateSubmitFunction({ tabIndex: 0 }),
@@ -94,7 +106,7 @@ const ResetPassword = ({
             {...{
               value: confirmPassword,
               tabIndex: 1,
-              labelText: 'Confirm new password',
+              labelText: confirmLabel,
               name: 'confirmPassword',
               dataType: 'string',
               type: 'password',
@@ -133,14 +145,10 @@ const ResetPassword = ({
       </form>
       <div className="Fz($fzbutton) Ta(start) Mt($lg)">
         <div>Did not receive Verification Code ?</div>
-        <div
-          className="C($primaryButton) Mt($xs) Td(u):h"
-          onClick={() => {
-            console.log('YOYO CLICKER', typeof resend);
-            resend();
-          }}
-        >
-          Click here to resend
+        <div className="Mt($xs)">
+          <Button {...resendButtonProps}>
+            <div>Click here to resend</div>
+          </Button>
         </div>
       </div>
     </>

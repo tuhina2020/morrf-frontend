@@ -47,7 +47,7 @@ const generateRequestForm = ({
         label="Your name"
         name="name"
         id="name"
-        tabIndex={0}
+        tabIndex={1}
         onChange={e => {
           handleChange(e);
           setName(e.target.value);
@@ -61,6 +61,7 @@ const generateRequestForm = ({
           name="search"
           type="text"
           inline
+          tabIndex={2}
           sliceInline={isDesktopOrLaptop ? 2 : 1}
           error={getError('specialist')}
           prependIcon="showmore"
@@ -83,7 +84,7 @@ const generateRequestForm = ({
         placeholder="Brief description of the job"
         name="description"
         id="description"
-        tabIndex={1}
+        tabIndex={3}
         onChange={handleChange}
         value={values.description}
         error={getError('description')}
@@ -93,7 +94,7 @@ const generateRequestForm = ({
         label="Job budget in INR"
         name="budget"
         id="budget"
-        tabIndex={1}
+        tabIndex={4}
         onChange={handleChange}
         value={values.budget}
         error={getError('budget')}
@@ -103,7 +104,7 @@ const generateRequestForm = ({
         label="Your email address"
         name="email"
         id="email"
-        tabIndex={1}
+        tabIndex={5}
         onChange={handleChange}
         value={values.email}
         error={getError('email')}
@@ -146,10 +147,10 @@ const RequestForm = props => {
       .email('Enter a valid email')
       .required('Required'),
     description: Yup.string()
-      .test('word-count-limit', 'Min 5 words and Max 100 words', value => {
+      .test('word-count-limit', 'Enter atleast 10 words', value => {
         if (!value) return false;
         const l = wordCount(value);
-        return l >= 5 && l <= 100;
+        return l >= 10 && l <= 100;
       })
       .required('Required'),
     budget: Yup.number()
@@ -185,17 +186,23 @@ const RequestForm = props => {
     onClick: () => setCount(0),
   };
 
+  const NewRequestButton = () => (
+    <div
+      className={
+        'Mx(a) W(fc) Pos(r) Trsdu(1s) Trstf(e) Trsp(a) ' +
+        (submitted ? 'H(fc)' : 'T($20x) H($50xl)')
+      }
+    >
+      <Button {...anotherReqButton}>Submit Another response</Button>
+    </div>
+  );
+
   return (
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
       } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg)`}
     >
-      {submitCount > 0 && !submitted ? (
-        <div className="Mx(a) W(fc) H($50xl) Pos(r) T($20x)">
-          <Button {...anotherReqButton}>Submit Another response</Button>
-        </div>
-      ) : null}
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />
       ) : submitCount === 0 ? (
@@ -224,6 +231,7 @@ const RequestForm = props => {
           })}
         </Formik>
       ) : null}
+      {submitCount > 0 ? <NewRequestButton /> : null}
     </div>
   );
 };

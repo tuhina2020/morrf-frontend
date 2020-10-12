@@ -17,9 +17,9 @@ const PortfolioFormCard = ({
   touched,
   handleChange,
   onRemove,
-  setImage,
   onCancel,
   uploadImageData,
+  removePortfolioImage,
   ...portfolio
 }) => {
   const getError = key =>
@@ -64,7 +64,7 @@ const PortfolioFormCard = ({
           placeholder="mm/yyyy"
           id="startYear"
           autoComplete="off"
-          dimensionClasses="W($11xl) H($2xl) Mend($2xl)"
+          dimensionClasses="W($11xl) H($2xl) Mend($md)"
           error={getError('startYear')}
           value={portfolio.startYear}
           onChange={handleChange}
@@ -98,16 +98,15 @@ const PortfolioFormCard = ({
         name="example-upload"
         maxSize={10}
         filesExisting={portfolio.images}
-        onChange={setImage}
+        onRemove={index => removePortfolioImage({ id: portfolio.id, index })}
+        onChange={data => uploadImageData({ files: data, id: portfolio.id })}
         showPreview
       />
-      <Button
-        {...removeProps}
-        // onClick={setTimeout(, 300)}
-        onClick={onRemove}
-      >
-        Remove Project
-      </Button>
+      {portfolio && portfolio.id ? (
+        <Button {...removeProps} onClick={onRemove}>
+          Remove Project
+        </Button>
+      ) : null}
     </div>
   );
 };
@@ -118,6 +117,9 @@ const PortfolioEditForm = ({
   currentIndex,
   onSave,
   uploadImageData,
+  removePortfolio,
+  removePortfolioImage,
+  portfolioImages,
 }) => {
   const validationSchema = Yup.object().shape({
     project: Yup.string()
@@ -138,6 +140,7 @@ const PortfolioEditForm = ({
         return l >= 5 && l <= 100;
       }),
   });
+  console.log(portfolio[currentIndex]);
 
   const emptyPortfolio = {
     project: '',
@@ -149,14 +152,15 @@ const PortfolioEditForm = ({
   };
   const initialValues =
     currentIndex === 0 || currentIndex
-      ? { ...portfolio[currentIndex] }
+      ? portfolio[currentIndex]
       : emptyPortfolio;
 
   const [forward, setForward] = useState(true);
   const onRemove = () => {
     if (currentIndex >= 0) {
-      const newPortfolio = portfolio.filter((obj, i) => i !== currentIndex);
-      onSave({ portfolio: newPortfolio });
+      const newPortfolio = portfolio.filter((obj, i) => i === currentIndex)[0];
+      // onSave({ portfolio: newPortfolio });
+      removePortfolio(newPortfolio);
       onCancel();
     }
   };
@@ -178,7 +182,6 @@ const PortfolioEditForm = ({
       mode: values.mode === 'completed' ? 'completed' : mode,
     };
     // alert(values);
-    alert(JSON.stringify(newPortfolio[index]));
     onSave({ portfolio: newPortfolio[index], newPortfolio });
     onCancel();
   };
@@ -212,7 +215,7 @@ const PortfolioEditForm = ({
         <div className="Bdrs($xs) Bgc(white)">
           <Form onSubmit={handleSubmit}>
             <>
-              <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+              <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
                 Edit Portfolio
               </div>
               <PortfolioFormCard
@@ -222,18 +225,11 @@ const PortfolioEditForm = ({
                 handleChange={handleChange}
                 onRemove={onRemove}
                 onCancel={onCancel}
-                setImage={v => {
-                  // let { images } = values;
-                  // images[index] = v;
-                  setFieldValue('images', v);
-                  uploadImageData({ files: v });
-                }}
+                uploadImageData={uploadImageData}
+                removePortfolioImage={removePortfolioImage}
               />
               <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
-                <Button
-                  {...cancelProps}
-                  onClick={onCancelHandler({ values, mode: 'draft' })}
-                >
+                <Button {...cancelProps} onClick={onCancel}>
                   Cancel
                 </Button>
                 <Button {...activeSaveProps}>Save</Button>

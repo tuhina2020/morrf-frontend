@@ -3,8 +3,8 @@ import LandingPage from 'containers/LandingPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import DummyPage from 'containers/DummyPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
+import ProjectPage from 'containers/ProjectPage/Loadable';
 import LitePage from 'containers/LitePage/Loadable';
-
 const ROUTES = [
   {
     path: '/landing',
@@ -38,6 +38,15 @@ const ROUTES = [
     auth: true,
     nav: true,
     key: 'profile',
+  },
+  {
+    path: '/projects',
+    component: ProjectPage,
+    header: false,
+    footer: false,
+    auth: true,
+    nav: true,
+    key: 'project',
   },
   {
     path: '/',

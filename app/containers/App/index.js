@@ -17,7 +17,7 @@ import ROUTES from './routes';
 export default function App({ history }) {
   const responsiveData = deviceScreenInfo();
   const toastProps = {
-    position: 'bottom-right',
+    position: 'bottom-center',
     autoClose: 5000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -48,6 +48,7 @@ export default function App({ history }) {
                           responsiveData={responsiveData}
                           loggedIn={isLoggedIn()}
                           location={location}
+                          history={history}
                         />
                       ) : (
                         <Redirect

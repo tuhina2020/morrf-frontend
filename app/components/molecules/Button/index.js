@@ -129,7 +129,9 @@ const Button = React.forwardRef((props, ref) => {
     'aria-label': iconDescription,
     tabIndex,
     disabled,
-    onClick,
+    onClick: e => {
+      if (!disabled) onClick(e);
+    },
     classes: buttonClasses,
     ...others,
   };

@@ -46,6 +46,23 @@ ProfilePage:
     Details
     Account
     Subscription
+ProjectPage:
+  atoms:
+    - row
+    - header
+    - avatar
+    - tags
+    - completion
+  molecules:
+    - table
+  Template:
+    - heading
+    - Create Project button
+    - table
+
+
+
+    - Create Project Modal
 
 
 

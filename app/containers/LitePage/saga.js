@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { EMAIL_REQUEST, CALLBACK_REQUEST } from './constants';
+import { EMAIL_REQUEST, CALLBACK_REQUEST, GET_ALL_SKILLS } from './constants';
 import request from 'utils/request';
-import { setToastData, setSuccess } from './actions';
+import { setToastData, setSuccess, setLocalSkills } from './actions';
 export function* emailReq({ payload }) {
   const requestURL =
     'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/project-details';
@@ -63,8 +63,29 @@ export function* callbackReq({ payload }) {
     yield put(setSuccess(false));
   }
 }
+
+function* getAllSkills() {
+  const requestURL =
+    'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/skills';
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'GET',
+      },
+      false,
+    );
+    yield put(setLocalSkills(response));
+    localStorage.setItem('skillsList', JSON.stringify(response));
+  } catch (error) {
+    yield put(setLocalSkills([]));
+    localStorage.removeItem('skillsList');
+  }
+}
 export default function* litePageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(EMAIL_REQUEST, emailReq);
   yield takeLatest(CALLBACK_REQUEST, callbackReq);
+  yield takeLatest(GET_ALL_SKILLS, getAllSkills);
 }

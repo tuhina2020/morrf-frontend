@@ -2,9 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { warning as Warning } from 'Assets/svg-comp';
 import { Field } from 'formik';
+import { isEmpty } from 'lodash';
+import BaseIcon from 'components/atoms/BaseIcon';
 
 const getClasses = ({ active, disabled, value, invalid, joined }) => ({
-  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Pstart($md) W(fc) Pstart($md) Trsdu(0.3s) Trsp(a) Trstf(e) Cur(a) ${
+  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Z(1) Pstart($md) W(fc) Pstart($md) Trsdu(0.3s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
     active && !disabled
@@ -37,17 +39,17 @@ const getClasses = ({ active, disabled, value, invalid, joined }) => ({
       : active
       ? 'Bdb($bdprimaryButton)'
       : 'Bdb($bdinputGrey)'
-  } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.3s) Trsp(a) Trstf(e)`,
+  } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.3s) Trsp(a) Trstf(e) Pos(r)`,
   inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
     active ? 'Op(1)::ph' : 'Op(0)::ph'
-  } Trsdu(0.6s)::ph Trsp(a)::ph Trstf(e)::ph`,
+  } Trsdu(0.3s)::ph Trsp(a)::ph Trstf(e)::ph`,
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.3s) Trsp(a) Trstf(e)`,
   errorMessageClasses: `Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.3s) Trsp(a) Trstf(e)`,
-  warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md)',
+  warningContainerClass: 'D(f) Ai(c) Jc(c) W($md) H($md) Pos(a) End(0)',
 });
 
 const FormikTextField = React.forwardRef((props, ref) => {
@@ -67,6 +69,12 @@ const FormikTextField = React.forwardRef((props, ref) => {
     dimensionClasses,
     placeholder,
     joined,
+    prependIcon,
+    iconWidth,
+    iconHeight,
+    iconClasses,
+    iconSpacing,
+    iconFill,
     ...others
   } = props;
 
@@ -92,6 +100,17 @@ const FormikTextField = React.forwardRef((props, ref) => {
     joined,
   });
 
+  const PrependIcon =
+    !isEmpty(prependIcon) && !error ? (
+      <BaseIcon
+        icon={prependIcon}
+        width={iconWidth}
+        height="48px"
+        iconClasses={iconClasses}
+        fill={iconFill}
+      />
+    ) : null;
+
   return (
     <div className={`${dimensionClasses} Pos(r) Ta(start)`} key="firstName">
       <label htmlFor={id} className={classes.labelClasses} id={`${id}_label`}>
@@ -116,6 +135,11 @@ const FormikTextField = React.forwardRef((props, ref) => {
         <div className={classes.warningContainerClass}>
           {error && <Warning className={classes.warningClasses} />}
         </div>
+        {PrependIcon ? (
+          <div className={`Mend(${iconSpacing}) D(f) Ai(c) Jc(c) H($full)`}>
+            {PrependIcon}
+          </div>
+        ) : null}
       </div>
       <div className={classes.errorMessageClasses}>{error || ''}</div>
     </div>
@@ -151,6 +175,9 @@ FormikTextField.defaultProps = {
   dimensionClasses: 'W($25x)',
   tabIndex: 0,
   joined: false,
+  iconWidth: '16px',
+  iconHeight: '16px',
+  iconSpacing: '8px',
 };
 
 export default FormikTextField;

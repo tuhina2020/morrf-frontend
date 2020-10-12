@@ -6,8 +6,10 @@ module.exports = () => ({
     error2: '#e80000',
     disabledGrey: '#aaaaaa',
     lightGrey: '#767676',
+    lightestGray2: '#ebebeb',
     headingDarkGrey: '#111',
     subheadingDarkGrey: '#222222',
+    footer: '#212121',
     bodyGrey: '#333333',
     mediumGrey: '#444444',
     inputGrey: '#555',
@@ -19,6 +21,7 @@ module.exports = () => ({
     activeTagBlue: '#e3ebff',
     checkBoxBg: '#fefefe',
     checkboxMore: '#e80000',
+    verified: '#00a04a',
   },
   fontFamily: {
     prefix: 'ff',
@@ -112,6 +115,7 @@ module.exports = () => ({
     '15xl': '150px',
     '15xxl': '156px',
     '16xl': '160px',
+    '18xl': '180px',
     '20xl': '192px',
     '20x': '200px',
     '24xl': '240px',
@@ -119,6 +123,7 @@ module.exports = () => ({
     xmd: '256px',
     '25xl': '258px',
     '30xl': '300px',
+    '40x': '400px',
     '45x': '450px',
     '50xl': '500px',
     '60xl': '600px',
@@ -166,6 +171,8 @@ module.exports = () => ({
     snackbar: '#323232',
     videoModal: 'rgba(0, 0, 0, 0.6)',
     radial: 'radial-gradient(circle,black 10%, transparent 10.01%)',
+    lite:
+      'transparent linear-gradient(94deg, #F60456 0%, #1325D2 100%) 0% 0% no-repeat padding-box',
   },
   border: {
     prefix: 'bd',

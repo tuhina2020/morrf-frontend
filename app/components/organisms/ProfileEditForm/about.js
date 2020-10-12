@@ -9,7 +9,7 @@ import { wordCount } from 'utils/helper';
 const AboutEditForm = ({ onCancel, data, onSave }) => {
   const Formik = useFormik({
     initialValues: {
-      about: data,
+      about: data || '',
     },
     onSubmit: values => {
       onSave(values);
@@ -18,9 +18,9 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
     validationSchema: Yup.object({
       about: Yup.string()
         .required('Required')
-        .test('word-count-limit', 'Min 30 words and Max 100 words', value => {
+        .test('word-count-limit', 'Min 10 words and Max 100 words', value => {
           const l = wordCount(value);
-          return l >= 30 && l <= 100;
+          return l >= 10 && l <= 100;
         }),
     }),
   });
@@ -50,7 +50,7 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
 
   return (
     <div className="Bdrs($xs) Bgc(white)">
-      <div className="Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
+      <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
         Edit About Me
       </div>
       <form noValidate onSubmit={Formik.handleSubmit}>

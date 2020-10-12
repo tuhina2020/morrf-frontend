@@ -11,6 +11,7 @@ import {
   RESEND_CODE,
   SET_GLOBAL_CHOICE,
   SIGNIN_GOOGLE,
+  GET_USER_BY_ID,
 } from './constants';
 import { makeSelectLoginPage } from './selectors';
 import {
@@ -18,51 +19,84 @@ import {
   setToastData,
   setChoice,
   signInAllUsers,
+  getUserById,
+  googleLogin,
 } from './actions';
 
+export function* getUserDataById() {
+  const { login } = yield select(makeSelectLoginPage());
+  const requestURL = `/user/${login.id}`;
+  try {
+    const existingUser = yield call(request, requestURL, {
+      method: 'GET',
+    });
+    yield put(setLoginData(existingUser));
+    localStorage.setItem('final', JSON.stringify(existingUser));
+    if (existingUser.role) localStorage.setItem('role', existingUser.role);
+  } catch (err) {
+    localStorage.removeItem('final');
+    localStorage.removeItem('token');
+    yield put(setLoginData({}));
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
 export function* getExistingUser({ payload }) {
-  const { email, refreshToken, error } = payload;
+  const { email, refreshToken, error, mode } = payload;
   const requestURL = '/user/check-user';
   try {
     const data = { email };
     if (!isEmpty(refreshToken)) localStorage.setItem('token', refreshToken);
     const existingUser = yield call(request, requestURL, {
       data,
-      headers: !isEmpty(refreshToken)
-        ? {
-            authType: 'google',
-            Authorization: refreshToken,
-          }
-        : undefined,
+      headers:
+        mode === 'google'
+          ? {
+              'auth-type': 'google',
+              Authorization: refreshToken,
+            }
+          : undefined,
     });
-    if (existingUser && existingUser.id && isEmpty(refreshToken)) {
+    if (get(existingUser, 'id')) {
       yield put(setLoginData(existingUser));
-      localStorage.setItem('loginData', JSON.stringify(existingUser));
-    }
-    if (existingUser.role) localStorage.setItem('role', existingUser.role);
-    if (!isEmpty(refreshToken)) {
-      yield signInGoogle({ email, refreshToken, error });
+      localStorage.setItem('authType', existingUser.authType);
+      // yield put(getUserById());
     }
   } catch (err) {
+    console.log(refreshToken, err);
+    if (!isEmpty(refreshToken) && err.code === 404)
+      yield put(googleLogin({ email, refreshToken }));
+    // else
+    //   yield put(
+    //     setToastData({
+    //       message: typeof err === 'string' ? err : err.message,
+    //       type: 'error',
+    //     }),
+    //   );
     localStorage.removeItem('loginData');
     localStorage.removeItem('token');
-    yield put(setLoginData({}));
+    yield put(setLoginData({ empty: 'none' }));
   }
 }
 
-export function* signInGoogle({ email, refreshToken, error }) {
-  const requestURL = '/user/login';
+export function* loginInGoogle({ payload }) {
+  const { email, refreshToken, error } = payload;
+  const requestURL = '/user/signup';
+  console.log(refreshToken);
   try {
-    debugger;
     if (error) throw error;
     const existingUser = yield call(request, requestURL, {
       headers: {
-        authType: 'google',
+        'auth-type': 'google',
         Authorization: refreshToken,
       },
-      data: { email },
+      data: { email, token: refreshToken },
     });
-    debugger;
     if (existingUser && existingUser.token) {
       localStorage.setItem('loginData', JSON.stringify(existingUser.user));
       localStorage.setItem('token', existingUser.token);
@@ -78,36 +112,36 @@ export function* signInGoogle({ email, refreshToken, error }) {
     yield put(
       setToastData({
         message: typeof err === 'string' ? err : err.message,
-        type: 'info',
+        type: 'error',
       }),
     );
   }
 }
 
 export function* signInAllUsersSaga({ payload }) {
-  const { email, password, verificationCode } = payload;
-  const requestURL = isEmpty(verificationCode) ? '/user/login' : '/user/signup';
+  const { email, password, verificationCode, mode } = payload;
+  const requestURL = mode === 'existing-user' ? '/user/login' : '/user/signup';
   try {
     const data = {
       username: email,
       password,
-      code: isEmpty(verificationCode) ? undefined : verificationCode,
+      code: mode === 'new-user' ? verificationCode : undefined,
     };
     const existingUser = yield call(request, requestURL, {
       data,
     });
     if (existingUser && existingUser.token) {
+      yield put(setLoginData(existingUser.user));
       localStorage.setItem('loginData', JSON.stringify(existingUser.user));
       localStorage.setItem('token', existingUser.token);
-      yield put(setLoginData(existingUser.user));
     }
     if (get(existingUser, 'user.role'))
       localStorage.setItem('role', existingUser.user.role);
   } catch (err) {
     yield put(
       setToastData({
-        message: err,
-        type: 'info',
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
       }),
     );
     localStorage.removeItem('loginData');
@@ -161,7 +195,7 @@ export function* verifyPassword({ payload }) {
   } catch (err) {
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -190,8 +224,8 @@ export function* resendVerificationCode({ payload }) {
   } catch (err) {
     yield put(
       setToastData({
-        message: err,
-        type: 'info',
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
       }),
     );
   }
@@ -215,7 +249,7 @@ export function* setGlobalChoice({ payload }) {
     localStorage.removeItem('role');
     yield put(
       setToastData({
-        message: err,
+        message: typeof err === 'string' ? err : err.message,
         type: 'error',
       }),
     );
@@ -231,5 +265,6 @@ export default function* loginPageSaga() {
   yield takeLatest(VERIFY_PASSWORD, verifyPassword);
   yield takeLatest(RESEND_CODE, resendVerificationCode);
   yield takeLatest(SET_GLOBAL_CHOICE, setGlobalChoice);
-  yield takeLatest(SIGNIN_GOOGLE, signInGoogle);
+  yield takeLatest(SIGNIN_GOOGLE, loginInGoogle);
+  yield takeLatest(GET_USER_BY_ID, getUserDataById);
 }

@@ -27,7 +27,7 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
       id={`${id}_menu`}
       aria-labelledby={`${id}_input_label`}
       className={`Bgc($navBarBg) W($full) Trsdu(0.6s) Trsp(a) Trstf(e) Bxsh($bxshcheckbox) ${
-        isOpen ? 'H($20x) Ov(s)' : 'H(0) B($xxs) Ov(h)'
+        isOpen ? 'H($18xl) Ov(s)' : 'H(0) B($xxs) Ov(h)'
       }`}
     >
       {iterableList.map((item, index) => (

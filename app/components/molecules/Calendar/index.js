@@ -44,14 +44,13 @@ const CalendarInput = ({
 
   const MyContainer = ({ className, children }) => {
     return (
-      <CalendarContainer className="W($full) H(0) Pb($full) Bgc($navBarBg) Ff($ffmanrope)">
+      <CalendarContainer className="W($full) H(0) Pb($full) Ff($ffmanrope)">
         <div className="W($full) Bgc($navBarBg) Bxsh($bxshcalendar) Bdrs($xxs)">
           {children}
         </div>
       </CalendarContainer>
     );
   };
-  console.log(startDate);
   return (
     <DatePicker
       selected={startDate}

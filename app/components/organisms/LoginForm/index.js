@@ -41,10 +41,11 @@ const LoginForm = ({
     // EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD,
   );
 
-  console.log('LoginForm rendered');
+  console.log('LoginForm rendered', isLoggedIn());
 
   useEffect(() => {
     let newState;
+    console.log('BEFORE', currentState, isLoggedIn());
     switch (currentState) {
       case EMAIL_LOGIN_STATES.ENTER_EMAIL:
         newState =
@@ -54,24 +55,32 @@ const LoginForm = ({
         break;
       case EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT:
         newState =
-          loginData && loginData.token
+          loginData && loginData.status === 'ACTIVE'
             ? EMAIL_LOGIN_STATES.CONGRATULATIONS
             : undefined;
+        break;
       case EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD:
         newState =
-          loginData && loginData.email && !loginData.role
+          loginData && loginData.status === 'ACTIVE' && isEmpty(loginData.role)
             ? EMAIL_LOGIN_STATES.CONGRATULATIONS
             : undefined;
+        break;
       case EMAIL_LOGIN_STATES.RESET_PASSWORD:
         newState =
           loginData && loginData.email && !loginData.role
             ? EMAIL_LOGIN_STATES.CONGRATULATIONS
             : undefined;
+        break;
       default:
         return;
     }
-    console.log(newState, switchState, google, 'THIS IS IT');
-    // debugger;
+
+    if (isLoggedIn()) {
+      newState = EMAIL_LOGIN_STATES.SUCCESS;
+      setSwitchState(true);
+    }
+
+    console.log(newState, switchState, isLoggedIn(), 'THIS IS IT');
     if (newState && switchState && !google) {
       console.log(
         'SWITCH STATE TO from',
@@ -80,13 +89,12 @@ const LoginForm = ({
         newState,
         loginData && loginData.id,
       );
-      // debugger;
       setCurrentState(newState);
       setSwitchState(false);
     }
-  }, [loginData]);
+  }, [loginData, isLoggedIn()]);
 
-  const getHeaderProps = current => {
+  const getHeaderProps = () => {
     const LOOKUP = {
       [EMAIL_LOGIN_STATES.ENTER_EMAIL]: {
         heading: "Let's get Started",
@@ -106,13 +114,17 @@ const LoginForm = ({
       [EMAIL_LOGIN_STATES.FORGOT_PASSWORD_MESSAGE]: {
         heading: 'Password Recovery',
         subheading: email,
-        back: () => setCurrentState(EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD),
+        back: () => {
+          setCurrentState(EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD);
+        },
       },
       [EMAIL_LOGIN_STATES.RESET_PASSWORD]: {
         heading: 'Password Recovery',
         subheading:
           (loginData && (loginData.name || loginData.email)) || 'Dummy',
-        back: () => {},
+        back: () => {
+          setCurrentState(EMAIL_LOGIN_STATES.ENTER_EMAIL);
+        },
       },
       [EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT]: {
         heading: 'Create Account',
@@ -126,7 +138,7 @@ const LoginForm = ({
         subheading: 'You have successfully created your account.',
       },
     };
-    return LOOKUP[current];
+    return LOOKUP[currentState];
   };
 
   const renderStates = () => {
@@ -136,18 +148,17 @@ const LoginForm = ({
           <EnterEmail
             email={email}
             setEmail={setEmail}
-            next={() => {
-              checkUser({ email });
+            next={email => {
+              setEmail(email);
+              checkUser({ email, mode: 'normal' });
               setSwitchState(true);
             }}
             checkUser={params => {
               setGoogle(true);
-              checkUser(params);
+              checkUser({ ...params, mode: 'google' });
               setSwitchState(true);
             }}
-            signInGoogleApi={params => {
-              signInWithGoogle(params);
-            }}
+            signInGoogleApi={signInWithGoogle}
           />
         );
       case EMAIL_LOGIN_STATES.CREATE_ACCOUNT_MESSAGE:
@@ -163,9 +174,9 @@ const LoginForm = ({
         return (
           <ExistingPassword
             password={password}
-            setPassword={setPassword}
-            next={() => {
-              signInAllUsers({ email, password });
+            next={password => {
+              setPassword(password);
+              signInAllUsers({ email, password, mode: 'existing-user' });
               setSwitchState(true);
             }}
             forgot={() => {
@@ -198,6 +209,8 @@ const LoginForm = ({
               verifyPassword({ email, password, verificationCode });
               setSwitchState(true);
             }}
+            label="New password"
+            confirmLabel="Confirm new password"
           />
         );
       case EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT:
@@ -211,15 +224,24 @@ const LoginForm = ({
             resend={() => resendVerificationCode({ email })}
             setCode={setCode}
             submitText="Create Account"
+            label="Create password"
+            confirmLabel="Confirm password"
             next={() => {
               console.log('THIS IS IT  1', email, password, verificationCode);
-              signInAllUsers({ email, password, verificationCode });
+              signInAllUsers({
+                email,
+                password,
+                verificationCode,
+                mode: 'new-user',
+              });
               setSwitchState(true);
             }}
           />
         );
       case EMAIL_LOGIN_STATES.CONGRATULATIONS:
         return <CongratulationsScreen setUserChoice={setUserChoice} />;
+      case EMAIL_LOGIN_STATES.SUCCESS:
+        return <Redirect to="/profile/details" />;
       default:
         return (
           <EnterEmail
@@ -233,13 +255,10 @@ const LoginForm = ({
         );
     }
   };
-  const loggedIn = isLoggedIn();
-  if (loggedIn) {
-    return <Redirect to="/profile/details" />;
-  }
+
   return (
     <div className="Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W(fc) Bdrs($bdrscontainer) Pt($2xl) Pb($9xl) Mb($2xl) Mih($60xl)">
-      <Header {...getHeaderProps(currentState)} />
+      <Header {...getHeaderProps()} />
       <div className="Px($5xl)">{renderStates()}</div>
     </div>
   );

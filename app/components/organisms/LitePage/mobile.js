@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { morrflogo as MorrfLogo, showmore as ShowMore } from 'Assets/svg-comp';
+import {
+  morrflogo as MorrfLogo,
+  showmore as ShowMore,
+  morff as Morff,
+} from 'Assets/svg-comp';
 
 import { getTransitionClass, scrollTo, scrollToElement } from 'utils/helper';
 import MovingDots from 'components/MovingDots';
@@ -8,11 +12,14 @@ import RequestForm from 'components/organisms/LiteForms/RequestForm/index';
 import Button from 'components/molecules/Button';
 import { Link } from 'react-router-dom';
 import LiteCard from 'components/molecules/LiteCard';
-import Gradient from 'Assets/images/Gradient_BG.png';
-import Splash from 'Assets/images/Splash_BG.png';
+import Gradient from 'Assets/images/lite/Gradient_BG.png';
+import Splash from 'Assets/images/lite/Splash_BG.png';
 import menuHeader from 'Assets/images/Menu_Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
-
+import Steps from './steps';
+import Awesomeness from './awesomeness';
+import Header from 'components/Header';
+import HeadingBg from 'Assets/images/lite/heading.png';
 const MobilePage = ({
   allProfessionTypes,
   isDesktopOrLaptop,
@@ -20,10 +27,16 @@ const MobilePage = ({
   callbackReq,
   success,
 }) => {
-  const [callToggle, setCallToggle] = useState(false);
+  const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
+  const [headerShadow, setHeaderShadow] = useState(false);
   const onScroll = () => {
+    if (document.documentElement.scrollTop > 0) {
+      setHeaderShadow(true);
+    } else {
+      setHeaderShadow(false);
+    }
     if (
       document.documentElement.scrollTop > 100 ||
       (document.body.scrollTop > 100 && !scrolled)
@@ -53,31 +66,26 @@ const MobilePage = ({
     };
     setTimeout(showMore, 200);
   };
+
+  const formRef = useRef(null);
+  const anotherReqButton = {
+    iconDescription: 'again',
+    alignContent: 'center',
+    kind: 'secondary',
+    type: 'button',
+    onClick: () =>
+      scrollToElement({
+        element: formRef.current,
+        offset: 0,
+        duration: 500,
+      }),
+  };
   return (
     <>
+      <Header shadow={headerShadow} isDesktopOrLaptop={false} height="72px" />
+      {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
-        className="W($full) H($5xl) D(f) Jc(c) Ai(c) Bgr(nr) Bxz(pb)"
-        style={{
-          backgroundImage: `url(${menuHeader})`,
-          backgroundPosition: 'center top',
-        }}
-      >
-        <div className="D(f) W($full) Ai(c) Jc(c)">
-          <MorrfLogo className="W(140px)" />
-          <div
-            className={`Bdend($bdlightGrey) Pstart($md) Mend($md)`}
-            style={{
-              paddingTop: '2.5vh',
-            }}
-          />
-          <div className="Ff($ffmanrope) Fw($fwregular) Fz($fzmessage)">
-            Design Made Easy
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="Bgr(nr)"
+        className="Bgr(nr) Pos(r) T($5xl)"
         style={{
           backgroundImage: `url(${Splash}),url(${Gradient})`,
           backgroundPosition: 'center top',
@@ -96,14 +104,14 @@ const MobilePage = ({
         <div className="Pb($2xl)">
           {callBackForm ? (
             <CallBackForm
-              isDesktopOrLaptop
+              isDesktopOrLaptop={isDesktopOrLaptop}
               setCallToggle={setCallToggle}
               callbackReq={callbackReq}
               success={success}
             />
           ) : (
             <RequestForm
-              isDesktopOrLaptop
+              isDesktopOrLaptop={isDesktopOrLaptop}
               setCallToggle={setCallToggle}
               allProfessionTypes={allProfessionTypes}
               sendEmail={sendEmail}
@@ -114,76 +122,89 @@ const MobilePage = ({
       </div>
       <div className="Bgc($navBarBg)">
         <div className="Ff($ffmanrope) D(f) Fw($fwmedium) Ai(c) Jc(c) Fz($lmg) Pt($lg)">
-          How is Morff different
+          What makes us awesome!
         </div>
-        <div className="Pt($lg)" ref={secondPage}>
-          <div className="D(f) Px($mmd) Ai(s) Jc(c) Flw(w)">
-            <LiteCard
-              isDesktopOrLaptop={false}
-              title="Ease of finding reliable freelance"
-              description="With Morff you can be assured that the designers are well qualified and have a good work experience in their own professional domains."
-            />
-            <LiteCard
-              isDesktopOrLaptop={false}
-              title="Get help in preparing contracts"
-              description="Once you finalise on the designer you want to work with, it’s as easy as getting started with project as we will take care of your legal work such a drafting contracts etc."
-            />
-
-            <LiteCard
-              isDesktopOrLaptop={false}
-              title="Payment management"
-              description="We assure you payment protection through a govt. approved escrow service. Your payments will only go through if the project is fruitful."
-            />
-
-            <LiteCard
-              isDesktopOrLaptop={false}
-              title="Project management assistance"
-              description="We understand that design projects are a handful to manage, that is why we offer you a continuous handholding and support you through out your project."
-            />
+        <div className="Mt(2vw) D(f) Ai(c) Jc(c) Fld(c)">
+          <div
+            className={`Bdrs(2.5vw) W(5vw) H(5vw) Mx(47.5%) Bxsh($bxshlightInset):h ${getTransitionClass(
+              0.4,
+            )} ${scrolled ? 'Op(0)' : ''}`}
+          >
+            <ShowMore width="10vw" height="10vw" onClick={onClickShowMore} />
           </div>
-          <div className="O(1) Mt($lg) Mb($lg) Bd($bdinputGrey)" />
-          <div className="W($full) Px($mmd) Ta(c) Pb($2xl) D(f) Fld(c) Pt($lg)">
-            <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($lmg) Lh(38px) Mb($xl)">
-              About Us
-            </div>
-            <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($fzbutton) Lh($lg)">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              mollis turpis augue, nec ultrices ipsum maximus a. Quisque leo
-              metus, lobortis ac mattis sed, cursus ut nisl. Nulla ut eros quam.
-              Curabitur quis nisi erat. Phasellus vel pharetra tellus. Nam et
-              nulla viverra, commodo velit pellentesque, consequat nulla.
-            </div>
+          <div
+            className={`${getTransitionClass(2)} Trsde(0.5s) ${
+              scrolled ? 'Pos(r) B(3vw)' : 'Op(0)'
+            }`}
+          >
+            <MovingDots />
+          </div>
+        </div>
+        <Awesomeness mobile={true} />
+        <div className="Bg($lite) Ff($ffmanrope) C(white) Py($xl) Ta(c)">
+          <div className="Fz($lg)">Want to hire a freelance designer?</div>
+          <div className="Fz($smd)">Here’s a simple and efficient way</div>
+        </div>
+        <Steps mobile={true} />
+        <div className="Mx(a) W(fc) Bgc(i) Pb($2xl)">
+          <Button {...anotherReqButton}>Drop a project request</Button>
+        </div>
+      </div>
+      <div className="W($full) Ta(c) Mx(a) Bgc(white) Mt($xxl)">
+        <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($lg)">
+          About Us
+        </div>
+        <div className="Fw($fwregular) Ff($ffopensans) Ta(c) Fz($smd) P($mmd)">
+          <div className="Mb($lg)">
+            We are a team that is passionate to change the way businesses use
+            design. Our mission is to make Design easy, reliable and
+            approachable.
+          </div>
+          <div className="Mb($lg)">
+            Our team consists of people at the top of their careers (read as IIT
+            and NID Alumni) working together to cater to a great need. Morff is
+            built out of our own experience in the design and business world.
+            Trying to make one small change at a time.
+          </div>
+          <div className="Mb($lg)">
+            We’re an enthusiastic bunch that likes having deep conversations
+            regarding design systems, psychology, social behaviour, tech.. well,
+            you get the gist! We are motivated by the current changing times and
+            the needs of the new world.
           </div>
         </div>
       </div>
-      <div className="H($20xl) Bgc($inputGrey) Px($mmd) Py($sm) D(f) Jc(fs) Ai(c)">
-        <div className="W($20xl) D(f) Fld(c) Jc(fs) Ai(fs)">
-          <div className="Fz($fzmessage) Ff($ffmanrope) C(white)">
-            Like to know more?
-          </div>
-          <div className="Ff($ffmanrope) C(white) Fz($sm) Mb($lg)">
-            Reach us at:
-            <a href="mailto:contact@morff.io" className="Td(n) C(white)">
-              contact@morff.io
-            </a>
-          </div>
-          <div>
-            <a
-              href="https://www.linkedin.com/company/morff-io"
-              className="Pend($xxs)"
-            >
-              <BaseIcon icon="linkedin" width="32px" height="32px" />
-            </a>
-            <a href="https://www.instagram.com/morff.io/">
-              <BaseIcon icon="instagram" width="32px" height="32px" />
-            </a>
-          </div>
-          <div className="Ff($ffmanrope) Fz($sm) C(white) Mb($md) Mt($lg)">
+      <div className="Bgc($footer) Px($mmd) Py($sm)">
+        <div className="Fz($mmd) Ff($ffmanrope) C(white)">
+          Like to know more?
+        </div>
+        <div className="Ff($ffmanrope) C(white) Fz($smd) Mb($lg)">
+          Reach us at:
+          <a href="mailto:contact@morff.io" className="Td(n) C(white)">
+            contact@morff.io
+          </a>
+        </div>
+        <div>
+          <a
+            href="https://www.linkedin.com/company/morff-io"
+            className="Pend($xxs)"
+          >
+            <BaseIcon icon="linkedin" width="32px" height="32px" />
+          </a>
+          <a href="https://www.instagram.com/morff.io/">
+            <BaseIcon icon="instagram" width="32px" height="32px" />
+          </a>
+        </div>
+        <div className="Ta(c)">
+          <Morff className="W($5x) H($xl)" />
+          <div className="Fz($smd) C($placeholderGrey) Mb($lg) Ff($ffmanrope)">
             Officially recognised by DIIPT, India
           </div>
-          <div className="Ff($ffmanrope) C($placeholderGrey) Fz($fzlabel)">
-            © 2020 Morff
-          </div>
+        </div>
+        <div className="D(f) Ai(c) Jc(c) Fz($xss) Bdt($bdsolidLightestGray) Ff($ffmanrope) C(white) Py($xs)">
+          <div className="C($placeholderGrey)">© 2020 Morff</div>
+          <div className="Mx($lg)">Privacy Policy</div>
+          <div className="">Terms of Use</div>
         </div>
       </div>
     </>
