@@ -27,9 +27,7 @@ const ContactFormComponent = ({
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
 
-  const [verifiedPhone, setVerified] = useState(
-    phone.verified && phone.number === values.phone,
-  );
+  const [verifiedPhone, setVerified] = useState(phone.verified);
 
   const saveProps = {
     iconDescription: 'Save',
@@ -68,11 +66,21 @@ const ContactFormComponent = ({
               label="Phone"
               name="phone"
               id="phone"
-              iconFill="#00a04a"
-              prependIcon={verifiedPhone ? 'checkcircle' : null}
+              iconFill={verifiedPhone ? '#00a04a' : '#ff0356'}
+              prependIcon={
+                isEmpty(values.phone)
+                  ? undefined
+                  : verifiedPhone
+                  ? 'checkcircle'
+                  : 'warning'
+              }
               onChange={e => {
                 handleChange(e);
-                if (verifiedPhone) setVerified(values.phone === e.target.value);
+                const newPhone = e.target.value;
+                // if (verifiedPhone)
+                setVerified(
+                  values.phone === newPhone && phone.number !== newPhone,
+                );
               }}
               value={values.phone}
               error={getError('phone')}

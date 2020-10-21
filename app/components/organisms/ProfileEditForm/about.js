@@ -18,9 +18,9 @@ const AboutEditForm = ({ onCancel, data, onSave }) => {
     validationSchema: Yup.object({
       about: Yup.string()
         .required('Required')
-        .test('word-count-limit', 'Min 10 words and Max 100 words', value => {
+        .test('word-count-limit', 'Min 30 words and Max 500 words', value => {
           const l = wordCount(value);
-          return l >= 10 && l <= 100;
+          return l >= 30 && l <= 500;
         }),
     }),
   });

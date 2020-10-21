@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { classnames } from 'utils/helper';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, get, isEmpty } from 'lodash';
+
 import FilePreview from './preview';
 
 const FileUpload2 = ({
@@ -14,11 +15,11 @@ const FileUpload2 = ({
   label,
   showPreview,
   filesExisting,
+  uploadedFiles,
   onChange,
   onRemove,
 }) => {
   const [fileList, setFiles] = useState(filesExisting);
-  const [dataList, setDataList] = useState(filesExisting);
   const [uploadHover, setUploadHover] = useState(false);
   const handleDragOver = e => {
     if ('preventDefault' in e) {
@@ -26,7 +27,6 @@ const FileUpload2 = ({
       e.preventDefault();
     }
     if (e.type === 'dragover') {
-      console.log('dragover');
       setUploadHover(true);
     } else {
       setUploadHover(false);
@@ -36,27 +36,18 @@ const FileUpload2 = ({
     const files = e.target.files || e.dataTransfer.files;
     const fileListTemp = [...fileList, ...files];
 
-    const dataListTemp = [...dataList, ...files];
-
-    if (dataListTemp.length >= maxSize) {
+    if (fileListTemp.length >= maxSize) {
       return;
     }
     setFiles(fileListTemp);
-
     handleDragOver(e);
-
-    setDataList(dataListTemp);
     onChange(files);
   };
 
   const removeItem = index => {
     const fileListTemp = [...fileList];
-    const dataListTemp = [...dataList];
     fileListTemp.splice(index, 1);
-    dataListTemp.splice(index, 1);
-    console.log('REMOVE FILE', index);
     setFiles(fileListTemp);
-    setDataList(dataListTemp);
     onRemove(index);
   };
 
@@ -66,9 +57,14 @@ const FileUpload2 = ({
       const removeItemCurrent = () => {
         removeItem(index);
       };
+      const success = get(uploadedFiles, `[${index}].id`, false);
       return (
         <div key={file.name + index}>
-          <FilePreview data={file} onRemove={removeItemCurrent} />
+          <FilePreview
+            data={file}
+            onRemove={removeItemCurrent}
+            success={!isEmpty(success)}
+          />
         </div>
       );
     });
@@ -135,6 +131,7 @@ FileUpload2.defaultProps = {
   heading: 'Drag and drop files here or click',
   subheading: 'Max of 10 files. Only .Jpeg and .png accepted',
   filesExisting: [],
+  uploadedFiles: [],
   onChange: (data, i) => {
     console.log('setting upsteam', i);
   },

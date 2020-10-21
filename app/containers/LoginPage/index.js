@@ -37,6 +37,7 @@ const LoginPage = ({
   dispatchToastData,
   signInWithGoogle,
 }) => {
+  if (isLoggedIn()) return <Redirect to="/profile/details" />;
   useInjectReducer({ key: 'loginPage', reducer });
   useInjectSaga({ key: 'loginPage', saga, mode: RESTART_ON_REMOUNT });
   const { error, role, login } = loginPage;

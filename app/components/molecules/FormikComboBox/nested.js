@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import BaseIcon from 'components/atoms/BaseIcon';
 import { classnames } from 'utils/helper';
@@ -17,14 +17,22 @@ const FormikComboBox = ({
   sliceInline,
   error,
   tabIndex,
+  isDesktopOrLaptop,
+  focusComboBox,
+  setFocus,
 }) => {
-  const [isOpen, setOpen] = useState(false);
+  console.log('GLOBAL FOCUS ', focusComboBox);
+  const [isOpen, setOpen] = useState(focusComboBox);
+  useEffect(() => {
+    setOpen(focusComboBox);
+  }, [focusComboBox]);
   const setOpenValue = (e, set) => {
     e.preventDefault();
     e.stopPropagation();
     if (disabled) return;
     // debugger;
     setOpen(set);
+    setFocus(set);
   };
 
   const invalid = error && error.length > 1;
@@ -33,7 +41,10 @@ const FormikComboBox = ({
     const newValues = add
       ? [...viewableValues, item]
       : viewableValues.filter(sk => sk.id !== item.id);
+    setOpen(true);
+    setFocus(true);
     onChange(newValues);
+    console.log('FOCUS ON CHANGE');
   };
 
   const deleteValues = skill => {
@@ -78,6 +89,7 @@ const FormikComboBox = ({
     'Fz($smd)': true,
     'Whs(nw)': true,
     'C($inputGrey)': true,
+    'Mend($sm)': true,
     // 'Pos(a)': true,
   });
 
@@ -111,7 +123,12 @@ const FormikComboBox = ({
     <div className="D(f) Ai(c) Jc(s) Mb($sm) Flw(w)">
       {viewableValues.map((val, i) => (
         <div className="Mend($sm) Mb($sm)" key={val.id + '_notinline_' + i}>
-          <Tag filter disabled={false} onDelete={() => deleteValues(val)}>
+          <Tag
+            filter
+            disabled={false}
+            onDelete={() => deleteValues(val)}
+            tabIndex={-1}
+          >
             {val.name}
           </Tag>
         </div>
@@ -135,17 +152,29 @@ const FormikComboBox = ({
           onKeyDown={toggleOpen}
           tabIndex={0}
         > */}
+        <input
+          // type="hidden"
+          id="lol"
+          tabIndex={tabIndex}
+          className="Op(0) Pos(a) T(0)"
+          focus={isOpen.toString()}
+          onFocus={e => {
+            console.log('NESTED FOUCS');
+            setOpenValue(e, true);
+          }}
+          onBlur={e => {
+            console.log('NESTED BLUR');
+            setOpenValue(e, false);
+          }}
+        />
         <div
           className={inputStyle}
           // readOnly
           // id={id}
           // autoComplete="off"
-          // onFocus={e => setOpenValue(e, !isOpen)}
-          // onBlur={e => setOpenValue(e, false)}
-          tabIndex={tabIndex}
         >
           <div
-            className={`D(f) Ai(c) Jc(sb) Px($sm) Pos(a)  T(0) H($2xl) W($full)`}
+            className={`D(f) Ai(c) Jc(s) Px($sm) Pos(a) T(0) H($2xl) W($full)`}
             onClick={e => setOpenValue(e, !isOpen)}
           >
             <div className={labelStyle}>{labelText}</div>
@@ -153,9 +182,9 @@ const FormikComboBox = ({
             {inline && <InlineValues />}
             <BaseIcon
               icon="showmore"
-              iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) ${
-                isOpen ? 'Rotate(180deg)' : ''
-              }`}
+              iconClasses={`W($lg) H($lg) Trsdu(0.8s) Trsp(a) Trstf(e) Pos(a) ${
+                isDesktopOrLaptop ? 'End($sm)' : 'End($xms)'
+              } ${isOpen ? 'Rotate(180deg)' : ''}`}
             />
           </div>
         </div>
@@ -165,6 +194,7 @@ const FormikComboBox = ({
           id={id}
           values={viewableValues}
           onSelect={selectObj}
+          tabIndex={-1}
         />
         <div
           className={`Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) ${
@@ -200,6 +230,7 @@ FormikComboBox.defaultProps = {
   sliceInline: 2,
   error: '',
   tabIndex: 0,
+  focusComboBox: false,
 };
 
 export default FormikComboBox;

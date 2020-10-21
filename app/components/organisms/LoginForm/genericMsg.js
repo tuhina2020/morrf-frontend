@@ -5,8 +5,8 @@ import Button from 'components/molecules/Button';
 const GenericMsg = ({
   wrapperClass,
   next,
-  heading,
-  subheading,
+  line1,
+  line2,
   message,
   submitText,
 }) => {
@@ -25,14 +25,16 @@ const GenericMsg = ({
   };
   return (
     <>
-      <div className="W($30xl) Fz($fzmessage) Lh(28px)">{message}</div>
-      <div className="Mt($xxl) D(f) Ai(c) Jc(c)">
-        {next && (
+      <div className="W($30xl) Fz($fzmessage) Lh(28px) Mx(a)">{message}</div>
+      <div className="W($30xl) Fz($smd) Mx(a) Mb($xs)">{line1}</div>
+      <div className="W($30xl) Fz($lg) Mx(a) Mb($xml)">{line2}</div>
+      {next && (
+        <div className="Mt($xxl) D(f) Ai(c) Jc(c)">
           <Button {...signInButtonProps}>
             <div>{submitText}</div>
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

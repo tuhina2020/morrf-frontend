@@ -21,7 +21,6 @@ import { setToast, isLoggedIn } from 'utils/helper';
 import { useInjectReducer } from 'utils/injectReducer';
 
 import { makeSelectProfilePage } from './selectors';
-
 import {
   setEmail,
   setLocalPhone,
@@ -75,7 +74,7 @@ const ProfilePage = ({
   removePortfolioImg,
   setPortfolioImg,
 }) => {
-  if (!loggedIn || isEmpty(profilePage.id)) return <Redirect to="/login" />;
+  if (!isLoggedIn()) return <Redirect to="/login" />;
   useInjectReducer({ key: 'profilePage', reducer });
 
   useInjectSaga({ key: 'profilePage', saga, mode: RESTART_ON_REMOUNT });
@@ -84,7 +83,14 @@ const ProfilePage = ({
     params: { tabId },
   } = match;
 
-  const { skillsList, email, phone } = profilePage;
+  const {
+    skillsList,
+    email,
+    phone,
+    id,
+    loading,
+    portfolioImages,
+  } = profilePage;
   useEffect(() => {
     getUserData();
     getSkills();
@@ -93,6 +99,7 @@ const ProfilePage = ({
   if (tabId === 'details')
     return (
       <ProfileDetails
+        loading={loading}
         profile={{
           ...profilePage,
           contact: { phone, email },
@@ -117,6 +124,7 @@ const ProfilePage = ({
         logout={logoutAction}
         removePortfolioImage={removePortfolioImg}
         setPortfolioImages={setPortfolioImg}
+        portfolioImages={portfolioImages}
       />
     );
 

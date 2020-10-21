@@ -19,6 +19,7 @@ const PortfolioFormCard = ({
   onRemove,
   onCancel,
   uploadImageData,
+  portfolioImages,
   removePortfolioImage,
   ...portfolio
 }) => {
@@ -97,7 +98,8 @@ const PortfolioFormCard = ({
         multiple
         name="example-upload"
         maxSize={10}
-        filesExisting={portfolio.images}
+        filesExisting={portfolio.files}
+        uploadedFiles={portfolioImages}
         onRemove={index => removePortfolioImage({ id: portfolio.id, index })}
         onChange={data => uploadImageData({ files: data, id: portfolio.id })}
         showPreview
@@ -140,7 +142,6 @@ const PortfolioEditForm = ({
         return l >= 5 && l <= 100;
       }),
   });
-  console.log(portfolio[currentIndex]);
 
   const emptyPortfolio = {
     project: '',
@@ -227,6 +228,7 @@ const PortfolioEditForm = ({
                 onCancel={onCancel}
                 uploadImageData={uploadImageData}
                 removePortfolioImage={removePortfolioImage}
+                portfolioImages={portfolioImages}
               />
               <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
                 <Button {...cancelProps} onClick={onCancel}>

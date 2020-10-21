@@ -72,13 +72,29 @@ const Steps = ({ mobile }) => {
   return (
     <>
       <div className={mobile ? '' : 'D(f) Ai(s) Jc(c) Mb($xxl) Mx(6%)'}>
-        {CounterContent.slice(0, 3).map(obj =>
-          mobile ? <MobileCounterCard {...obj} /> : <CounterCard {...obj} />,
+        {CounterContent.slice(0, 3).map((obj, index) =>
+          mobile ? (
+            <div key={index}>
+              <MobileCounterCard {...obj} />
+            </div>
+          ) : (
+            <div key={index}>
+              <CounterCard {...obj} />
+            </div>
+          ),
         )}
       </div>
       <div className={mobile ? 'Pb(1px)' : 'D(f) Ai(s) Jc(c) Mx($14xl)'}>
-        {CounterContent.slice(3).map(obj =>
-          mobile ? <MobileCounterCard {...obj} /> : <CounterCard {...obj} />,
+        {CounterContent.slice(3).map((obj, index) =>
+          mobile ? (
+            <div key={index}>
+              <MobileCounterCard {...obj} />
+            </div>
+          ) : (
+            <div key={index}>
+              <CounterCard {...obj} />
+            </div>
+          ),
         )}
       </div>
     </>

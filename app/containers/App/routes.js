@@ -5,6 +5,8 @@ import DummyPage from 'containers/DummyPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
 import ProjectPage from 'containers/ProjectPage/Loadable';
 import LitePage from 'containers/LitePage/Loadable';
+import PrivacyPage from 'containers/Privacy/Loadable';
+import TermsOfUsePage from 'containers/TermsOfUse/Loadable';
 const ROUTES = [
   {
     path: '/landing',
@@ -13,6 +15,22 @@ const ROUTES = [
     footer: false,
     auth: false,
     key: 'landing',
+  },
+  {
+    path: '/termsofuse',
+    component: TermsOfUsePage,
+    header: true,
+    footer: false,
+    auth: false,
+    key: 'termsofuse',
+  },
+  {
+    path: '/privacy',
+    component: PrivacyPage,
+    header: true,
+    footer: false,
+    auth: false,
+    key: 'privacy',
   },
   {
     path: '/login',

@@ -32,27 +32,6 @@ const DesktopPage = ({
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
   const [name, setName] = useState('');
-  const [headerShadow, setHeaderShadow] = useState(false);
-  const onScroll = () => {
-    if (document.documentElement.scrollTop > 0) {
-      setHeaderShadow(true);
-    } else {
-      setHeaderShadow(false);
-    }
-    if (
-      document.documentElement.scrollTop > 100 ||
-      (document.body.scrollTop > 100 && !scrolled)
-    ) {
-      setScrollStatus(true);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
 
   const onClickShowMore = () => {
     setScrollStatus(!scrolled);
@@ -94,15 +73,22 @@ const DesktopPage = ({
   return (
     <>
       <Header
-        shadow={headerShadow}
         isDesktopOrLaptop={true}
         bgImg={HeadingBg}
         height="72px"
         padding="Px(6%)"
       />
-      <img src={Splash} className="Pos(a) Z(-1) W($full) T($5xl)" />
-      <img src={Gradient} className="Pos(a) Z(-2) W($full) T($5xl) H($full)" />
-      <div className="Pos(r) T($5xl)">
+      <div
+        className="Pos(r) T($5xl) Bgr(nr)"
+        style={{
+          backgroundImage: `url(${Splash}),url(${Gradient})`,
+          backgroundPosition: 'center top',
+          backgroundSize: 'auto auto, auto auto',
+        }}
+      >
+        {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T($5xl)" />
+      <img src={Gradient} className="Pos(a) Z(-2) W($full) T($5xl) H($full)" /> */}
+
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($4xl) Ta(c) Mb($sm)">
             Looking for a freelance designer?
@@ -123,7 +109,8 @@ const DesktopPage = ({
             />
           )}
         </div>
-
+      </div>
+      <div className="Pos(r) T($5xl)">
         <div className="Bgc($navBarBg)">
           <div className="Ff($ffmanrope) D(f) Ai(c) Jc(c) Fz($xxl) Pt($2xl)">
             What makes us awesome!
@@ -199,23 +186,34 @@ const DesktopPage = ({
               </div>
             </div>
             <div>
-              <div style={{ textAlign: 'right' }}>
-                <a
-                  href="https://www.linkedin.com/company/morff-io"
-                  className="Pend($xxs)"
+              <div className="Ta(end) D(f)">
+                <div
+                  className="Pend($xxs) Cur(p)"
+                  onClick={() =>
+                    window.open('https://www.linkedin.com/company/morff-io')
+                  }
                 >
                   <BaseIcon icon="linkedin" width="32px" height="32px" />
-                </a>
-                <a href="https://www.instagram.com/morff.io/">
+                </div>
+                <div
+                  className="Pend($xxs) Cur(p)"
+                  onClick={() =>
+                    window.open('https://www.instagram.com/morff.io/')
+                  }
+                >
                   <BaseIcon icon="instagram" width="32px" height="32px" />
-                </a>
+                </div>
               </div>
             </div>
           </div>
           <div className="D(f) Ai(c) Jc(c) Fz($md) Py($xs) Mx($10x) Bdt($bdsolidLightestGray) Ff($ffmanrope)">
             <div className="C($placeholderGrey)">© 2020 Morff</div>
-            <div className="Mx($3xxl)">Privacy Policy</div>
-            <div className="">Terms of Use</div>
+            <a href="/privacy" className="Td(n) C(white) Mx($3xxl)">
+              Privacy Policy
+            </a>
+            <a href="/termsofuse" className="Td(n) C(white) Mx($lg)">
+              Terms of Use
+            </a>
           </div>
         </div>
       </div>

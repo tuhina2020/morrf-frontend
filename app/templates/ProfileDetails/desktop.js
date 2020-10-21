@@ -11,7 +11,9 @@ import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
 import pick from 'lodash/pick';
-import Header from 'components/Header';
+import Header from 'components/molecules/Header';
+import LoadingAnimation from 'Assets/gifs/loading.gif';
+import { get } from 'lodash';
 const ProfileDetails = ({
   profile,
   sendCode,
@@ -22,7 +24,9 @@ const ProfileDetails = ({
   removeExperience,
   removePortfolioImage,
   setPortfolioImages,
+  portfolioImages,
   logout,
+  loading,
 }) => {
   const {
     personal,
@@ -35,6 +39,8 @@ const ProfileDetails = ({
     skillsList,
   } = profile;
 
+  const [blur, setBlur] = useState(loading);
+
   const countEmptyLarge = [portfolio, experience].filter(isEmpty).length;
   const countEmptySmall = [personal, about, phone, skills].filter(isEmpty)
     .length;
@@ -45,19 +51,26 @@ const ProfileDetails = ({
   const onCancelModal = () => {
     setOpen('');
     setSourcePage('main');
+    setBlur(false);
   };
 
-  const onCancelForm = useCallback(() => {
+  const onCancelForm = () => {
     const getstarted = () => {
-      setOpen('getstarted');
-      setSourcePage('getstarted');
+      setTimeout(() => {
+        setOpen('getstarted');
+        setSourcePage('getstarted');
+        setBlur(true);
+      }, 400);
     };
     const main = () => {
-      setOpen('');
-      setSourcePage('main');
+      setTimeout(() => {
+        setOpen('');
+        setBlur(false);
+        setSourcePage('main');
+      }, 400);
     };
     return source === 'getstarted' ? getstarted() : main();
-  }, [source]);
+  };
 
   const extraProps = {
     allSkills: skillsList,
@@ -65,12 +78,16 @@ const ProfileDetails = ({
     source,
     currentIndex,
     onClickAdd: setOpen,
-    closeDialog: () => setOpen(''),
+    closeDialog: () => {
+      setOpen('');
+      setBlur(false);
+    },
     verifyPhone,
     uploadImageData,
     removePortfolio,
     removeExperience,
     removePortfolioImage,
+    portfolioImages: get(portfolioImages, 'images', []),
   };
 
   const [scrolled, setScrollStatus] = useState(false);
@@ -95,80 +112,139 @@ const ProfileDetails = ({
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (isEmpty(open)) setBlur(loading);
+  }, [loading]);
+
+  const Loading = () => {
+    return loading ? (
+      <div className="W($full) H(100vw) Op(0.5) Bgc(white) Z(2)">
+        <img
+          src={LoadingAnimation}
+          className="W($third) Mx(35%) Pos(r) T($20x)"
+        />
+      </div>
+    ) : null;
+  };
+
+  console.log('BLUR IS', blur, loading);
   return (
     <div>
       <Header
-        shadow={headerShadow}
         isDesktopOrLaptop={true}
-        height="72px"
-        padding="Px(6%)"
-        bgc="white"
-        logout={true}
+        logout={isEmpty(open)}
         logoutAction={logout}
+        blur={blur}
       />
-      <div className="D(f) Ai(s) Jc(s) P($lg) Pos(r) T($5xl)">
-        <div className="Mend($lg) Miw($60xl)">
-          <PersonalDetails
-            personal={personal}
-            onEdit={() => setOpen('personal')}
-          />
-          <Contact data={{ phone, email }} onEdit={() => setOpen('contact')} />
-          <AboutMe about={about} onEdit={() => setOpen('about')} />
-          <Skills skills={skills} onEdit={() => setOpen('skills')} />
-          <Experience
+      <Loading />
+      <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
+        <div className={`D(f) Ai(s) Jc(s) P($lg)`}>
+          <div className="Mend($lg) Miw($60xl)">
+            <PersonalDetails
+              personal={personal}
+              onEdit={() => {
+                setBlur(true);
+                setOpen('personal');
+                setSourcePage('main');
+              }}
+            />
+            <Contact
+              data={{ phone, email, personal }}
+              onEdit={() => {
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('contact');
+              }}
+            />
+            <AboutMe
+              about={about}
+              onEdit={() => {
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('about');
+              }}
+            />
+            <Skills
+              skills={skills}
+              onEdit={() => {
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('skills');
+              }}
+            />
+            <Experience
+              onEdit={index => {
+                console.log('EDITING');
+                setIndex(index);
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('editExperience');
+              }}
+              data={experience}
+              onAdd={() => {
+                console.log('ADDING');
+                setIndex();
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('experience');
+              }}
+            />
+          </div>
+          <Portfolio
+            portfolio={portfolio}
             onEdit={index => {
               console.log('EDITING');
               setIndex(index);
-              setOpen('editExperience');
+              setBlur(true);
+              setSourcePage('main');
+              setPortfolioImages({
+                images: portfolio[index].files.map(file => ({
+                  url: file.url,
+                  id: file.id,
+                })),
+                id: portfolio[index].id,
+                done: false,
+              });
+              setOpen('editPortfolio');
             }}
-            data={experience}
+            onPreviewImage={setBlur}
             onAdd={() => {
               console.log('ADDING');
               setIndex();
-              setOpen('experience');
+              setBlur(true);
+              setSourcePage('main');
+              setOpen('portfolio');
             }}
           />
         </div>
-        <Portfolio
-          portfolio={portfolio}
-          onEdit={index => {
-            console.log('EDITING');
-            setIndex(index);
-            setPortfolioImages({
-              images: portfolio[index].files.map(file =>
-                pick(file, ['id', 'name']),
-              ),
-              id: portfolio[index].id,
-            });
-            setOpen('editPortfolio');
+        <GetStartedMajor
+          data={profile}
+          onStart={() => {
+            setSourcePage('getstarted');
+            setOpen('getstarted');
+            setBlur(true);
           }}
-          onAdd={() => {
-            console.log('ADDING');
-            setIndex();
-            setOpen('portfolio');
-          }}
+          loading={blur}
+          countEmptyLarge={countEmptyLarge}
+          countEmptySmall={countEmptySmall}
         />
       </div>
-      <GetStartedMajor
-        data={profile}
-        onStart={() => {
-          setSourcePage('getstarted');
-          setOpen('getstarted');
-        }}
-        countEmptyLarge={countEmptyLarge}
-        countEmptySmall={countEmptySmall}
-      />
+
       <Modal
         isOpen={!isEmpty(open)}
         contentLabel="onRequestClose Example"
         onRequestClose={onCancelModal}
-        className={`W($60xl) M(a) H($fc) Pos(r) T($10x)  Bd(n) O(n)`}
-        overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
+        className={`W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)`}
+        overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full)"
       >
         <EditFormModal
           onCancel={onCancelForm}
           data={open === 'getstarted' ? profile : profile[open]}
-          onSave={saveFunctionMap[open]}
+          onSave={params => {
+            saveFunctionMap[open](params);
+            setBlur(true);
+          }}
           open={open}
           {...extraProps}
         />

@@ -26,6 +26,7 @@ import {
   SET_ID,
   SET_PORTFOLIO_IMAGES,
   REMOVE_PORTFOLIO_IMAGE,
+  SET_LOADING_STATE,
 } from './constants';
 
 export function getUser(payload) {
@@ -120,9 +121,17 @@ export function logout() {
   };
 }
 
-export function setId() {
+export function setId(payload) {
   return {
     type: SET_ID,
+    payload,
+  };
+}
+
+export function setLoading(payload) {
+  return {
+    type: SET_LOADING_STATE,
+    payload,
   };
 }
 

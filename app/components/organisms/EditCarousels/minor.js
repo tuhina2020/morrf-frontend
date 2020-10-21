@@ -13,14 +13,12 @@ const GetStarted = ({ width, onStart }) => {
     type: 'submit',
     roundCorners: true,
     onClick: () => {
-      console.log('lol');
       onStart();
     },
   };
   return (
     <div className="W($30xl) H($30xl) Bgc(white) Bdrs($bdrsbutton) Ff($ffmanrope) D(f) Ai(s) P($lg) Jc(s) Fld(c) Pos(r) T($10x) Start(80%)">
-      <BaseIcon icon="check" fill="lightgray" iconClasses="W($10x) H($10x)" />
-      <div className="Fz($mmd) Lh(2.4) C($inputGrey)">
+      <div className="Fz($mmd) Lh(1.5) C($inputGrey)">
         Add more details about you to get more projects
       </div>
       <div className="My($lg) W($quarter)">

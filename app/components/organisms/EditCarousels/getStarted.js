@@ -49,7 +49,8 @@ const MESSAGES = {
     add: 'about',
     subheading: 'Short note about yourself',
     reason: 'A short and sweet pitch about yourself',
-    image: '',
+    image:
+      'https://morff-profile.s3-ap-southeast-1.amazonaws.com/images/about.png',
   },
   skills: {
     heading: 'Skills',
@@ -100,28 +101,24 @@ const getFilteredMsg = ({ data, addProps }) => {
   return { filteredMessages, countEmpty };
 };
 
-const GetFilteredMsgBody = ({ filteredMessages }) => {
-  // debugger;
-  return filteredMessages.map(msg => (
-    <div key={msg.add} className="Mt($lg)">
-      <div className="D(f) Ai(c) Jc(c)">
+const Completion = ({ percentage }) => {
+  return (
+    <div className="D(f) Ai(c) Jc(s)">
+      <div className="Ff($ffopensans) Fz($sm) Mt($xs) Mb($sm) Mend($lg)">
+        Your profile is {percentage.toFixed(1)} % complete
+      </div>
+      <div className="D(f) Ai(c) Jc(c) W($10x)">
         <div
-          className="W($10x) H($10x)"
-          style={{
-            backgroundImage: `url(${msg.image})`,
-            backgroundSize: '100%',
-            backgroundRepeat: 'no-repeat',
-          }}
+          className="H(2px) Bgc($iconBlue)"
+          style={{ width: percentage + '%' }}
+        />
+        <div
+          className="H(2px) Bgc($lightestGray2)"
+          style={{ width: 100 - percentage + '%' }}
         />
       </div>
-      <div className="W($45x) Ta(c) Mb($4xl)">
-        <div className="Fz($smx)">{msg.heading}</div>
-        <div className="Fz($sm) Mb($sm)">{msg.subheading}</div>
-        <div className="My($sm) H(1px) W($full) Bgc($disabledGrey2)" />
-        <div className="Fz($sm)">{msg.reason || ''}</div>
-      </div>
     </div>
-  ));
+  );
 };
 
 const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
@@ -135,7 +132,6 @@ const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
     roundCorners: false,
     onClick: () => {
       const currentPage = filteredMessages[currentIndex].add;
-      console.log('add me', currentPage);
       onClickAdd(currentPage);
     },
   };
@@ -161,26 +157,22 @@ const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
 
   return (
     <div className="Bgc(white) Bdrs($xs) Bgc(white) H($fc) Maw($60xl)">
-      <div className="Ff($ffmanrope) Lh(1) Px($lg) Py($sm) Bdb($bdcardGrey)">
-        <div className="Fz($mmd) Fw($fwbold)">Lets build your profile</div>
-        {/* <div className="D(f) Jc(s) Ai(c)"> */}
-        <div className="Ff($ffopensans) Fz($sm) Mt($xs) Mb($sm) Mend($lg)">
-          Your profile is {percentage.toFixed(1)} % complete
+      <div className="D(f) Jc(sb) Ai(c) Bdb($bdcardGrey)">
+        <div className="Ff($ffmanrope) Lh(1) Px($lg) Py($sm)">
+          <div className="Fz($mmd) Fw($fwbold)">Lets build your profile</div>
+          <Completion percentage={percentage} />
+          <div className="Fz($sm) C($inputGrey)">
+            A complete profile increases your chances of being recognised
+          </div>
         </div>
-        {/* <div className="H(1px) W($10x) Bgc(black)" />
-        </div> */}
-
-        <div className="Fz($sm) C($inputGrey)">
-          A complete profile increases your chances of being recognised
-        </div>
+        <BaseIcon
+          icon="close"
+          fill="black"
+          iconClasses="W($lg) Bdrs($md) Bgc($hoverInput):h M($lg) D(b) Bxz(cb) P($xxs)"
+          onClick={closeDialog}
+        />
       </div>
       <div>
-        {/* <BaseIcon
-          icon="check"
-          fill="gray"
-          iconClasses="W($10x) H($10x) Mx(a) D(b)"
-        /> */}
-
         <div className="D(f) Jc(c) Ai(fs) Ff($ffmanrope)">
           <BaseIcon
             icon="showmore"
@@ -203,11 +195,10 @@ const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
                   <div key={msg.add} className="Mt($lg)">
                     <div className="D(f) Ai(c) Jc(c)">
                       <div
-                        className="W($10x) H($10x)"
+                        className="W($2xl) H($2xl) Bgr(nr)"
                         style={{
                           backgroundImage: `url(${msg.image})`,
                           backgroundSize: '100%',
-                          backgroundRepeat: 'no-repeat',
                         }}
                       />
                     </div>
@@ -217,7 +208,7 @@ const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
                     <div className="W($45x) Ta(c) Mb($4xl)">
                       <div className="Fz($smx)">{msg.heading}</div>
                       <div className="Fz($sm)">{msg.subheading}</div>
-                      <div className="My($sm) H(1px) W($full) Bgc($disabledGrey2)" />
+                      <div className="My($lg) H(1px) W($full) Bgc($disabledGrey2)" />
                       <div className="Fz($sm)">{msg.reason || ''}</div>
                     </div>
                   </div>

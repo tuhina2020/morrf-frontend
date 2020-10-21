@@ -32,6 +32,8 @@ const generateRequestForm = ({
     type: 'submit',
   };
 
+  const [focusComboBox, setFocus] = useState(false);
+
   const requestButtonProps = {
     iconDescription: 'callback',
     alignContent: 'center',
@@ -43,17 +45,17 @@ const generateRequestForm = ({
   return (
     <form className="W($full) H($full)" onSubmit={handleSubmit}>
       <FormikInput
-        dimensionClasses="W($full) H($2xl) Mb($sm)"
+        dimensionClasses="W($full) Mb($sm)"
         label="Your name"
         name="name"
         id="name"
-        tabIndex={1}
         onChange={e => {
           handleChange(e);
           setName(e.target.value);
         }}
         value={values.name}
         error={getError('name')}
+        onFocus={() => setFocus(false)}
       />
       <div className="W($full) Mb($sm)">
         <NestedFormikComboBox
@@ -61,7 +63,7 @@ const generateRequestForm = ({
           name="search"
           type="text"
           inline
-          tabIndex={2}
+          isDesktopOrLaptop={isDesktopOrLaptop}
           sliceInline={isDesktopOrLaptop ? 2 : 1}
           error={getError('specialist')}
           prependIcon="showmore"
@@ -76,6 +78,8 @@ const generateRequestForm = ({
           }, [])}
           items={allProfessionTypes}
           viewableValues={values.specialist}
+          focusComboBox={focusComboBox}
+          setFocus={setFocus}
         />
       </div>
       <FormikTextArea
@@ -84,35 +88,33 @@ const generateRequestForm = ({
         placeholder="Brief description of the job"
         name="description"
         id="description"
-        tabIndex={3}
         onChange={handleChange}
         value={values.description}
         error={getError('description')}
+        onFocus={() => setFocus(false)}
       />
       <FormikInput
-        dimensionClasses="W($full) H($2xl) Mb($sm)"
+        dimensionClasses="W($full) Mb($sm)"
         label="Job budget in INR"
         name="budget"
         id="budget"
-        tabIndex={4}
         onChange={handleChange}
         value={values.budget}
         error={getError('budget')}
+        onFocus={() => setFocus(false)}
       />
       <FormikInput
-        dimensionClasses="W($full) H($2xl) Mb($sm)"
+        dimensionClasses="W($full) Mb($sm)"
         label="Your email address"
         name="email"
         id="email"
-        tabIndex={5}
         onChange={handleChange}
         value={values.email}
         error={getError('email')}
+        onFocus={() => setFocus(false)}
       />
       <div
-        className={
-          isDesktopOrLaptop ? 'Mx(a) Mt($sm) W(fc)' : 'Mx(a) Mt($lg) W(fc)'
-        }
+        className={`Mx(a) W(fc) ${isDesktopOrLaptop ? 'Mt($sm)' : 'Mt($lg)'}`}
       >
         <Button {...submitProps}>Submit Request</Button>
       </div>
@@ -154,7 +156,7 @@ const RequestForm = props => {
       })
       .required('Required'),
     budget: Yup.number()
-      .integer('Enter amount')
+      .transform((o, v) => parseFloat(v.replace(/,/g, '')))
       .min(1000, 'Enter atleast 1000')
       .required('Required'),
     specialist: Yup.array().required('Required'),
@@ -172,36 +174,43 @@ const RequestForm = props => {
   const [submitted, setSubmitted] = useState(false);
   const [submitCount, setCount] = useState(0);
   useEffect(() => {
+    let t;
     if (submitted) {
-      setTimeout(() => {
+      t = setTimeout(() => {
         setSubmitted(false);
-      }, 1000);
+      }, 2000);
     }
+    return () => {
+      if (t) clearTimeout(t);
+    };
   }, [submitted]);
   const anotherReqButton = {
     iconDescription: 'again',
     alignContent: 'center',
     kind: 'secondary',
     type: 'button',
-    onClick: () => setCount(0),
+    onClick: () => {
+      setCount(0);
+    },
   };
 
-  const NewRequestButton = () => (
-    <div
-      className={
-        'Mx(a) W(fc) Pos(r) Trsdu(1s) Trstf(e) Trsp(a) ' +
-        (submitted ? 'H(fc)' : 'T($20x) H($50xl)')
-      }
-    >
-      <Button {...anotherReqButton}>Submit Another response</Button>
-    </div>
-  );
+  const NewRequestButton = () =>
+    submitCount === 1 ? (
+      <>
+        <img src={SuccessAnimation} className="W($half) Op(0)" />
+        <div className="W($full) H($2xl)">
+          <div className={'Mx(a) W(fc) Trsdu(1s) Trstf(e) Trsp(a) H(fc)'}>
+            <Button {...anotherReqButton}>Submit Another response</Button>
+          </div>
+        </div>
+      </>
+    ) : null;
 
   return (
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
-      } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg)`}
+      } Mih(575px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) Pos(r)`}
     >
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />
@@ -219,7 +228,6 @@ const RequestForm = props => {
             });
             setCount(1);
             setSubmitted(true);
-            setSubmitting(false);
           }}
           validationSchema={validationSchema}
         >
@@ -231,7 +239,7 @@ const RequestForm = props => {
           })}
         </Formik>
       ) : null}
-      {submitCount > 0 ? <NewRequestButton /> : null}
+      <NewRequestButton />
     </div>
   );
 };

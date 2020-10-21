@@ -18,6 +18,7 @@ import {
   SET_LOCAL_ABOUT_ME,
   SET_ID,
   SET_PORTFOLIO_IMAGES,
+  SET_LOADING_STATE,
 } from './constants';
 const currentSkillsObj1 = [
   {
@@ -39,24 +40,25 @@ const getDataFromLogin = (key, defaultValue = '') =>
   isEmpty(get(loginData, key)) ? defaultValue : loginData[key];
 
 const emptyState = {
-  email: getDataFromLogin('email.email'),
+  loading: true,
+  email: '',
   phone: {
-    number: getDataFromLogin('phone.phone_number'),
-    verified: getDataFromLogin('phone.verified', false),
+    number: '',
+    verified: false,
   },
-  id: getDataFromLogin('id'),
+  id: getDataFromLogin('id', ''),
   personal: {
-    firstName: getDataFromLogin('first_name'),
-    lastName: getDataFromLogin('second_name'),
-    profession: getDataFromLogin('profession'),
-    city: getDataFromLogin('city'),
-    state: getDataFromLogin('state'),
+    firstName: '',
+    lastName: '',
+    profession: '',
+    city: '',
+    state: '',
   },
-  about: getDataFromLogin('about'),
-  portfolio: getDataFromLogin('portfolio', []),
-  skills: getDataFromLogin('skills', []),
-  experience: getDataFromLogin('experience', []),
-  skillsList: getDefaultState('skillsList', []),
+  about: '',
+  portfolio: [],
+  skills: [],
+  experience: [],
+  skillsList: [],
   portfolioImages: {
     id: '',
     images: [],
@@ -287,6 +289,7 @@ const dummyFilled = {
   portfolioImages: {
     id: '',
     images: [],
+    done: false,
   },
 };
 
@@ -321,10 +324,13 @@ const profilePageReducer = (state = initialState, action) =>
         draft.skills = action.payload;
         break;
       case SET_ID:
-        draft.id = '';
+        draft.id = action.payload;
         break;
       case SET_PORTFOLIO_IMAGES:
         draft.portfolioImages = action.payload;
+        break;
+      case SET_LOADING_STATE:
+        draft.loading = action.payload;
     }
   });
 

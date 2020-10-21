@@ -77,6 +77,7 @@ module.exports = () => ({
     auto: 'auto',
     half: '50%',
     quarter: '25%',
+    third: '30%',
     deci: '10%',
     '3xs': '2px',
     xhs: '3px',
@@ -166,6 +167,7 @@ module.exports = () => ({
     hoverInput: '#e4e4e4',
     primaryButton: '#162dff',
     navBarBg: '#f5f5f5',
+    completion: '#949494',
     overlay: 'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))',
     modal: 'rgba(0, 0, 0, 0.4)',
     snackbar: '#323232',
@@ -177,6 +179,7 @@ module.exports = () => ({
   border: {
     prefix: 'bd',
     checkmark: '0 2px 2px 0',
+    tabBlue: '2px solid #0847f4',
     disabledGreyButton: '1px solid #919191',
     primaryButton: '1px solid #162dff',
     headingDarkGrey: '1px solid #111',

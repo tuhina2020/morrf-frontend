@@ -53,4 +53,6 @@ export const SET_ID = 'app/ProfilePage/SET_ID';
 export const SET_PORTFOLIO_IMAGES = 'app/ProfilePage/SET_PORTFOLIO_IMAGES';
 export const REMOVE_PORTFOLIO_IMAGE = 'app/ProfilePage/REMOVE_PORTFOLIO_IMAGE';
 
+export const SET_LOADING_STATE = 'app/ProfilePage/SET_LOADING_STATE';
+
 export const LOGOUT = 'app/ProfilePage/LOGOUT';

@@ -26,7 +26,6 @@ const generateMorffLiteForm = ({
     kind: 'primary',
     type: 'submit',
   };
-  console.log(focused);
   const dimensionClasses = 'Mb($lg) W($full)';
   const dateDimensionClasses = isDesktopOrLaptop
     ? 'Mb($lg) W(217px) Mend($2xl)'
@@ -124,7 +123,7 @@ const CallBackForm = props => {
     if (submitted) {
       setTimeout(() => {
         setSubmitted(false);
-      }, 1500);
+      }, 2000);
     }
   }, [submitted]);
   const anotherReqButton = {
@@ -143,21 +142,35 @@ const CallBackForm = props => {
     onClick: () => setCallToggle(true),
   };
 
-  const NewRequestButton = () => (
-    <div
-      className={
-        'Mx(a) W(fc) Pos(r) Trsdu(1s) Trstf(e) Trsp(a) ' +
-        (submitted ? 'H(fc)' : 'T($20x) H($50xl)')
-      }
-    >
-      <Button {...anotherReqButton}>Submit Another response</Button>
-    </div>
-  );
+  console.log(submitted, submitCount);
+
+  // const NewRequestButton = () => (
+  //   <div
+  //     className={
+  //       'Mx(a) W(fc) Pos(r) Trsdu(1s) Trstf(e) Trsp(a) ' +
+  //       (submitted ? 'H(fc)' : 'T($20x) H($50xl)')
+  //     }
+  //   >
+  //     <Button {...anotherReqButton}>Submit Another response</Button>
+  //   </div>
+  // );
+
+  const NewRequestButton = () =>
+    submitCount > 0 ? (
+      <>
+        <img src={SuccessAnimation} className="W($half) Op(0)" />
+        <div className="W($full) H($2xl)">
+          <div className={'Mx(a) W(fc) Trsdu(1s) Trstf(e) Trsp(a) H(fc)'}>
+            <Button {...anotherReqButton}>Submit Another response</Button>
+          </div>
+        </div>
+      </>
+    ) : null;
   return (
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
-      } H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
+      } Mih(575px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
     >
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />
@@ -165,7 +178,7 @@ const CallBackForm = props => {
         <div className="Pos(r)">
           <BaseIcon
             icon="arrowback"
-            iconClasses="Bdrs($mmd) W($lg) H($lg) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
+            iconClasses="Bdrs($half) W($lg) H($lg) Bgc($navBarBg):h Pos(a) Bxz(cb) P($xss) Start($sm)"
             onClick={() => setCallToggle(false)}
           />
           <div className="Mt($lg) Mx(a) W(fc)">
@@ -180,7 +193,6 @@ const CallBackForm = props => {
               callbackReq(values);
               resetForm({ values: initialValues });
               setName('');
-              setSubmitting(false);
               setCount(1);
               setSubmitted(true);
             }}
@@ -197,7 +209,7 @@ const CallBackForm = props => {
           </Formik>
         </div>
       ) : null}
-      {submitCount > 0 ? <NewRequestButton /> : null}
+      <NewRequestButton />
     </div>
   );
 };

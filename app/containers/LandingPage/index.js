@@ -35,30 +35,11 @@ export function LandingPage({ onSubmitForm, responsiveData }) {
 
   const [showCurve, setCurveStatus] = useState(false);
   const [scrolled, setScrollStatus] = useState(false);
-  const [headerShadow, setHeaderShadow] = useState(false);
-
-  const onScroll = () => {
-    if (document.documentElement.scrollTop > 0) {
-      setHeaderShadow(true);
-    } else {
-      setHeaderShadow(false);
-    }
-    if (
-      document.documentElement.scrollTop > 100 ||
-      (document.body.scrollTop > 100 && !scrolled)
-    ) {
-      setScrollStatus(true);
-    }
-  };
-  window.addEventListener('scroll', onScroll);
 
   useEffect(() => {
     setTimeout(() => {
       setCurveStatus(true);
     }, 500);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
   }, []);
   const { isDesktopOrLaptop } = responsiveData;
   const emailPropsTop = {
@@ -87,7 +68,7 @@ export function LandingPage({ onSubmitForm, responsiveData }) {
 
   return (
     <div className="Ff($ffmont) Ovx(h)">
-      <Header shadow={headerShadow} isDesktopOrLaptop={isDesktopOrLaptop} />
+      <Header isDesktopOrLaptop={isDesktopOrLaptop} />
       <div
         className={`Pos(a) Z(-1) ${getTransitionClass(2)} ${
           showCurve ? (isDesktopOrLaptop ? 'T(4vw)' : 'T(20vw)') : 'T(-24vw)'

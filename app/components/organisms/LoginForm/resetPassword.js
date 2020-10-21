@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import Input from 'components/molecules/Input';
 import Button from 'components/molecules/Button';
 import BaseIcon from 'components/atoms/BaseIcon';
-import { bulkValidationList } from 'utils/helper';
-import { morff as Morff } from 'Assets/svg-comp';
-import {
-  PASSWORD_VALIDATION_OBJ,
-  VERIFICATION_VALIDATION_OBJ,
-} from './constants';
-
+import FormikInput from 'components/molecules/FormikInput';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 const ResetPassword = ({
   next,
   back,
@@ -17,13 +13,7 @@ const ResetPassword = ({
   user,
   wrapperClass,
   submitText,
-  password,
-  setPassword,
-  confirmPassword,
-  verificationCode,
-  setConfirmPassword,
   resend,
-  setCode,
   heading,
   subheading,
   label,
@@ -53,15 +43,40 @@ const ResetPassword = ({
     invalidText: 'New Password doesnot match the password above',
   });
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    setValidate([true, true, true]);
-    const canSubmit = submittable.reduce(
-      (acc, current) => acc && current,
-      true,
-    );
+  const passwordObj = Yup.string()
+    .matches(/[A-Z]/, {
+      excludeEmptyString: true,
+      message: 'Password must have atleast one capital letter',
+    })
+    .matches(/[a-z]/, {
+      excludeEmptyString: true,
+      message: 'Password must have atleast one small letter',
+    })
+    .matches(/[0-9]/, {
+      excludeEmptyString: true,
+      message: 'Password must have atleast one digit',
+    })
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, {
+      excludeEmptyString: true,
+      message: 'Password must have atleast one special character',
+    })
+    .min(8, 'Enter atleast eight characters')
+    .required('Required');
+  const YupObj = {
+    password: passwordObj,
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], "Passwords don't match")
+      .required('Required'),
+    verificationCode: Yup.string()
+      .length(6, 'Enter six characters')
+      .required('Required'),
+  };
+  const validationSchema = Yup.object(YupObj);
 
-    if (canSubmit && password === confirmPassword) next();
+  const initialValues = {
+    password: '',
+    confirmPassword: '',
+    verificationCode: '',
   };
 
   const signInButtonProps = {
@@ -69,89 +84,83 @@ const ResetPassword = ({
     alignContent: 'center',
     kind: 'primary',
     size: 'fc',
-    tabIndex: 2,
+    type: 'submit',
   };
 
   const resendButtonProps = {
     iconDescription: 'resend',
     alignContent: 'center',
     kind: 'tertiary',
-    onClick: () => {
-      console.log('YOYO CLICKER', typeof resend);
-      resend();
-    },
+    onClick: resend,
+    type: 'button',
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} noValidate>
-        <div className="Mb($lg)">
-          <Input
-            {...{
-              value: password,
-              validate: validate[0],
-              tabIndex: 0,
-              dataType: 'string',
-              type: 'password',
-              labelText: label,
-              name: 'password',
-              validationList: PASSWORD_VALIDATION_OBJ,
-              setSubmittable: generateSubmitFunction({ tabIndex: 0 }),
-              onChange: generateOnChange({ change: setPassword, tabIndex: 0 }),
-            }}
-          />
-        </div>
-        <div className="Mb($lg)">
-          <Input
-            {...{
-              value: confirmPassword,
-              tabIndex: 1,
-              labelText: confirmLabel,
-              name: 'confirmPassword',
-              dataType: 'string',
-              type: 'password',
-              validationList: PASSWORD_VALIDATION_OBJ,
-              validate: validate[1],
-              extraValidation,
-              setSubmittable: generateSubmitFunction({ tabIndex: 1 }),
-              onChange: generateOnChange({
-                change: setConfirmPassword,
-                tabIndex: 1,
-              }),
-            }}
-          />
-        </div>
-        <div className="Mb($lg)">
-          <Input
-            {...{
-              value: verificationCode,
-              tabIndex: 2,
-              labelText: 'Verification code',
-              name: 'verificationCode',
-              dataType: 'string',
-              type: 'password',
-              validationList: VERIFICATION_VALIDATION_OBJ,
-              validate: validate[2],
-              setSubmittable: generateSubmitFunction({ tabIndex: 2 }),
-              onChange: generateOnChange({ change: setCode, tabIndex: 2 }),
-            }}
-          />
-        </div>
-        <div className="Mt($5x) Mx(a) W(fc)">
-          <Button {...signInButtonProps}>
-            <div>{submitText}</div>
-          </Button>
-        </div>
-      </form>
-      <div className="Fz($fzbutton) Ta(start) Mt($lg)">
-        <div>Did not receive Verification Code ?</div>
-        <div className="Mt($xs)">
-          <Button {...resendButtonProps}>
-            <div>Click here to resend</div>
-          </Button>
-        </div>
-      </div>
-    </>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, { setSubmitting }) => {
+        alert(JSON.stringify(values));
+        next(values);
+      }}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit, values, errors, touched, handleChange }) => {
+        const getError = key =>
+          key && errors[key] && touched[key] ? errors[key] : null;
+        return (
+          <>
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="Mb($lg)">
+                <FormikInput
+                  value={values.password}
+                  dimensionClasses="W($30x)"
+                  label={label}
+                  type="password"
+                  id="password"
+                  onChange={handleChange}
+                  error={getError('password')}
+                />
+              </div>
+              <div className="Mb($lg)">
+                <FormikInput
+                  value={values.confirmPassword}
+                  label={confirmLabel}
+                  type="password"
+                  id="confirmPassword"
+                  dimensionClasses="W($30x)"
+                  onChange={handleChange}
+                  error={getError('confirmPassword')}
+                />
+              </div>
+              <div className="Mb($lg)">
+                <FormikInput
+                  value={values.verificationCode}
+                  label="Verification code"
+                  type="password"
+                  id="verificationCode"
+                  dimensionClasses="W($30x)"
+                  onChange={handleChange}
+                  error={getError('verificationCode')}
+                />
+              </div>
+              <div className="Mt($5x) Mx(a) W(fc)">
+                <Button {...signInButtonProps}>
+                  <div>{submitText}</div>
+                </Button>
+              </div>
+            </form>
+            <div className="Fz($fzbutton) Ta(start) Mt($lg)">
+              <div>Did not receive Verification Code ?</div>
+              <div className="Mt($xs)">
+                <Button {...resendButtonProps}>
+                  <div>Click here to resend</div>
+                </Button>
+              </div>
+            </div>
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 

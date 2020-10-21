@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import BaseIcon from 'components/atoms/BaseIcon';
 import { classnames } from 'utils/helper';
 import get from 'lodash/get';
-const FilePreview = ({ onRemove, data, onload }) => {
+import FileLoading from 'Assets/gifs/file-loading.gif';
+const FilePreview = ({ onRemove, data, success, onload }) => {
   const [loading, setLoading] = useState(true);
   const [removed, setRemoved] = useState(false);
   const classes = classnames({
@@ -20,21 +21,26 @@ const FilePreview = ({ onRemove, data, onload }) => {
     'Trsp(a)': true,
     'Trstf(e)': true,
   });
+  console.log('PREVIEW COMPONENT ', success);
   return (
     <div className={classes}>
       <div className="Ff($ffmanrope) Fz($sm) C($headingDarkGrey) P($xs)">
         {data.name}
       </div>
-      <BaseIcon
-        icon="close"
-        iconClasses="W($xss) H($xss) Bxz(cb) P($xxs) Bdrs($half) C($headingDarkGrey) Bgc($hoverInput):h M($sm)"
-        onClick={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          setRemoved(true);
-          setTimeout(onRemove, 300);
-        }}
-      />
+      {success ? (
+        <BaseIcon
+          icon="close"
+          iconClasses="W($mmd) Bxz(cb) P($xxs) Bdrs($half) C($headingDarkGrey) Bgc($hoverInput):h M($xms)"
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setRemoved(true);
+            setTimeout(onRemove, 300);
+          }}
+        />
+      ) : (
+        <img src={FileLoading} className="W($mmd) M($xms)" />
+      )}
     </div>
   );
 };
@@ -43,6 +49,7 @@ FilePreview.defaultProps = {
   onload: params => {
     console.log('loading ', params);
   },
+  success: false,
 };
 
 export default FilePreview;

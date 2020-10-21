@@ -43,14 +43,14 @@ const DisplayCard = React.forwardRef((props, ref) => {
         topRightIcon ? (
           <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
             <div>{heading}</div>
-            <BaseIcon
-              icon={topRightIcon}
-              width="28px"
-              height="28px"
-              iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs)"
-              fill={color}
-              onClick={onClickIcon}
-            />
+            <div className="W($lg) H($lg) Pos(r)  P($xxs)">
+              <BaseIcon
+                icon={topRightIcon}
+                iconClasses="Pos(a) T(0) W($full) Bdrs($half) Bgc($navBarBg):h P($xxs)"
+                fill={color}
+                onClick={onClickIcon}
+              />
+            </div>
           </div>
         ) : (
           <div className="Fz($mmd) Lh(1) Px($lg) Py($sm) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">

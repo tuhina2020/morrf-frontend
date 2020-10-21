@@ -15,18 +15,19 @@ const CalendarInput = ({
   value,
 }) => {
   const [startDate, setStartDate] = useState(value || undefined);
-  const ExampleCustomInput = ({ value, onClick }) => (
+  const ExampleCustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <FormikInput
       label={label}
       name={name}
       id={id}
       value={value}
       error={error}
+      ref={ref}
       dimensionClasses={dimensionClasses}
       onClick={onClick}
       onChange={onChange}
     />
-  );
+  ));
   const renderDayContents = (day, date) => {
     const sameDay = datesAreOnSameDay(date) ? 'Bgc(black) C(white)' : '';
     const selected =

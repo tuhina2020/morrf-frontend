@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
-import Button from 'components/molecules/Button';
-import { PASSWORD_VALIDATION_OBJ } from './constants';
-import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
+import Button from 'components/molecules/Button';
+import * as Yup from 'yup';
 const ExistingPassword = ({
   next,
   forgot,
@@ -68,7 +67,6 @@ const ExistingPassword = ({
       validationSchema={validationSchema}
     >
       {({ handleSubmit, values, errors, touched, handleChange }) => {
-        console.log(errors);
         const getError = key =>
           key && errors[key] && touched[key] ? errors[key] : null;
         return (
@@ -77,6 +75,7 @@ const ExistingPassword = ({
               label="Password"
               name="password"
               id="password"
+              dimensionClasses="W($30xl) Mx(a)"
               onChange={handleChange}
               value={values.password}
               error={getError('password')}

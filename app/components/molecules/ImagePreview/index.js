@@ -42,7 +42,7 @@ const ImagePreview = ({ data, onCancel }) => {
     <div>
       <BaseIcon
         icon="close"
-        iconClasses="W($xl) H($xl) Bxz(cb) P($xxs) Bdrs($half) C(white) Bgc($inputGrey):h M($sm) Start($full) Pos(r) T(0)"
+        iconClasses="W($xl) H($xl) Bxz(cb) P($xxs) Bdrs($half) C(white) Bgc($inputGrey):h M($sm) Start(90%) Pos(f) T($10x)"
         onClick={e => {
           e.preventDefault();
           e.stopPropagation();

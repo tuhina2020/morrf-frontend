@@ -18,7 +18,14 @@ const parseNestedObj = items => {
   return finalList;
 };
 
-const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
+const NestedFormikCheckList = ({
+  items,
+  id,
+  values,
+  onSelect,
+  isOpen,
+  tabIndex,
+}) => {
   const iterableList = parseNestedObj(items);
   const iterableLen = iterableList.length;
   const selectedIds = values.map(sk => sk.id);
@@ -27,7 +34,7 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
       id={`${id}_menu`}
       aria-labelledby={`${id}_input_label`}
       className={`Bgc($navBarBg) W($full) Trsdu(0.6s) Trsp(a) Trstf(e) Bxsh($bxshcheckbox) ${
-        isOpen ? 'H($18xl) Ov(s)' : 'H(0) B($xxs) Ov(h)'
+        isOpen ? 'H($18xl) Ov(s)' : 'H(0) B($xxs) Ov(s)'
       }`}
     >
       {iterableList.map((item, index) => (
@@ -56,6 +63,7 @@ const NestedFormikCheckList = ({ items, id, values, onSelect, isOpen }) => {
                   labelSize="sm"
                   bluePosition="Start(58px)"
                   bgColorStyle="Bgc($navBarBg)"
+                  tabIndex={tabIndex}
                   onChange={e => {
                     e.preventDefault();
                     e.stopPropagation();

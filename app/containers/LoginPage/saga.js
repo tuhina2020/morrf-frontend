@@ -144,6 +144,7 @@ export function* signInAllUsersSaga({ payload }) {
         type: 'error',
       }),
     );
+    yield put(setLoginData({ empty: true }));
     localStorage.removeItem('loginData');
     localStorage.removeItem('token');
   }
@@ -242,11 +243,13 @@ export function* setGlobalChoice({ payload }) {
       method: 'PATCH',
       data,
     });
-    yield put(setLoginData(existingUser.user));
+    localStorage.setItem('loginData', JSON.stringify(existingUser));
     localStorage.setItem('role', role);
+    yield put(setLoginData(existingUser));
     yield put(setChoice(role));
   } catch (err) {
     localStorage.removeItem('role');
+    yield put(setChoice(''));
     yield put(
       setToastData({
         message: typeof err === 'string' ? err : err.message,

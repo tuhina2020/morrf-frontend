@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import BaseIcon from 'components/atoms/BaseIcon';
 
 const getClasses = ({ active, disabled, value, invalid, joined }) => ({
-  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Z(1) Pstart($md) W(fc) Pstart($md) Trsdu(0.3s) Trsp(a) Trstf(e) Cur(a) ${
+  labelClasses: `Lh(0) Ff($ffmanrope) Pos(a) Z(1) Pstart($md) W($full) Pstart($md) Trsdu(0.3s) Trsp(a) Trstf(e) Cur(a) ${
     disabled ? 'C($disabledGrey2)' : ''
   } ${
     active && !disabled

@@ -58,6 +58,7 @@ const EnterEmail = ({
                 id="email"
                 onChange={handleChange}
                 value={values.email}
+                dimensionClasses="W($30xl) Mx(a)"
                 error={getError('email')}
               />
               <div className="Mt($5x) Mx(a) W($10x)">
@@ -68,14 +69,14 @@ const EnterEmail = ({
         }}
       </Formik>
 
-      <div className="My($2xl) D(f) Ai(c) Jc(c)">
+      {/* <div className="My($2xl) D(f) Ai(c) Jc(c)">
         <div className="H(1px) W($half) Bgc($hoverInput)" />
         <div className="W(40px)">or</div>
         <div className="H(1px) W($half) Bgc($hoverInput)" />
       </div>
       <div className="Mx(a) W(fc)">
         <GoogleLogin signInApi={signInGoogleApi} checkUser={checkUser} />
-      </div>
+      </div> */}
     </>
   );
 };

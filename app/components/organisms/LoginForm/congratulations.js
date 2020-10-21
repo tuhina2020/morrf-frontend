@@ -13,7 +13,10 @@ const CongratulationsScreen = ({ setUserChoice }) => {
   };
   return (
     <div>
-      <GenericMessage message="Why are you joining morff?" />
+      <GenericMessage
+        line2="What brings you to Morff?"
+        line1="One last question before we are all set to go"
+      />
       <div className="W(fc) Mx(a) Mb($xl)">
         <Button
           {...buttonDisplayProps}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import ImagePreview from 'components/molecules/ImagePreview';
@@ -6,21 +6,30 @@ import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 import { classnames } from 'utils/helper';
 import Modal from 'react-modal';
-const PortfolioScroll = ({ onNext, onBack, files, current = false }) => {
+import LazyImage from 'components/molecules/LazyImg';
+const PortfolioScroll = ({
+  onNext,
+  onBack,
+  files,
+  onPreviewImage,
+  current = false,
+}) => {
   Modal.setAppElement('#app');
   const imageCount4 = files.length <= 4;
   const remaining = imageCount4 ? [...Array(4 - files.length).keys()] : [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentImage, setCurrentImage] = useState({});
+  const [totalWidth, setWidth] = useState(0);
   const commonIconStyle = classnames({
-    'W($xl)': true,
-    'H($xl)': true,
+    'W($xl)': !imageCount4,
+    'H($xl)': !imageCount4,
     'Bdrs($lg)': true,
     'C(white)': imageCount4,
-    'Bgc($navBarBg):h': !imageCount4,
     'Trsdu(0.4s)': true,
     'Trsp(a)': true,
     'Trstf(e)': true,
+    'W(0)': imageCount4,
+    'H(0)': imageCount4,
   });
   const onBackClick = () => {
     if (imageCount4) return;
@@ -30,9 +39,11 @@ const PortfolioScroll = ({ onNext, onBack, files, current = false }) => {
     }
   };
 
+  const newRef = useRef();
+
   const onNextClick = () => {
     if (imageCount4) return;
-    if (currentIndex < files.length / 4 - 1) {
+    if (currentIndex < files.length - 1) {
       setCurrentIndex(currentIndex + 1);
       onNext();
     }
@@ -41,19 +52,36 @@ const PortfolioScroll = ({ onNext, onBack, files, current = false }) => {
   const onImageClick = (e, params) => {
     e.preventDefault();
     e.stopPropagation();
+    onPreviewImage(true);
     setCurrentImage(params);
   };
+  const onClosePreview = () => {
+    onPreviewImage(false);
+    setCurrentImage({});
+  };
+  console.log(
+    imageCount4,
+    files.length,
+    'imageCount4',
+    commonIconStyle,
+    currentIndex === 0 ? 'C($navBarBg)' : '',
+  );
+
+  console.log(totalWidth);
   return (
     <div className="D(f) Jc(fs) Ai(c) W(fc) End($xss)">
       <BaseIcon
         icon="showmore"
-        iconClasses={commonIconStyle + ' Rotate(90deg)'}
+        iconClasses={`${commonIconStyle} Rotate(90deg) ${
+          currentIndex === 0 ? 'C($disabledGrey)' : 'Bgc($navBarBg):h'
+        }`}
         onClick={onBackClick}
       />
       {/* <div>{JSON.stringify(images)}</div> */}
       <div className="Ov(h) Maw($50xl)">
         <div
           className="D(f) Ai(c) Jc(fs) Trsdu(1s) Trsp(a) Trstf(e)"
+          ref={newRef}
           style={{
             transform: `translateX(${-1 * currentIndex * 400}px)`,
           }}
@@ -62,39 +90,33 @@ const PortfolioScroll = ({ onNext, onBack, files, current = false }) => {
             <div
               key={id}
               className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
-              onClick={e => onImageClick(e, { data: url || data, type })}
+              onClick={e => onImageClick(e, { data: url, type })}
             >
-              {type.match('image') && (
-                <img src={url || data} className="W($10x) H($10x) Bdrs($xxs)" />
-              )}
-              {type.match('pdf') && (
-                <div className="W($10x) H($10x) Bdrs($xxs) Ff($ffmanrope) Fz($sm) Bd($bdinputGrey) P($xs)">
-                  {name.length <= 65 ? name : name.slice(0, 62) + '...'}
-                </div>
-              )}
+              <img
+                src={url}
+                className="W(a) H($10x) Bdrs($xxs)"
+                // placeHolderClass="W($10x) H($10x)"
+              />
             </div>
           ))}
-          {/* {remaining.map(o => (
-            <div
-              key={o}
-              className="W($10x) H($10x) M($xxs) Bdrs($xxs) Bgc(white)"
-            />
-          ))} */}
         </div>
       </div>
       <BaseIcon
         icon="showmore"
-        iconClasses={commonIconStyle + ' Rotate(-90deg)'}
-        fill={imageCount4 ? 'white' : 'black'}
+        iconClasses={`${commonIconStyle} Rotate(-90deg) ${
+          currentIndex >= files.length - 1
+            ? 'C($disabledGrey)'
+            : 'Bgc($navBarBg):h'
+        }`}
         onClick={onNextClick}
       />
       <Modal
         isOpen={!isEmpty(currentImage)}
-        onRequestClose={() => setCurrentImage({})}
-        className={`W($60xl) M(a) H($fc) Pos(r) T(0) Bd(n) O(n)`}
+        onRequestClose={onClosePreview}
+        className={`W($60xl) M(a) H($fc) Pos(r) T($20x) Bd(n) O(n)`}
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
-        <ImagePreview {...currentImage} onCancel={() => setCurrentImage({})} />
+        <ImagePreview {...currentImage} onCancel={onClosePreview} />
       </Modal>
     </div>
   );
@@ -127,7 +149,7 @@ const DraftPortfolio = ({ project, loopKey, onEdit, mode, last }) => {
   );
 };
 
-const Portfolio = ({ portfolio, onEdit, onAdd }) => {
+const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage }) => {
   if (isEmpty(portfolio)) return null;
   return (
     // <DisplayCard
@@ -152,7 +174,7 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
           {
             project,
             startYear: from,
-            endYear: duration,
+            endYear: to,
             highlights: description,
             files,
             client,
@@ -173,7 +195,7 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
                   {project}
                 </div>
                 <div className="Fz($smd) W($quarter) Ta(e)">
-                  {from} {duration ? ', ' + duration + ' mon' : ''}
+                  {from} {to ? ', ' + to : ''}
                 </div>
                 <BaseIcon
                   icon="edit"
@@ -185,9 +207,10 @@ const Portfolio = ({ portfolio, onEdit, onAdd }) => {
               </div>
               <div className="Mt($xs) Mb($lg)">{description}</div>
               <PortfolioScroll
-                images={files}
+                files={files}
                 onNext={() => {}}
                 onBack={() => {}}
+                onPreviewImage={onPreviewImage}
               />
             </div>
           ) : (
@@ -208,6 +231,10 @@ Portfolio.propTypes = {
   portfolio: PropTypes.array,
   onEdit: PropTypes.func,
   onAdd: PropTypes.func,
+};
+
+PortfolioScroll.defaultProps = {
+  files: [],
 };
 
 export default Portfolio;

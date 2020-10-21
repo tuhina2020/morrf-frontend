@@ -53,12 +53,6 @@ export const isLoggedIn = () => {
 export const deviceScreenInfo = () => {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1024 });
   const isTabletOrMobile = false;
-  console.log(
-    'CALCULATING ',
-    isDesktopOrLaptop,
-    screen.width,
-    screen.width > 1224,
-  );
   return {
     isDesktopOrLaptop,
     isTabletOrMobile,

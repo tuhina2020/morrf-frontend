@@ -19,6 +19,7 @@ const Tag = ({
   title,
   disabled,
   onDelete,
+  tabIndex,
   ...other
 }) => {
   const [hover, setHover] = useState(false);
@@ -70,6 +71,7 @@ const Tag = ({
       className={classnames(wrapperStyleJSON)}
       disabled={disabled}
       {...other}
+      tabIndex={tabIndex}
       onMouseEnter={() => !disabled && setHover(true)}
       onMouseLeave={() => !disabled && setHover(false)}
       type="button"
@@ -125,6 +127,11 @@ Tag.propTypes = {
    * Function to execute on delete
    */
   onDelete: PropTypes.func,
+  tabIndex: PropTypes.number,
+};
+
+Tag.defaultProps = {
+  tabIndex: -1,
 };
 
 export default Tag;

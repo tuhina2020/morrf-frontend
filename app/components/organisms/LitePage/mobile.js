@@ -31,27 +31,7 @@ const MobilePage = ({
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
   const [headerShadow, setHeaderShadow] = useState(false);
-  const onScroll = () => {
-    if (document.documentElement.scrollTop > 0) {
-      setHeaderShadow(true);
-    } else {
-      setHeaderShadow(false);
-    }
-    if (
-      document.documentElement.scrollTop > 100 ||
-      (document.body.scrollTop > 100 && !scrolled)
-    ) {
-      setScrollStatus(true);
-    }
-  };
-  window.addEventListener('scroll', onScroll);
-
-  useEffect(() => {
-    setTimeout(() => {}, 500);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
+  const [name, setName] = useState('');
   const onClickShowMore = () => {
     setScrollStatus(!scrolled);
     const showMore = () => {
@@ -82,7 +62,7 @@ const MobilePage = ({
   };
   return (
     <>
-      <Header shadow={headerShadow} isDesktopOrLaptop={false} height="72px" />
+      <Header isDesktopOrLaptop={false} height="72px" />
       {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
@@ -116,12 +96,13 @@ const MobilePage = ({
               allProfessionTypes={allProfessionTypes}
               sendEmail={sendEmail}
               success={success}
+              setName={setName}
             />
           )}
         </div>
       </div>
-      <div className="Bgc($navBarBg)">
-        <div className="Ff($ffmanrope) D(f) Fw($fwmedium) Ai(c) Jc(c) Fz($lmg) Pt($lg)">
+      <div className="Bgc($navBarBg) Pos(r) T($5xl)">
+        <div className="Ff($ffmanrope) D(f) Fw($fwmedium) Ai(c) Jc(c) Fz($lmg) Pt($lg) Ta(c)">
           What makes us awesome!
         </div>
         <div className="Mt(2vw) D(f) Ai(c) Jc(c) Fld(c)">
@@ -203,8 +184,12 @@ const MobilePage = ({
         </div>
         <div className="D(f) Ai(c) Jc(c) Fz($xss) Bdt($bdsolidLightestGray) Ff($ffmanrope) C(white) Py($xs)">
           <div className="C($placeholderGrey)">© 2020 Morff</div>
-          <div className="Mx($lg)">Privacy Policy</div>
-          <div className="">Terms of Use</div>
+          <a href="/privacy" className="Td(n) C(white) Mx($lg)">
+            Privacy Policy
+          </a>
+          <a href="/termsofuse" className="Td(n) C(white) Mx($lg)">
+            Terms of Use
+          </a>
         </div>
       </div>
     </>

@@ -35,8 +35,6 @@ const LitePage = ({
     getSkills();
   }, []);
 
-  console.log('RESPONSIVE ', responsiveData);
-
   const props = {
     isDesktopOrLaptop,
     callbackReq,

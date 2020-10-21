@@ -70,14 +70,10 @@ const DragAndDropFn = () => {
   return (
     <div className="Pos(r) D(ib)" ref={dropRef}>
       <div
+        className="T(0) B(0) Start(0) End(0) Z(9999)"
         style={{
           border: 'dashed grey 4px',
           backgroundColor: 'rgba(255,255,255,.8)',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 9999,
         }}
       >
         <div

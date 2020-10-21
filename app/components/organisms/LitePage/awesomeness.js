@@ -18,7 +18,7 @@ const CounterContent = [
   },
   {
     image:
-      'https://morff-commingsoon.s3-ap-southeast-1.amazonaws.com/project-management.png',
+      'https://morff-commingsoon.s3-ap-southeast-1.amazonaws.com/communication.png',
     number: 3,
     headerText: 'Project management assistance',
     bodyText:
@@ -37,18 +37,18 @@ const CounterContent = [
 const CounterCard = ({ image, headerText, bodyText, number }) => {
   const odd = number % 2 === 1;
   const Body = () => (
-    <div className={`Maw(56%) ${odd ? 'Mstart(8%)' : 'Mend(8%)'}`}>
+    <div className={`Maw(56%) ${odd ? 'Mend(8%)' : 'Mstart(8%)'}`}>
       <div className="Fz($lmg) Mb($lg)">{headerText}</div>
       <div className="Fz($mmd) Ff($ffopensans)">{bodyText}</div>
     </div>
   );
   return (
     <div className="Ff($ffmanrope) D(f) Ai(c) Jc(c) My(5%)" key={number}>
-      {!odd && <Body />}
+      {odd && <Body />}
       <div className="W(21vw)">
         <img src={image} className="W($full)" />
       </div>
-      {odd && <Body />}
+      {!odd && <Body />}
     </div>
   );
 };
@@ -56,7 +56,7 @@ const CounterCard = ({ image, headerText, bodyText, number }) => {
 const MobileCounterCard = ({ image, headerText, bodyText, number }) => {
   const odd = number % 2 === 1;
   return (
-    <div className="Ff($ffmanrope) Ta(c) Mb($xl) W(88%) Mx(a)" key={number}>
+    <div className="Ff($ffmanrope) Ta(c) Mb($xl) Mx(a)" key={number}>
       <div className="My($lg)">
         <img src={image} className="W($full)" />
       </div>
@@ -71,8 +71,16 @@ const MobileCounterCard = ({ image, headerText, bodyText, number }) => {
 const Awesomeness = ({ mobile }) => {
   return (
     <div className={mobile ? 'Py($mmd) Px(10vw)' : 'Mx(21vw)'}>
-      {CounterContent.map(obj =>
-        mobile ? <MobileCounterCard {...obj} /> : <CounterCard {...obj} />,
+      {CounterContent.map((obj, index) =>
+        mobile ? (
+          <div key={index}>
+            <MobileCounterCard {...obj} />
+          </div>
+        ) : (
+          <div key={index}>
+            <CounterCard {...obj} />
+          </div>
+        ),
       )}
     </div>
   );

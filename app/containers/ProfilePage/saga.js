@@ -36,6 +36,7 @@ import {
   getUser,
   setId,
   setPortfolioImages,
+  setLoading,
 } from './actions';
 import { setToast } from 'utils/helper';
 import { Field } from 'formik';
@@ -53,7 +54,7 @@ function* logout() {
   yield put(setLocalExperience([]));
   yield put(setLocalPersonalData({}));
   yield put(setLocalSkills([]));
-  yield put(setId());
+  yield put(setId(''));
   setToast({
     message: 'You have been logged out.',
     type: 'info',
@@ -81,12 +82,18 @@ function* uploadImage({ payload }) {
   } = profilePage;
   console.log(profilePage);
   try {
+    yield put(
+      setPortfolioImages({
+        id,
+        images,
+        done: false,
+      }),
+    );
     let newImages = yield all(
       Array.from(files).map(async file => {
         const lastIndex = file.name.lastIndexOf('.');
         const file_name = file.name.substr(0, lastIndex);
         const extension = file.name.substr(lastIndex + 1);
-        debugger;
 
         const signedUrl = await getSignedUrlById({
           file_name: file_name + new Date().getTime() + '.' + extension,
@@ -115,12 +122,12 @@ function* uploadImage({ payload }) {
     if (compact(newImages).length < files.length)
       throw 'Error Uploading Images';
 
-    newImages = [...images, ...newImages];
-    debugger;
+    newImages = [...images, ...newImages.map(img => ({ id: img }))];
     yield put(
       setPortfolioImages({
         id,
         images: newImages,
+        done: true,
       }),
     );
   } catch (err) {
@@ -131,7 +138,7 @@ function* uploadImage({ payload }) {
         type: 'error',
       }),
     );
-    yield put(setPortfolioImages({ id: '', images: [] }));
+    yield put(setPortfolioImages({ id: '', images: [], done: false }));
   }
 }
 
@@ -219,16 +226,58 @@ function* setRemoteExperience({ payload }) {
   }
 }
 
+function* setCurrentUser({ payload }) {
+  const { user, phone_verified = true } = payload;
+  try {
+    localStorage.setItem('loginData', JSON.stringify(user));
+    yield put(setId(user.id));
+    yield put(setLoginData(user));
+    yield put(setLocalAboutMe(user.about));
+    yield put(setEmail(user.email.email));
+    localStorage.setItem('role', user.role);
+    yield put(
+      setLocalPhone({
+        number: user.phone.phone_number,
+        verified: phone_verified ? user.phone.verified : false,
+      }),
+    );
+    yield put(
+      setLocalPersonalData({
+        firstName: user.first_name,
+        lastName: user.second_name,
+        profession: user.profession,
+        city: user.city,
+        state: user.state,
+      }),
+    );
+    yield put(setLocalSkills(user.skills));
+    yield put(setLocalExperience(user.experience));
+    yield put(setLocalPortfolio(user.portfolio));
+  } catch (err) {
+    yield put(setLocalAboutMe(''));
+    yield put(setLocalPhone({}));
+    yield put(setLocalPortfolio([]));
+    yield put(setLocalExperience([]));
+    yield put(setLocalPersonalData([]));
+    yield put(setLocalSkills([]));
+    throw err;
+  }
+}
+
 function* getCurrentUser({ payload = {} }) {
+  yield put(setLoading(true));
   const { phone_verified = true } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  if (profilePage && profilePage.id) {
+  if (!isEmpty(profilePage.id)) {
     const requestURL = `/user/${profilePage.id}?experience=true&portfolio=true`;
     try {
       const user = yield call(request, requestURL, { method: 'GET' });
       localStorage.setItem('loginData', JSON.stringify(user));
+      yield put(setId(user.id));
+      yield put(setLoginData(user));
       yield put(setLocalAboutMe(user.about));
       yield put(setEmail(user.email.email));
+      localStorage.setItem('role', user.role);
       yield put(
         setLocalPhone({
           number: user.phone.phone_number,
@@ -247,13 +296,16 @@ function* getCurrentUser({ payload = {} }) {
       yield put(setLocalSkills(user.skills));
       yield put(setLocalExperience(user.experience));
       yield put(setLocalPortfolio(user.portfolio));
+      yield put(setLoading(false));
     } catch (err) {
+      yield put(setLoading(false));
       yield put(setLocalAboutMe(''));
       yield put(setLocalPhone({}));
       yield put(setLocalPortfolio([]));
       yield put(setLocalExperience([]));
       yield put(setLocalPersonalData([]));
       yield put(setLocalSkills([]));
+      throw err;
     }
   }
 }
@@ -292,6 +344,12 @@ function* setRemotePersonalData({ payload }) {
       { op: 'add', path: '/state', value: payload.state },
     ];
     yield call(request, requestURL, { method: 'PATCH', data });
+    yield put(
+      setToastData({
+        message: 'Successfully edited personal details',
+        type: 'info',
+      }),
+    );
     yield put(getUser());
   } catch (err) {
     yield put(
@@ -305,10 +363,12 @@ function* setRemotePersonalData({ payload }) {
 
 function* setRemotePortfolio({ payload }) {
   console.log('Portfolio Data has been set', payload);
+  yield put(setLoading(true));
   const { portfolio } = payload;
   const profilePage = yield select(makeSelectProfilePage());
   const {
     portfolioImages: { images },
+    portfolio: existingPortfolio,
   } = profilePage;
   const requestURL = `/user/${profilePage.id}/portfolio`;
   const data = {
@@ -317,16 +377,23 @@ function* setRemotePortfolio({ payload }) {
     startYear: portfolio.startYear,
     endYear: portfolio.endYear,
     highlights: portfolio.highlights,
-    files: images,
+    files: images.map(img => img.id),
   };
-  debugger;
   try {
-    const user = yield call(request, requestURL, {
+    const newPortfolio = yield call(request, requestURL, {
       method: 'POST',
       data,
     });
+    yield put(
+      setToastData({
+        message: 'Successfully edited portfolio',
+        type: 'info',
+      }),
+    );
     yield put(getUser());
+    yield put(setLoading(false));
   } catch (err) {
+    yield put(setLoading(false));
     yield put(
       setToastData({
         message: typeof err === 'string' ? err : err.message,
@@ -337,12 +404,14 @@ function* setRemotePortfolio({ payload }) {
 }
 
 function* editPortfolio({ payload }) {
+  yield put(setLoading(true));
   const {
     portfolio: { id, project, highlights, startYear, endYear, client, user_id },
   } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  const {
+  let {
     portfolioImages: { images },
+    portfolio: oldPortfolio,
   } = profilePage;
   const requestURL = `/user/${user_id}/portfolio/${id}`;
   const data = compact([
@@ -351,23 +420,31 @@ function* editPortfolio({ payload }) {
     endYear && { op: 'replace', path: '/endYear', value: endYear },
     highlights && { op: 'replace', path: '/highlights', value: highlights },
     client && { op: 'replace', path: '/client', value: client },
-    !isEmpty(images) && { op: 'replace', path: '/files', value: images },
+    !isEmpty(images) && {
+      op: 'replace',
+      path: '/files',
+      value: images.map(img => img.id),
+    },
   ]);
   if (isEmpty(data)) return;
   try {
-    yield call(request, requestURL, {
+    const newPortfolio = yield call(request, requestURL, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json-patch+json',
       },
       data,
     });
-    yield put(getUser());
+    const index = oldPortfolio.findIndex(p => p.id === id);
+    oldPortfolio[index] = newPortfolio;
+    yield put(setLoading(false));
+    yield put(setLocalPortfolio(oldPortfolio));
     setToast({
       message: 'Successfully Edited Portfolio',
       mode: 'info',
     });
   } catch (err) {
+    yield put(setLoading(false));
     yield put(
       setToastData({
         message: typeof err === 'string' ? err : err.message,
@@ -430,6 +507,12 @@ function* removePortfolio({ payload }) {
   try {
     yield call(request, requestURL, { method: 'DELETE' });
     yield put(getUser());
+    yield put(
+      setToastData({
+        message: 'Removed portfolio',
+        type: 'info',
+      }),
+    );
   } catch (err) {
     console.log(err);
     yield put(
@@ -447,6 +530,12 @@ function* removeExperience({ payload }) {
   const requestURL = `/user/${profilePage.id}/experience/${id}`;
   try {
     yield call(request, requestURL, { method: 'DELETE' });
+    yield put(
+      setToastData({
+        message: 'Removed Experience',
+        type: 'info',
+      }),
+    );
     yield put(getUser());
   } catch (err) {
     yield put(
@@ -476,7 +565,6 @@ function* setRemotePhone({ payload }) {
         type: 'info',
       }),
     );
-    // yield put(getUser({ phone_verified: false }));
   } catch (err) {
     yield put(
       setToastData({
@@ -503,13 +591,15 @@ function* getAllSkills() {
 function* removePortfolioImage({ payload }) {
   const { index, id } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  const {
+  let {
     portfolioImages: { images },
   } = profilePage;
+  images.splice(index, 1);
   yield put(
     setPortfolioImages({
       id,
-      images: images.splice(index, 1),
+      images,
+      done: true,
     }),
   );
 }

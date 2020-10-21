@@ -108,7 +108,6 @@ const firebaseSignin = ({ signInApi, checkUser }) => {
       const token = result.credential.accessToken;
       const { user } = result;
       refreshToken = user.refreshToken;
-      console.log(user);
       const { email } = user;
       // const { given_name: firstName, family_name: lastName } = user;
       checkUser({ email, refreshToken });
