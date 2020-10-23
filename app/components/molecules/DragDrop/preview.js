@@ -21,7 +21,6 @@ const FilePreview = ({ onRemove, data, success, onload }) => {
     'Trsp(a)': true,
     'Trstf(e)': true,
   });
-  console.log('PREVIEW COMPONENT ', success);
   return (
     <div className={classes}>
       <div className="Ff($ffmanrope) Fz($sm) C($headingDarkGrey) P($xs)">

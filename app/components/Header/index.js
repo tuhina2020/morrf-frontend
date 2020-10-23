@@ -48,7 +48,7 @@ export default function Header({
     >
       <div
         className={`D(f) ${
-          isDesktopOrLaptop ? 'Jc(s) P(1vw)' : 'Jc(c) Py(5vw)'
+          screen.width > 900 ? 'Jc(s) P(1vw)' : 'Jc(c) Py(5vw)'
         } Ai(c)`}
         style={{ height }}
       >

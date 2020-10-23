@@ -2,6 +2,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { EMAIL_REQUEST, CALLBACK_REQUEST, GET_ALL_SKILLS } from './constants';
 import request from 'utils/request';
 import { setToastData, setSuccess, setLocalSkills } from './actions';
+import sortBy from 'lodash/sortBy';
 export function* emailReq({ payload }) {
   const requestURL =
     'https://p00egotma6.execute-api.ap-southeast-1.amazonaws.com/prod/project-details';
@@ -76,8 +77,9 @@ function* getAllSkills() {
       },
       false,
     );
-    yield put(setLocalSkills(response));
-    localStorage.setItem('skillsList', JSON.stringify(response));
+    const skills = sortBy(response, 'category');
+    yield put(setLocalSkills(skills));
+    localStorage.setItem('skillsList', JSON.stringify(skills));
   } catch (error) {
     yield put(setLocalSkills([]));
     localStorage.removeItem('skillsList');

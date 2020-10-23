@@ -8,14 +8,14 @@ import LitePage from 'containers/LitePage/Loadable';
 import PrivacyPage from 'containers/Privacy/Loadable';
 import TermsOfUsePage from 'containers/TermsOfUse/Loadable';
 const ROUTES = [
-  {
-    path: '/landing',
-    component: LandingPage,
-    header: false,
-    footer: false,
-    auth: false,
-    key: 'landing',
-  },
+  // {
+  //   path: '/landing',
+  //   component: LandingPage,
+  //   header: false,
+  //   footer: false,
+  //   auth: false,
+  //   key: 'landing',
+  // },
   {
     path: '/termsofuse',
     component: TermsOfUsePage,
@@ -66,15 +66,15 @@ const ROUTES = [
     nav: true,
     key: 'project',
   },
-  {
-    path: '/',
-    component: LandingPage,
-    exact: true,
-    header: true,
-    footer: true,
-    auth: false,
-    key: 'home',
-  },
+  // {
+  //   path: '/',
+  //   component: LandingPage,
+  //   exact: true,
+  //   header: true,
+  //   footer: true,
+  //   auth: false,
+  //   key: 'home',
+  // },
   {
     path: '/notfound',
     component: NotFoundPage,
@@ -84,7 +84,7 @@ const ROUTES = [
     key: 'notfound',
   },
   {
-    path: '/lite',
+    path: '/',
     component: LitePage,
     header: true,
     footer: true,

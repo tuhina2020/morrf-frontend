@@ -166,6 +166,13 @@ const PortfolioEditForm = ({
     }
   };
 
+  const imageUploadSuccess = isEmpty(portfolioImages)
+    ? false
+    : portfolioImages.reduce((acc, cur) => {
+        const success = !isEmpty(cur.id);
+        return acc && success;
+      }, true);
+
   const activeSaveProps = {
     iconDescription: 'Save',
     alignContent: 'center',
@@ -173,6 +180,7 @@ const PortfolioEditForm = ({
     size: 'half',
     type: 'submit',
     roundCorners: false,
+    disabled: !imageUploadSuccess,
   };
 
   const onCancelHandler = ({ values, mode }) => () => {

@@ -26,13 +26,16 @@ const PersonalDetails = ({ personal, onEdit }) => {
         </div>
         <div className="D(f) Ai(s) Jc(c)">
           <BaseImage text={firstName[0].toUpperCase()} />
-          <BaseIcon
-            icon="edit"
-            width="28px"
-            height="28px"
-            iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
-            onClick={onEdit}
-          />
+          <div className="Mstart($lg) Pos(r) P($xxs) Bgc($navBarBg):h Bdrs($half) W($lmg) H($lmg)">
+            <BaseIcon
+              icon="edit"
+              fill="#555"
+              onClick={onEdit}
+              width="20px"
+              height="20px"
+              iconClasses="Pos(a) T($xxs) Start($xxs)"
+            />
+          </div>
         </div>
       </div>
     </div>

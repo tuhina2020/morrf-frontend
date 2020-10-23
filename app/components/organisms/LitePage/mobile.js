@@ -81,7 +81,7 @@ const MobilePage = ({
           </div>
         </div>
 
-        <div className="Pb($2xl)">
+        <div className="Pb($2xl)" ref={formRef}>
           {callBackForm ? (
             <CallBackForm
               isDesktopOrLaptop={isDesktopOrLaptop}

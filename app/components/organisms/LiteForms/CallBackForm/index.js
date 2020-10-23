@@ -142,8 +142,6 @@ const CallBackForm = props => {
     onClick: () => setCallToggle(true),
   };
 
-  console.log(submitted, submitCount);
-
   // const NewRequestButton = () => (
   //   <div
   //     className={

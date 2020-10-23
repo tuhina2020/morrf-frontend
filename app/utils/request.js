@@ -34,9 +34,6 @@ export default function request(url, options, internal = true) {
     ...omit(options, ['headers', 'data', 'form']),
   };
 
-  if (formData)
-    console.log('HEADERS ', modifiedOptions, formData.getAll('file'));
-
   return fetch(internal ? BASE_URL.default + url : url, modifiedOptions).then(
     response =>
       new Promise((resolve, reject) => {

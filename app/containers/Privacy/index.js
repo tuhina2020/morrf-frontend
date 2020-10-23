@@ -4,7 +4,11 @@ const Privacy = ({ responsiveData }) => {
   const { isDesktopOrLaptop } = responsiveData;
   return (
     <>
-      <Header isDesktopOrLaptop={isDesktopOrLaptop} height="72px" />
+      <Header
+        isDesktopOrLaptop={isDesktopOrLaptop}
+        height="72px"
+        padding="Px(5vw)"
+      />
       <div className="Py($5xl) Px(5vw) Ff($ffopensans) Fz($md)">
         <p className="Ta(c) Fz($xl) Ff($ffmanrope)">
           <span>

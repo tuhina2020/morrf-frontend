@@ -21,7 +21,6 @@ const FormikComboBox = ({
   focusComboBox,
   setFocus,
 }) => {
-  console.log('GLOBAL FOCUS ', focusComboBox);
   const [isOpen, setOpen] = useState(focusComboBox);
   useEffect(() => {
     setOpen(focusComboBox);
@@ -44,7 +43,6 @@ const FormikComboBox = ({
     setOpen(true);
     setFocus(true);
     onChange(newValues);
-    console.log('FOCUS ON CHANGE');
   };
 
   const deleteValues = skill => {
@@ -159,11 +157,9 @@ const FormikComboBox = ({
           className="Op(0) Pos(a) T(0)"
           focus={isOpen.toString()}
           onFocus={e => {
-            console.log('NESTED FOUCS');
             setOpenValue(e, true);
           }}
           onBlur={e => {
-            console.log('NESTED BLUR');
             setOpenValue(e, false);
           }}
         />
@@ -230,6 +226,7 @@ FormikComboBox.defaultProps = {
   sliceInline: 2,
   error: '',
   tabIndex: 0,
+  setFocus: () => {},
   focusComboBox: false,
 };
 

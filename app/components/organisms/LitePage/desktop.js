@@ -83,7 +83,7 @@ const DesktopPage = ({
         style={{
           backgroundImage: `url(${Splash}),url(${Gradient})`,
           backgroundPosition: 'center top',
-          backgroundSize: 'auto auto, auto auto',
+          backgroundSize: screen.width >= 1920 ? '100%' : 'auto',
         }}
       >
         {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T($5xl)" />
