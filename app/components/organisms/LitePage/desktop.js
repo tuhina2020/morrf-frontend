@@ -12,9 +12,8 @@ import RequestForm from 'components/organisms/LiteForms/RequestForm/index';
 import { Link } from 'react-router-dom';
 import LiteCard from 'components/molecules/LiteCard';
 import Gradient from 'Assets/images/lite/Gradient_BG.png';
-import Splash from 'Assets/images/lite/Splash_BG.png';
 import HeadingBg from 'Assets/images/lite/heading.png';
-import menuHeader from 'Assets/images/Menu_Header.png';
+import menuHeader from 'Assets/images/Header.png';
 import BaseIcon from 'components/atoms/BaseIcon/index';
 import Button from 'components/molecules/Button/index';
 import Steps from './steps';
@@ -79,16 +78,13 @@ const DesktopPage = ({
         padding="Px(6%)"
       />
       <div
-        className="Pos(r) T($5xl) Bgr(nr)"
+        className="Pos(r) T(71px) Bgr(nr)"
         style={{
-          backgroundImage: `url(${Splash}),url(${Gradient})`,
+          backgroundImage: `url(${Gradient})`,
           backgroundPosition: 'center top',
-          backgroundSize: screen.width >= 1920 ? '100%' : 'auto',
+          backgroundSize: 'cover',
         }}
       >
-        {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T($5xl)" />
-      <img src={Gradient} className="Pos(a) Z(-2) W($full) T($5xl) H($full)" /> */}
-
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($4xl) Ta(c) Mb($sm)">
             Looking for a freelance designer?
@@ -169,24 +165,24 @@ const DesktopPage = ({
         </div>
 
         <div className="Bgc($footer) C(white)">
-          <div className="H($12xl) D(f) Jc(sb) Ai(c) Mx($11xl) Ff($ffmanrope)">
-            <div>
+          <div className="H($12xl) D(f) Jc(s) Ai(c) Mx($11xl) Ff($ffmanrope)">
+            <div className="W($quarter)">
               <div className="Fz($fztitle)">Like to know more?</div>
               <div className="Fz($smd)">
                 Reach us at :{' '}
-                <a href="mailto:contact@morff.io" className="Td(n) C(white)">
-                  contact@morff.io
+                <a href="mailto:care@morff.io" className="Td(n) C(white)">
+                  care@morff.io
                 </a>
               </div>
             </div>
-            <div className="Ta(c)">
+            <div className="Ta(c) W($full)">
               <Morff className="W($5x) H($xl)" />
               <div className="Fz($smd) C($placeholderGrey) Mb($lg)">
                 A recognised startup by DPIIT, Govt. of India
               </div>
             </div>
-            <div>
-              <div className="Ta(end) D(f)">
+            <div className="W($quarter)">
+              <div className="Ta(end) D(f) Ai(c) Jc(fe)">
                 <div
                   className="Pend($xxs) Cur(p)"
                   onClick={() =>

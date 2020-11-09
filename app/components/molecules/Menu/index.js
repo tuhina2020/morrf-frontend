@@ -14,7 +14,7 @@ const getMenuStyle = ({
 }) => {
   const commonStyles = {
     'O(n)': true,
-    'W(100%)': true,
+    'W($full)': true,
     'H(100%)': true,
   };
 

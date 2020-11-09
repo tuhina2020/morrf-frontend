@@ -35,7 +35,7 @@ export default function Header({
   return (
     <div className={blur ? 'Blur($xxs)' : ''}>
       <div
-        className={`Pos(r) T(0) W(100%) Op(1) Z(2) Pstart($lg) ${getTransitionClass(
+        className={`Pos(r) T(0) W($full) Op(1) Z(2) Pstart($lg) ${getTransitionClass(
           1,
         )} H(a) ${
           headerShadow ? 'Bxsh($bxshnavBar)' : 'Bdb($bdcardGrey)'

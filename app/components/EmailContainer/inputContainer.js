@@ -70,7 +70,7 @@ class InputContainer extends React.Component {
     const currentError = this.currentError({ validObject });
     return (
       <div className={isDesktopOrLaptop ? '' : 'H(19vw)'}>
-        <label className="W(100%)" htmlFor={name}>
+        <label className="W($full)" htmlFor={name}>
           <div
             className={`Pos(r) ${
               active
@@ -138,7 +138,7 @@ InputContainer.propTypes = {
 
 InputContainer.defaultProps = {
   containerClass: 'W(20%) Mend(2vw)',
-  inputClass: 'Bd(n) Bdb($bdnewGrey) W(100%)',
+  inputClass: 'Bd(n) Bdb($bdnewGrey) W($full)',
   changeHandler: () => {},
   blurHandler: () => {},
   focusHandler: () => {},

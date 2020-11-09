@@ -23,11 +23,11 @@ const TermsOfUse = ({ responsiveData }) => {
             statutes as amended by the Information Technology Act, 2000. These
             terms of use (<strong>Terms of Use</strong>) mandate the terms on
             which users (<strong>You</strong> or
-            <strong>Your</strong> or
-            <strong>Yourself</strong> or
-            <strong>Users</strong>) interested in availing Morff Services
+            <strong> Your</strong> or
+            <strong> Yourself</strong> or
+            <strong> Users</strong>) interested in availing Morff Services
             (defined below), and accessing the website{' '}
-            <a href="https://www.morff.io/">
+            <a href="/">
               <span className="s2">www.morff.io</span>
             </a>{' '}
             owned and operated by Prelko Private Limited (<strong>Morff</strong>
@@ -81,7 +81,7 @@ const TermsOfUse = ({ responsiveData }) => {
             our Platforms and services.
           </span>
         </p>
-        <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
+        <p className="Mb($sm) Ta(j) My($xs) Fz($md) Fw($fwbold)">
           <span>
             <strong>In this Terms of Use:</strong>
           </span>
@@ -122,17 +122,17 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Morff</strong>,<strong>we</strong>,<strong>our</strong>,
-            <strong>company</strong> or
-            <strong>the company</strong> or
-            <strong>us</strong> means Prelko Private Limited (CIN
+            <strong>Morff</strong>,<strong> we</strong>,<strong> our</strong>,
+            <strong> company</strong> or
+            <strong> the company</strong> or
+            <strong>us</strong> means Prelko Private Limited ( CIN
           </span>
           <span className="s4">U74999PN2020PTC191370</span>
-          <span>).</span>
+          <span> ).</span>
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Morff Services</strong>
+            <strong>Morff Services </strong>
             means all services provided by us to you whether offline or online
             and whether or not through the Platform, and as more specifically
             described in Part A below.
@@ -140,14 +140,14 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Morff Verified</strong>
+            <strong>Morff Verified </strong>
             means Users who have been satisfactorily verified under the Know
             your Customer and identity verification policy.
           </span>
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Intellectual Property Rights</strong>
+            <strong>Intellectual Property Rights </strong>
             means any and all intellectual property rights, existing worldwide
             and the subject matter of such rights, including: (a) patents,
             copyright, rights in circuit layouts (or similar rights), registered
@@ -161,7 +161,7 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Milestone Payment</strong>
+            <strong>Milestone Payment </strong>
             means a payment made by the Buyer for the provision of Freelancer
             Services under a Project Agreement and which will be released in
             accordance with the section Milestone Payments of these Terms of
@@ -170,7 +170,7 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project</strong>
+            <strong>Project </strong>
             means a job offered or awarded by a Buyer via thePlatform, which may
             include a Project Request by a Buyer, a Project awarded by a Buyer,
             a service bought by a Buyer from a Freelancer in relation to a
@@ -181,7 +181,7 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project Agreement</strong>
+            <strong>Project Agreement </strong>
             means an agreement executed between a Buyer and a Freelancer in
             relation to the execution of a Project, including the Project Brief
             as provided by Buyer through Morff as part of the Morff Services,
@@ -190,7 +190,7 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project Brief</strong>
+            <strong>Project Brief </strong>
             means the document setting out the scope of a Project, including but
             not limited to items such as a design brief, key milestones, budget
             etc.
@@ -205,14 +205,14 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project Milestone</strong>
+            <strong>Project Milestone </strong>
             in respect of a Project, means the key milestones identified in the
             Project Agreement.
           </span>
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project Proposal</strong>
+            <strong>Project Proposal </strong>
             in respect of a Project Request, means the proposal given by the
             Freelancer in respect of a Project including services, proposed
             costs, timelines, and other details as required in such Project
@@ -221,7 +221,7 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>Project Request</strong>
+            <strong>Project Request </strong>
             means a project that is listed by a Buyer and in respect of which a
             Freelancer can submit a Project Proposal via the Website or the
             Platform for provision of the Freelancer Services.
@@ -229,29 +229,32 @@ const TermsOfUse = ({ responsiveData }) => {
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>User</strong>,<strong>you</strong> or
-            <strong>your</strong> means an individual who visits the Platform or
-            uses the Morff Services whether as a Buyer or as a Freelancer.
+            <strong>User</strong>,<strong> you</strong> or
+            <strong> your</strong> means an individual who visits the Platform
+            or uses the Morff Services whether as a Buyer or as a Freelancer.
           </span>
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
-            <strong>User Agreement</strong>
+            <strong>User Agreement </strong>
             means: (1) this Terms of Use; (2) the Privacy Policy as amended from
             time to time; (3) any other contractual provisions accepted by both
             the Freelancer and Buyer uploaded to the Website, to the extent not
-            inconsistent with the Project Agreement and the Privacy Policy; (4)
-            the Project terms as awarded and accepted on the Platform and in the
-            Project Agreement, to the extent not inconsistent with the Terms of
-            Use and the Privacy Policy; and (5) any other material incorporated
-            by reference from time to time.
+            inconsistent with the Project Agreement and the{' '}
+            <a href="/privacy">
+              <span className="s2">Privacy Policy;</span>
+            </a>{' '}
+            (4) the Project terms as awarded and accepted on the Platform and in
+            the Project Agreement, to the extent not inconsistent with the Terms
+            of Use and the Privacy Policy; and (5) any other material
+            incorporated by reference from time to time.
           </span>
         </p>
         <p className="Mb($sm) Ta(j) My($xs) Fz($md)">
           <span>
             <strong>Website</strong> means the Website operated by Morff and
             available at:
-            <a href="https://www.morff.io/">
+            <a href="/">
               <span className="s5">Morff.io</span>
             </a>
             and any of its regional or other domains or properties, whether or
@@ -1549,7 +1552,7 @@ const TermsOfUse = ({ responsiveData }) => {
                   Terms of Use or are dissatisfied with the Platform, Morff
                   Services, Your only recourse is to stop accessing the
                   Platform. Morff will make Your account dormant upon receipt of
-                  request in writing/e-mail at support@morff.io.
+                  request in writing/e-mail at care@morff.io.
                 </span>
               </li>
               <li className="Ta(j)">
@@ -1623,12 +1626,12 @@ const TermsOfUse = ({ responsiveData }) => {
                 on the Platform, please report the same to the following e-mail
                 id:
               </span>
-              <span className="s9">support@morff.io</span>
+              <span className="s9">care@morff.io</span>
               <span>
                 . In case You have any queries with respect to the Terms of Use,
-                or the Morff Services, please write to Us at
+                or the Morff Services, please write to us at
               </span>
-              <span className="s9">support@morff.io</span>
+              <span className="s9">care@morff.io</span>
             </p>
             <p className="p6" className="Mstart($sm) Ta(j)">
               <br />
@@ -1642,11 +1645,35 @@ const TermsOfUse = ({ responsiveData }) => {
               <span>
                 You hereby expressly agree to receive Project related
                 communications by way of SMS and/or e-mails from Morff, or other
-                third parties. You can unsubscribe/ opt-out from receiving
+                third parties regardless of whether or not you may have signed
+                up/registered with the National Do Not Call Registry (in Fully
+                or Partly Blocked category as per the National Customer
+                Preference Register) Communication with regard to your use of
+                the Morff Services whether or not it is Project related
+                communication shall not be construed as unsolicited commercial
+                communication under the guidelines of the Telecom Regulatory
+                Authority in India, and agree that you have specifically opted
+                to receive communication in this regard on the telephone number
+                provided by you. You can unsubscribe/ opt-out from receiving
                 communications through SMS and e-mail anytime by contacting us
                 for the same. However, You may still receive communications from
                 with respect to Your use of the Morff Services via SMS and/or
-                e-mail.
+                e-mail. You further agree that you authorize Morff to
+                share/disclose your contact information to any third party
+                service provider, or any affiliates, group companies, their
+                authorized agents, or third-party service providers for the
+                purpose of any communication about Morff Services, whether or
+                not such communication is Project related.
+              </span>
+            </p>
+            <p className="p12 Mb($xs) Mstart($smx) Ta(j)">
+              <span>
+                You also acknowledge and agree that any and all communication
+                you make with other Users/Morff through the platform whether in
+                the form of calls, or SMS may be through a third party platform,
+                and authorize Morff and such third party platform to do all such
+                acts as are required for the purpose of facilitating such
+                communication.
               </span>
             </p>
             <p className="p6" className="Mstart($sm) Ta(j)">
@@ -1718,7 +1745,7 @@ const TermsOfUse = ({ responsiveData }) => {
                   violates Your intellectual property, You must promptly notify
                   Morff in writing at [
                 </span>
-                <span className="s9">support@Morff.io</span>
+                <span className="s9">care@morff.io</span>
                 <span>
                   ] These notifications should only be submitted by the owner of
                   the intellectual property or an agent duly authorized to act
@@ -2015,21 +2042,21 @@ const TermsOfUse = ({ responsiveData }) => {
                 </span>
               </li>
               <li className="Ta(j)">
-                <span>The Commission Fee shall be [</span>
-                <span className="s9">&bull;</span>
-                <span>] % ([</span>
-                <span className="s9">
-                  <em>insert percentage in words here</em>
-                </span>
                 <span>
-                  ] percent) of each Milestone Payment, not including any
-                  Penalty amount to be deducted from the Milestone Payment.
+                  <span>
+                    The Commission Fee shall be
+                    <strong>
+                      <span className="s9"> 10 % (Ten percent) </span>
+                    </strong>
+                    of each Milestone Payment, not including any Penalty amount
+                    to be deducted from the Milestone Payment.
+                  </span>
                 </span>
               </li>
               <li className="Ta(j)">
-                <span>Freelancer agrees to pay a Service Fee of INR [</span>
-                <span className="s9">&bull;</span>
-                <span>] for availing Morff Services.</span>
+                <span>Freelancer agrees to pay a Service Fee of INR </span>
+                <strong className="s9">1499</strong>
+                <span> for availing Morff Services.</span>
               </li>
             </ol>
             <p className="p6" className="Mstart($sm) Ta(j)">

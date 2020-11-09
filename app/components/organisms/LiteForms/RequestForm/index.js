@@ -82,49 +82,51 @@ const generateRequestForm = ({
           setFocus={setFocus}
         />
       </div>
-      <FormikTextArea
-        dimensionClasses="W($full) Mb($sm)"
-        heightClass="H($10x)"
-        placeholder="Brief description of the job"
-        name="description"
-        id="description"
-        onChange={handleChange}
-        value={values.description}
-        error={getError('description')}
-        onFocus={() => setFocus(false)}
-      />
-      <FormikInput
-        dimensionClasses="W($full) Mb($sm)"
-        label="Job budget in INR"
-        name="budget"
-        id="budget"
-        onChange={handleChange}
-        value={values.budget}
-        error={getError('budget')}
-        onFocus={() => setFocus(false)}
-      />
-      <FormikInput
-        dimensionClasses="W($full) Mb($sm)"
-        label="Your email address"
-        name="email"
-        id="email"
-        onChange={handleChange}
-        value={values.email}
-        error={getError('email')}
-        onFocus={() => setFocus(false)}
-      />
-      <div
-        className={`Mx(a) W(fc) ${isDesktopOrLaptop ? 'Mt($sm)' : 'Mt($lg)'}`}
-      >
-        <Button {...submitProps}>Submit Request</Button>
-      </div>
-      <div className="My($lg) D(f) Ai(c) Jc(c) Mx(a) W(60%)">
-        <div className="H(1px) W($half) Bgc($hoverInput)" />
-        <div className="W(40px) Ff($ffmanrope) Fz($smd) Ta(c)">or</div>
-        <div className="H(1px) W($half) Bgc($hoverInput)" />
-      </div>
-      <div className="Mx(a) W(fc)">
-        <Button {...requestButtonProps}>Request a Callback</Button>
+      <div className="Pos(r) T($3xl)">
+        <FormikTextArea
+          dimensionClasses="W($full) Mb($sm)"
+          heightClass="H($10x)"
+          placeholder="Brief description of the job"
+          name="description"
+          id="description"
+          onChange={handleChange}
+          value={values.description}
+          error={getError('description')}
+          onFocus={() => setFocus(false)}
+        />
+        <FormikInput
+          dimensionClasses="W($full) Mb($sm)"
+          label="Job budget in INR"
+          name="budget"
+          id="budget"
+          onChange={handleChange}
+          value={values.budget}
+          error={getError('budget')}
+          onFocus={() => setFocus(false)}
+        />
+        <FormikInput
+          dimensionClasses="W($full) Mb($sm)"
+          label="Your email address"
+          name="email"
+          id="email"
+          onChange={handleChange}
+          value={values.email}
+          error={getError('email')}
+          onFocus={() => setFocus(false)}
+        />
+        <div
+          className={`Mx(a) W(fc) ${isDesktopOrLaptop ? 'Mt($sm)' : 'Mt($lg)'}`}
+        >
+          <Button {...submitProps}>Submit Request</Button>
+        </div>
+        <div className="My($lg) D(f) Ai(c) Jc(c) Mx(a) W(60%)">
+          <div className="H(1px) W($half) Bgc($hoverInput)" />
+          <div className="W(40px) Ff($ffmanrope) Fz($smd) Ta(c)">or</div>
+          <div className="H(1px) W($half) Bgc($hoverInput)" />
+        </div>
+        <div className="Mx(a) W(fc)">
+          <Button {...requestButtonProps}>Request a Callback</Button>
+        </div>
       </div>
     </form>
   );

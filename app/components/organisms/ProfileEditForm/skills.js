@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import NestedFormikComboBox from 'components/molecules/FormikComboBox/nested';
 import Tag from 'components/molecules/Tag';
@@ -24,6 +24,7 @@ const SkillEditForm = ({ onCancel, onSave, data: skills, allSkills }) => {
     roundCorners: false,
     onClick: onCancel,
   };
+  const [focusComboBox, setFocus] = useState(false);
   return (
     <div className="Bdrs($xs) Bgc(white)">
       <div className="Fz($mmd) Lh(1) Px($lg) Pb($xss) Pt($md) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
@@ -53,8 +54,10 @@ const SkillEditForm = ({ onCancel, onSave, data: skills, allSkills }) => {
                 }}
                 items={allSkills}
                 viewableValues={values.skills}
+                focusComboBox={focusComboBox}
               />
             </div>
+            <div className="H($2xl) W($full)" />
             <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
               <Button {...cancelProps}>Cancel</Button>
               <Button {...saveProps}>Save</Button>

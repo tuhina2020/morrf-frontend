@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { classnames } from 'utils/helper';
 import { Field } from 'formik';
+import { isEmpty } from 'lodash';
 
 const FormikCheckbox = React.forwardRef((props, ref) => {
   const [focus, setFocus] = useState(false);
@@ -71,33 +72,44 @@ const FormikCheckbox = React.forwardRef((props, ref) => {
   });
 
   return (
-    <Field name={props.name}>
-      {({ field }) => (
-        <label className="D(f) Jc(fs) Ai(c) Cur(p) Bg(i) W($full) Pos(r)">
-          <span className={checkmarkBg} />
-          <span className={checkmarkStyle} />
-          <span className={blueBorderOnFocus} />
-          <input
-            className={inputStyles}
-            {...field}
-            disabled={props.disabled}
-            type="checkbox"
-            tabIndex={props.tabIndex}
-            checked={props.value}
-            onChange={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              props.onChange(e);
-            }}
-            aria-checked={props.value}
-            onFocus={() => setFocus(true)}
-            ref={ref}
-            onBlur={() => setFocus(false)}
-          />
-          <div className={labelStyle}>{props.labelText}</div>
-        </label>
-      )}
-    </Field>
+    <div>
+      <Field name={props.name}>
+        {({ field }) => (
+          <label className="D(f) Jc(fs) Ai(c) Cur(p) Bg(i) W($full) Pos(r)">
+            <span className={checkmarkBg} />
+            <span className={checkmarkStyle} />
+            <span className={blueBorderOnFocus} />
+            <input
+              className={inputStyles}
+              {...field}
+              disabled={props.disabled}
+              type="checkbox"
+              tabIndex={props.tabIndex}
+              checked={props.value}
+              onChange={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                props.onChange(e);
+              }}
+              aria-checked={props.value}
+              onFocus={() => setFocus(true)}
+              ref={ref}
+              onBlur={() => setFocus(false)}
+            />
+            <div className={labelStyle}>
+              {!isEmpty(props.labelText) ? props.labelText : props.children}
+            </div>
+          </label>
+        )}
+      </Field>
+      <div
+        className={`Ff($ffmanrope) C($error) Pstart($md) Fz($fzlabel) H($smd) Pos(a) Mt($3xs) ${
+          !isEmpty(props.error) ? 'Op(1)' : 'Op(0)'
+        } Trsdu(0.3s) Trsp(a) Trstf(e)`}
+      >
+        {props.error}
+      </div>
+    </div>
   );
 });
 
@@ -114,10 +126,11 @@ FormikCheckbox.propTypes = {
 
 FormikCheckbox.defaultProps = {
   disabled: false,
-  labelText: 'Label',
+  labelText: '',
   labelSize: 'sm',
   bluePosition: 'Start(-2px)',
   tabIndex: 0,
+  error: '',
 };
 
 export default FormikCheckbox;

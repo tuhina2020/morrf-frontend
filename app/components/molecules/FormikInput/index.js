@@ -40,7 +40,7 @@ const getClasses = ({ active, disabled, value, invalid, joined }) => ({
       ? 'Bdb($bdprimaryButton)'
       : 'Bdb($bdinputGrey)'
   } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.3s) Trsp(a) Trstf(e) Pos(r)`,
-  inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
+  inputClasses: `Bd(n) Cur(a) W($full) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) ${
     active ? 'Op(1)::ph' : 'Op(0)::ph'
   } Trsdu(0.3s)::ph Trsp(a)::ph Trstf(e)::ph`,
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${

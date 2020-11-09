@@ -28,7 +28,7 @@ const getClasses = ({ active, disabled, value, invalid, animate }) => ({
   } D(f) C($inputGrey)::ph Bgc($navBarBg) Bdrs($bdrsinput) ${
     disabled ? '' : 'Bgc($hoverInput):h'
   } Trsdu(0.3s) Trsp(a) Trstf(e)`,
-  inputClasses: `Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) lhcrop`,
+  inputClasses: `Bd(n) Cur(a) W($full) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) lhcrop`,
   warningClasses: `C($error) W($md) H($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.3s) Trsp(a) Trstf(e)`,

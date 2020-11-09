@@ -41,6 +41,7 @@ const LoginForm = ({
     token && (isEmpty(role) || role === 'undefined')
       ? EMAIL_LOGIN_STATES.CONGRATULATIONS
       : EMAIL_LOGIN_STATES.ENTER_EMAIL,
+    // EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT,
   );
 
   useEffect(() => {

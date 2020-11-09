@@ -86,11 +86,11 @@ const PortfolioScroll = ({
             transform: `translateX(${-1 * currentIndex * 400}px)`,
           }}
         >
-          {files.map(({ url, id, data, type, name }) => (
+          {files.map(({ url, id, data, type, name }, index) => (
             <div
               key={id}
               className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
-              onClick={e => onImageClick(e, { data: url, type })}
+              onClick={e => onImageClick(e, { data: url, type, index })}
             >
               <img
                 src={url}
@@ -113,10 +113,14 @@ const PortfolioScroll = ({
       <Modal
         isOpen={!isEmpty(currentImage)}
         onRequestClose={onClosePreview}
-        className={`W($60xl) M(a) H($fc) Pos(r) T($20x) Bd(n) O(n)`}
+        className={`W($fc) M(a) H($fc) Pos(r) T($20x) Bd(n) O(n)`}
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
-        <ImagePreview {...currentImage} onCancel={onClosePreview} />
+        <ImagePreview
+          {...currentImage}
+          onCancel={onClosePreview}
+          files={files}
+        />
       </Modal>
     </div>
   );

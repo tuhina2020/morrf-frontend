@@ -202,7 +202,6 @@ const CreateProjectForm = ({ onCancel, onSave, skillsList, onCb }) => {
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
           console.log(onSave);
-          alert(JSON.stringify(values));
           onSave(values);
           setSubmitting(false);
           onCancel();

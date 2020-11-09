@@ -44,7 +44,7 @@ export function LandingPage({ onSubmitForm, responsiveData }) {
   const { isDesktopOrLaptop } = responsiveData;
   const emailPropsTop = {
     formClass: isDesktopOrLaptop ? 'D(f) Ai(c) Jc(sb)' : 'D(f) Fld(c)',
-    containerClass: isDesktopOrLaptop ? 'D(f) Jc(sb) W(100%)' : '',
+    containerClass: isDesktopOrLaptop ? 'D(f) Jc(sb) W($full)' : '',
     submitSuccessStyle: isDesktopOrLaptop
       ? 'Fz($fzcaption)'
       : 'Fz($fzlarge) Fld(c) Mt(17vw) Mb(22vw)',
@@ -106,7 +106,7 @@ export function LandingPage({ onSubmitForm, responsiveData }) {
             >
               <img
                 src={ComingSoonGraphic}
-                className="W(100%)"
+                className="W($full)"
                 alt="Coming Soon"
               />
             </div>

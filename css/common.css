@@ -62,8 +62,8 @@ body.fontLoaded {
 .Toastify__toast--default {
   background: white;
   color: black;
-  border: 1px solid rgb(255, 67, 67);
-  border-radius: 4px;
+  border-left: 8px solid #172be2;
+  border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.08) 3px 3px 12px;
 }
 
@@ -95,6 +95,8 @@ body.fontLoaded {
   transition: 0.3s ease;
   -ms-flex-item-align: start;
   align-self: flex-start;
+  position: relative;
+  top: 8px;
 }
 
 .Toastify__close-button--default {

@@ -22,14 +22,12 @@ const FormikComboBox = ({
   setFocus,
 }) => {
   const [isOpen, setOpen] = useState(focusComboBox);
-  useEffect(() => {
-    setOpen(focusComboBox);
-  }, [focusComboBox]);
   const setOpenValue = (e, set) => {
     e.preventDefault();
     e.stopPropagation();
     if (disabled) return;
     // debugger;
+    console.log('SETTING OPEN AND FOCUS TO ', set);
     setOpen(set);
     setFocus(set);
   };
@@ -135,31 +133,26 @@ const FormikComboBox = ({
   );
 
   return (
-    <>
+    <div className="W($full) Pos(r)">
       {!inline && <NotInlineValues />}
       <div
-        className="W($full) Pos(r)"
+        className="W($full) Pos(a) Z(2)"
         aria-haspopup="listbox"
         aria-owns={`${id}_menu`}
         aria-expanded={isOpen}
       >
-        {/* <div
-          role="button"
-          className={labelStyle}
-          onClick={toggleOpen}
-          onKeyDown={toggleOpen}
-          tabIndex={0}
-        > */}
         <input
           // type="hidden"
           id="lol"
           tabIndex={tabIndex}
-          className="Op(0) Pos(a) T(0)"
+          className="Op(0) Pos(a) T(0) W($full) H($full)"
           focus={isOpen.toString()}
           onFocus={e => {
+            console.log('FOCUS');
             setOpenValue(e, true);
           }}
           onBlur={e => {
+            console.log('BLUR');
             setOpenValue(e, false);
           }}
         />
@@ -200,7 +193,7 @@ const FormikComboBox = ({
           {error || ''}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ const getClasses = ({ active, disabled, value, invalid, heightClass }) => ({
       ? 'Bdb($bdprimaryButton)'
       : 'Bdb($bdinputGrey)'
   } D(f) C($inputGrey) Bdrs($bdrsinput) Trsdu(0.8s) Trsp(a) Trstf(e)`,
-  inputClasses: `${heightClass} O(n) Rsz(n) Bd(n) Cur(a) W(100%) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) Ff($ffmanrope) Ff($ffmanrope)::ph`,
+  inputClasses: `${heightClass} O(n) Rsz(n) Bd(n) Cur(a) W($full) Pb($sm) Pt($smx) Pstart($md) Fz($fzbutton) C($inputGrey) C($inputGrey)::ph Op(1)::ph Bdrs($bdrsinput) Pos(r)::ph T(2px):ph Bg(i) Ff($ffmanrope) Ff($ffmanrope)::ph`,
   warningClasses: `C($error) W($md) H($md) Pos(r) T($md) End($md) ${
     invalid ? 'Op(1)' : 'Op(0)'
   } Trsdu(0.8s) Trsp(a) Trstf(e)`,

@@ -13,8 +13,7 @@ import Button from 'components/molecules/Button';
 import { Link } from 'react-router-dom';
 import LiteCard from 'components/molecules/LiteCard';
 import Gradient from 'Assets/images/lite/Gradient_BG.png';
-import Splash from 'Assets/images/lite/Splash_BG.png';
-import menuHeader from 'Assets/images/Menu_Header.png';
+import menuHeader from 'Assets/images/Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
@@ -67,9 +66,9 @@ const MobilePage = ({
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
         style={{
-          backgroundImage: `url(${Splash}),url(${Gradient})`,
+          backgroundImage: `url(${Gradient})`,
           backgroundPosition: 'center top',
-          backgroundSize: 'auto auto, 100% 100%',
+          backgroundSize: 'cover',
         }}
       >
         <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
@@ -131,7 +130,7 @@ const MobilePage = ({
           <Button {...anotherReqButton}>Drop a project request</Button>
         </div>
       </div>
-      <div className="W($full) Ta(c) Mx(a) Bgc(white) Mt($xxl)">
+      <div className="W($full) Ta(c) Mx(a) Bgc(white) Mt($xxl) Pos(r) T($5xl)">
         <div className="Fw($fwmedium) Ff($ffmanrope) Ta(c) Fz($lg)">
           About Us
         </div>
@@ -161,8 +160,8 @@ const MobilePage = ({
         </div>
         <div className="Ff($ffmanrope) C(white) Fz($smd) Mb($lg)">
           Reach us at:
-          <a href="mailto:contact@morff.io" className="Td(n) C(white)">
-            contact@morff.io
+          <a href="mailto:care@morff.io" className="Td(n) C(white)">
+            care@morff.io
           </a>
         </div>
         <div>

@@ -34,7 +34,7 @@ export default function Header({
   }, []);
   return (
     <div
-      className={`Pos(f) T(0) W(100%) Op(1) Z(2) ${padding} ${!bgImg &&
+      className={`Pos(f) T(0) W($full) Op(1) Z(3) ${padding} ${!bgImg &&
         !bgc &&
         'Bgc(#d4d4d4)'} ${getTransitionClass(2)} ${
         headerShadow ? 'Bxsh($bxshnavBar)' : ''

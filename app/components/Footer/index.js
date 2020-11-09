@@ -8,7 +8,7 @@ export default function Footer({ onSubmitForm, isDesktopOrLaptop }) {
     formClass: isDesktopOrLaptop
       ? 'D(f) Ai(c) Jc(sb) W(50%)'
       : 'D(f) Fld(c) Mt(5vw)',
-    containerClass: isDesktopOrLaptop ? 'D(f) W(100%)' : '',
+    containerClass: isDesktopOrLaptop ? 'D(f) W($full)' : '',
     submitSuccessStyle: isDesktopOrLaptop
       ? 'Fz($fzcaption) Mb(3vw)'
       : 'Fz($fzlarge) Fld(c)',
@@ -40,11 +40,8 @@ export default function Footer({ onSubmitForm, isDesktopOrLaptop }) {
         } C($bodyGrey) Mb(1.3vw)`}
       >
         Reach us at:{' '}
-        <Link
-          to="mailto : contact@morff.io"
-          className="Td(n) C($placeholderGrey)"
-        >
-          contact@morff.io
+        <Link to="mailto : care@morff.io" className="Td(n) C($placeholderGrey)">
+          care@morff.io
         </Link>
       </div>
 

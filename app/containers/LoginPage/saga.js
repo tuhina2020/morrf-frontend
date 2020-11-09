@@ -137,6 +137,7 @@ export function* signInAllUsersSaga({ payload }) {
     }
     if (get(existingUser, 'user.role'))
       localStorage.setItem('role', existingUser.user.role);
+    yield put(getUserById());
   } catch (err) {
     yield put(
       setToastData({

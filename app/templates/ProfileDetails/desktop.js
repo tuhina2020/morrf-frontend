@@ -236,7 +236,7 @@ const ProfileDetails = ({
         contentLabel="onRequestClose Example"
         onRequestClose={onCancelModal}
         className={`W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)`}
-        overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full)"
+        overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full) Ov(h)"
       >
         <EditFormModal
           onCancel={onCancelForm}

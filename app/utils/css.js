@@ -11,7 +11,7 @@ export const getInputBoxStyles = isDesktopOrLaptop => ({
         : 'Fz($fzmobilesubheading) H(6vw)'
     }`,
   },
-  inputClass: `Bd(n) W(100%) Pb(0.2vw) Ff($ffmont) ${
+  inputClass: `Bd(n) W($full) Pb(0.2vw) Ff($ffmont) ${
     isDesktopOrLaptop ? 'Fz($fzcaption)' : 'Fz($fzlarge)'
   } C($primary):h::ph Op(1)::ph`,
   submitStyle: {

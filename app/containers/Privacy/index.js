@@ -773,13 +773,13 @@ const Privacy = ({ responsiveData }) => {
                   <p className="p10">
                     <span className="s1">
                       Any grievance or complaint may be intimated to the
-                      grievance officer [
+                      grievance officer
                     </span>
-                    <span className="s5">&bull;</span>
-                    <span className="s1">], via e-mail at [</span>
-                    <span className="s5">&bull;</span>
+                    <span className="s5">Elias Sheikh </span>
+                    <span className="s1">, via e-mail at </span>
+                    <span className="s5">care@morff.io</span>
                     <span className="s1">
-                      ]. The complaint shall be redressed within a period of one
+                      . The complaint shall be redressed within a period of one
                       (1) month.
                     </span>
                   </p>

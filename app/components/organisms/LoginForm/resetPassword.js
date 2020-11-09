@@ -6,6 +6,7 @@ import BaseIcon from 'components/atoms/BaseIcon';
 import FormikInput from 'components/molecules/FormikInput';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import FormikCheckBox from 'components/molecules/FormikCheckBox/dropdown';
 const ResetPassword = ({
   next,
   back,
@@ -64,6 +65,7 @@ const ResetPassword = ({
     .required('Required');
   const YupObj = {
     password: passwordObj,
+    accepted: Yup.bool().oneOf([true], 'Please accept terms and conditions'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], "Passwords don't match")
       .required('Required'),
@@ -77,6 +79,7 @@ const ResetPassword = ({
     password: '',
     confirmPassword: '',
     verificationCode: '',
+    accepted: false,
   };
 
   const signInButtonProps = {
@@ -99,7 +102,6 @@ const ResetPassword = ({
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        alert(JSON.stringify(values));
         next(values);
       }}
       validationSchema={validationSchema}
@@ -143,12 +145,35 @@ const ResetPassword = ({
                   error={getError('verificationCode')}
                 />
               </div>
+              <FormikCheckBox
+                name="accepted"
+                value={values.accepted}
+                labelSize="sm"
+                bluePosition="Start(58px)"
+                bgColorStyle="Bgc($navBarBg)"
+                onChange={handleChange}
+                error={getError('accepted')}
+              >
+                <div>
+                  I agree to Morff{' '}
+                  <span>
+                    <a href="/termsofuse" className="C($black)">
+                      Terms of Use
+                    </a>
+                  </span>{' '}
+                  and{' '}
+                  <span>
+                    <a href="/privacy">Privacy Policy</a>
+                  </span>{' '}
+                </div>
+              </FormikCheckBox>
               <div className="Mt($5x) Mx(a) W(fc)">
                 <Button {...signInButtonProps}>
                   <div>{submitText}</div>
                 </Button>
               </div>
             </form>
+
             <div className="Fz($fzbutton) Ta(start) Mt($lg)">
               <div>Did not receive Verification Code ?</div>
               <div className="Mt($xs)">
