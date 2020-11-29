@@ -24,7 +24,7 @@ const LoginHeader = ({
           back ? 'Pend($5xl)' : 'Px($5xl)'
         }`}
       >
-        <BaseIcon icon="morff" iconClasses="W($3xxl) H($5x)" />
+        <BaseIcon icon="morff" iconClasses="W($3xl) H($5x)" />
       </div>
     </div>
     {heading && (

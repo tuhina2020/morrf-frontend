@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function SvgDedicatedconsultant(props) {
   return (
-    <svg viewBox="0 0 15 15" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" {...props}>
       <path
         id="Dedicated_Designer_icon"
         data-name="Dedicated Designer icon"

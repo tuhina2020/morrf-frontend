@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function SvgGoogle(props) {
   return (
-    <svg viewBox="0 0 16 16.323" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16.323" {...props}>
       <path
         className="a"
         d="M279.939,224.758a9.6,9.6,0,0,0-.141-1.658h-7.7v3.143h4.408a3.778,3.778,0,0,1-1.631,2.48v2.039h2.63A7.971,7.971,0,0,0,279.939,224.758Z"

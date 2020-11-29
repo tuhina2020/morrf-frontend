@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function SvgPmicon(props) {
   return (
-    <svg viewBox="0 0 16 20" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" {...props}>
       <defs>
         <style>
           {

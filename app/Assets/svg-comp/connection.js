@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function SvgConnection(props) {
   return (
-    <svg viewBox="0 0 16.304 15" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.304 15" {...props}>
       <defs>
         <style>{'.connection-cs1-1 {fill: #000122;}'}</style>
       </defs>

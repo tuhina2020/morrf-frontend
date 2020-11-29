@@ -127,7 +127,7 @@ const GetStartedForm = ({ data, onClickAdd, closeDialog }) => {
     iconDescription: 'Cancel',
     alignContent: 'center',
     kind: 'tertiary',
-    size: '3xxl',
+    size: '3xl',
     type: 'button',
     roundCorners: false,
     onClick: () => {

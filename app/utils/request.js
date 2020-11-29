@@ -10,7 +10,7 @@ import get from 'lodash/get';
  *
  * @return {object}           The response data
  */
-export default function request(url, options, internal = true) {
+export default function request(url, options, internal = true, auth = true) {
   const token = localStorage.getItem('token');
   const { form: formData } = options;
   const headers = Object.assign({}, options.headers);
@@ -23,6 +23,10 @@ export default function request(url, options, internal = true) {
 
   if (internal && (!isEmpty(token) || token !== 'undefined')) {
     headers.Authorization = token;
+  }
+
+  if (!auth) {
+    delete headers.Authorization;
   }
   const modifiedOptions = {
     method: 'POST',

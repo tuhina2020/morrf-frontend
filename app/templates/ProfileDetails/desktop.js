@@ -27,6 +27,7 @@ const ProfileDetails = ({
   portfolioImages,
   logout,
   loading,
+  viewOnly,
 }) => {
   const {
     personal,
@@ -133,7 +134,7 @@ const ProfileDetails = ({
     <div>
       <Header
         isDesktopOrLaptop={true}
-        logout={isEmpty(open)}
+        logout={isEmpty(open) && !viewOnly}
         logoutAction={logout}
         blur={blur}
       />
@@ -148,15 +149,18 @@ const ProfileDetails = ({
                 setOpen('personal');
                 setSourcePage('main');
               }}
+              viewOnly={!!viewOnly}
             />
-            <Contact
-              data={{ phone, email, personal }}
-              onEdit={() => {
-                setBlur(true);
-                setSourcePage('main');
-                setOpen('contact');
-              }}
-            />
+            {!viewOnly && (
+              <Contact
+                data={{ phone, email, personal }}
+                onEdit={() => {
+                  setBlur(true);
+                  setSourcePage('main');
+                  setOpen('contact');
+                }}
+              />
+            )}
             <AboutMe
               about={about}
               onEdit={() => {
@@ -164,6 +168,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('about');
               }}
+              viewOnly={viewOnly}
             />
             <Skills
               skills={skills}
@@ -172,6 +177,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('skills');
               }}
+              viewOnly={viewOnly}
             />
             <Experience
               onEdit={index => {
@@ -189,6 +195,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('experience');
               }}
+              viewOnly={viewOnly}
             />
           </div>
           <Portfolio
@@ -216,39 +223,44 @@ const ProfileDetails = ({
               setSourcePage('main');
               setOpen('portfolio');
             }}
+            viewOnly={viewOnly}
           />
         </div>
-        <GetStartedMajor
-          data={profile}
-          onStart={() => {
-            setSourcePage('getstarted');
-            setOpen('getstarted');
-            setBlur(true);
-          }}
-          loading={blur}
-          countEmptyLarge={countEmptyLarge}
-          countEmptySmall={countEmptySmall}
-        />
+        {!viewOnly && (
+          <GetStartedMajor
+            data={profile}
+            onStart={() => {
+              setSourcePage('getstarted');
+              setOpen('getstarted');
+              setBlur(true);
+            }}
+            loading={blur}
+            countEmptyLarge={countEmptyLarge}
+            countEmptySmall={countEmptySmall}
+          />
+        )}
       </div>
 
-      <Modal
-        isOpen={!isEmpty(open)}
-        contentLabel="onRequestClose Example"
-        onRequestClose={onCancelModal}
-        className={`W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)`}
-        overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full) Ov(h)"
-      >
-        <EditFormModal
-          onCancel={onCancelForm}
-          data={open === 'getstarted' ? profile : profile[open]}
-          onSave={params => {
-            saveFunctionMap[open](params);
-            setBlur(true);
-          }}
-          open={open}
-          {...extraProps}
-        />
-      </Modal>
+      {!viewOnly && (
+        <Modal
+          isOpen={!isEmpty(open)}
+          contentLabel="onRequestClose Example"
+          onRequestClose={onCancelModal}
+          className={`W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)`}
+          overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full) Ov(h)"
+        >
+          <EditFormModal
+            onCancel={onCancelForm}
+            data={open === 'getstarted' ? profile : profile[open]}
+            onSave={params => {
+              saveFunctionMap[open](params);
+              setBlur(true);
+            }}
+            open={open}
+            {...extraProps}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
@@ -257,6 +269,11 @@ ProfileDetails.propTypes = {
   profile: PropTypes.object,
   sendCode: PropTypes.func,
   saveFunctionMap: PropTypes.object,
+  viewOnly: PropTypes.bool,
+};
+
+ProfileDetails.defaultProps = {
+  viewOnly: false,
 };
 
 export default ProfileDetails;

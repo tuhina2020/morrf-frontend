@@ -75,7 +75,7 @@ LoginTemplate.propTypes = {
 
 LoginTemplate.defaultProps = {
   textStyle:
-    'Ff($ffmanrope) Fz(3.8vw) C(black) Mb($3xxl) Bgc(white) W(fc) Mx(a) P($xss)',
+    'Ff($ffmanrope) Fz(3.8vw) C(black) Mb($3xl) Bgc(white) W(fc) Mx(a) P($xss)',
   text: 'Ready to Morff ?',
   loginStyle: 'Ta(c) H(100vh) Pt($10x) login',
 };

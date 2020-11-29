@@ -45,25 +45,25 @@ export default function Header({
           backgroundSize: bgImg && 'cover',
         }}
       >
-        <div
-          className={`D(f) ${
-            isDesktopOrLaptop ? 'Jc(s) P(1vw)' : 'Jc(c) Py(5vw)'
-          } Ai(c)`}
-        >
-          <Morff width="50px" height="48px" />
-          <div
-            className={`Bdend($bdlightGrey) Pt(2.5vw) Pstart($lg) Mend($lg)`}
-          />
-          <div className={`Fw($fwregular) Ff($ffmanrope) Fz($lg)`}>
-            Designer
-          </div>
-          <div className="Mstart($10x)">
-            <Tab content="My Details" status="active" />
-          </div>
-          {logout && (
-            <div className="Pos(a) End(10px)">
-              <Button {...buttonProps}>Logout</Button>
-            </div>
+        <div className={`D(f) ${logout ? 'Jc(s)' : 'Jc(c)'} Ai(c) P(1vw)`}>
+          {logout ? (
+            <>
+              <Morff width="50px" height="48px" />
+              <div
+                className={`Bdend($bdlightGrey) Pt(2.5vw) Pstart($lg) Mend($lg)`}
+              />
+              <div className={`Fw($fwregular) Ff($ffmanrope) Fz($lg)`}>
+                Designer
+              </div>
+              <div className="Mstart($10x)">
+                <Tab content="My Details" status="active" />
+              </div>
+              <div className="Pos(a) End(10px)">
+                <Button {...buttonProps}>Logout</Button>
+              </div>
+            </>
+          ) : (
+            <Morff width="86px" height="80px" />
           )}
         </div>
       </div>

@@ -2,7 +2,11 @@ import * as React from 'react';
 
 function SvgCurve(props) {
   return (
-    <svg viewBox="0 0 2032.147 492.854" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 2032.147 492.854"
+      {...props}
+    >
       <style>{'.curve-a{fill:#f5f5f5;}'}</style>
       <path
         className="curve-a"

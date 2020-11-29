@@ -41,9 +41,9 @@ const PDFPreview = ({ data, onCancel }) => {
 
 const ImagePreview = ({ data, onCancel, files, index }) => {
   const commonIconStyle = classnames({
-    'W($xl)': true,
-    'H($xl)': true,
-    'Bdrs($lg)': true,
+    'W($3xl)': true,
+    'H($3xl)': true,
+    'Bdrs($half)': true,
     // 'C(white)': imageCount4,
     'Trsdu(0.4s)': true,
     'Trsp(a)': true,
@@ -93,7 +93,12 @@ const ImagePreview = ({ data, onCancel, files, index }) => {
           } Pos(f) T($35x) Start($20x)`}
           onClick={onBackClick}
         />
-        <img src={currentImage.data} className="W($60xl)" />
+        <div className="W($60xl) H($60xl) D(f) Ai(fs) Jc(s) Pos(r) T($xl)">
+          <img
+            src={currentImage.data}
+            className="Mah($full) W($full) H(a) Objf(ct)"
+          />
+        </div>
         <BaseIcon
           icon="showmore"
           iconClasses={`${commonIconStyle} Rotate(-90deg) ${

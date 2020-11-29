@@ -79,7 +79,7 @@ const ExperienceFormCard = ({
           placeholder="mm/yyyy"
           disabled={present}
           dimensionClasses="W($10x)"
-          error={getError('endYear')}
+          error={!present ? getError('endYear') : ''}
           value={endYear}
           onChange={handleChange}
         />

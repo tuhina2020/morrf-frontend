@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import Tag from 'components/molecules/Tag';
 import isEmpty from 'lodash/isEmpty';
-const Skills = ({ skills, onEdit }) => {
+const Skills = ({ skills, onEdit, viewOnly }) => {
   if (isEmpty(skills)) return null;
   return (
     <DisplayCard
       heading="Skills"
-      topRightIcon="edit"
+      topRightIcon={!viewOnly ? 'edit' : ''}
       onClickIcon={onEdit}
       childPadding="Px($lg) Pt($sm)"
     >
@@ -29,6 +29,12 @@ const Skills = ({ skills, onEdit }) => {
 Skills.propTypes = {
   skills: PropTypes.array,
   onEdit: PropTypes.func,
+  viewOnly: PropTypes.bool,
+};
+
+Skills.defaultProps = {
+  viewOnly: false,
+  onEdit: () => {},
 };
 
 export default Skills;

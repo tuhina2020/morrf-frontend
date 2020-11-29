@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function SvgProjectplanningicon(props) {
   return (
-    <svg viewBox="0 0 27.581 28" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.581 28" {...props}>
       <defs>
         <style>
           {

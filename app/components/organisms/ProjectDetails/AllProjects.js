@@ -45,7 +45,7 @@ const AllProjects = ({ projects }) => {
     },
   ];
   return (
-    <div className="Mt($3xxl)">
+    <div className="Mt($3xl)">
       <Table tableHeaders={tableHeaders} rowData={projects} />
     </div>
   );

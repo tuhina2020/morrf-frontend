@@ -2,7 +2,12 @@ import * as React from 'react';
 
 function SvgMorrflogo(props) {
   return (
-    <svg viewBox="0 0 230 62" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 230 62"
+      {...props}
+    >
       <defs>
         <clipPath id="clip-path">
           <path

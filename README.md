@@ -39,7 +39,7 @@ $ npm run grunt
 
 $ npm run build
 
-$ npm tun start:prod
+$ npm run start:prod
 ```
 
 Run Production server at `https://localhost:3000`

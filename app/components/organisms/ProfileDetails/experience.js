@@ -5,12 +5,12 @@ import sortBy from 'lodash/sortBy';
 import isEmpty from 'lodash/isEmpty';
 import BaseIcon from 'components/atoms/BaseIcon';
 
-const Experience = ({ data: experience, onEdit, onSave, onAdd }) => {
+const Experience = ({ data: experience, onEdit, onSave, onAdd, viewOnly }) => {
   if (isEmpty(experience)) return null;
   return (
     <DisplayCard
       heading="Experience"
-      topRightIcon="simpleadd"
+      topRightIcon={!viewOnly && 'simpleadd'}
       onClickIcon={onAdd}
     >
       {experience.map(
@@ -29,13 +29,15 @@ const Experience = ({ data: experience, onEdit, onSave, onAdd }) => {
               <div>
                 {startYear} - {present ? 'present' : endYear}
               </div>
-              <BaseIcon
-                icon="edit"
-                width="28px"
-                height="28px"
-                iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
-                onClick={() => onEdit(i)}
-              />
+              {!viewOnly && (
+                <BaseIcon
+                  icon="edit"
+                  width="28px"
+                  height="28px"
+                  iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
+                  onClick={() => onEdit(i)}
+                />
+              )}
             </div>
             <div className="Mt($sm) Mb($mmd)">{company}</div>
             <div>{highlights}</div>
@@ -49,6 +51,12 @@ Experience.propTypes = {
   experience: PropTypes.array,
   onEdit: PropTypes.func,
   onAdd: PropTypes.func,
+};
+
+Experience.defaultProps = {
+  viewOnly: false,
+  onEdit: () => {},
+  onAdd: () => {},
 };
 
 export default Experience;

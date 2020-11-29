@@ -13,6 +13,7 @@ const PortfolioScroll = ({
   files,
   onPreviewImage,
   current = false,
+  viewOnly,
 }) => {
   Modal.setAppElement('#app');
   const imageCount4 = files.length <= 4;
@@ -141,6 +142,7 @@ const DraftPortfolio = ({ project, loopKey, onEdit, mode, last }) => {
         <div className="Fz($smd) Fs(i) C($inputGrey)">
           Saved draft. Will be visible only to you until completed
         </div>
+
         <BaseIcon
           icon="edit"
           width="28px"
@@ -153,7 +155,7 @@ const DraftPortfolio = ({ project, loopKey, onEdit, mode, last }) => {
   );
 };
 
-const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage }) => {
+const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage, viewOnly }) => {
   if (isEmpty(portfolio)) return null;
   return (
     // <DisplayCard
@@ -164,14 +166,16 @@ const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage }) => {
     <div className="Bdrs($xs) Bgc(white) W($60xl) H(fc)">
       <div className="D(f) Ai(c) Jc(sb) Fz($mmd) Lh(1) Px($lg) Py($xss) Bdb($bdcardGrey) Ff($ffmanrope) H($2xl)">
         <div>Portfolio</div>
-        <BaseIcon
-          icon="simpleadd"
-          width="24px"
-          height="24px"
-          iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs)"
-          fill="black"
-          onClick={onAdd}
-        />
+        {!viewOnly && (
+          <BaseIcon
+            icon="simpleadd"
+            width="24px"
+            height="24px"
+            iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs)"
+            fill="black"
+            onClick={onAdd}
+          />
+        )}
       </div>
       {portfolio.map(
         (
@@ -201,13 +205,15 @@ const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage }) => {
                 <div className="Fz($smd) W($quarter) Ta(e)">
                   {from} {to ? ', ' + to : ''}
                 </div>
-                <BaseIcon
-                  icon="edit"
-                  width="28px"
-                  height="28px"
-                  iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
-                  onClick={() => onEdit(i)}
-                />
+                {!viewOnly && (
+                  <BaseIcon
+                    icon="edit"
+                    width="28px"
+                    height="28px"
+                    iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
+                    onClick={() => onEdit(i)}
+                  />
+                )}
               </div>
               <div className="Mt($xs) Mb($lg)">{description}</div>
               <PortfolioScroll
@@ -235,10 +241,12 @@ Portfolio.propTypes = {
   portfolio: PropTypes.array,
   onEdit: PropTypes.func,
   onAdd: PropTypes.func,
+  viewOnly: PropTypes.bool,
 };
 
 PortfolioScroll.defaultProps = {
   files: [],
+  viewOnly: false,
 };
 
 export default Portfolio;

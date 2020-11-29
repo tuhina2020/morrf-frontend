@@ -3,6 +3,7 @@ import LandingPage from 'containers/LandingPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import DummyPage from 'containers/DummyPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
+import ViewProfilePage from 'containers/ViewProfilePage/Loadable';
 import ProjectPage from 'containers/ProjectPage/Loadable';
 import LitePage from 'containers/LitePage/Loadable';
 import PrivacyPage from 'containers/Privacy/Loadable';
@@ -47,6 +48,15 @@ const ROUTES = [
     footer: false,
     auth: true,
     key: 'dashboard',
+  },
+  {
+    path: '/profile/:transientId/view',
+    component: ViewProfilePage,
+    header: false,
+    footer: false,
+    auth: false,
+    nav: true,
+    key: 'viewprofile',
   },
   {
     path: '/profile/:tabId',

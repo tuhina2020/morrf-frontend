@@ -204,7 +204,7 @@ const DesktopPage = ({
           </div>
           <div className="D(f) Ai(c) Jc(c) Fz($md) Py($xs) Mx($10x) Bdt($bdsolidLightestGray) Ff($ffmanrope)">
             <div className="C($placeholderGrey)">© 2020 Morff</div>
-            <a href="/privacy" className="Td(n) C(white) Mx($3xxl)">
+            <a href="/privacy" className="Td(n) C(white) Mx($3xl)">
               Privacy Policy
             </a>
             <a href="/termsofuse" className="Td(n) C(white) Mx($lg)">
