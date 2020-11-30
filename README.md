@@ -15,8 +15,6 @@ $ nvm use 12
 
 $ npm i
 
-$ npm run generate:svg
-
 $ npm run grunt
 
 $ npm run build:dev
@@ -32,8 +30,6 @@ Run local server at `https://localhost:3000`
 $ nvm use 12
 
 $ npm i
-
-$ npm run generate:svg
 
 $ npm run grunt
 
