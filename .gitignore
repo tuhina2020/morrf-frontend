@@ -5,7 +5,6 @@ node_modules
 stats.json
 css/generatedAtoms.css
 app/Assets/svg-svgo/
-app/Assets/svg-comp/
 password
 .firebase
 
