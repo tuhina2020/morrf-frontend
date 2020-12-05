@@ -27,7 +27,7 @@ export function* getUserDataById() {
   const { login } = yield select(makeSelectLoginPage());
   const requestURL = `/user/${login.id}`;
   try {
-    const existingUser = yield call(request, requestURL, {
+    const existingUser = yield call(request, `${requestURL}?experience=false&portfolio=false`, {
       method: 'GET',
     });
     yield put(setLoginData(existingUser));
@@ -47,7 +47,7 @@ export function* getUserDataById() {
 }
 
 export function* getExistingUser({ payload }) {
-  const { email, refreshToken, error, mode } = payload;
+  const { email, refreshToken, mode } = payload;
   const requestURL = '/user/check-user';
   try {
     const data = { email };
