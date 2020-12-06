@@ -264,7 +264,7 @@ const LoginForm = ({
   };
 
   return (
-    <div className="Pos(r) Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W($45x) Py($2xl) Bdrs($bdrscontainer) Mb($2xl) Mih($60xl)">
+    <div className="Pos(r) Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W($45x) Py($2xl) Bdrs($bdrscontainer) Mb($2xl)">
       <div className={loading ? 'Op(0.5)' : undefined}>
         <Header {...getHeaderProps()} />
       </div>
