@@ -6,7 +6,7 @@ stats.json
 css/generatedAtoms.css
 app/Assets/svg-svgo/
 password
-.firebase
+.firebase/
 
 # Cruft
 .DS_Store
