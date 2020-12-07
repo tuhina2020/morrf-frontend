@@ -4,6 +4,8 @@ import map from 'lodash/map';
 import compact from 'lodash/compact';
 import request from 'utils/request';
 import { setLoginData, setToastData } from 'containers/LoginPage/actions';
+import { setToast, getDefaultState } from 'utils/helper';
+import { Field } from 'formik';
 import {
   SEND_VERIFICATION,
   VERIFY_PHONE,
@@ -38,8 +40,6 @@ import {
   setPortfolioImages,
   setLoading,
 } from './actions';
-import { setToast } from 'utils/helper';
-import { Field } from 'formik';
 
 function* logout() {
   localStorage.removeItem('loginData');
@@ -96,12 +96,12 @@ function* uploadImage({ payload }) {
         const extension = file.name.substr(lastIndex + 1);
 
         const signedUrl = await getSignedUrlById({
-          file_name: file_name + new Date().getTime() + '.' + extension,
+          file_name: `${file_name + new Date().getTime()}.${extension}`,
           file_type: type,
           type: TYPE_LOOKUP[extension],
           id: profilePage.id,
         });
-        var form = new FormData();
+        const form = new FormData();
 
         const ALL_FIELDS = signedUrl.url.fields;
         Object.keys(ALL_FIELDS).forEach(field => {
@@ -268,8 +268,10 @@ function* getCurrentUser({ payload = {} }) {
   yield put(setLoading(true));
   const { phone_verified = true } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  if (!isEmpty(profilePage.id)) {
-    const requestURL = `/user/${profilePage.id}?experience=true&portfolio=true`;
+  const loginData = getDefaultState('loginData', {});
+  const id = !isEmpty(profilePage.id) ? profilePage.id : loginData.id;
+  if (!isEmpty(id)) {
+    const requestURL = `/user/${id}?experience=true&portfolio=true`;
     try {
       const user = yield call(request, requestURL, { method: 'GET' });
       localStorage.setItem('loginData', JSON.stringify(user));
@@ -409,7 +411,7 @@ function* editPortfolio({ payload }) {
     portfolio: { id, project, highlights, startYear, endYear, client, user_id },
   } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  let {
+  const {
     portfolioImages: { images },
     portfolio: oldPortfolio,
   } = profilePage;
@@ -591,7 +593,7 @@ function* getAllSkills() {
 function* removePortfolioImage({ payload }) {
   const { index, id } = payload;
   const profilePage = yield select(makeSelectProfilePage());
-  let {
+  const {
     portfolioImages: { images },
   } = profilePage;
   images.splice(index, 1);
