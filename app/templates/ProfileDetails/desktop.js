@@ -9,11 +9,11 @@ import Skills from 'components/organisms/ProfileDetails/skills';
 import GetStartedMajor from 'components/organisms/EditCarousels/major';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
-import EditFormModal from './editModal';
 import pick from 'lodash/pick';
 import Header from 'components/molecules/Header';
 import LoadingAnimation from 'Assets/gifs/loading.gif';
 import { get } from 'lodash';
+import EditFormModal from './editModal';
 const ProfileDetails = ({
   profile,
   sendCode,
@@ -118,8 +118,8 @@ const ProfileDetails = ({
     if (isEmpty(open)) setBlur(loading);
   }, [loading]);
 
-  const Loading = () => {
-    return loading ? (
+  const Loading = () =>
+    loading ? (
       <div className="W($full) H(100vw) Op(0.5) Bgc(white) Z(2)">
         <img
           src={LoadingAnimation}
@@ -127,20 +127,19 @@ const ProfileDetails = ({
         />
       </div>
     ) : null;
-  };
 
   console.log('BLUR IS', blur, loading);
   return (
     <div>
       <Header
-        isDesktopOrLaptop={true}
+        isDesktopOrLaptop
         logout={isEmpty(open) && !viewOnly}
         logoutAction={logout}
         blur={blur}
       />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
-        <div className={`D(f) Ai(s) Jc(s) P($lg)`}>
+        <div className="D(f) Ai(s) Jc(s) P($lg)">
           <div className="Mend($lg) Miw($60xl)">
             <PersonalDetails
               personal={personal}
@@ -168,7 +167,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('about');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
             <Skills
               skills={skills}
@@ -177,7 +176,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('skills');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
             <Experience
               onEdit={index => {
@@ -195,7 +194,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('experience');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
           </div>
           <Portfolio
@@ -223,7 +222,7 @@ const ProfileDetails = ({
               setSourcePage('main');
               setOpen('portfolio');
             }}
-            viewOnly={viewOnly}
+            viewOnly={!!viewOnly}
           />
         </div>
         {!viewOnly && (
@@ -246,7 +245,7 @@ const ProfileDetails = ({
           isOpen={!isEmpty(open)}
           contentLabel="onRequestClose Example"
           onRequestClose={onCancelModal}
-          className={`W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)`}
+          className="W($60xl) M(a) H($fc) Pos(r) T($third)  Bd(n) O(n)"
           overlayClassName="Bgc($modal) Pos(a) T(0) Start(0) B(0) End(0) W($full) H($full) Ov(h)"
         >
           <EditFormModal
