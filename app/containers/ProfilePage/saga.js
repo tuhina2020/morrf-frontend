@@ -296,6 +296,9 @@ function* getCurrentUser({ payload = {} }) {
           state: user.state,
         }),
       );
+      /*
+       * Parsing old date format (mm/yyyy) to (dd/mm/yyyy)
+       */
       const portfolio = user.portfolio.map(pFolio => {
         const { startYear, endYear } = pFolio;
         const validStart = startYear.split('/').length === 3;

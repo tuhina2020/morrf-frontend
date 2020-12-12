@@ -36,22 +36,8 @@ const CalendarInput = ({
       readOnly={true}
     />
   ));
-  const renderDayContents = (day, date) => {
-    const sameDay = datesAreOnSameDay(date) ? 'Bgc(black) C($iconBlue)' : '';
-    const selected =
-      startDate && datesAreOnSameDay(date, startDate)
-        ? 'Bgc($iconBlue) C(white)'
-        : '';
-    return (
-      <div
-        className={sameDay + ' W($xxl) H($xxl) Bgc($hoverInput):h Fz(0.875rem)'}
-      >
-        {day}
-      </div>
-    );
-  };
 
-  const MyContainer = ({ className, children }) => {
+  const Container = ({ className, children }) => {
     return (
       <CalendarContainer className="W($full) H(0) Pb($full) Ff($ffmanrope)">
         <div className="W($full) Bgc($navBarBg) Bxsh($bxshcalendar) Bdrs($xxs)">
@@ -69,12 +55,11 @@ const CalendarInput = ({
       setStartDate(newDate);
       setUpstreamDate(newDate);
     },
-    calendarContainer: MyContainer,
+    calendarContainer: Container,
     customInput: <ExampleCustomInput />,
     minDate,
     maxDate,
     renderCustomHeader: selectYear ? CustomHeader : undefined,
-    // renderDayContents={renderDayContents}
     dayClassName: date => {
       const today = datesAreOnSameDay(date)
         ? 'C($iconBlue)! Fw($fwbold)! Bgc($navBarBg)!'
