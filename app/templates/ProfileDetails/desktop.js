@@ -128,7 +128,6 @@ const ProfileDetails = ({
       </div>
     ) : null;
 
-  console.log('BLUR IS', blur, loading);
   return (
     <div>
       <Header

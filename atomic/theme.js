@@ -162,6 +162,7 @@ module.exports = () => ({
     prefix: '',
     bgfull: '100% 100%',
     themeColor: '#ff0356',
+    calendarGrey: '#f0f0f0',
     disabledGrey2: '#c6c6c6',
     hoverButton: '#172be2',
     hoverInput: '#e4e4e4',

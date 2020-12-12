@@ -11,6 +11,7 @@ import get from 'lodash/get';
 import { wordCount } from 'utils/helper';
 import FileUpload from 'components/molecules/DragDrop/file2';
 import { values } from 'lodash';
+import FormikCalendar from 'components/molecules/Calendar';
 
 const PortfolioFormCard = ({
   errors,
@@ -21,6 +22,7 @@ const PortfolioFormCard = ({
   uploadImageData,
   portfolioImages,
   removePortfolioImage,
+  setFieldValue,
   ...portfolio
 }) => {
   const getError = key =>
@@ -36,6 +38,8 @@ const PortfolioFormCard = ({
     roundCorners: false,
     postIcon: 'remove',
   };
+  let minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 30);
   return (
     <div className="Pos(r) Mah($45x) Ov(s) P($lg)">
       <div className="D(f) Ai(c) Jc(sb)">
@@ -59,27 +63,43 @@ const PortfolioFormCard = ({
         />
       </div>
       <div className="D(f) Ai(c) Jc(s) My($lg)">
-        <FormikInput
+        <FormikCalendar
           label="From"
           name="startYear"
-          placeholder="mm/yyyy"
           id="startYear"
-          autoComplete="off"
-          dimensionClasses="W($11xl) H($2xl) Mend($md)"
-          error={getError('startYear')}
+          placeholder="mm/dd/yyyy"
+          dateFormat="MM/dd/yyyy"
+          dimensionClasses={'W($11xl) H($2xl) Mend($md) Pos(r) Ta(start)'}
           value={portfolio.startYear}
-          onChange={handleChange}
+          minDate={minDate}
+          selectYear={true}
+          error={getError('startYear')}
+          setUpstreamDate={val => {
+            const [year, month, date] = new Date(val)
+              .toISOString()
+              .split('T')[0]
+              .split('-');
+            setFieldValue('startYear', month + '/' + date + '/' + year);
+          }}
         />
-        <FormikInput
+        <FormikCalendar
           label="To"
           name="endYear"
-          placeholder="mm/yyyy"
           id="endYear"
-          autoComplete="off"
-          dimensionClasses="W($11xl) H($2xl)"
-          error={getError('endYear')}
+          selectYear={true}
+          placeholder="mm/dd/yyyy"
+          dateFormat="MM/dd/yyyy"
+          dimensionClasses={'W($11xl) H($2xl) Mend($md) Pos(r) Ta(start)'}
           value={portfolio.endYear}
-          onChange={handleChange}
+          minDate={minDate}
+          error={getError('endYear')}
+          setUpstreamDate={val => {
+            const [year, month, date] = new Date(val)
+              .toISOString()
+              .split('T')[0]
+              .split('-');
+            setFieldValue('endYear', month + '/' + date + '/' + year);
+          }}
         />
       </div>
       <FormikTextArea
@@ -129,10 +149,23 @@ const PortfolioEditForm = ({
       .required('Required'),
     client: Yup.string().required('Required'),
     startYear: Yup.string()
-      .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
+      .matches(
+        /^((((0)[0-9])|((1)[0-2]))(\/)([0-2][0-9]|(3)[0-1])(\/))\d{4}$/,
+        'Enter valid date mm/dd/yyyy',
+      )
       .required('Required'),
     endYear: Yup.string()
-      .matches(/^(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/, 'Enter valid date mm/yyyy')
+      .matches(
+        /^((((0)[0-9])|((1)[0-2]))(\/)([0-2][0-9]|(3)[0-1])(\/))\d{4}$/,
+        'Enter valid date mm/dd/yyyy',
+      )
+      .test(
+        'test-endDate',
+        'End date should be after start date',
+        function checkEnd(end) {
+          return new Date(this.parent.startYear) < new Date(end);
+        },
+      )
       .required('Required'),
     highlights: Yup.string()
       .required('Required')
@@ -190,7 +223,6 @@ const PortfolioEditForm = ({
       ...values,
       mode: values.mode === 'completed' ? 'completed' : mode,
     };
-    // alert(values);
     onSave({ portfolio: newPortfolio[index], newPortfolio });
     onCancel();
   };
@@ -208,6 +240,7 @@ const PortfolioEditForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
         onCancelHandler({ values, mode: 'completed' })();
         setSubmitting(false);
       }}
@@ -231,6 +264,7 @@ const PortfolioEditForm = ({
                 {...values}
                 errors={errors}
                 touched={touched}
+                setFieldValue={setFieldValue}
                 handleChange={handleChange}
                 onRemove={onRemove}
                 onCancel={onCancel}

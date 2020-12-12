@@ -125,6 +125,7 @@ const Input = React.forwardRef(
     const inputProps = {
       labelText,
       name,
+      key,
       placeholder,
       type,
       invalid,

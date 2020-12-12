@@ -32,6 +32,8 @@ const generateMorffLiteForm = ({
     : 'Mb($lg) W(265px)';
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 5);
   return (
     <form onSubmit={handleSubmit}>
       <FormikInput
@@ -64,6 +66,7 @@ const generateMorffLiteForm = ({
           id="date"
           dimensionClasses={dateDimensionClasses}
           onChange={handleChange}
+          maxDate={maxDate}
           value={values.date}
           error={getError('date')}
           setUpstreamDate={val => {
