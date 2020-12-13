@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormikCheckBox from 'components/molecules/FormikCheckBox';
 import FormikInput from 'components/molecules/FormikInput';
+import FormikCalendar from 'components/molecules/Calendar';
 import FormikTextArea from 'components/molecules/FormikTextArea';
 import { Form, FieldArray, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -33,6 +34,8 @@ const ExperienceFormCard = ({
   errors,
   touched,
   handleChange,
+  handleSubmit,
+  values,
   setFieldValue,
   onRemove,
 }) => {
@@ -78,26 +81,11 @@ const ExperienceFormCard = ({
           autoComplete="off"
           placeholder="mm/yyyy"
           disabled={present}
-          dimensionClasses="W($10x)"
+          dimensionClasses="W($10x) Mstart($xss)"
           error={!present ? getError('endYear') : ''}
           value={endYear}
           onChange={handleChange}
         />
-        <div className="Mstart($lg) Pos(r) T($xs) Bgc(white)">
-          <FormikCheckBox
-            name="present"
-            value={present || false}
-            labelText="I work here currently"
-            onChange={e => {
-              handleChange(e);
-              const { value } = e.target;
-              const v = value && value.length > 0 && JSON.parse(value);
-              if (!v) {
-                setFieldValue('endYear', '');
-              }
-            }}
-          />
-        </div>
       </div>
       <FormikTextArea
         label="Description"
