@@ -8,30 +8,27 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { RESTART_ON_REMOUNT } from 'utils/constants';
 import { setToast, isLoggedIn } from 'utils/helper';
 import LoginDesktopTemplate from 'templates/Login/desktop';
+import { Redirect } from 'react-router-dom';
 import { makeSelectLoginPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { Redirect } from 'react-router-dom';
 import {
   getExistingUser,
   signInAllUsers,
   forgotPassword,
   verifyNewPassword,
   resendCode,
-  setGlobalChoice,
+  // setGlobalChoice,
   setToastData,
   googleLogin,
 } from './actions';
 
 const LoginPage = ({
-  loggedIn,
   signIn,
-  responsiveData,
   checkUser,
   verifyPassword,
   loginPage,
-  setUserChoice,
-  history,
+  // setUserChoice,
   forgotUserPassword,
   resendVerificationCode,
   dispatchToastData,
@@ -40,18 +37,17 @@ const LoginPage = ({
   if (isLoggedIn()) return <Redirect to="/profile/details" />;
   useInjectReducer({ key: 'loginPage', reducer });
   useInjectSaga({ key: 'loginPage', saga, mode: RESTART_ON_REMOUNT });
-  const { error, role, login } = loginPage;
+  const { error, login } = loginPage;
   if (error.message) {
     setToast(error);
     dispatchToastData({});
   }
   return (
     <LoginDesktopTemplate
-      setUserChoice={setUserChoice}
+      // setUserChoice={setUserChoice}
       signInAllUsers={signIn}
       loginData={login}
       checkUser={checkUser}
-      role={role}
       error={error}
       forgotPassword={forgotUserPassword}
       verifyPassword={verifyPassword}
@@ -62,7 +58,15 @@ const LoginPage = ({
 };
 
 LoginPage.propTypes = {
-  responsiveData: PropTypes.object,
+  signIn: PropTypes.func,
+  checkUser: PropTypes.func,
+  verifyPassword: PropTypes.func,
+  loginPage: PropTypes.func,
+  // setUserChoice: PropTypes.func,
+  forgotUserPassword: PropTypes.func,
+  resendVerificationCode: PropTypes.func,
+  dispatchToastData: PropTypes.func,
+  signInWithGoogle: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -75,7 +79,7 @@ function mapDispatchToProps(dispatch) {
     signIn: params => dispatch(signInAllUsers(params)),
     verifyPassword: params => dispatch(verifyNewPassword(params)),
     forgotUserPassword: params => dispatch(forgotPassword(params)),
-    setUserChoice: params => dispatch(setGlobalChoice(params)),
+    // setUserChoice: params => dispatch(setGlobalChoice(params)),
     resendVerificationCode: params => dispatch(resendCode(params)),
     dispatchToastData: params => dispatch(setToastData(params)),
     signInWithGoogle: params => dispatch(googleLogin(params)),

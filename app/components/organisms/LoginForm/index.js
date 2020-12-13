@@ -7,7 +7,7 @@ import EnterEmail from './email';
 import ExistingPassword from './existingPassword';
 import GenericMessage from './genericMsg';
 import ResetPasswordForm from './resetPassword';
-import CongratulationsScreen from './congratulations';
+// import CongratulationsScreen from './congratulations';
 import { EMAIL_LOGIN_STATES } from './constants';
 import Header from './header';
 import LoadingAnimation from 'Assets/gifs/loading.gif';
@@ -25,7 +25,7 @@ const LoginForm = ({
   setConfirmPassword,
   verifyPassword,
   setCode,
-  role,
+  // role,
   setUserChoice,
   resendVerificationCode,
   forgotPassword,
@@ -38,9 +38,7 @@ const LoginForm = ({
   const token = localStorage.getItem('token');
 
   const [currentState, setCurrentState] = useState(
-    token && (isEmpty(role) || role === 'undefined')
-      ? EMAIL_LOGIN_STATES.CONGRATULATIONS
-      : EMAIL_LOGIN_STATES.ENTER_EMAIL,
+    token ? EMAIL_LOGIN_STATES.CONGRATULATIONS : EMAIL_LOGIN_STATES.ENTER_EMAIL,
     // EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT,
   );
 
@@ -65,19 +63,19 @@ const LoginForm = ({
         break;
       case EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD:
         newState =
-          loginData && loginData.status === 'ACTIVE' && isEmpty(loginData.role)
+          loginData && loginData.status === 'ACTIVE'
             ? EMAIL_LOGIN_STATES.CONGRATULATIONS
             : isLoggedIn() && EMAIL_LOGIN_STATES.SUCCESS;
         break;
       case EMAIL_LOGIN_STATES.RESET_PASSWORD:
         newState =
-          loginData && loginData.email && !loginData.role
+          loginData && loginData.email
             ? EMAIL_LOGIN_STATES.CONGRATULATIONS
             : undefined;
         break;
       case EMAIL_LOGIN_STATES.CONGRATULATIONS:
         newState =
-          loginData && loginData.id && (isEmpty(role) || role === 'undefined')
+          loginData && loginData.id
             ? EMAIL_LOGIN_STATES.SUCCESS
             : EMAIL_LOGIN_STATES.CONGRATULATIONS;
       default:
@@ -93,7 +91,7 @@ const LoginForm = ({
       setLoading(false);
       setSwitchState(false);
     }
-  }, [loginData, loginData.role, isLoggedIn()]);
+  }, [loginData, isLoggedIn()]);
 
   const getHeaderProps = () => {
     const LOOKUP = {
@@ -238,15 +236,6 @@ const LoginForm = ({
           />
         );
       case EMAIL_LOGIN_STATES.CONGRATULATIONS:
-        return (
-          <CongratulationsScreen
-            setUserChoice={value => {
-              setLoading(true);
-              setUserChoice(value);
-              setSwitchState(true);
-            }}
-          />
-        );
       case EMAIL_LOGIN_STATES.SUCCESS:
         return <Redirect to="/profile/details" />;
       default:
@@ -295,7 +284,7 @@ LoginForm.propTypes = {
   setCode: PropTypes.func,
   verifyPassword: PropTypes.func,
   resendVerificationCode: PropTypes.func,
-  role: PropTypes.string,
+  // role: PropTypes.string,
   setUserChoice: PropTypes.func,
   forgotPassword: PropTypes.func,
   signInWithGoogle: PropTypes.func,
