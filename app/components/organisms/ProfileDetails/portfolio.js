@@ -215,7 +215,9 @@ const Portfolio = ({ portfolio, onEdit, onAdd, onPreviewImage, viewOnly }) => {
                   />
                 )}
               </div>
-              <div className="Mt($xs) Mb($lg)">{description}</div>
+              <div className="Ff($ffopensans) Fz($md) Lh(1.75)">
+                {description}
+              </div>
               <PortfolioScroll
                 files={files}
                 onNext={() => {}}
