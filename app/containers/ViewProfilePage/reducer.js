@@ -14,7 +14,6 @@ import {
   SET_LOCAL_PORTFOLIO,
   SET_LOCAL_EXPERIENCE,
   SET_LOCAL_SKILLS,
-  SET_AVAILABLE_SKILLS,
   SET_LOCAL_ABOUT_ME,
   SET_ID,
   SET_PORTFOLIO_IMAGES,
@@ -70,9 +69,6 @@ const viewProfilePageReducer = (state = initialState, action) =>
         break;
       case SET_LOCAL_EXPERIENCE:
         draft.experience = action.payload;
-        break;
-      case SET_AVAILABLE_SKILLS:
-        draft.skillsList = action.payload;
         break;
       case SET_LOCAL_SKILLS:
         draft.skills = action.payload;

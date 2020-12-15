@@ -27,7 +27,6 @@ const FormikComboBox = ({
     e.stopPropagation();
     if (disabled) return;
     // debugger;
-    console.log('SETTING OPEN AND FOCUS TO ', set);
     setOpen(set);
     setFocus(set);
   };
@@ -148,11 +147,9 @@ const FormikComboBox = ({
           className="Op(0) Pos(a) T(0) W($full) H($full)"
           focus={isOpen.toString()}
           onFocus={e => {
-            console.log('FOCUS');
             setOpenValue(e, true);
           }}
           onBlur={e => {
-            console.log('BLUR');
             setOpenValue(e, false);
           }}
         />

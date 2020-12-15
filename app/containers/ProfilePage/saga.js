@@ -250,6 +250,7 @@ function* setCurrentUser({ payload }) {
         state: user.state,
       }),
     );
+
     yield put(setLocalSkills(user.skills));
     yield put(setLocalExperience(user.experience));
     yield put(setLocalPortfolio(user.portfolio));
@@ -295,9 +296,26 @@ function* getCurrentUser({ payload = {} }) {
           state: user.state,
         }),
       );
+      /*
+       * Parsing old date format (mm/yyyy) to (dd/mm/yyyy)
+       */
+      const portfolio = user.portfolio.map(pFolio => {
+        const { startYear, endYear } = pFolio;
+        const validStart = startYear.split('/').length === 3;
+        const validEnd = endYear.split('/').length === 3;
+        return {
+          ...pFolio,
+          startYear: validStart
+            ? startYear
+            : startYear.split('/')[0] + '/01/' + startYear.split('/')[1],
+          endYear: validEnd
+            ? endYear
+            : endYear.split('/')[0] + '/01/' + endYear.split('/')[1],
+        };
+      });
       yield put(setLocalSkills(user.skills));
       yield put(setLocalExperience(user.experience));
-      yield put(setLocalPortfolio(user.portfolio));
+      yield put(setLocalPortfolio(portfolio));
       yield put(setLoading(false));
     } catch (err) {
       yield put(setLoading(false));
