@@ -59,7 +59,7 @@ function* getCurrentUser({ payload = {} }) {
       yield put(setLoginData(user));
       yield put(setLocalAboutMe(user.about));
       // yield put(setEmail(user.email.email));
-      localStorage.setItem('role', user.role);
+      // localStorage.setItem('role', user.role);
       // yield put(
       //   setLocalPhone({
       //     number: user.phone.phone_number,

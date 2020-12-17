@@ -5,11 +5,11 @@
  */
 import produce from 'immer';
 import { getDefaultState } from 'utils/helper';
-import { SET_LOGIN_DATA, SET_CHOICE, SET_TOAST_MESSAGE } from './constants';
+import { SET_LOGIN_DATA, SET_TOAST_MESSAGE } from './constants';
 
 export const initialState = {
   login: getDefaultState('loginData', {}),
-  role: getDefaultState('role'),
+  // role: getDefaultState('role'),
   error: {},
 };
 
@@ -20,9 +20,9 @@ const loginPageReducer = (state = initialState, action) =>
       case SET_LOGIN_DATA:
         draft.login = action.payload;
         break;
-      case SET_CHOICE:
+      /* case SET_CHOICE:
         draft.role = action.payload;
-        break;
+        break; */
       case SET_TOAST_MESSAGE:
         draft.error = action.payload;
         break;

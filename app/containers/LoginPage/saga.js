@@ -9,7 +9,7 @@ import {
   VERIFY_PASSWORD,
   FORGOT_PASSWORD,
   RESEND_CODE,
-  SET_GLOBAL_CHOICE,
+  // SET_GLOBAL_CHOICE,
   SIGNIN_GOOGLE,
   GET_USER_BY_ID,
 } from './constants';
@@ -17,7 +17,7 @@ import { makeSelectLoginPage } from './selectors';
 import {
   setLoginData,
   setToastData,
-  setChoice,
+  // setChoice,
   signInAllUsers,
   getUserById,
   googleLogin,
@@ -27,12 +27,16 @@ export function* getUserDataById() {
   const { login } = yield select(makeSelectLoginPage());
   const requestURL = `/user/${login.id}`;
   try {
-    const existingUser = yield call(request, `${requestURL}?experience=false&portfolio=false`, {
-      method: 'GET',
-    });
+    const existingUser = yield call(
+      request,
+      `${requestURL}?experience=false&portfolio=false`,
+      {
+        method: 'GET',
+      },
+    );
     yield put(setLoginData(existingUser));
     localStorage.setItem('final', JSON.stringify(existingUser));
-    if (existingUser.role) localStorage.setItem('role', existingUser.role);
+    // if (existingUser.role) localStorage.setItem('role', existingUser.role);
   } catch (err) {
     localStorage.removeItem('final');
     localStorage.removeItem('token');
@@ -102,8 +106,8 @@ export function* loginInGoogle({ payload }) {
       localStorage.setItem('token', existingUser.token);
       yield put(setLoginData(existingUser.user));
     }
-    if (get(existingUser, 'user.role'))
-      localStorage.setItem('role', existingUser.user.role);
+    /* if (get(existingUser, 'user.role'))
+      localStorage.setItem('role', existingUser.user.role); */
   } catch (err) {
     console.log(err);
     localStorage.removeItem('loginData');
@@ -135,8 +139,8 @@ export function* signInAllUsersSaga({ payload }) {
       localStorage.setItem('loginData', JSON.stringify(existingUser.user));
       localStorage.setItem('token', existingUser.token);
     }
-    if (get(existingUser, 'user.role'))
-      localStorage.setItem('role', existingUser.user.role);
+    /* if (get(existingUser, 'user.role'))
+      localStorage.setItem('role', existingUser.user.role); */
     yield put(getUserById());
   } catch (err) {
     yield put(
@@ -233,7 +237,7 @@ export function* resendVerificationCode({ payload }) {
   }
 }
 
-export function* setGlobalChoice({ payload }) {
+/* export function* setGlobalChoice({ payload }) {
   const { role } = payload;
   const { login } = yield select(makeSelectLoginPage());
   const requestURL = `/user/${login.id}`;
@@ -258,7 +262,7 @@ export function* setGlobalChoice({ payload }) {
       }),
     );
   }
-}
+} */
 
 // Individual exports for testing
 export default function* loginPageSaga() {
@@ -268,7 +272,7 @@ export default function* loginPageSaga() {
   yield takeLatest(FORGOT_PASSWORD, forgotPassword);
   yield takeLatest(VERIFY_PASSWORD, verifyPassword);
   yield takeLatest(RESEND_CODE, resendVerificationCode);
-  yield takeLatest(SET_GLOBAL_CHOICE, setGlobalChoice);
+  // yield takeLatest(SET_GLOBAL_CHOICE, setGlobalChoice);
   yield takeLatest(SIGNIN_GOOGLE, loginInGoogle);
   yield takeLatest(GET_USER_BY_ID, getUserDataById);
 }

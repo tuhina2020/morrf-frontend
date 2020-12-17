@@ -114,7 +114,7 @@ const PortfolioScroll = ({
       <Modal
         isOpen={!isEmpty(currentImage)}
         onRequestClose={onClosePreview}
-        className={`W($fc) M(a) H($fc) Pos(r) T($20x) Bd(n) O(n)`}
+        className="W($60xl) M(a) H($fc) Pos(r) T($3xl) Bd(n) O(n)"
         overlayClassName="Bgc($modal) Pos(f) T(0) Start(0) B(0) End(0)"
       >
         <ImagePreview
