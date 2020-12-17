@@ -27,9 +27,13 @@ export function* getUserDataById() {
   const { login } = yield select(makeSelectLoginPage());
   const requestURL = `/user/${login.id}`;
   try {
-    const existingUser = yield call(request, `${requestURL}?experience=true&portfolio=true`, {
-      method: 'GET',
-    });
+    const existingUser = yield call(
+      request,
+      `${requestURL}?experience=false&portfolio=false`,
+      {
+        method: 'GET',
+      },
+    );
     yield put(setLoginData(existingUser));
     localStorage.setItem('final', JSON.stringify(existingUser));
     // if (existingUser.role) localStorage.setItem('role', existingUser.role);
