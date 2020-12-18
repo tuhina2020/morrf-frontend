@@ -171,7 +171,7 @@ const CallBackForm = props => {
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
-      } Mih(575px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
+      } Mih($6xxl) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
     >
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />

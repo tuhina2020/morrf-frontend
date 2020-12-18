@@ -44,7 +44,7 @@ import {
 function* logout() {
   localStorage.removeItem('loginData');
   localStorage.removeItem('authType');
-  localStorage.removeItem('role');
+  // localStorage.removeItem('role');
   localStorage.removeItem('skillList');
   localStorage.removeItem('token');
   yield put(setLoginData({}));
@@ -234,7 +234,7 @@ function* setCurrentUser({ payload }) {
     yield put(setLoginData(user));
     yield put(setLocalAboutMe(user.about));
     yield put(setEmail(user.email.email));
-    localStorage.setItem('role', user.role);
+    // localStorage.setItem('role', user.role);
     yield put(
       setLocalPhone({
         number: user.phone.phone_number,
@@ -280,7 +280,7 @@ function* getCurrentUser({ payload = {} }) {
       yield put(setLoginData(user));
       yield put(setLocalAboutMe(user.about));
       yield put(setEmail(user.email.email));
-      localStorage.setItem('role', user.role);
+      // localStorage.setItem('role', user.role);
       yield put(
         setLocalPhone({
           number: user.phone.phone_number,
