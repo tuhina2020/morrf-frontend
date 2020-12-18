@@ -69,6 +69,40 @@ const DesktopPage = ({
         duration: 500,
       }),
   };
+  const [rndmItem, setRndmItem] = useState();
+  const myArray = [
+    'Museum',
+    'Landscape',
+    'Recce engineer',
+    'Exhibition',
+    'Retail',
+    'Architecht',
+    'Furniture',
+    'Ceramic',
+    'Textile',
+    'Digital product',
+    'Packaging',
+    'Logo',
+    'Website',
+    'Books',
+    'Spatial graphics',
+    'Brochure',
+    'Researcher',
+    'Presentation',
+    'Marketing',
+    'Infographic',
+  ];
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const randomItem = myArray[Math.floor(Math.random() * myArray.length)];
+    const intro = setInterval(() => {
+      setRndmItem(randomItem);
+      setCounter(counter + 1);
+    }, 2000);
+    return () => {
+      clearInterval(intro);
+    };
+  }, [counter]);
   return (
     <>
       <Header
@@ -87,7 +121,7 @@ const DesktopPage = ({
       >
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($4xl) Ta(c) Mb($sm)">
-            Looking for a freelance designer?
+            Looking for a freelance {rndmItem} designer?
           </div>
           <div className="Fz($fzdesktopTitle)">
             Drop your details and we will find the best pick for you
