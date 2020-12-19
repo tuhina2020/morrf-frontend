@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactTextTransition, { presets } from 'react-text-transition';
 import {
   morrflogo as MorrfLogo,
   showmore as ShowMore,
@@ -69,27 +70,34 @@ const DesktopPage = ({
         duration: 500,
       }),
   };
-  const [rndmItem, setRndmItem] = useState();
+  const [rndmItem, setRndmItem] = useState('"Marketing"');
   const myArray = [
     'Museum',
     'Landscape',
     'Recce engineer',
     'Exhibition',
+    'Lighting',
     'Retail',
+    'Residential interior',
     'Architecht',
     'Furniture',
     'Ceramic',
+    'Lifestyle accessory',
+    'Toy',
     'Textile',
+    'Industrial',
     'Digital product',
     'Packaging',
     'Logo',
     'Website',
+    'Illustrator',
+    'Branding',
     'Books',
     'Spatial graphics',
     'Brochure',
     'Researcher',
     'Presentation',
-    'Marketing',
+    '"Marketing"',
     'Infographic',
   ];
   const [counter, setCounter] = useState(0);
@@ -102,7 +110,7 @@ const DesktopPage = ({
     return () => {
       clearInterval(intro);
     };
-  }, [counter]);
+  });
   return (
     <>
       <Header
@@ -121,7 +129,16 @@ const DesktopPage = ({
       >
         <div className="Ff($ffmanrope) D(f) Pt($5x) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($4xl) Ta(c) Mb($sm)">
-            Looking for a freelance {rndmItem} designer?
+            Looking for a freelance{' '}
+            <ReactTextTransition
+              text={rndmItem}
+              spring={presets.molasses}
+              style={{ margin: '0 4px' }}
+              direction="down"
+              overflow
+              inline
+            />{' '}
+            designer?
           </div>
           <div className="Fz($fzdesktopTitle)">
             Drop your details and we will find the best pick for you
