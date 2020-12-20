@@ -114,6 +114,16 @@ const generateRequestForm = ({
           error={getError('email')}
           onFocus={() => setFocus(false)}
         />
+        <FormikInput
+          dimensionClasses="W($full) Mb($sm)"
+          label="Your phone number"
+          name="phone"
+          id="phone"
+          onChange={handleChange}
+          value={values.phone}
+          error={getError('phone')}
+          onFocus={() => setFocus(false)}
+        />
         <div
           className={`Mx(a) W(fc) ${isDesktopOrLaptop ? 'Mt($sm)' : 'Mt($lg)'}`}
         >
@@ -162,6 +172,7 @@ const RequestForm = props => {
       .min(1000, 'Enter atleast 1000')
       .required('Required'),
     specialist: Yup.array().required('Required'),
+    phone: Yup.number().required('Required'),
   };
 
   const validationSchema = Yup.object(YupObj);
@@ -172,6 +183,7 @@ const RequestForm = props => {
     description: '',
     budget: '',
     email: '',
+    phone: '',
   };
   const [submitted, setSubmitted] = useState(false);
   const [submitCount, setCount] = useState(0);
@@ -212,7 +224,7 @@ const RequestForm = props => {
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
-      } Mih(575px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) Pos(r)`}
+      } Mih($6xxl) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) Pos(r)`}
     >
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />

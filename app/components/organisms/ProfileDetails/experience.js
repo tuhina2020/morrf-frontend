@@ -40,7 +40,7 @@ const Experience = ({ data: experience, onEdit, onSave, onAdd, viewOnly }) => {
               )}
             </div>
             <div className="Mt($sm) Mb($mmd)">{company}</div>
-            <div>{highlights}</div>
+            <div className="Ff($ffopensans) Fz($md) Lh(1.75)">{highlights}</div>
           </div>
         ),
       )}
