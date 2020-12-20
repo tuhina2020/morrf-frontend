@@ -70,42 +70,13 @@ const DesktopPage = ({
         duration: 500,
       }),
   };
-  const [rndmItem, setRndmItem] = useState('"Marketing"');
-  const myArray = [
-    'Museum',
-    'Landscape',
-    'Recce engineer',
-    'Exhibition',
-    'Lighting',
-    'Retail',
-    'Residential interior',
-    'Architecht',
-    'Furniture',
-    'Ceramic',
-    'Lifestyle accessory',
-    'Toy',
-    'Textile',
-    'Industrial',
-    'Digital product',
-    'Packaging',
-    'Logo',
-    'Website',
-    'Illustrator',
-    'Branding',
-    'Books',
-    'Spatial graphics',
-    'Brochure',
-    'Researcher',
-    'Presentation',
-    '"Marketing"',
-    'Infographic',
-  ];
-  const [counter, setCounter] = useState(0);
+  const [profession, setProfession] = useState('"Marketing"');
+  const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
-    const randomItem = myArray[Math.floor(Math.random() * myArray.length)];
+    const visibleProfession =
+      professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
-      setRndmItem(randomItem);
-      setCounter(counter + 1);
+      setProfession(visibleProfession);
     }, 2000);
     return () => {
       clearInterval(intro);
@@ -131,7 +102,7 @@ const DesktopPage = ({
           <div className="Fz($4xl) Ta(c) Mb($sm)">
             Looking for a freelance{' '}
             <ReactTextTransition
-              text={rndmItem}
+              text={profession}
               spring={presets.molasses}
               style={{ margin: '0 4px' }}
               direction="down"
