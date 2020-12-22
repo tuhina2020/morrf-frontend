@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactTextTransition, { presets } from 'react-text-transition';
 import {
   morrflogo as MorrfLogo,
   showmore as ShowMore,
@@ -59,6 +60,21 @@ const MobilePage = ({
         duration: 500,
       }),
   };
+
+  const [profession, setProfession] = useState('"Marketing"');
+  const [counter, setCounter] = useState(0);
+  const professionArr = allProfessionTypes.map(p => p.name);
+  useEffect(() => {
+    const visibleProfession =
+      professionArr[Math.floor(Math.random() * professionArr.length)];
+    const intro = setInterval(() => {
+      setProfession(visibleProfession);
+      setCounter(counter + 1);
+    }, 2000);
+    return () => {
+      clearInterval(intro);
+    };
+  });
   return (
     <>
       <Header isDesktopOrLaptop={false} height="72px" />
@@ -73,7 +89,16 @@ const MobilePage = ({
       >
         <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($xl) Mb($md)">
-            Looking for a freelance designer?
+            Looking for a freelance{' '}
+            <ReactTextTransition
+              text={profession}
+              spring={presets.molasses}
+              style={{ margin: '0 4px' }}
+              direction="down"
+              overflow
+              inline
+            />{' '}
+            designer?
           </div>
           <div className="Fz($smx)">
             Drop your details and we will find the best pick for you
