@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 import ProfileDetails from 'templates/ProfileDetails/desktop';
 
@@ -43,6 +45,7 @@ import {
   logout,
   removePortfolioImage,
   setPortfolioImages,
+  setRemoteBankDetails,
 } from './actions';
 
 import reducer from './reducer';
@@ -73,6 +76,7 @@ const ProfilePage = ({
   logoutAction,
   removePortfolioImg,
   setPortfolioImg,
+  setBank,
 }) => {
   if (!isLoggedIn()) return <Redirect to="/login" />;
   useInjectReducer({ key: 'profilePage', reducer });
@@ -98,7 +102,7 @@ const ProfilePage = ({
 
   if (tabId === 'details')
     return (
-      <ProfileDetails
+       <ProfileDetails
         loading={loading}
         profile={{
           ...profilePage,
@@ -110,6 +114,7 @@ const ProfilePage = ({
           experience: saveExperience,
           about: saveAboutMe,
           personal: savePersonalDetails,
+          bankDetails: setBank,
           portfolio: savePortfolio,
           editPortfolio: editPortfolioData,
           skills: saveSkills,
@@ -125,10 +130,10 @@ const ProfilePage = ({
         removePortfolioImage={removePortfolioImg}
         setPortfolioImages={setPortfolioImg}
         portfolioImages={portfolioImages}
-      />
+      /> 
     );
 
-  return <div>LOL TTHIS IS EMPTY</div>;
+  return <div>THIS IS EMPTY</div>;
 };
 
 ProfilePage.propTypes = { responsiveData: PropTypes.object };
@@ -158,6 +163,7 @@ function mapDispatchToProps(dispatch) {
     logoutAction: () => dispatch(logout()),
     removePortfolioImg: params => dispatch(removePortfolioImage(params)),
     setPortfolioImg: params => dispatch(setPortfolioImages(params)),
+    setBank: params => dispatch(setRemoteBankDetails(params)),
   };
 }
 const withConnect = connect(

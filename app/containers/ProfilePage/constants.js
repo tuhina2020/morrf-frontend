@@ -53,6 +53,12 @@ export const SET_ID = 'app/ProfilePage/SET_ID';
 export const SET_PORTFOLIO_IMAGES = 'app/ProfilePage/SET_PORTFOLIO_IMAGES';
 export const REMOVE_PORTFOLIO_IMAGE = 'app/ProfilePage/REMOVE_PORTFOLIO_IMAGE';
 
+export const SET_PROFILE_IMAGE = 'app/ProfilePage/SET_PROFILE_IMAGE';
+
+export const SET_LOCAL_BANK_DETAILS = 'app/ProfilePage/SET_LOCAL_BANK_DETAILS';
+
+export const SET_REMOTE_BANK_DETAILS = 'app/ProfilePage/SET_REMOTE_BANK_DETAILS';
+
 export const SET_LOADING_STATE = 'app/ProfilePage/SET_LOADING_STATE';
 
 export const LOGOUT = 'app/ProfilePage/LOGOUT';

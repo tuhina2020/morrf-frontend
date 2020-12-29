@@ -17,6 +17,7 @@ import {
   SET_REMOTE_PHONE,
   GET_USER,
   UPLOAD_IMAGE,
+  SET_REMOTE_BANK_DETAILS,
   GET_ALL_SKILLS,
   REMOVE_PORTFOLIO,
   EDIT_PORTFOLIO,
@@ -39,6 +40,8 @@ import {
   setId,
   setPortfolioImages,
   setLoading,
+  setProfileImage,
+  setLocalBankDetails,
 } from './actions';
 
 function* logout() {
@@ -54,6 +57,7 @@ function* logout() {
   yield put(setLocalExperience([]));
   yield put(setLocalPersonalData({}));
   yield put(setLocalSkills([]));
+  yield put(setLocalBankDetails({}));
   yield put(setId(''));
   setToast({
     message: 'You have been logged out.',
@@ -250,13 +254,21 @@ function* setCurrentUser({ payload }) {
         state: user.state,
       }),
     );
-
+    yield put(
+      setLocalBankDetails({
+        holderName: user.holderName,
+        bankName: user.bankName,
+        accountNumber: user.accountNumber,
+        ifscCode: user.ifscCode,
+      }),
+    ); 
     yield put(setLocalSkills(user.skills));
     yield put(setLocalExperience(user.experience));
     yield put(setLocalPortfolio(user.portfolio));
   } catch (err) {
     yield put(setLocalAboutMe(''));
     yield put(setLocalPhone({}));
+    yield put(setLocalBankDetails({}));
     yield put(setLocalPortfolio([]));
     yield put(setLocalExperience([]));
     yield put(setLocalPersonalData([]));
@@ -296,30 +308,22 @@ function* getCurrentUser({ payload = {} }) {
           state: user.state,
         }),
       );
-      /*
-       * Parsing old date format (mm/yyyy) to (dd/mm/yyyy)
-       */
-      const portfolio = user.portfolio.map(pFolio => {
-        const { startYear, endYear } = pFolio;
-        const validStart = startYear.split('/').length === 3;
-        const validEnd = endYear.split('/').length === 3;
-        return {
-          ...pFolio,
-          startYear: validStart
-            ? startYear
-            : startYear.split('/')[0] + '/01/' + startYear.split('/')[1],
-          endYear: validEnd
-            ? endYear
-            : endYear.split('/')[0] + '/01/' + endYear.split('/')[1],
-        };
-      });
+      yield put(
+        setLocalBankDetails({
+          holderName: user.holderName,
+          bankName: user.bankName,
+          accountNumber: user.accountNumber,
+          ifscCode: user.ifscCode,
+        }),
+      );
       yield put(setLocalSkills(user.skills));
       yield put(setLocalExperience(user.experience));
-      yield put(setLocalPortfolio(portfolio));
+      yield put(setLocalPortfolio(user.portfolio));
       yield put(setLoading(false));
     } catch (err) {
       yield put(setLoading(false));
       yield put(setLocalAboutMe(''));
+      yield put(setLocalBankDetails({}));
       yield put(setLocalPhone({}));
       yield put(setLocalPortfolio([]));
       yield put(setLocalExperience([]));
@@ -350,6 +354,33 @@ function* setRemoteAboutMe({ payload }) {
     );
   }
 }
+
+/* function* setProfileImage({ payload }) {
+  console.log('we are setting profile pic here', payload);
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${profilePage.id}`;
+  try {
+    const data = [
+      { op: 'add', path: '/image', value: payload.profileImage.id },
+    ];
+    yield call(request, requestURL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json-patch+json',
+      },
+      data,
+    });
+    yield put(getUser());
+  } catch (err) {
+    console.log(err);
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+} */
 
 function* setRemotePersonalData({ payload }) {
   console.log('Personal Data has been set', payload);
@@ -543,6 +574,34 @@ function* removePortfolio({ payload }) {
     );
   }
 }
+function* setRemoteBank({ payload }) {
+  console.log('Bank details have been set', payload);
+  const { bankDetails, user_id } = payload;
+  const profilePage = yield select(makeSelectProfilePage());
+  const requestURL = `/user/${user_id}/bank-details`;
+  const data = {
+    holderName: bankDetails.holderName,
+    bankName: bankDetails.bankName,
+    accountNumber: bankDetails.accountNumber,
+    ifscCode: bankDetails.ifscCode,
+  };
+  yield put(setLocalBankDetails(data));
+  try {
+    yield call(request, requestURL, {
+      method: 'POST',
+      data,
+    });
+    yield put(getUser());
+  } catch (err) {
+    console.log(err);
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
 
 function* removeExperience({ payload }) {
   const { id } = payload;
@@ -642,5 +701,6 @@ export default function* profilePageSaga() {
   yield takeLatest(EDIT_EXPERIENCE, editExperience);
   yield takeLatest(REMOVE_EXPERIENCE, removeExperience);
   yield takeLatest(REMOVE_PORTFOLIO_IMAGE, removePortfolioImage);
+  yield takeLatest(SET_REMOTE_BANK_DETAILS, setRemoteBank);
   yield takeLatest(LOGOUT, logout);
 }
