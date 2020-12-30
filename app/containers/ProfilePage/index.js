@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import 'react-tabs/style/react-tabs.css';
 
 import ProfileDetails from 'templates/ProfileDetails/desktop';
 
