@@ -18,6 +18,7 @@ import {
   SET_ID,
   SET_PORTFOLIO_IMAGES,
   SET_LOADING_STATE,
+  SET_LOCAL_BANK_DETAILS,
 } from './constants';
 const currentSkillsObj1 = [
   {
@@ -49,6 +50,15 @@ const emptyState = {
     city: '',
     state: '',
   },
+  bankDetails: {
+    holderName: '',
+    bankName: '',
+    accountNumber: '',
+    ifscCode: '',
+  },
+  /* profileImage: {
+    id: '',
+  }, */
   about: '',
   portfolio: [],
   skills: [],
@@ -94,6 +104,9 @@ const profilePageReducer = (state = initialState, action) =>
         break;
       case SET_PORTFOLIO_IMAGES:
         draft.portfolioImages = action.payload;
+        break;
+      case SET_LOCAL_BANK_DETAILS:
+        draft.bankDetails = action.payload;
         break;
       case SET_LOADING_STATE:
         draft.loading = action.payload;

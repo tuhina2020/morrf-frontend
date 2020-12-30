@@ -27,6 +27,9 @@ import {
   SET_PORTFOLIO_IMAGES,
   REMOVE_PORTFOLIO_IMAGE,
   SET_LOADING_STATE,
+  SET_PROFILE_IMAGE,
+  SET_REMOTE_BANK_DETAILS,
+  SET_LOCAL_BANK_DETAILS,
 } from './constants';
 
 export function getUser(payload) {
@@ -40,6 +43,12 @@ export function setRemotePersonalData(payload) {
 }
 export function setEmail(payload) {
   return { type: SET_EMAIL, payload };
+}
+export function setLocalBankDetails(payload) {
+  return { type: SET_LOCAL_BANK_DETAILS, payload };
+}
+export function setRemoteBankDetails(payload) {
+  return { type: SET_REMOTE_BANK_DETAILS, payload };
 }
 export function setLocalAboutMe(payload) {
   return { type: SET_LOCAL_ABOUT_ME, payload };
@@ -82,6 +91,9 @@ export function sendVerificationCode(payload) {
 }
 export function uploadImage(payload) {
   return { type: UPLOAD_IMAGE, payload };
+}
+export function setProfileImage(payload) {
+  return { type: SET_PROFILE_IMAGE, payload };
 }
 export function getAllSkills() {
   return { type: GET_ALL_SKILLS };
