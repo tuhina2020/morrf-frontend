@@ -19,6 +19,7 @@ const EnterEmail = ({
 
   const YupObj = {
     email: Yup.string()
+      .trim()
       .min(4, 'Enter atleast four characters')
       .email('Enter a valid email')
       .required('Required'),
