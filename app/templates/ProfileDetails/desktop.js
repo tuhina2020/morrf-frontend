@@ -6,15 +6,14 @@ import Contact from 'components/organisms/ProfileDetails/contact';
 import Experience from 'components/organisms/ProfileDetails/experience';
 import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
-import Bankdetails from 'components/organisms/ProfileDetails/bankdetails';
 import GetStartedMajor from 'components/organisms/EditCarousels/major';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
-import EditFormModal from './editModal';
 import pick from 'lodash/pick';
 import Header from 'components/molecules/Header';
 import LoadingAnimation from 'Assets/gifs/loading.gif';
 import { get } from 'lodash';
+import EditFormModal from './editModal';
 const ProfileDetails = ({
   profile,
   sendCode,
@@ -36,7 +35,6 @@ const ProfileDetails = ({
     phone,
     email,
     experience,
-    bankDetails,
     portfolio,
     skills,
     skillsList,
@@ -120,8 +118,8 @@ const ProfileDetails = ({
     if (isEmpty(open)) setBlur(loading);
   }, [loading]);
 
-  const Loading = () => {
-    return loading ? (
+  const Loading = () =>
+    loading ? (
       <div className="W($full) H(100vw) Op(0.5) Bgc(white) Z(2)">
         <img
           src={LoadingAnimation}
@@ -129,20 +127,18 @@ const ProfileDetails = ({
         />
       </div>
     ) : null;
-  };
 
-  console.log('BLUR IS', blur, loading);
   return (
     <div>
       <Header
-        isDesktopOrLaptop={true}
+        isDesktopOrLaptop
         logout={isEmpty(open) && !viewOnly}
         logoutAction={logout}
         blur={blur}
       />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
-        <div className={`D(f) Ai(s) Jc(s) P($lg)`}>
+        <div className="D(f) Ai(s) Jc(s) P($lg)">
           <div className="Mend($lg) Miw($60xl)">
             <PersonalDetails
               personal={personal}
@@ -170,7 +166,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('about');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
             <Skills
               skills={skills}
@@ -179,7 +175,7 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('skills');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
             <Experience
               onEdit={index => {
@@ -197,25 +193,8 @@ const ProfileDetails = ({
                 setSourcePage('main');
                 setOpen('experience');
               }}
-              viewOnly={viewOnly}
+              viewOnly={!!viewOnly}
             />
-            <Bankdetails 
-              bankDetails={bankDetails}
-              onEdit={() => {
-                setBlur(true);
-                setOpen('bankDetails');
-                setSourcePage('main');
-              }}
-              onAdd={() => {
-                console.log('ADDING');
-                setIndex();
-                setBlur(true);
-                setSourcePage('main');
-                setOpen('bankDetails');
-              }}
-              viewOnly={viewOnly}
-            >
-            </Bankdetails>
           </div>
           <Portfolio
             portfolio={portfolio}
@@ -242,7 +221,7 @@ const ProfileDetails = ({
               setSourcePage('main');
               setOpen('portfolio');
             }}
-            viewOnly={viewOnly}
+            viewOnly={!!viewOnly}
           />
         </div>
         {!viewOnly && (
