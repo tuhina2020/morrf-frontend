@@ -8,6 +8,7 @@ import ProjectPage from 'containers/ProjectPage/Loadable';
 import LitePage from 'containers/LitePage/Loadable';
 import PrivacyPage from 'containers/Privacy/Loadable';
 import TermsOfUsePage from 'containers/TermsOfUse/Loadable';
+import KYCPage from 'containers/KYCPage/Loadable';
 const ROUTES = [
   // {
   //   path: '/landing',
@@ -32,6 +33,14 @@ const ROUTES = [
     footer: false,
     auth: false,
     key: 'privacy',
+  },
+  {
+    path: '/kycpage',
+    component: KYCPage,
+    header: true,
+    footer: false,
+    auth: false,
+    key: 'kycpage',
   },
   {
     path: '/login',
