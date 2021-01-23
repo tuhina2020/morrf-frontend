@@ -6,7 +6,6 @@ import Contact from 'components/organisms/ProfileDetails/contact';
 import Experience from 'components/organisms/ProfileDetails/experience';
 import Portfolio from 'components/organisms/ProfileDetails/portfolio';
 import Skills from 'components/organisms/ProfileDetails/skills';
-import Kycpage from 'components/organisms/ProfileDetails/kycpage';
 import GetStartedMajor from 'components/organisms/EditCarousels/major';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
@@ -39,7 +38,6 @@ const ProfileDetails = ({
     portfolio,
     skills,
     skillsList,
-    kycpage,
   } = profile;
 
   const [blur, setBlur] = useState(loading);
@@ -161,15 +159,6 @@ const ProfileDetails = ({
                 }}
               />
             )}
-            <Kycpage
-              kycpage={kycpage}
-              onEdit={() => {
-                setBlur(true);
-                setSourcePage('main');
-                setOpen('kycpage');
-              }}
-              viewOnly={viewOnly}
-            />
             <AboutMe
               about={about}
               onEdit={() => {
