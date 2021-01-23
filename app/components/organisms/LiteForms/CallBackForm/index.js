@@ -32,8 +32,6 @@ const generateMorffLiteForm = ({
     : 'Mb($lg) W(265px)';
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
-  const maxDate = new Date();
-  maxDate.setMonth(maxDate.getMonth() + 5);
   return (
     <form onSubmit={handleSubmit}>
       <FormikInput
@@ -66,7 +64,6 @@ const generateMorffLiteForm = ({
           id="date"
           dimensionClasses={dateDimensionClasses}
           onChange={handleChange}
-          maxDate={maxDate}
           value={values.date}
           error={getError('date')}
           setUpstreamDate={val => {
@@ -161,7 +158,7 @@ const CallBackForm = props => {
       <>
         <img src={SuccessAnimation} className="W($half) Op(0)" />
         <div className="W($full) H($2xl)">
-          <div className={'Mx(a) W(fc) Trsdu(1s) Trstf(e) Trsp(a) H(fc)'}>
+          <div className="Mx(a) W(fc) Trsdu(1s) Trstf(e) Trsp(a) H(fc)">
             <Button {...anotherReqButton}>Submit Another response</Button>
           </div>
         </div>
@@ -171,7 +168,7 @@ const CallBackForm = props => {
     <div
       className={`${
         isDesktopOrLaptop ? 'W(530px)' : 'W(320px)'
-      } Mih($6xxl) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
+      } Mih(575px) H(a) Bgc(white) Bxsh($bxshhighlight) M(a) Bdrs($xs) P($lg) O(1) Pos(r)`}
     >
       {submitted && submitCount === 1 ? (
         <img src={SuccessAnimation} className="W($full)" />
@@ -183,7 +180,11 @@ const CallBackForm = props => {
             onClick={() => setCallToggle(false)}
           />
           <div className="Mt($lg) Mx(a) W(fc)">
-            <MorffLogo className="W($6xl) H($5xl)" />
+            <BaseIcon
+              icon="callback"
+              fill="#24a047"
+              iconClasses="Bdrs($half) Bgc($navBarBg) W($6xl) H($5xl)"
+            />
           </div>
           <div className="Ff($ffmanrope) Fz($fztitle) Ta(c) Mt($lg) Mb($2xl)">
             Request a Call Back

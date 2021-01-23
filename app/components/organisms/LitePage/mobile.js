@@ -18,7 +18,7 @@ import menuHeader from 'Assets/images/Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
-import Header from 'components/Header';
+import NewHeader from 'components/NewHeader';
 import HeadingBg from 'Assets/images/lite/heading.png';
 const MobilePage = ({
   allProfessionTypes,
@@ -77,7 +77,7 @@ const MobilePage = ({
   });
   return (
     <>
-      <Header isDesktopOrLaptop={false} height="72px" />
+      <NewHeader isDesktopOrLaptop={false} height="72px" />
       {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
