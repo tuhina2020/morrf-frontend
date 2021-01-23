@@ -71,7 +71,7 @@ export default function NewHeader({
         </div>
         <div className="Pos(a) End($20x)">
           <Button
-            onClick={() => window.open('https://support.morff.co.in/')}
+            onClick={() => window.open('https://support.morff.io/freelancers')}
             {...buttonProps}
           >
             Join as a Freelancer
