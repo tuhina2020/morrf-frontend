@@ -19,7 +19,7 @@ import BaseIcon from 'components/atoms/BaseIcon/index';
 import Button from 'components/molecules/Button/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
-import Header from 'components/Header';
+import NewHeader from 'components/NewHeader';
 const DesktopPage = ({
   sendEmail,
   callbackReq,
@@ -84,7 +84,7 @@ const DesktopPage = ({
   });
   return (
     <>
-      <Header
+      <NewHeader
         isDesktopOrLaptop={true}
         bgImg={HeadingBg}
         height="72px"
