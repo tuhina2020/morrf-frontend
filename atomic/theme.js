@@ -76,7 +76,6 @@ module.exports = () => ({
     fc: 'fit-content',
     auto: 'auto',
     half: '50%',
-    sli: '47%',
     quarter: '25%',
     third: '30%',
     deci: '10%',
