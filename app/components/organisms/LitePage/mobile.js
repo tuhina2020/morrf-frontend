@@ -77,7 +77,7 @@ const MobilePage = ({
   });
   return (
     <>
-      <NewHeader isDesktopOrLaptop={false} height="72px" />
+      <NewHeader isDesktopOrLaptop={false} />
       {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
@@ -87,17 +87,14 @@ const MobilePage = ({
           backgroundSize: 'cover',
         }}
       >
-        <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
+        <div className="Px($mmd) Ta(start) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($xl) Mb($md)">
             Looking for a freelance{' '}
             <ReactTextTransition
               text={profession}
-              spring={presets.molasses}
-              style={{ margin: '0 4px' }}
-              direction="down"
-              overflow
-              inline
-            />{' '}
+              // spring={presets.molasses}
+              direction="up"
+            />
             designer?
           </div>
           <div className="Fz($smx)">

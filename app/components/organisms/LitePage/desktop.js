@@ -84,12 +84,7 @@ const DesktopPage = ({
   });
   return (
     <>
-      <NewHeader
-        isDesktopOrLaptop={true}
-        bgImg={HeadingBg}
-        height="72px"
-        padding="Px(6%)"
-      />
+      <NewHeader isDesktopOrLaptop={true} bgImg={HeadingBg} padding="Px(6%)" />
       <div
         className="Pos(r) T(71px) Bgr(nr)"
         style={{
