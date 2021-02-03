@@ -8,14 +8,13 @@ import { clean } from 'utils/helper';
 const PersonalDetails = ({ personal, onEdit, viewOnly }) => {
   const { firstName, lastName, profession, city, state } = personal;
   const personalObj = clean(personal);
-  if (isEmpty(personal) || !personalObj.firstName || !personalObj.lastName)
-    return null;
+  if (isEmpty(personal) || !firstName) return null;
   return (
     <div className="Bdrs($xs) Bgc(white) H($fc) Maw($60xl)">
       <div className="D(f) Ai(s) Jc(sb) Px($lg) Pb($sm) Pt($mmd) Lh(1)">
         <div>
           <div className="Ff($ffmanrope) Fz($xml)">
-            {firstName} {lastName}
+            {firstName} {lastName || ''}
           </div>
           <div className="Ff($ffopensans) Fz($md)">
             <div className="My($sm)">{profession}</div>
