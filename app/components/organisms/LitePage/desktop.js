@@ -19,7 +19,7 @@ import BaseIcon from 'components/atoms/BaseIcon/index';
 import Button from 'components/molecules/Button/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
-import Header from 'components/Header';
+import NewHeader from 'components/NewHeader';
 const DesktopPage = ({
   sendEmail,
   callbackReq,
@@ -71,12 +71,14 @@ const DesktopPage = ({
       }),
   };
   const [profession, setProfession] = useState('"Marketing"');
+  const [counter, setCounter] = useState(0);
   const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
     const visibleProfession =
       professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
       setProfession(visibleProfession);
+      setCounter(counter + 1);
     }, 2000);
     return () => {
       clearInterval(intro);
@@ -84,7 +86,7 @@ const DesktopPage = ({
   });
   return (
     <>
-      <Header
+      <NewHeader
         isDesktopOrLaptop={true}
         bgImg={HeadingBg}
         height="72px"
