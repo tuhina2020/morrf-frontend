@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import FormikInput from 'components/molecules/FormikInput';
@@ -12,33 +12,20 @@ import isUndefined from 'lodash/isUndefined';
 import { wordCount } from 'utils/helper';
 import SelectField from './Selectfield';
 
-const removeProps = {
-  iconDescription: 'Remove',
-  alignContent: 'center',
-  kind: 'danger',
-  size: '10x',
-  type: 'button',
-  height: 'H($lg)',
-  roundCorners: false,
-  postIcon: 'remove',
-};
-
-const EditAdressFormBody = ({
-  currentIndex,
+const EditAddressFormBody = ({
   line_1,
   line_2,
   city,
   state,
   pincode,
   country,
+  id,
   proof_type,
   errors,
   touched,
   handleChange,
-  handleSubmit,
   field,
   form,
-  values,
   setFieldValue,
   onRemove,
   removeAddress,
@@ -63,9 +50,9 @@ const EditAdressFormBody = ({
   };
   return (
     <div className="Pos(r) Mah($60xl) Ov(s) P($lg)">
-      <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
+      <div className="D(f) Ai(c) Jc(sb) Mb($md)">
         <FormikInput
-          label="Address line 1"
+          label="Address Line 1"
           name="line_1"
           id="line_1"
           dimensionClasses="W($full)"
@@ -76,20 +63,20 @@ const EditAdressFormBody = ({
       </div>
       <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
         <FormikInput
+          label="Address Line 1"
           name="line_2"
           id="line_2"
-          label="Address line2"
           dimensionClasses="W($full)"
           onChange={handleChange}
           value={line_2}
           error={getError('line_2')}
         />
       </div>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
+      <div className="D(f) Ai(c) Jc(sb) H($2xl) My($lg)">
         <FormikInput
+          label="PIN Code"
           name="pincode"
           id="pincode"
-          label="PIN CODE"
           onChange={handleChange}
           value={pincode}
           error={getError('pincode')}
@@ -97,9 +84,9 @@ const EditAdressFormBody = ({
       </div>
       <div className="D(f) Ai(c) Jc(sb) H($2xl)">
         <FormikInput
-          label="CITY "
           name="city"
           id="city"
+          label="CITY"
           onChange={handleChange}
           value={city}
           error={getError('city')}
@@ -117,15 +104,13 @@ const EditAdressFormBody = ({
         Upload Proof
         <Field name="proof_type" component={SelectField} options={options} />
       </div>
-      {address && address.id ? (
-        <Button {...removeProps} onClick={onRemove}>
-          Remove
-        </Button>
-      ) : null}
+      <Button {...removeProps} onClick={onRemove}>
+        Remove
+      </Button>
     </div>
   );
 };
-
+debugger;
 const EditAddressForm = ({ onCancel, data, onSave, removeAddress }) => {
   const saveProps = {
     iconDescription: 'Save',
@@ -144,13 +129,13 @@ const EditAddressForm = ({ onCancel, data, onSave, removeAddress }) => {
     roundCorners: false,
     onClick: onCancel,
   };
+
   const validationSchema = Yup.object({
     line_1: Yup.string().required('Required'),
     line_2: Yup.string().required('Required'),
     city: Yup.string().required('Required'),
     state: Yup.string().required('Required'),
-    pincode: Yup.string().required('Required'),
-    country: Yup.string().required('Required'),
+    pincode: Yup.number().required('Required'),
   });
   const initialValues = { ...data };
   const onRemove = () => {
@@ -173,7 +158,7 @@ const EditAddressForm = ({ onCancel, data, onSave, removeAddress }) => {
             Edit Your Details
           </div>
           <Form onSubmit={handleSubmit}>
-            <EditAdressFormBody
+            <EditAddressFormBody
               {...values}
               handleChange={handleChange}
               onRemove={onRemove}
@@ -199,7 +184,6 @@ EditAddressForm.propTypes = {
 
 EditAddressForm.defaultProps = {
   onCancel: () => {},
-  data: {},
 };
 
 export default EditAddressForm;
