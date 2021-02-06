@@ -18,7 +18,7 @@ import menuHeader from 'Assets/images/Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
-import NewHeader from 'components/NewHeader';
+import Header from 'components/Header';
 import HeadingBg from 'Assets/images/lite/heading.png';
 const MobilePage = ({
   allProfessionTypes,
@@ -45,6 +45,12 @@ const MobilePage = ({
       else scrollTo({});
     };
     setTimeout(showMore, 200);
+  };
+  const buttonProps = {
+    iconDescription: 'sign in with google',
+    alignContent: 'center',
+    kind: 'primary',
+    size: '50x',
   };
 
   const formRef = useRef(null);
@@ -77,7 +83,7 @@ const MobilePage = ({
   });
   return (
     <>
-      <NewHeader isDesktopOrLaptop={false} />
+      <Header isDesktopOrLaptop={false} />
       {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
@@ -87,14 +93,27 @@ const MobilePage = ({
           backgroundSize: 'cover',
         }}
       >
-        <div className="Px($mmd) Ta(start) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
+        <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($xl) Mb($md)">
+            <div className="Mx($10x)">
+              <Button
+                onClick={() =>
+                  window.open('https://support.morff.io/freelancers')
+                }
+                {...buttonProps}
+              >
+                Join as a Freelancer
+              </Button>
+            </div>
             Looking for a freelance{' '}
             <ReactTextTransition
               text={profession}
-              // spring={presets.molasses}
-              direction="up"
-            />
+              spring={presets.molasses}
+              style={{ margin: '0 4px' }}
+              direction="down"
+              overflow
+              inline
+            />{' '}
             designer?
           </div>
           <div className="Fz($smx)">
