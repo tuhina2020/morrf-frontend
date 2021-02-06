@@ -69,7 +69,6 @@ function* getCurrentUser({ payload = {} }) {
       yield put(
         setLocalPersonalData({
           firstName: user.first_name,
-          lastName: user.second_name,
           profession: user.profession,
           city: user.city,
           state: user.state,

@@ -79,15 +79,6 @@ const ViewProfilePage = ({
         editExperience: viewProfilePage.experience,
       }}
       viewOnly={true}
-      // verifyPhone={formVerifyPhone}
-      // sendCode={savePhone}
-      // uploadImageData={uploadImageData}
-      // removePortfolio={removePortfolioData}
-      // removeExperience={removeExperienceData}
-      // logout={logoutAction}
-      // removePortfolioImage={removePortfolioImg}
-      // setPortfolioImages={setPortfolioImg}
-      // portfolioImages={portfolioImages}
     />
   );
 };
