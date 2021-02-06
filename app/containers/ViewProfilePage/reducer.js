@@ -30,7 +30,6 @@ const emptyState = {
   id: '',
   personal: {
     firstName: '',
-    lastName: '',
     profession: '',
     city: '',
     state: '',

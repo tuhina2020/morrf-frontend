@@ -4,7 +4,6 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import DummyPage from 'containers/DummyPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
 import ViewProfilePage from 'containers/ViewProfilePage/Loadable';
-import ProjectPage from 'containers/ProjectPage/Loadable';
 import LitePage from 'containers/LitePage/Loadable';
 import PrivacyPage from 'containers/Privacy/Loadable';
 import TermsOfUsePage from 'containers/TermsOfUse/Loadable';
@@ -66,15 +65,6 @@ const ROUTES = [
     auth: true,
     nav: true,
     key: 'profile',
-  },
-  {
-    path: '/projects',
-    component: ProjectPage,
-    header: false,
-    footer: false,
-    auth: true,
-    nav: true,
-    key: 'project',
   },
   // {
   //   path: '/',
