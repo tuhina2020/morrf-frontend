@@ -71,12 +71,16 @@ const DesktopPage = ({
       }),
   };
   const [profession, setProfession] = useState('"Marketing"');
+  const [index, setIndex] = useState(0);
   const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
-    const visibleProfession =
-      professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
+      let newIndex = Math.floor(Math.random() * professionArr.length);
+      newIndex =
+        newIndex === index ? (newIndex + 1) % professionArr.length : newIndex;
+      const visibleProfession = professionArr[newIndex];
       setProfession(visibleProfession);
+      setIndex(newIndex);
     }, 2000);
     return () => {
       clearInterval(intro);
