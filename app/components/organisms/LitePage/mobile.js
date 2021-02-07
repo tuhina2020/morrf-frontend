@@ -62,19 +62,28 @@ const MobilePage = ({
   };
 
   const [profession, setProfession] = useState('"Marketing"');
-  const [counter, setCounter] = useState(0);
+  const [index, setIndex] = useState(0);
   const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
-    const visibleProfession =
-      professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
+      let newIndex = Math.floor(Math.random() * professionArr.length);
+      newIndex =
+        newIndex === index ? (newIndex + 1) % professionArr.length : newIndex;
+      const visibleProfession = professionArr[newIndex];
       setProfession(visibleProfession);
-      setCounter(counter + 1);
+      setIndex(newIndex);
     }, 2000);
     return () => {
       clearInterval(intro);
     };
   });
+  const buttonProps = {
+    iconDescription: 'sign in with google',
+    alignContent: 'center',
+    kind: 'primary',
+    size: '50x',
+  };
+
   return (
     <>
       <NewHeader isDesktopOrLaptop={false} />
@@ -88,6 +97,16 @@ const MobilePage = ({
         }}
       >
         <div className="Px($mmd) Ta(start) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
+          <div className="Pb($lg)">
+            <Button
+              {...buttonProps}
+              onClick={() =>
+                window.open('https://support.morff.io/freelancers')
+              }
+            >
+              Join as a Freelancer
+            </Button>
+          </div>
           <div className="Fz($xl) Mb($md)">
             Looking for a freelance{' '}
             <ReactTextTransition

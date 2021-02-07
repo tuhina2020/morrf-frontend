@@ -47,7 +47,7 @@ export default function NewHeader({
       <div
         className={`D(f) H($5xl) ${
           screen.width > 900
-            ? 'Jc(s) P(1vw)'
+            ? 'Jc(sb) P(1vw)'
             : 'Jc(c) Py(3vw) Mstart(5vw) Mend(12vw)'
         } Ai(c)`}
       >
@@ -63,17 +63,26 @@ export default function NewHeader({
                 : 'Pt(5.5vw) Pstart(2.8vw) Mend(2.8vw)'
             }`}
           />
-          {isDesktopOrLaptop && (
-            <div className={`Fw($fwregular) Ff($ffmanrope) Fz($mmd)`}>
-              Design Made Easy
-            </div>
-          )}
+          <div
+            className={`Fw($fwregular) Ff($ffmanrope) ${
+              isDesktopOrLaptop ? 'Fz($mmd)' : 'Fz($smd)'
+            }`}
+          >
+            Design Made Easy
+          </div>
         </div>
-        <div className={!isDesktopOrLaptop ? '' : 'End($20x)'}>
-          <a href="https://support.morff.io/freelancers" className="Td(n)">
-            <Button {...buttonProps}>Join as a Freelancer</Button>
-          </a>
-        </div>
+        {isDesktopOrLaptop && (
+          <div>
+            <Button
+              {...buttonProps}
+              onClick={() =>
+                window.open('https://support.morff.io/freelancers')
+              }
+            >
+              Join as a Freelancer
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
