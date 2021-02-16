@@ -35,7 +35,7 @@ const EditBankFormBody = ({
   account_number,
   ifsc_code,
   upi_code,
-  proof_file,
+  files,
   ...bankDetailss
 }) => {
   const getError = key =>
@@ -116,7 +116,7 @@ const EditBankFormBody = ({
         multiple
         name="example-upload"
         maxSize={10}
-        filesExisting={bankDetailss.proof_file}
+        filesExisting={files}
         uploadedFiles={bankImages}
         onRemove={index => removeBankImages({ id: bankDetailss.id, index })}
         onChange={data =>

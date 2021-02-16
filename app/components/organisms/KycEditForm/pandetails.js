@@ -13,19 +13,12 @@ import { wordCount } from 'utils/helper';
 import FileUpload from 'components/molecules/DragDrop/file2';
 import SelectField from './Selectfield';
 
-const EditAddressFormBody = ({
+const EditPanFormBody = ({
   currentIndex,
-  line_1,
-  line_2,
-  city,
-  state,
-  pincode,
-  country,
+  pancard,
+  panImage,
   id,
-  proof_type,
-  addressImages,
   files,
-  proof_files,
   errors,
   touched,
   handleChange,
@@ -33,10 +26,10 @@ const EditAddressFormBody = ({
   form,
   setFieldValue,
   onRemove,
-  removeAddress,
-  uploadaddressImageData,
-  removeaddressImages,
-  ...address
+  removePan,
+  uploadPanImageData,
+  removePanImage,
+  ...panDetails
 }) => {
   const getError = key =>
     key && errors[key] && touched[key] ? errors[key] : null;
@@ -59,52 +52,13 @@ const EditAddressFormBody = ({
     <div className="Pos(r) Mah($60xl) Ov(s) P($lg)">
       <div className="D(f) Ai(c) Jc(sb) Mb($md)">
         <FormikInput
-          label="Address Line 1"
-          name="line_1"
-          id="line_1"
+          label="PAN Number"
+          name="pancard"
+          id="pancard"
           dimensionClasses="W($full)"
           onChange={handleChange}
-          value={line_1}
-          error={getError('line_1')}
-        />
-      </div>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl) Mb($md)">
-        <FormikInput
-          label="Address Line 1"
-          name="line_2"
-          id="line_2"
-          dimensionClasses="W($full)"
-          onChange={handleChange}
-          value={line_2}
-          error={getError('line_2')}
-        />
-      </div>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl) My($lg)">
-        <FormikInput
-          label="PIN Code"
-          name="pincode"
-          id="pincode"
-          onChange={handleChange}
-          value={pincode}
-          error={getError('pincode')}
-        />
-      </div>
-      <div className="D(f) Ai(c) Jc(sb) H($2xl)">
-        <FormikInput
-          name="city"
-          id="city"
-          label="CITY"
-          onChange={handleChange}
-          value={city}
-          error={getError('city')}
-        />
-        <FormikInput
-          name="state"
-          id="state"
-          label="STATE"
-          onChange={handleChange}
-          value={state}
-          error={getError('state')}
+          value={pancard}
+          error={getError('pancard')}
         />
       </div>
       <div className="Ai(c) Jc(sb) H($3xl) My($xl) Maw($sli) Bgc(white)">
@@ -115,12 +69,12 @@ const EditAddressFormBody = ({
       <FileUpload
         multiple
         name="example-upload"
-        maxSize={10}
+        maxSize={1}
         filesExisting={files}
-        uploadedFiles={addressImages}
-        onRemove={index => removeaddressImages({ id: address.id, index })}
+        uploadedFiles={panImage}
+        onRemove={index => removePanImage({ id: panDetails.id, index })}
         onChange={data =>
-          uploadaddressImageData({ files: data, id: address.id })
+          uploadPanImageData({ files: data, id: panDetails.id })
         }
         showPreview
       />
@@ -131,15 +85,15 @@ const EditAddressFormBody = ({
   );
 };
 debugger;
-const EditAddressForm = ({
+const EditPanForm = ({
   onCancel,
   data,
   onSave,
-  removeAddress,
+  removePan,
   currentIndex,
-  uploadaddressImageData,
-  removeaddressImages,
-  addressImages,
+  uploadPanImageData,
+  removePanImage,
+  panImage,
 }) => {
   const saveProps = {
     iconDescription: 'Save',
@@ -160,15 +114,11 @@ const EditAddressForm = ({
   };
 
   const validationSchema = Yup.object({
-    line_1: Yup.string().required('Required'),
-    line_2: Yup.string().required('Required'),
-    city: Yup.string().required('Required'),
-    state: Yup.string().required('Required'),
-    pincode: Yup.number().required('Required'),
+    pancard: Yup.string().required('Required'),
   });
   const initialValues = { ...data };
   const onRemove = () => {
-    removeAddress(data);
+    removePan(data);
     onCancel();
   };
   debugger;
@@ -187,15 +137,15 @@ const EditAddressForm = ({
             Edit Your Details
           </div>
           <Form onSubmit={handleSubmit}>
-            <EditAddressFormBody
+            <EditPanFormBody
               {...values}
               handleChange={handleChange}
               onRemove={onRemove}
               errors={errors}
               touched={touched}
-              uploadaddressImageData={uploadaddressImageData}
-              removeaddressImages={removeaddressImages}
-              addressImages={addressImages}
+              uploadPanImageData={uploadPanImageData}
+              removePanImage={removePanImage}
+              panImage={panImage}
             />
             <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">
               <Button {...cancelProps}>Cancel</Button>
@@ -208,14 +158,14 @@ const EditAddressForm = ({
   );
 };
 
-EditAddressForm.propTypes = {
+EditPanForm.propTypes = {
   onCancel: PropTypes.func,
   onSave: PropTypes.func.isRequired,
   data: PropTypes.object,
 };
 
-EditAddressForm.defaultProps = {
+EditPanForm.defaultProps = {
   onCancel: () => {},
 };
 
-export default EditAddressForm;
+export default EditPanForm;

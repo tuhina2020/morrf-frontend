@@ -10,48 +10,19 @@ import { classnames } from 'utils/helper';
 import Modal from 'react-modal';
 import LazyImage from 'components/molecules/LazyImg';
 
-const AddressScroll = ({
-  onNext,
-  onBack,
-  files,
-  onPreviewImage,
-  current = false,
-  viewOnly,
-}) => {
+const PanScroll = ({ files, onPreviewImage, current = false, viewOnly }) => {
   Modal.setAppElement('#app');
-  const imageCount4 = files.length <= 4;
-  const remaining = imageCount4 ? [...Array(4 - files.length).keys()] : [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentImage, setCurrentImage] = useState({});
   const [totalWidth, setWidth] = useState(0);
   const commonIconStyle = classnames({
-    'W($xl)': !imageCount4,
-    'H($xl)': !imageCount4,
     'Bdrs($lg)': true,
-    'C(white)': imageCount4,
     'Trsdu(0.4s)': true,
     'Trsp(a)': true,
     'Trstf(e)': true,
-    'W(0)': imageCount4,
-    'H(0)': imageCount4,
   });
-  const onBackClick = () => {
-    if (imageCount4) return;
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      onBack();
-    }
-  };
 
   const newRef = useRef();
-
-  const onNextClick = () => {
-    if (imageCount4) return;
-    if (currentIndex < files.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      onNext();
-    }
-  };
 
   const onImageClick = (e, params) => {
     e.preventDefault();
@@ -64,23 +35,13 @@ const AddressScroll = ({
     setCurrentImage({});
   };
   console.log(
-    imageCount4,
     files.length,
-    'imageCount4',
     commonIconStyle,
     currentIndex === 0 ? 'C($navBarBg)' : '',
   );
 
-  console.log(totalWidth);
   return (
     <div className="D(f) Jc(fs) Ai(c) W(fc) End($xss)">
-      <BaseIcon
-        icon="showmore"
-        iconClasses={`${commonIconStyle} Rotate(90deg) ${
-          currentIndex === 0 ? 'C($disabledGrey)' : 'Bgc($navBarBg):h'
-        }`}
-        onClick={onBackClick}
-      />
       <div className="Ov(h) Maw($50xl)">
         <div
           className="D(f) Ai(c) Jc(fs) Trsdu(1s) Trsp(a) Trstf(e)"
@@ -89,30 +50,19 @@ const AddressScroll = ({
             transform: `translateX(${-1 * currentIndex * 400}px)`,
           }}
         >
-          {files.map(({ url, id, type }, index) => (
-            <div
-              key={id}
-              className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
-              onClick={e => onImageClick(e, { data: url, type, index })}
-            >
-              <img
-                src={url}
-                className="W(a) H($10x) Bdrs($xxs)"
-                // placeHolderClass="W($10x) H($10x)"
-              />
-            </div>
-          ))}
+          <div
+            key={files.id}
+            className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
+            onClick={e => onImageClick(e, { data: files.url, type })}
+          >
+            <img
+              src={files.url}
+              className="W(a) H($10x) Bdrs($xxs)"
+              // placeHolderClass="W($10x) H($10x)"
+            />
+          </div>
         </div>
       </div>
-      <BaseIcon
-        icon="showmore"
-        iconClasses={`${commonIconStyle} Rotate(-90deg) ${
-          currentIndex >= files.length - 1
-            ? 'C($disabledGrey)'
-            : 'Bgc($navBarBg):h'
-        }`}
-        onClick={onNextClick}
-      />
       <Modal
         isOpen={!isEmpty(currentImage)}
         onRequestClose={onClosePreview}
@@ -129,23 +79,23 @@ const AddressScroll = ({
   );
 };
 debugger;
-const AddressDetails = ({
-  address,
+const PanDetails = ({
+  panDetails,
   onAdd,
   onPreviewImage,
   onEdit,
   viewOnly,
 }) => {
-  const { line_1, line_2, city, state, pincode, proof_type, files } = address;
-  if (isEmpty(line_1))
+  const { pancard, files } = panDetails;
+  if (isEmpty(pancard))
     return (
       <div className="Bdrs($xs) Bgc(white) W($60xl) H(fc)">
-        <DisplayCard heading="Billing Details">
+        <DisplayCard heading="PAN Details">
           <div className="D(f) Ai(c) Jc(fs) Ff($ffopensans) Fz($md)">
             <div className="W($full)">
               <div className="D(f) Fxd(r) Jc(fs)">
                 <div className="Fz($md) My($xms)">
-                  This address will be used in the invoices you raise
+                  ADD PAN CARD AND PAN NUMBER 
                 </div>
                 <div className="Fz($smd) My($xms) Mstart($xl)">
                   <BaseIcon
@@ -155,7 +105,7 @@ const AddressDetails = ({
                     fill="#0000FF"
                     onClick={onAdd}
                   />
-                  Add Address
+                  Add PAN Details
                 </div>
               </div>
             </div>
@@ -174,21 +124,11 @@ const AddressDetails = ({
         <div className="D(f) Ai(c) Jc(fs) Ff($ffopensans) Fz($md)">
           <div className="W($full)">
             <div className="Fw($fwbold) Fz($smx) Lh(1) Mb($xs)">
-              Adress Details
+              PAN Details
             </div>
             <div className="D(f) Fxd(c) Flw(w) Jc(fs)">
-              <div className="Fz($smd) My($xms)">{line_1}</div>
-              <div className="Fz($smd) Mend($xs) My($xms)">{line_2}</div>
-              <div className="Fz($smd) Mend($xs) My($xms)">{city}</div>
-              <div className="Fz($smd) Mend($xs) My($xms)">{state}</div>
-              <div className="Fz($smd) Mend($xs) My($xms)">{pincode}</div>
-              <div className="Fz($smd) Mend($xs) My($xms)">{proof_type}</div>
-              <AddressScroll
-                files={files}
-                onNext={() => {}}
-                onBack={() => {}}
-                onPreviewImage={onPreviewImage}
-              />
+              <div className="Fz($smd) Mend($xs) My($xms)">{pancard}</div>
+              <PanScroll files={files} onPreviewImage={onPreviewImage} />
             </div>
           </div>
         </div>
@@ -197,20 +137,20 @@ const AddressDetails = ({
   );
 };
 
-AddressDetails.propTypes = {
-  address: PropTypes.object,
+PanDetails.propTypes = {
+  panDetails: PropTypes.object,
   onEdit: PropTypes.func,
   onAdd: PropTypes.func,
   viewOnly: PropTypes.bool,
 };
 
-AddressDetails.defaultProps = {
+PanDetails.defaultProps = {
   viewOnly: false,
   onAdd: () => {},
   onEdit: () => {},
 };
-AddressScroll.defaultProps = {
-  files: [],
+PanScroll.defaultProps = {
+  files: {},
   viewOnly: false,
 };
-export default AddressDetails;
+export default PanDetails;

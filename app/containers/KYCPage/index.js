@@ -21,13 +21,16 @@ import { setToast, isLoggedIn } from 'utils/helper';
 import { useInjectReducer } from 'utils/injectReducer';
 
 import { makeSelectKYCPage } from './selectors';
+import { logout } from 'containers/ProfilePage/actions';
 import {
   getAddress,
   editAddress,
   uploadBankImage,
-  logout,
+  uploadAddressImage,
   removePortfolioImage,
+  removeAddressImages,
   setBankImages,
+  setAddressImages,
   removeBankImages,
   setRemoteBankDetails,
   setRemoteAddress,
@@ -35,6 +38,12 @@ import {
   editBankDetails,
   removeBankDetails,
   removeAddress,
+  setRemotePan,
+  getUserPan,
+  editPanDetails,
+  uploadPanImage,
+  setPanImage,
+  removePanImage,
 } from './actions';
 
 import reducer from './reducer';
@@ -48,19 +57,29 @@ const KYCPage = ({
   kycPage,
   match,
   saveAddress,
+  savePan,
   getAddress,
+  getUserPan,
+  editPanData,
   uploadBankImageData,
+  uploadaddressImageData,
+  uploadPanImageData,
   editAddressData,
   logoutAction,
   setBankImg,
+  setAddressImg,
+  setPanImg,
   removeBankImg,
+  removeaddressImg,
+  removePanImg,
   setBank,
   getBankDetails,
   editBankDetailsData,
   removeBankDetailsData,
   removeAddressData,
+  removePanData,
 }) => {
-    if (!isLoggedIn()) return <Redirect to="/login" />;
+  if (!isLoggedIn()) return <Redirect to="/login" />;
   useInjectReducer({ key: 'kycPage', reducer });
 
   useInjectSaga({ key: 'kycPage', saga, mode: RESTART_ON_REMOUNT });
@@ -68,37 +87,52 @@ const KYCPage = ({
     id,
     loading,
     bankImages,
+    addressImages,
     bankDetailss,
     address,
+    panDetails,
+    panImage,
   } = kycPage;
   useEffect(() => {
     getBankDetails();
     getAddress();
+    getUserPan();
   }, []);
-  
+
   return (
     <KycDetails
-     loading={loading}
-     kyc={{
-       ...kycPage,
-       editbankDetails: kycPage.bankDetailss,
-       editAddress:kycPage.address,
-     }}
-     saveFunctionMap={{
-       bankDetailss: setBank,
-       address: saveAddress,
-       editbankDetails: editBankDetailsData,
-       editAddress: editAddressData,
-     }}
-     uploadBankImageData={uploadBankImageData}
-     removeBankDetails={removeBankDetailsData}
-     removeAddress={removeAddressData}
-     logout={logoutAction}
-     removeBankImages={removeBankImg}
-     setBankImages={setBankImg}
-     bankImages={bankImages}
-   /> 
- );
+      loading={loading}
+      kyc={{
+        ...kycPage,
+        editbankDetails: kycPage.bankDetailss,
+        editAddress: kycPage.address,
+        editpanDetails: kycPage.panDetails,
+      }}
+      saveFunctionMap={{
+        bankDetailss: setBank,
+        address: saveAddress,
+        panDetails: savePan,
+        editbankDetails: editBankDetailsData,
+        editAddress: editAddressData,
+        editpanDetails: editPanData,
+      }}
+      uploadBankImageData={uploadBankImageData}
+      uploadaddressImageData={uploadaddressImageData}
+      uploadPanImageData={uploadPanImageData}
+      removeBankDetails={removeBankDetailsData}
+      removeAddress={removeAddressData}
+      logout={logoutAction}
+      removeBankImages={removeBankImg}
+      removeaddressImages={removeaddressImg}
+      removePanImage={removePanImg}
+      setBankImages={setBankImg}
+      setAddressImages={setAddressImg}
+      setPanImage={setPanImg}
+      bankImages={bankImages}
+      addressImages={addressImages}
+      panImage={panImage}
+    />
+  );
 };
 KYCPage.propTypes = { responsiveData: PropTypes.object };
 
@@ -109,17 +143,27 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     saveAddress: params => dispatch(setRemoteAddress(params)),
+    savePan: params => dispatch(setRemotePan(params)),
     uploadBankImageData: params =>
       dispatch(uploadBankImage({ ...params, type: 'bankDetailss' })),
-    getBankDetails : () => dispatch(getBankDetails()),
+    uploadaddressImageData: params =>
+      dispatch(uploadAddressImage({ ...params, type: 'address' })),
+    uploadPanImageData: params =>
+      dispatch(uploadPanImage({ ...params, type: 'panDetails' })),
+    getBankDetails: () => dispatch(getBankDetails()),
     getAddress: () => dispatch(getAddress()),
+    getUserPan: () => dispatch(getUserPan()),
     editAddressData: params => dispatch(editAddress(params)),
     removeAddressData: params => dispatch(removeAddress(params)),
     editBankDetailsData: params => dispatch(editBankDetails(params)),
     removeBankDetailsData: params => dispatch(removeBankDetails(params)),
+    editPanData: params => dispatch(editPanDetails(params)),
     logoutAction: () => dispatch(logout()),
     setBankImg: params => dispatch(setBankImages(params)),
+    setAddressImg: params => dispatch(setAddressImages(params)),
+    setPanImg: params => dispatch(setPanImage(params)),
     removeBankImg: params => dispatch(removeBankImages(params)),
+    removeaddressImg: params => dispatch(removeAddressImages(params)),
     setBank: params => dispatch(setRemoteBankDetails(params)),
   };
 }

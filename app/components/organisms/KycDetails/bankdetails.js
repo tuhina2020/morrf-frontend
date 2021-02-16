@@ -13,15 +13,14 @@ import LazyImage from 'components/molecules/LazyImg';
 const BankDetailsScroll = ({
   onNext,
   onBack,
-  proof_file,
   files,
   onPreviewImage,
   current = false,
   viewOnly,
 }) => {
   Modal.setAppElement('#app');
-  const imageCount4 = proof_file.length <= 2;
-  const remaining = imageCount4 ? [...Array(2 - proof_file.length).keys()] : [];
+  const imageCount4 = files.length <= 4;
+  const remaining = imageCount4 ? [...Array(4 - files.length).keys()] : [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentImage, setCurrentImage] = useState({});
   const [totalWidth, setWidth] = useState(0);
@@ -48,7 +47,7 @@ const BankDetailsScroll = ({
 
   const onNextClick = () => {
     if (imageCount4) return;
-    if (currentIndex < proof_file.length - 1) {
+    if (currentIndex < files.length - 1) {
       setCurrentIndex(currentIndex + 1);
       onNext();
     }
@@ -66,7 +65,7 @@ const BankDetailsScroll = ({
   };
   console.log(
     imageCount4,
-    proof_file.length,
+    files.length,
     'imageCount4',
     commonIconStyle,
     currentIndex === 0 ? 'C($navBarBg)' : '',
@@ -90,7 +89,7 @@ const BankDetailsScroll = ({
             transform: `translateX(${-1 * currentIndex * 400}px)`,
           }}
         >
-          {proof_file.map(({ url, id, data, type, name }, index) => (
+          {files.map(({ url, id, type }, index) => (
             <div
               key={id}
               className="M($xxs) Bdrs($xxs) Bd($bdblue):h"
@@ -108,7 +107,7 @@ const BankDetailsScroll = ({
       <BaseIcon
         icon="showmore"
         iconClasses={`${commonIconStyle} Rotate(-90deg) ${
-          currentIndex >= proof_file.length - 1
+          currentIndex >= files.length - 1
             ? 'C($disabledGrey)'
             : 'Bgc($navBarBg):h'
         }`}
@@ -123,7 +122,7 @@ const BankDetailsScroll = ({
         <ImagePreview
           {...currentImage}
           onCancel={onClosePreview}
-          files={proof_file}
+          files={files}
         />
       </Modal>
     </div>
@@ -179,7 +178,7 @@ const BankDetails = ({
               account_number,
               ifsc_code,
               upi_code,
-              proof_file,
+              files,
               order,
               mode,
             },
@@ -218,6 +217,12 @@ const BankDetails = ({
                   <div className="Fz($smd) Mend($xs) My($xms)">
                     UPI code : {upi_code}
                   </div>
+                  <BankDetailsScroll
+                    files={files}
+                    onNext={() => {}}
+                    onBack={() => {}}
+                    onPreviewImage={onPreviewImage}
+                  />
                 </div>
               </div>
             </div>
@@ -235,10 +240,8 @@ BankDetails.propTypes = {
   viewOnly: PropTypes.bool,
 };
 
-BankDetails.defaultProps = {
-  proof_file: [],
+BankDetailsScroll.defaultProps = {
+  files: [],
   viewOnly: false,
-  onAdd: () => {},
-  onEdit: () => {},
 };
 export default BankDetails;

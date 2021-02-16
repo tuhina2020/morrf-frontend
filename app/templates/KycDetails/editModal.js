@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EditBankForm from 'components/organisms/KycEditForm/bankdetails';
 import EditAddressForm from 'components/organisms/KycEditForm/address';
+import EditPanForm from 'components/organisms/KycEditForm/pandetails';
 const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
   const props = {
     ...extraProps,
@@ -16,6 +17,9 @@ const EditFormModal = ({ data, onSave, onCancel, open, ...extraProps }) => {
     case 'address':
     case 'editAddress':
       return <EditAddressForm {...props} />;
+    case 'panDetails':
+    case 'editpanDetails':
+      return <EditPanForm {...props} />;
     default:
       return null;
   }

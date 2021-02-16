@@ -2,7 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Bankdetails from 'components/organisms/KycDetails/bankdetails';
 import AddressDetails from 'components/organisms/KycDetails/address';
+import PanDetails from 'components/organisms/KycDetails/pandetails';
 import Kycpage from 'components/organisms/KycDetails/kycpage';
+import Kyckyc from 'components/organisms/KycDetails/kyckyc';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
@@ -15,16 +17,25 @@ const KycDetails = ({
   kyc,
   removeBankDetails,
   removeAddress,
+  removePan,
   uploadBankImageData,
+  uploadaddressImageData,
+  uploadPanImageData,
   bankImages,
+  panImage,
+  addressImages,
   saveFunctionMap,
   removeBankImages,
+  removeAddressImages,
+  removePanImage,
   setBankImages,
+  setAddressImages,
+  setPanImage,
   logout,
   loading,
   viewOnly,
 }) => {
-  const { bankDetailss, address } = kyc;
+  const { bankDetailss, address, panDetails } = kyc;
   const [blur, setBlur] = useState(loading);
 
   const[open, setOpen] = useState('');
@@ -62,10 +73,17 @@ const KycDetails = ({
       setBlur(false);
     },
     uploadBankImageData,
+    uploadaddressImageData,
     removeBankImages,
+    removeAddressImages,
     removeBankDetails,
     removeAddress,
+    removePan,
+    uploadPanImageData,
+    removePanImage,
+    panImage:  get(panImage, 'image', ''),
     bankImages: get(bankImages, 'images', []),
+    addressImages: get(addressImages, 'images', []),
   };
   const [scrolled, setScrollStatus] = useState(false);
   const [headerShadow, setHeaderShadow] = useState(false);
@@ -108,24 +126,32 @@ const KycDetails = ({
   console.log('BLUR IS', blur, loading);
   return (
     <div className="Bgc($navBarBg) Mih(100vh)">
-      <Header
-        isDesktopOrLaptop={true}
-        logout={isEmpty(open) && !viewOnly}
-        logoutAction={logout}
-        blur={blur}
+    <Header
+      isDesktopOrLaptop
+      logout={isEmpty(open) && !viewOnly}
+      logoutAction={logout}
+      blur={blur}
       />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
       <Kycpage />
         <div className={`D(f) Fxd(r) Flw(w) Mx($10x) Maw($full) Ai(s) Jc(s) P($lg)`}>
           <div className="D(f) Fxd(c) Flb(f) F(o) Mend($lg) Miw($60xl)">
-            <AddressDetails 
+            <AddressDetails
               address={address}
-              onEdit={() => {
+              onEdit={index => {
                 console.log('EDITING');
-                setIndex();
+                setIndex(index);
                 setBlur(true);
                 setSourcePage('main');
+                setAddressImages({
+                  images: address.files.map(file => ({
+                    url: file.url,
+                    id: file.id,
+                  })),
+                  id: address.id,
+                  done: false,
+                });
                 setOpen('editAddress');
               }}
               onAdd={() => {
@@ -134,6 +160,14 @@ const KycDetails = ({
                 setBlur(true);
                 setSourcePage('main');
                 setOpen('address');
+              }}
+              viewOnly={viewOnly}
+            />
+            <Kyckyc
+              onEdit={() => {
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('kycpage');
               }}
               viewOnly={viewOnly}
             />
@@ -147,7 +181,7 @@ const KycDetails = ({
                 setBlur(true);
                 setSourcePage('main');
                 setBankImages({
-                  images: bankDetailss[index].proof_file.map(file => ({
+                  images: bankDetailss[index].files.map(file => ({
                     url: file.url,
                     id: file.id,
                   })),
@@ -156,7 +190,6 @@ const KycDetails = ({
                 });
                 setOpen('editbankDetails');
               }}
-              onPreviewImage={setBlur}
               onAdd={() => {
                 console.log('ADDING');
                 setIndex();
@@ -165,7 +198,33 @@ const KycDetails = ({
                 setOpen('bankDetailss');
               }}
               viewOnly={viewOnly}
-          />
+            />
+            <PanDetails
+              panDetails={panDetails}
+              onEdit={index => {
+                console.log('EDITING');
+                setIndex(index);
+                setBlur(true);
+                setSourcePage('main');
+                setPanImage({
+                  images: {
+                    url: panDetails.files.url,
+                    id: panDetails.files.id,
+                  },
+                  id: panDetails.id,
+                  done: false,
+                });
+                setOpen('editpanDetails');
+              }}
+              onAdd={() => {
+                console.log('ADDING');
+                setIndex();
+                setBlur(true);
+                setSourcePage('main');
+                setOpen('panDetails');
+              }}
+              viewOnly={viewOnly}
+            />
           </div>
         </div>
       </div>

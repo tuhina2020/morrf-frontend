@@ -8,25 +8,31 @@ import {
   SET_LOADING_STATE,
   SET_LOCAL_BANK_DETAILS,
   SET_LOCAL_ADDRESS,
+  SET_LOCAL_PAN,
+  SET_ADDRESS_IMAGES,
+  SET_PAN_IMAGE,
 } from './constants';
 
 const emptyState = {
   loading: true,
   id: '',
-  address: {
-    line_1: '',
-    line_2: '',
-    city: '',
-    state: '',
-    pincode: '',
-    country: '',
-    id: '',
-    proof_type: '',
-  },
+  address: {},
   bankDetailss: [],
   bankImages: {
     id: '',
     images: [],
+  },
+  addressImages: {
+    id: '',
+    images: [],
+  },
+  panDetails: {
+    pancard: '',
+    files: '',
+  },
+  panImage: {
+    id: '',
+    image: '',
   },
 };
 export const initialState = emptyState;
@@ -40,11 +46,20 @@ const kycPageReducer = (state = initialState, action) =>
       case SET_BANK_IMAGES:
         draft.bankImages = action.payload;
         break;
+      case SET_ADDRESS_IMAGES:
+        draft.addressImages = action.payload;
+        break;
+      case SET_PAN_IMAGE:
+        draft.panImage = action.payload;
+        break;
       case SET_LOCAL_BANK_DETAILS:
         draft.bankDetailss = action.payload;
         break;
       case SET_LOCAL_ADDRESS:
         draft.address = action.payload;
+        break;
+      case SET_LOCAL_PAN:
+        draft.panDetails = action.payload;
         break;
       case SET_LOADING_STATE:
         draft.loading = action.payload;
@@ -52,4 +67,3 @@ const kycPageReducer = (state = initialState, action) =>
   });
 
 export default kycPageReducer;
-
