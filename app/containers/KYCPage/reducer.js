@@ -28,11 +28,10 @@ const emptyState = {
   },
   panDetails: {
     pancard: '',
-    files: '',
+    files: [],
   },
   panImage: {
-    id: '',
-    image: '',
+    images: [],
   },
 };
 export const initialState = emptyState;

@@ -16,6 +16,7 @@ import SelectField from './Selectfield';
 const EditPanFormBody = ({
   currentIndex,
   pancard,
+  pancard_proof,
   panImage,
   id,
   files,
@@ -69,13 +70,11 @@ const EditPanFormBody = ({
       <FileUpload
         multiple
         name="example-upload"
-        maxSize={1}
+        maxSize={10}
         filesExisting={files}
         uploadedFiles={panImage}
         onRemove={index => removePanImage({ id: panDetails.id, index })}
-        onChange={data =>
-          uploadPanImageData({ files: data, id: panDetails.id })
-        }
+        onChange={data => uploadPanImageData({ files: data })}
         showPreview
       />
       <Button {...removeProps} onClick={onRemove}>

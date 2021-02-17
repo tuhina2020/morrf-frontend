@@ -207,11 +207,10 @@ const KycDetails = ({
                 setBlur(true);
                 setSourcePage('main');
                 setPanImage({
-                  images: {
-                    url: panDetails.files.url,
-                    id: panDetails.files.id,
-                  },
-                  id: panDetails.id,
+                  images: panDetails.files.map(file => ({
+                    url: file.url,
+                    id: file.id,
+                  })),
                   done: false,
                 });
                 setOpen('editpanDetails');

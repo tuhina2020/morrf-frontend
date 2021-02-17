@@ -230,55 +230,54 @@ function* uploadPanImage({ payload }) {
     jpeg: 'image/jpeg',
   };
   const {
-    panImage: { image },
+    panImage: { images },
   } = kycPage;
   console.log(kycPage);
   try {
     yield put(
       setPanImage({
-        id,
-        image,
+        images,
         done: false,
       }),
     );
     debugger;
-    let newImage = yield all(async files => {
-      const lastIndex = files.name.lastIndexOf('.');
-      const file_name = files.name.substr(0, lastIndex);
-      const extension = files.name.substr(lastIndex + 1);
+    let newImages = yield all(
+      Array.from(files).map(async file => {
+        const lastIndex = file.name.lastIndexOf('.');
+        const file_name = file.name.substr(0, lastIndex);
+        const extension = file.name.substr(lastIndex + 1);
 
-      const signedUrl = await getSignedUrlById({
-        file_name: `${file_name + new Date().getTime()}.${extension}`,
-        file_type: 'image',
-        type: TYPE_LOOKUP[extension],
-        id: user_id,
-      });
-      const form = new FormData();
+        const signedUrl = await getSignedUrlById({
+          file_name: `${file_name + new Date().getTime()}.${extension}`,
+          file_type: 'image',
+          type: TYPE_LOOKUP[extension],
+          id: user_id,
+        });
+        const form = new FormData();
 
-      const ALL_FIELDS = signedUrl.url.fields;
-      Object.keys(ALL_FIELDS).forEach(field => {
-        form.append(field, ALL_FIELDS[field]);
-      });
-      form.append('files', files);
-      const uploadResponse = await request(
-        signedUrl.url.url,
-        {
-          method: 'POST',
-          form,
-        },
-        false,
-      );
-      return uploadResponse.success ? signedUrl.id : undefined;
-    });
+        const ALL_FIELDS = signedUrl.url.fields;
+        Object.keys(ALL_FIELDS).forEach(field => {
+          form.append(field, ALL_FIELDS[field]);
+        });
+        form.append('file', file);
+        const uploadResponse = await request(
+          signedUrl.url.url,
+          {
+            method: 'POST',
+            form,
+          },
+          false,
+        );
+        return uploadResponse.success ? signedUrl.id : undefined;
+      }),
+    );
     if (compact(newImages).length < files.length)
       throw 'Error Uploading Images';
 
-    // newImages = [...images, ...newImages.map(img => ({ id: img }))];
-    newImage = id;
+    newImages = [...images, ...newImages.map(img => ({ id: img }))];
     yield put(
       setPanImage({
-        id,
-        image: newImage,
+        images: newImages,
         done: true,
       }),
     );
@@ -291,7 +290,7 @@ function* uploadPanImage({ payload }) {
         type: 'error',
       }),
     );
-    yield put(setPanImage({ id: '', image: '', done: false }));
+    yield put(setPanImage({ images: [], done: false }));
   }
 }
 function* setRemotePanDetails({ payload }) {
@@ -301,7 +300,7 @@ function* setRemotePanDetails({ payload }) {
   const loginData = getDefaultState('loginData', {});
   const user_id = loginData.id;
   const {
-    panImage: { image },
+    panImage: { images },
   } = kycPage;
   const requestURL = `/user/${user_id}`;
   const data = compact([
@@ -309,7 +308,7 @@ function* setRemotePanDetails({ payload }) {
     {
       op: 'add',
       path: '/pancard_proof',
-      value: image.id,
+      value: images.map(img => img.id),
     },
   ]);
   if (isEmpty(data)) return;
@@ -344,15 +343,15 @@ function* editPanDetails({ payload }) {
   const loginData = getDefaultState('loginData', {});
   const user_id = loginData.id;
   const {
-    panImage: { image },
+    panImage: { images },
   } = kycPage;
   const requestURL = `/user/${user_id}`;
   const data = compact([
     pancard && { op: 'replace', path: '/pancard', value: pancard },
-    !isEmpty(image) && {
+    !isEmpty(images) && {
       op: 'replace',
       path: '/pancard_proof',
-      value: image.id,
+      value: images.map(img => img.id),
     },
   ]);
   if (isEmpty(data)) return;
