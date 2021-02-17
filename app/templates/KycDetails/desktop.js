@@ -4,7 +4,6 @@ import Bankdetails from 'components/organisms/KycDetails/bankdetails';
 import AddressDetails from 'components/organisms/KycDetails/address';
 import PanDetails from 'components/organisms/KycDetails/pandetails';
 import Kycpage from 'components/organisms/KycDetails/kycpage';
-import Kyckyc from 'components/organisms/KycDetails/kyckyc';
 import isEmpty from 'lodash/isEmpty';
 import Modal from 'react-modal';
 import EditFormModal from './editModal';
@@ -160,14 +159,6 @@ const KycDetails = ({
                 setBlur(true);
                 setSourcePage('main');
                 setOpen('address');
-              }}
-              viewOnly={viewOnly}
-            />
-            <Kyckyc
-              onEdit={() => {
-                setBlur(true);
-                setSourcePage('main');
-                setOpen('kycpage');
               }}
               viewOnly={viewOnly}
             />
