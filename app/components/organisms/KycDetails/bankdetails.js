@@ -127,8 +127,7 @@ const BankDetailsScroll = ({
       </Modal>
     </div>
   );
-}; 
-debugger;
+};
 
 const BankDetails = ({
   bankDetailss,

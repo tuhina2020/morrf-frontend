@@ -56,7 +56,6 @@ async function getSignedUrlById({ file_name, file_type, id, type }) {
     data: { file_name, file_type, type },
   });
   return url;
-  debugger;
 }
 async function getSignedUrlByBankId({ file_name, file_type, id, type }) {
   const requestURL = `/user/${id}/upload`;
@@ -64,7 +63,7 @@ async function getSignedUrlByBankId({ file_name, file_type, id, type }) {
     method: 'POST',
     data: { file_name, file_type, type },
   });
-  debugger;
+
   return url;
 }
 function* uploadBankImage({ payload }) {
@@ -89,7 +88,7 @@ function* uploadBankImage({ payload }) {
         done: false,
       }),
     );
-    debugger;
+
     let newImages = yield all(
       Array.from(files).map(async file => {
         const lastIndex = file.name.lastIndexOf('.');
@@ -131,7 +130,6 @@ function* uploadBankImage({ payload }) {
         done: true,
       }),
     );
-    debugger;
   } catch (err) {
     console.log(err);
     yield put(
@@ -165,7 +163,7 @@ function* uploadAddressImage({ payload }) {
         done: false,
       }),
     );
-    debugger;
+
     let newImages = yield all(
       Array.from(files).map(async file => {
         const lastIndex = file.name.lastIndexOf('.');
@@ -207,7 +205,6 @@ function* uploadAddressImage({ payload }) {
         done: true,
       }),
     );
-    debugger;
   } catch (err) {
     console.log(err);
     yield put(
@@ -232,15 +229,7 @@ function* uploadPanImage({ payload }) {
   const {
     panImage: { images },
   } = kycPage;
-  console.log(kycPage);
   try {
-    yield put(
-      setPanImage({
-        images,
-        done: false,
-      }),
-    );
-    debugger;
     let newImages = yield all(
       Array.from(files).map(async file => {
         const lastIndex = file.name.lastIndexOf('.');
@@ -274,14 +263,13 @@ function* uploadPanImage({ payload }) {
     if (compact(newImages).length < files.length)
       throw 'Error Uploading Images';
 
-    newImages = [...images, ...newImages.map(img => ({ id: img }))];
+    newImages = [...images, ...newImages];
     yield put(
       setPanImage({
         images: newImages,
         done: true,
       }),
     );
-    debugger;
   } catch (err) {
     console.log(err);
     yield put(
@@ -308,9 +296,10 @@ function* setRemotePanDetails({ payload }) {
     {
       op: 'add',
       path: '/pancard_proof',
-      value: images.map(img => img.id),
+      value: images,
     },
   ]);
+  debugger;
   if (isEmpty(data)) return;
   try {
     yield call(request, requestURL, {
@@ -320,7 +309,7 @@ function* setRemotePanDetails({ payload }) {
       },
       data,
     });
-    debugger;
+
     setToast({
       message: 'Successfully addeed Pan Details',
       mode: 'info',
@@ -363,7 +352,7 @@ function* editPanDetails({ payload }) {
       },
       data,
     });
-    debugger;
+
     setToast({
       message: 'Successfully Edited Pan Details',
       mode: 'info',
@@ -395,7 +384,7 @@ function* getPanUser({ payload = {} }) {
           files: user.pancard_proof,
         }),
       );
-      debugger;
+
       yield put(setLoading(false));
     } catch (err) {
       yield put(setLoading(false));
@@ -432,7 +421,7 @@ function* setRemoteBankDetails({ payload }) {
     });
     yield put(getBankDetails());
     // yield put(getUser());
-    debugger;
+
     // yield put(setLoading(false));
   } catch (err) {
     console.log(err);
@@ -493,7 +482,7 @@ function* editBankDetails({ payload }) {
     oldbankDetails[index] = newbankDetails;
     yield put(setLoading(false));
     yield put(setLocalBankDetails(oldbankDetails));
-    debugger;
+
     setToast({
       message: 'Successfully Edited Bank Details',
       mode: 'info',
@@ -520,7 +509,7 @@ function* getAllBankDetails({ payload = {} }) {
     localStorage.setItem('bankDetailss', JSON.stringify(response));
     yield put(setLocalBankDetails(response));
     console.log('this is bankDetailss ', localStorage.getItem('bankDetailss'));
-    // debugger;
+    //
     yield put(setLoading(false));
   } catch (error) {
     yield put(setLocalBankDetails([]));
@@ -542,7 +531,6 @@ function* removeBankDetails({ payload }) {
         type: 'info',
       }),
     );
-    debugger;
   } catch (err) {
     console.log(err);
     yield put(
@@ -588,7 +576,6 @@ function* setRemoteAddress({ payload }) {
       data,
     });
     yield put(getAddress());
-    debugger;
   } catch (err) {
     console.log(err);
     yield put(
@@ -653,7 +640,7 @@ function* editAddress({ payload }) {
     });
     // yield put(setLoading(false));
     yield put(setLocalAddress(newAddress));
-    debugger;
+
     setToast({
       message: 'Successfully Edited Address',
       mode: 'info',
@@ -694,7 +681,6 @@ function* getAddressDetails({ payload = {} }) {
       }),
     );
     yield put(setLoading(false));
-    debugger;
   } catch (error) {
     yield put(setLocalAddress({}));
     localStorage.removeItem('address');
@@ -709,7 +695,7 @@ function* removeAddress({ payload }) {
   try {
     yield call(request, requestURL, { method: 'DELETE' });
     yield put(getAddress());
-    debugger;
+
     yield put(
       setToastData({
         message: 'Removed Address',

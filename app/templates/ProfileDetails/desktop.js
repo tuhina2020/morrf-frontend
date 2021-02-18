@@ -94,7 +94,6 @@ const ProfileDetails = ({
   };
 
   const [scrolled, setScrollStatus] = useState(false);
-  const [headerShadow, setHeaderShadow] = useState(false);
   const onScroll = () => {
     if (document.documentElement.scrollTop > 0) {
       setHeaderShadow(true);

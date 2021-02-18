@@ -130,7 +130,6 @@ const EditAddressFormBody = ({
     </div>
   );
 };
-debugger;
 const EditAddressForm = ({
   onCancel,
   data,
@@ -171,7 +170,6 @@ const EditAddressForm = ({
     removeAddress(data);
     onCancel();
   };
-  debugger;
   return (
     <Formik
       initialValues={initialValues}

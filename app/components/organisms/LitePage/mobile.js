@@ -30,7 +30,6 @@ const MobilePage = ({
   const [callBackForm, setCallToggle] = useState(false);
   const secondPage = useRef(null);
   const [scrolled, setScrollStatus] = useState(false);
-  const [headerShadow, setHeaderShadow] = useState(false);
   const [name, setName] = useState('');
   const onClickShowMore = () => {
     setScrollStatus(!scrolled);

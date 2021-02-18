@@ -212,7 +212,6 @@ const EditBankForm = ({
     type: 'button',
     roundCorners: false,
   };
-  debugger;
   return (
     <Formik
       initialValues={initialValues}

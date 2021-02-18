@@ -83,7 +83,6 @@ const EditPanFormBody = ({
     </div>
   );
 };
-debugger;
 const EditPanForm = ({
   onCancel,
   data,
@@ -120,7 +119,6 @@ const EditPanForm = ({
     removePan(data);
     onCancel();
   };
-  debugger;
   return (
     <Formik
       initialValues={initialValues}

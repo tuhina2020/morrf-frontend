@@ -37,7 +37,7 @@ const KycDetails = ({
   const { bankDetailss, address, panDetails } = kyc;
   const [blur, setBlur] = useState(loading);
 
-  const[open, setOpen] = useState('');
+  const [open, setOpen] = useState('');
   const [currentIndex, setIndex] = useState();
   const [source, setSourcePage] = useState('main');
   Modal.setAppElement('#app');
@@ -80,12 +80,11 @@ const KycDetails = ({
     removePan,
     uploadPanImageData,
     removePanImage,
-    panImage:  get(panImage, 'image', ''),
+    panImage: get(panImage, 'image', ''),
     bankImages: get(bankImages, 'images', []),
     addressImages: get(addressImages, 'images', []),
   };
   const [scrolled, setScrollStatus] = useState(false);
-  const [headerShadow, setHeaderShadow] = useState(false);
   const onScroll = () => {
     if (document.documentElement.scrollTop > 0) {
       setHeaderShadow(true);
@@ -125,16 +124,18 @@ const KycDetails = ({
   console.log('BLUR IS', blur, loading);
   return (
     <div className="Bgc($navBarBg) Mih(100vh)">
-    <Header
-      isDesktopOrLaptop
-      logout={isEmpty(open) && !viewOnly}
-      logoutAction={logout}
-      blur={blur}
+      <Header
+        isDesktopOrLaptop
+        logout={isEmpty(open) && !viewOnly}
+        logoutAction={logout}
+        blur={blur}
       />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
-      <Kycpage />
-        <div className={`D(f) Fxd(r) Flw(w) Mx($10x) Maw($full) Ai(s) Jc(s) P($lg)`}>
+        <Kycpage />
+        <div
+          className={`D(f) Fxd(r) Flw(w) Mx($10x) Maw($full) Ai(s) Jc(s) P($lg)`}
+        >
           <div className="D(f) Fxd(c) Flb(f) F(o) Mend($lg) Miw($60xl)">
             <AddressDetails
               address={address}

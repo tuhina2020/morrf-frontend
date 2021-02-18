@@ -127,7 +127,6 @@ const PanScroll = ({
     </div>
   );
 };
-debugger;
 const PanDetails = ({
   panDetails,
   onAdd,
@@ -177,10 +176,7 @@ const PanDetails = ({
             </div>
             <div className="D(f) Fxd(c) Flw(w) Jc(fs)">
               <div className="Fz($smd) Mend($xs) My($xms)">{pancard}</div>
-              <PanScroll
-                files={files}
-                onPreviewImage={onPreviewImage}
-              />
+              <PanScroll files={files} onPreviewImage={onPreviewImage} />
             </div>
           </div>
         </div>

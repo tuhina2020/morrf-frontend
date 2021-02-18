@@ -128,7 +128,6 @@ const AddressScroll = ({
     </div>
   );
 };
-debugger;
 const AddressDetails = ({
   address,
   onAdd,
