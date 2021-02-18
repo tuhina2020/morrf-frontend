@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import FormikInput from 'components/molecules/FormikInput';
 import FormikTextArea from 'components/molecules/FormikTextArea';
-import { Form, FieldArray, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
 import isEmpty from 'lodash/isEmpty';

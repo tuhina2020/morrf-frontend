@@ -12,7 +12,7 @@ import isUndefined from 'lodash/isUndefined';
 import { wordCount } from 'utils/helper';
 import FileUpload from 'components/molecules/DragDrop/file2';
 import { values } from 'lodash';
-import SelectField from './Selectfield';
+import SelectField from 'components/molecules/SelectField';
 
 const EditBankFormBody = ({
   currentIndex,

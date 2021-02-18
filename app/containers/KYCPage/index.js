@@ -44,6 +44,7 @@ import {
   uploadPanImage,
   setPanImage,
   removePanImage,
+  removePan,
 } from './actions';
 
 import reducer from './reducer';
@@ -125,6 +126,7 @@ const KYCPage = ({
       removeBankImages={removeBankImg}
       removeaddressImages={removeaddressImg}
       removePanImage={removePanImg}
+      removePanDetails={removePanData}
       setBankImages={setBankImg}
       setAddressImages={setAddressImg}
       setPanImage={setPanImg}
@@ -156,6 +158,7 @@ function mapDispatchToProps(dispatch) {
     editAddressData: params => dispatch(editAddress(params)),
     removeAddressData: params => dispatch(removeAddress(params)),
     editBankDetailsData: params => dispatch(editBankDetails(params)),
+    removePanData: params => dispatch(removePan(params)),
     removeBankDetailsData: params => dispatch(removeBankDetails(params)),
     editPanData: params => dispatch(editPanDetails(params)),
     logoutAction: () => dispatch(logout()),

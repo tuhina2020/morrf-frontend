@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DisplayCard from 'components/molecules/DisplayCard';
 import FormikInput from 'components/molecules/FormikInput';
-import { Formik, FieldArray, Form, Field, FieldProps } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import Select, { Option, ReactSelectProps } from 'react-select';
 import * as Yup from 'yup';
 import Button from 'components/molecules/Button';
@@ -11,7 +11,7 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import { wordCount } from 'utils/helper';
 import FileUpload from 'components/molecules/DragDrop/file2';
-import SelectField from './Selectfield';
+import SelectField from 'components/molecules/SelectField';
 
 const EditPanFormBody = ({
   currentIndex,
@@ -27,9 +27,9 @@ const EditPanFormBody = ({
   form,
   setFieldValue,
   onRemove,
-  removePan,
   uploadPanImageData,
   removePanImage,
+  removePanDetails,
   ...panDetails
 }) => {
   const getError = key =>
@@ -64,7 +64,13 @@ const EditPanFormBody = ({
       </div>
       <div className="Ai(c) Jc(sb) H($3xl) My($xl) Maw($sli) Bgc(white)">
         Upload Proof
-        <Field name="proof_type" component={SelectField} options={options} />
+        <Field
+          name="proof_type"
+          id="proof_type"
+          component={SelectField}
+          options={options}
+          onChange={handleChange}
+        />
       </div>
       <div className="Fz($smx) Lh(1)">Add Files</div>
       <FileUpload
@@ -87,11 +93,11 @@ const EditPanForm = ({
   onCancel,
   data,
   onSave,
-  removePan,
   currentIndex,
   uploadPanImageData,
   removePanImage,
   panImage,
+  removePanDetails,
 }) => {
   const saveProps = {
     iconDescription: 'Save',
@@ -116,7 +122,7 @@ const EditPanForm = ({
   });
   const initialValues = { ...data };
   const onRemove = () => {
-    removePan(data);
+    removePanDetails(data);
     onCancel();
   };
   return (
@@ -142,6 +148,7 @@ const EditPanForm = ({
               touched={touched}
               uploadPanImageData={uploadPanImageData}
               removePanImage={removePanImage}
+              removePanDetails={removePanDetails}
               panImage={panImage}
             />
             <div className="D(f) Ai(c) Jc(c) Bdt($bdcardGrey)">

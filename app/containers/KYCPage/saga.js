@@ -30,6 +30,7 @@ import {
   EDIT_BANK_DETAILS,
   REMOVE_BANK_DETAILS,
   REMOVE_BANK_IMAGES,
+  REMOVE_PAN,
   REMOVE_ADDRESS_IMAGES,
   SET_REMOTE_ADDRESS,
   REMOVE_ADDRESS,
@@ -281,9 +282,47 @@ function* uploadPanImage({ payload }) {
     yield put(setPanImage({ images: [], done: false }));
   }
 }
+
+function* removePanDetails({ payload }) {
+  yield put(setLoading(true));
+  const loginData = getDefaultState('loginData', {});
+  const user_id = loginData.id;
+  const requestURL = `/user/${user_id}`;
+  const data = compact([
+    { op: 'remove', path: '/pancard' },
+    { op: 'remove', path: '/pancard_proof' },
+    // { op: 'remove', path: '/proof_type' },
+  ]);
+
+  try {
+    yield call(request, requestURL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json-patch+json',
+      },
+      data,
+    });
+
+    setToast({
+      message: 'Successfully removed Pan Details',
+      mode: 'info',
+    });
+    yield put(getUserPan());
+    yield put(setLoading(false));
+  } catch (err) {
+    yield put(setLoading(false));
+    yield put(
+      setToastData({
+        message: typeof err === 'string' ? err : err.message,
+        type: 'error',
+      }),
+    );
+  }
+}
+
 function* setRemotePanDetails({ payload }) {
   yield put(setLoading(true));
-  const { pancard } = payload;
+  const { pancard, proof_type } = payload;
   const kycPage = yield select(makeSelectKYCPage());
   const loginData = getDefaultState('loginData', {});
   const user_id = loginData.id;
@@ -298,8 +337,8 @@ function* setRemotePanDetails({ payload }) {
       path: '/pancard_proof',
       value: images,
     },
+    // { op: 'add', path: '/proof_type', value: proof_type },
   ]);
-  debugger;
   if (isEmpty(data)) return;
   try {
     yield call(request, requestURL, {
@@ -327,7 +366,7 @@ function* setRemotePanDetails({ payload }) {
 }
 function* editPanDetails({ payload }) {
   yield put(setLoading(true));
-  const { pancard } = payload;
+  const { pancard, proof_type } = payload;
   const kycPage = yield select(makeSelectKYCPage());
   const loginData = getDefaultState('loginData', {});
   const user_id = loginData.id;
@@ -337,6 +376,7 @@ function* editPanDetails({ payload }) {
   const requestURL = `/user/${user_id}`;
   const data = compact([
     pancard && { op: 'replace', path: '/pancard', value: pancard },
+    // proof_type && { op: 'replace', path: '/proof_type', value: proof_type },
     !isEmpty(images) && {
       op: 'replace',
       path: '/pancard_proof',
@@ -760,4 +800,5 @@ export default function* KYCPageSaga() {
   yield takeLatest(SET_REMOTE_PAN, setRemotePanDetails);
   yield takeLatest(GET_USER_PAN, getPanUser);
   yield takeLatest(EDIT_PAN, editPanDetails);
+  yield takeLatest(REMOVE_PAN, removePanDetails);
 }

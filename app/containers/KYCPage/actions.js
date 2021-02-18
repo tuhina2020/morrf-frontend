@@ -131,3 +131,10 @@ export function removePanImage(payload) {
     payload,
   };
 }
+
+export function removePan(payload) {
+  return {
+    type: REMOVE_PAN,
+    payload,
+  };
+}
