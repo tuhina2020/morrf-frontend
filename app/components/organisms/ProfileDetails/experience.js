@@ -7,6 +7,7 @@ import BaseIcon from 'components/atoms/BaseIcon';
 
 const Experience = ({ data: experience, onEdit, onSave, onAdd, viewOnly }) => {
   if (isEmpty(experience)) return null;
+  // debugger;
   return (
     <DisplayCard
       heading="Experience"
@@ -34,7 +35,7 @@ const Experience = ({ data: experience, onEdit, onSave, onAdd, viewOnly }) => {
                   icon="edit"
                   width="28px"
                   height="28px"
-                  iconClasses="Bdrs($half) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
+                  iconClasses="Bdrs($full) Bgc($navBarBg):h P($xxs) C($inputGrey) Mstart($lg)"
                   onClick={() => onEdit(i)}
                 />
               )}

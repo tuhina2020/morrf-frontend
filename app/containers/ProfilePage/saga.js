@@ -7,6 +7,10 @@ import { setLoginData, setToastData } from 'containers/LoginPage/actions';
 import { setToast, getDefaultState } from 'utils/helper';
 import { Field } from 'formik';
 import {
+  setLocalBankDetails,
+  setLocalAddress,
+} from 'containers/KYCPage/actions';
+import {
   SEND_VERIFICATION,
   VERIFY_PHONE,
   SET_REMOTE_EXPERIENCE,
@@ -55,6 +59,8 @@ function* logout() {
   yield put(setLocalPersonalData({}));
   yield put(setLocalSkills([]));
   yield put(setId(''));
+  yield put(setLocalBankDetails([]));
+  yield put(setLocalAddress({}));
   setToast({
     message: 'You have been logged out.',
     type: 'info',
