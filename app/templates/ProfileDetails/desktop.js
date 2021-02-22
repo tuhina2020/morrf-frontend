@@ -130,12 +130,6 @@ const ProfileDetails = ({
 
   return (
     <div>
-      <Header
-        isDesktopOrLaptop
-        logout={isEmpty(open) && !viewOnly}
-        logoutAction={logout}
-        blur={blur}
-      />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
         <div className={`D(f) Fxd(r) Flw(w) Mx($10x) Maw($full) Ai(s) Jc(s) P($lg)`}>
