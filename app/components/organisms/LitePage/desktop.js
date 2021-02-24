@@ -71,16 +71,14 @@ const DesktopPage = ({
       }),
   };
   const [profession, setProfession] = useState('"Marketing"');
-  const [index, setIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
   const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
+    const visibleProfession =
+      professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
-      let newIndex = Math.floor(Math.random() * professionArr.length);
-      newIndex =
-        newIndex === index ? (newIndex + 1) % professionArr.length : newIndex;
-      const visibleProfession = professionArr[newIndex];
       setProfession(visibleProfession);
-      setIndex(newIndex);
+      setCounter(counter + 1);
     }, 2000);
     return () => {
       clearInterval(intro);
@@ -88,7 +86,12 @@ const DesktopPage = ({
   });
   return (
     <>
-      <NewHeader isDesktopOrLaptop={true} bgImg={HeadingBg} padding="Px(6%)" />
+      <NewHeader
+        isDesktopOrLaptop={true}
+        bgImg={HeadingBg}
+        height="72px"
+        padding="Px(6%)"
+      />
       <div
         className="Pos(r) T(71px) Bgr(nr)"
         style={{
