@@ -31,14 +31,15 @@ const LoginForm = ({
   forgotPassword,
   signInWithGoogle,
 }) => {
+  // if (isLoggedIn()) return <Redirect to="/profile/details" />;
   const [switchState, setSwitchState] = useState(false);
   const [google, setGoogle] = useState(false);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
 
   const [currentState, setCurrentState] = useState(
-    EMAIL_LOGIN_STATES.ENTER_EMAIL,
-    // token ? EMAIL_LOGIN_STATES.CONGRATULATIONS : EMAIL_LOGIN_STATES.ENTER_EMAIL,
+    token ? EMAIL_LOGIN_STATES.CONGRATULATIONS : EMAIL_LOGIN_STATES.ENTER_EMAIL,
+    // EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT,
   );
 
   useEffect(() => {
@@ -55,20 +56,16 @@ const LoginForm = ({
             : EMAIL_LOGIN_STATES.CREATE_ACCOUNT_MESSAGE;
         break;
       case EMAIL_LOGIN_STATES.CREATE_NEW_ACCOUNT:
-        newState = isLoggedIn()
-          ? EMAIL_LOGIN_STATES.SUCCESS
-          : EMAIL_LOGIN_STATES.ENTER_EMAIL;
-        // loginData && loginData.status === 'ACTIVE'
-        //   ? EMAIL_LOGIN_STATES.CONGRATULATIONS
-        //   : isLoggedIn() && EMAIL_LOGIN_STATES.SUCCESS;
+        newState =
+          loginData && loginData.status === 'ACTIVE'
+            ? EMAIL_LOGIN_STATES.CONGRATULATIONS
+            : isLoggedIn() && EMAIL_LOGIN_STATES.SUCCESS;
         break;
       case EMAIL_LOGIN_STATES.EXISTING_ENTER_PASSWORD:
-        newState = isLoggedIn()
-          ? EMAIL_LOGIN_STATES.SUCCESS
-          : EMAIL_LOGIN_STATES.ENTER_EMAIL;
-        // loginData && loginData.status === 'ACTIVE'
-        //   ? EMAIL_LOGIN_STATES.CONGRATULATIONS
-        //   : isLoggedIn() && EMAIL_LOGIN_STATES.SUCCESS;
+        newState =
+          loginData && loginData.status === 'ACTIVE'
+            ? EMAIL_LOGIN_STATES.CONGRATULATIONS
+            : isLoggedIn() && EMAIL_LOGIN_STATES.SUCCESS;
         break;
       case EMAIL_LOGIN_STATES.RESET_PASSWORD:
         newState =
@@ -84,6 +81,10 @@ const LoginForm = ({
       default:
         return;
     }
+    // if (isLoggedIn() && newState !== EMAIL_LOGIN_STATES.CONGRATULATIONS) {
+    //   newState = EMAIL_LOGIN_STATES.SUCCESS;
+    //   setSwitchState(true);
+    // }
 
     if (newState && switchState && !google) {
       setCurrentState(newState);
@@ -236,7 +237,7 @@ const LoginForm = ({
         );
       case EMAIL_LOGIN_STATES.CONGRATULATIONS:
       case EMAIL_LOGIN_STATES.SUCCESS:
-        return <Redirect to="/profile/details" />;
+        return <Redirect to="/tabs" />;
       default:
         return (
           <EnterEmail
@@ -252,12 +253,14 @@ const LoginForm = ({
   };
 
   return (
-    <div className="Pos(r) Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W($45x) Py($2xl) Bdrs($bdrscontainer)">
-      <Header {...getHeaderProps()} />
+    <div className="Pos(r) Bgc(white) Bxsh($bxshhighlight) Ff($ffmanrope) Mx(a) W($45x) Py($2xl) Bdrs($bdrscontainer) Mb($2xl)">
+      <div className={loading ? 'Op(0.5)' : undefined}>
+        <Header {...getHeaderProps()} />
+      </div>
       {loading && (
         <img
           src={LoadingAnimation}
-          className="W($full) Pos(a) T(0) Start(0) M(5%) W(90%) Op(0.5)"
+          className="W($full) Pos(a) T($10x) Start(0)"
         />
       )}
       <div className={`Px($5xl) ${loading ? 'Op(0.2)' : 'Op(1)'}`}>
