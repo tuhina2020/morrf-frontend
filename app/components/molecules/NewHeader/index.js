@@ -2,8 +2,7 @@ import { morff as Morff } from 'Assets/svg-comp';
 import React, { useEffect, useState } from 'react';
 import { getTransitionClass } from 'utils/helper';
 import Button from 'components/molecules/Button';
-import Tab from './tabs';
-export default function Header({
+export default function NewHeader({
   isDesktopOrLaptop,
   bgImg,
   height,
@@ -56,9 +55,7 @@ export default function Header({
               <div className={`Fw($fwregular) Ff($ffmanrope) Fz($lg)`}>
                 Designer
               </div>
-              <div className="Mstart($10x)">
-                <Tab content="My Details" status="active" />
-              </div>
+              <div className="Mstart($10x)" />
               <div className="Pos(a) End(10px)">
                 <Button {...buttonProps}>Logout</Button>
               </div>

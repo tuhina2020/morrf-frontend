@@ -130,16 +130,10 @@ const ProfileDetails = ({
 
   return (
     <div>
-      <Header
-        isDesktopOrLaptop
-        logout={isEmpty(open) && !viewOnly}
-        logoutAction={logout}
-        blur={blur}
-      />
       <Loading />
       <div className={`Z(1) ${blur ? 'Blur($xxs)' : undefined}`}>
-        <div className="D(f) Ai(s) Jc(s) P($lg)">
-          <div className="Mend($lg) Miw($60xl)">
+        <div className={`D(f) Fxd(r) Flw(w) Mx($10x) Maw($full) Ai(s) Jc(s) P($lg)`}>
+          <div className="D(f) Fxd(c) Flb(f) F(o) Mend($lg) Miw($60xl)">
             <PersonalDetails
               personal={personal}
               onEdit={() => {

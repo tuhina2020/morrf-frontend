@@ -79,9 +79,9 @@ const ProfilePage = ({
 
   useInjectSaga({ key: 'profilePage', saga, mode: RESTART_ON_REMOUNT });
 
-  const {
+  /* const {
     params: { tabId },
-  } = match;
+  } = match; */
 
   const {
     skillsList,
@@ -96,7 +96,7 @@ const ProfilePage = ({
     getSkills();
   }, []);
 
-  if (tabId === 'details')
+  // if (tabId === 'details')
     return (
       <ProfileDetails
         loading={loading}
@@ -128,7 +128,7 @@ const ProfilePage = ({
       />
     );
 
-  return <div>LOL TTHIS IS EMPTY</div>;
+  // return <div> THIS IS EMPTY</div>;
 };
 
 ProfilePage.propTypes = { responsiveData: PropTypes.object };

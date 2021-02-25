@@ -236,7 +236,7 @@ const LoginForm = ({
         );
       case EMAIL_LOGIN_STATES.CONGRATULATIONS:
       case EMAIL_LOGIN_STATES.SUCCESS:
-        return <Redirect to="/profile/details" />;
+        return <Redirect to="/tabs" />;
       default:
         return (
           <EnterEmail

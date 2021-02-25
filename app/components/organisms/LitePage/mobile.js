@@ -18,7 +18,7 @@ import menuHeader from 'Assets/images/Header.png';
 import BaseIcon from '../../atoms/BaseIcon/index';
 import Steps from './steps';
 import Awesomeness from './awesomeness';
-import NewHeader from 'components/NewHeader';
+import Header from 'components/Header';
 import HeadingBg from 'Assets/images/lite/heading.png';
 const MobilePage = ({
   allProfessionTypes,
@@ -46,6 +46,12 @@ const MobilePage = ({
     };
     setTimeout(showMore, 200);
   };
+  const buttonProps = {
+    iconDescription: 'sign in with google',
+    alignContent: 'center',
+    kind: 'primary',
+    size: '50x',
+  };
 
   const formRef = useRef(null);
   const anotherReqButton = {
@@ -62,31 +68,22 @@ const MobilePage = ({
   };
 
   const [profession, setProfession] = useState('"Marketing"');
-  const [index, setIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
   const professionArr = allProfessionTypes.map(p => p.name);
   useEffect(() => {
+    const visibleProfession =
+      professionArr[Math.floor(Math.random() * professionArr.length)];
     const intro = setInterval(() => {
-      let newIndex = Math.floor(Math.random() * professionArr.length);
-      newIndex =
-        newIndex === index ? (newIndex + 1) % professionArr.length : newIndex;
-      const visibleProfession = professionArr[newIndex];
       setProfession(visibleProfession);
-      setIndex(newIndex);
+      setCounter(counter + 1);
     }, 2000);
     return () => {
       clearInterval(intro);
     };
   });
-  const buttonProps = {
-    iconDescription: 'sign in with google',
-    alignContent: 'center',
-    kind: 'primary',
-    size: '50x',
-  };
-
   return (
     <>
-      <NewHeader isDesktopOrLaptop={false} />
+      <Header isDesktopOrLaptop={false} />
       {/* <img src={Splash} className="Pos(a) Z(-1) W($full) T(0)" /> */}
       <div
         className="Bgr(nr) Pos(r) T($5xl)"
@@ -96,24 +93,27 @@ const MobilePage = ({
           backgroundSize: 'cover',
         }}
       >
-        <div className="Px($mmd) Ta(start) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
-          <div className="Pb($lg)">
-            <Button
-              {...buttonProps}
-              onClick={() =>
-                window.open('https://support.morff.io/freelancers')
-              }
-            >
-              Join as a Freelancer
-            </Button>
-          </div>
+        <div className="Px($mmd) Ta(c) Ff($ffmanrope) Fw($fwmedium) D(f) Pt($lg) Fld(c) Ai(c) W($full) Jc(c) Mb($lg)">
           <div className="Fz($xl) Mb($md)">
+            <div className="Mx($10x)">
+              <Button
+                onClick={() =>
+                  window.open('https://support.morff.io/freelancers')
+                }
+                {...buttonProps}
+              >
+                Join as a Freelancer
+              </Button>
+            </div>
             Looking for a freelance{' '}
             <ReactTextTransition
               text={profession}
-              // spring={presets.molasses}
-              direction="up"
-            />
+              spring={presets.molasses}
+              style={{ margin: '0 4px' }}
+              direction="down"
+              overflow
+              inline
+            />{' '}
             designer?
           </div>
           <div className="Fz($smx)">
