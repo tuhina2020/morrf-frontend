@@ -127,7 +127,7 @@ const BankDetailsScroll = ({
       </Modal>
     </div>
   );
-}; 
+};
 debugger;
 
 const BankDetails = ({
@@ -164,7 +164,7 @@ const BankDetails = ({
     );
   // debugger;
   return (
-    <div className="Bdrs($xs) Bgc(white) W($60xl) H(fc) Mb($xl)">
+    <div className="Bdrs($xs) Bgc(white) W($60xl) H(fc) Mb($xl) ">
       <DisplayCard
         heading="Bank Details"
         topRightIcon={!viewOnly && 'simpleadd'}
@@ -199,24 +199,18 @@ const BankDetails = ({
                   )}
                 </div>
                 <div className="D(f) Fxd(c) Flw(w) Jc(fs)">
-                  <div className="Fz($smd) My($xms)">
-                    Name as per bank account : {holder_name}
-                  </div>
+                  <div className="Fz($smd) My($xms)">{holder_name}</div>
                   <div className="Fz($smd) Mend($xs) My($xms)">
-                    Account No : {account_number}
+                    {account_number}
                   </div>
-                  <div className="Fz($smd) Mend($xs) My($xms)">
-                    IFSC code : {ifsc_code}
-                  </div>
+                  <div className="Fz($smd) Mend($xs) My($xms)">{ifsc_code}</div>
                   <div
                     className="Fz($smd) Mend($xs) My($xms)"
                     key={bank_name + i}
                   >
-                    Bank Name : {bank_name}
+                    {bank_name}
                   </div>
-                  <div className="Fz($smd) Mend($xs) My($xms)">
-                    UPI code : {upi_code}
-                  </div>
+                  <div className="Fz($smd) Mend($xs) My($xms)">{upi_code}</div>
                   <BankDetailsScroll
                     files={files}
                     onNext={() => {}}
